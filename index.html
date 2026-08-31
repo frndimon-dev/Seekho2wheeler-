@@ -124,7 +124,6 @@
 
       <!-- 1. DASHBOARD VIEW -->
       <section id="tabDashboard" class="space-y-6">
-        <!-- Dual Filter Bar -->
         <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="flex items-center space-x-2">
             <i class="fa-solid fa-filter text-yellow-500"></i>
@@ -149,7 +148,6 @@
           </div>
         </div>
 
-        <!-- 4 Key Metrics (KPI Cards) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-blue-500"></div>
@@ -177,7 +175,6 @@
           </div>
         </div>
 
-        <!-- Visual Revenue Split Graph Card -->
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="font-black text-slate-900 text-base flex items-center space-x-2">
@@ -187,7 +184,6 @@
             <span id="dashExpectedRevenue" class="text-xs font-black bg-yellow-50 px-3 py-1.5 rounded-xl text-yellow-800 border border-yellow-200">TOTAL EXPECTED: ₹0</span>
           </div>
 
-          <!-- Progress Bar Graph -->
           <div class="space-y-2">
             <div class="h-6 w-full bg-slate-100 rounded-2xl overflow-hidden flex border border-slate-200">
               <div id="graphPaidBar" class="bg-green-500 h-full transition-all duration-500 flex items-center justify-center text-[10px] text-white font-black" style="width: 0%;"></div>
@@ -206,7 +202,6 @@
           </div>
         </div>
 
-        <!-- 6 Branches Summary Cards Grid -->
         <div>
           <h3 class="font-black text-slate-900 text-base mb-4 flex items-center space-x-2">
             <i class="fa-solid fa-building-flag text-yellow-500"></i>
@@ -216,12 +211,12 @@
         </div>
       </section>
 
-      <!-- 2. ATTENDANCE & SCANNER VIEW -->
+      <!-- 2. ATTENDANCE & SCANNER VIEW (WITH CAMERA & FILE UPLOAD) -->
       <section id="tabAttendance" class="hidden space-y-6">
         <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm text-center max-w-xl mx-auto space-y-6">
           <div>
             <h2 class="text-xl font-black text-slate-900">QR Code Attendance Scanner</h2>
-            <p class="text-xs text-slate-500 mt-1">Scan student ID QR code from receipt to increment class attendance</p>
+            <p class="text-xs text-slate-500 mt-1">Scan from Camera OR Upload QR Screenshot from Gallery</p>
           </div>
 
           <div class="relative mx-auto max-w-xs aspect-square bg-slate-900 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-lg flex items-center justify-center">
@@ -232,10 +227,19 @@
             </div>
           </div>
 
-          <button id="toggleScannerBtn" onclick="toggleScanner()" class="w-full sm:w-auto px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-md transition flex items-center justify-center space-x-2 mx-auto text-sm">
-            <i class="fa-solid fa-camera"></i>
-            <span id="scannerBtnText">START CAMERA</span>
-          </button>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button id="toggleScannerBtn" onclick="toggleScanner()" class="w-full sm:w-auto px-6 py-3.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-xs">
+              <i class="fa-solid fa-camera"></i>
+              <span id="scannerBtnText">START CAMERA</span>
+            </button>
+
+            <!-- Gallery Scan Input -->
+            <label class="w-full sm:w-auto px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-black rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-xs cursor-pointer">
+              <i class="fa-solid fa-image"></i>
+              <span>SCAN FROM GALLERY / FILE</span>
+              <input type="file" id="qrFileInput" accept="image/*" class="hidden" onchange="scanFromImage(this)" />
+            </label>
+          </div>
         </div>
       </section>
 
@@ -315,7 +319,7 @@
         </form>
       </section>
 
-      <!-- 4. CUSTOMER LIST VIEW (WITH FULL CRUD & EDIT MODAL) -->
+      <!-- 4. CUSTOMER LIST VIEW (WITH LIVE COUNTDOWN BADGES) -->
       <section id="tabStudents" class="hidden space-y-4">
         <div class="flex flex-col sm:flex-row items-center gap-3">
           <div class="relative w-full">
@@ -454,6 +458,12 @@
           <input type="number" id="editClassesAttended" min="0" max="15" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
         </div>
 
+        <!-- Replace / Edit Photo in Modal -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Update Photo (Optional)</label>
+          <input type="file" id="editPhoto" accept="image/*" class="w-full p-2 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
+        </div>
+
         <div class="flex space-x-2 pt-2">
           <button type="submit" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm">
             SAVE & UPDATE
@@ -466,7 +476,7 @@
     </div>
   </div>
 
-  <!-- ================= LOGIC & DUAL-STORAGE SYSTEM ================= -->
+  <!-- ================= LOGIC & SYSTEM ================= -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAGbROD4YLWMyWkxgR0ZRe8nUW-x2Cei9E",
@@ -538,14 +548,13 @@
       document.getElementById("mainApp").classList.remove("hidden");
       document.getElementById("userBadge").textContent = currentUser.role === "owner" ? "OWNER PORTAL (CENTRAL)" : `${currentUser.branch.toUpperCase()} BRANCH`;
 
+      // Branch lock for trainer admission defaults
       if (currentUser.role === "trainer") {
         document.getElementById("navDashBtn").classList.add("hidden");
         document.getElementById("admBranch").value = currentUser.branch;
-        document.getElementById("admBranch").disabled = true;
         switchTab("attendance");
       } else {
         document.getElementById("navDashBtn").classList.remove("hidden");
-        document.getElementById("admBranch").disabled = false;
         switchTab("dashboard");
       }
 
@@ -560,17 +569,24 @@
       location.reload();
     }
 
+    // Tab Switching With Visual Active State
     function switchTab(tab) {
-      ["dashboard", "attendance", "admission", "students", "shift"].forEach(t => {
+      const allTabs = ["dashboard", "attendance", "admission", "students", "shift"];
+      allTabs.forEach(t => {
         const sec = document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}`);
         const btn = document.getElementById(`nav${t.charAt(0).toUpperCase() + t.slice(1)}Btn`);
         if (sec) sec.classList.add("hidden");
-        if (btn) btn.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap";
+        if (btn) {
+          btn.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap";
+        }
       });
+
       const activeSec = document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
       const activeBtn = document.getElementById(`nav${tab.charAt(0).toUpperCase() + tab.slice(1)}Btn`);
       if (activeSec) activeSec.classList.remove("hidden");
-      if (activeBtn) activeBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-sm flex items-center space-x-2 whitespace-nowrap";
+      if (activeBtn) {
+        activeBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-sm border border-yellow-400 flex items-center space-x-2 whitespace-nowrap";
+      }
     }
 
     function initFirebaseSync() {
@@ -587,6 +603,7 @@
       } catch(e) {}
     }
 
+    // High Speed Canvas Compressor
     function compressImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -608,11 +625,11 @@
             canvas.height = height;
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL("image/jpeg", 0.6));
+            resolve(canvas.toDataURL("image/jpeg", 0.7));
           };
-          img.onerror = () => resolve("https://via.placeholder.com/80");
+          img.onerror = () => resolve("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60");
         };
-        reader.onerror = () => resolve("https://via.placeholder.com/80");
+        reader.onerror = () => resolve("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60");
       });
     }
 
@@ -635,6 +652,7 @@
       calcAdmFees();
     }
 
+    // Admission Form Submit
     document.getElementById("admissionForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const photoFile = document.getElementById("admPhoto").files[0];
@@ -643,7 +661,7 @@
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Saving...</span>`;
 
       try {
-        let compressedBase64 = "https://via.placeholder.com/80";
+        let compressedBase64 = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60";
         if (photoFile) {
           compressedBase64 = await compressImage(photoFile);
         }
@@ -696,6 +714,7 @@
       btn.innerHTML = `<i class="fa-solid fa-bolt"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
 
+    // Dashboard Render
     function renderDashboard() {
       const selectedBranch = document.getElementById("filterBranch").value;
       const selectedMonth = document.getElementById("filterMonth").value;
@@ -757,6 +776,7 @@
       });
     }
 
+    // Customer List with Countdown Badge & Real Photo
     function renderStudentList() {
       const q = document.getElementById("searchStudentInput").value.toLowerCase();
       const branchFilter = document.getElementById("studentFilterBranch").value;
@@ -776,29 +796,46 @@
 
       filtered.forEach(student => {
         const card = document.createElement("div");
-        card.className = "bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4 hover:shadow-md transition";
+        card.className = "bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition relative overflow-hidden";
         const progress = Math.min(100, Math.round(((student.classesAttended || 0) / student.packageDays) * 100));
 
+        // Payment Countdown Calculation
+        const classes = student.classesAttended || 0;
+        let countdownBadgeHtml = "";
+        if (student.dueAmount > 0) {
+          const classesLeft = Math.max(0, 6 - classes);
+          if (classes >= 6) {
+            countdownBadgeHtml = `<div class="bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider animate-pulse flex items-center space-x-1"><i class="fa-solid fa-triangle-exclamation"></i><span>PAYMENT OVERDUE - ATTENDANCE BLOCKED</span></div>`;
+          } else {
+            countdownBadgeHtml = `<div class="bg-amber-100 border border-amber-300 text-amber-900 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center space-x-1"><i class="fa-solid fa-clock"></i><span>${classesLeft} Classes to go for next payment</span></div>`;
+          }
+        } else {
+          countdownBadgeHtml = `<div class="bg-green-100 text-green-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">Fees Cleared</div>`;
+        }
+
         card.innerHTML = `
-          <div class="flex items-start justify-between">
-            <div class="flex items-center space-x-3">
-              <img src="${student.photoUrl || 'https://via.placeholder.com/80'}" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm" />
-              <div>
-                <h4 class="font-black text-slate-900 text-sm">${student.name}</h4>
-                <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-100 text-yellow-900 px-1.5 py-0.5 rounded font-bold">${student.branch}</span></p>
-                <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days)</p>
-              </div>
-            </div>
+          <!-- Top Countdown Bar -->
+          <div class="flex items-center justify-between">
+            ${countdownBadgeHtml}
             <button onclick='openEditModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-yellow-400 hover:text-slate-950 text-slate-600 transition flex items-center justify-center text-xs" title="Edit Customer">
               <i class="fa-solid fa-pen"></i>
             </button>
+          </div>
+
+          <div class="flex items-start space-x-3 pt-1">
+            <img src="${student.photoUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'}" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm" />
+            <div>
+              <h4 class="font-black text-slate-900 text-sm">${student.name}</h4>
+              <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-100 text-yellow-900 px-1.5 py-0.5 rounded font-bold">${student.branch}</span></p>
+              <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days)</p>
+            </div>
           </div>
 
           <!-- Progress -->
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
               <span class="text-slate-700">Classes: ${student.classesAttended || 0}/${student.packageDays}</span>
-              <span class="${student.dueAmount > 0 ? 'text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-md' : 'text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-md'}">
+              <span class="${student.dueAmount > 0 ? 'text-red-600 font-black' : 'text-green-600'}">
                 ${student.dueAmount > 0 ? `Due: ₹${student.dueAmount}` : 'Fully Paid'}
               </span>
             </div>
@@ -842,7 +879,7 @@
       document.getElementById("portModalTotal").textContent = `₹${student.totalFees}`;
       document.getElementById("portModalPaid").textContent = `₹${student.paidAmount}`;
       document.getElementById("portModalDue").textContent = `₹${student.dueAmount}`;
-      document.getElementById("portModalImg").src = student.photoUrl || "https://via.placeholder.com/80";
+      document.getElementById("portModalImg").src = student.photoUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60";
 
       const qrPayload = JSON.stringify({ studentCode: student.studentCode, phone: student.phone });
       const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 300, margin: 1 });
@@ -923,6 +960,7 @@
       document.getElementById("editTotalFees").value = student.totalFees;
       document.getElementById("editPaidAmount").value = student.paidAmount;
       document.getElementById("editClassesAttended").value = student.classesAttended || 0;
+      document.getElementById("editPhoto").value = "";
       calcEditFees();
       document.getElementById("editModal").classList.remove("hidden");
     }
@@ -934,12 +972,13 @@
       document.getElementById("editDueDisplay").textContent = `₹${due}`;
     }
 
-    document.getElementById("editForm").addEventListener("submit", (e) => {
+    document.getElementById("editForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const id = document.getElementById("editStudentId").value;
       const total = Number(document.getElementById("editTotalFees").value) || 0;
       const paid = Number(document.getElementById("editPaidAmount").value) || 0;
       const due = Math.max(0, total - paid);
+      const newPhotoFile = document.getElementById("editPhoto").files[0];
 
       const idx = rawStudents.findIndex(s => s.id === id);
       if (idx !== -1) {
@@ -951,6 +990,10 @@
         rawStudents[idx].paidAmount = paid;
         rawStudents[idx].dueAmount = due;
         rawStudents[idx].classesAttended = Number(document.getElementById("editClassesAttended").value) || 0;
+
+        if (newPhotoFile) {
+          rawStudents[idx].photoUrl = await compressImage(newPhotoFile);
+        }
 
         saveLocal();
         renderDashboard();
@@ -979,6 +1022,7 @@
       }
     }
 
+    // QR Attendance Scanner (Camera)
     function toggleScanner() {
       const overlay = document.getElementById("scannerOverlay");
       const text = document.getElementById("scannerBtnText");
@@ -1006,6 +1050,26 @@
         text.textContent = "START CAMERA";
         overlay.classList.remove("hidden");
         isScanning = false;
+      }
+    }
+
+    // QR Attendance Scanner (File / Gallery Upload)
+    function scanFromImage(input) {
+      if (input.files && input.files.length > 0) {
+        const file = input.files[0];
+        const html5Qr = new Html5Qrcode("reader");
+        html5Qr.scanFile(file, true)
+          .then(decodedText => {
+            try {
+              const data = JSON.parse(decodedText);
+              handleAttendance(data.studentCode);
+            } catch (err) {
+              alert("Invalid QR Code format in image!");
+            }
+          })
+          .catch(err => {
+            alert("No valid QR code found in this picture. Please try a clearer screenshot.");
+          });
       }
     }
 
