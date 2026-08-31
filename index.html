@@ -58,7 +58,7 @@
       <form id="loginForm" class="space-y-4">
         <div id="branchSelectGroup" class="hidden">
           <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Select Your Branch</label>
-          <select id="loginBranch" class="w-full p-3.5 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-bold text-sm">
+          <select id="loginBranch" onchange="handleBranchChange()" class="w-full p-3.5 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-bold text-sm">
             <option value="Tollygunge">Tollygunge Branch</option>
             <option value="Rabindra Sarovar">Rabindra Sarovar Branch</option>
             <option value="New Town">New Town Branch</option>
@@ -68,14 +68,21 @@
           </select>
         </div>
 
-        <div id="usernameGroup">
-          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Owner User ID</label>
-          <input type="text" id="username" placeholder="admin" value="admin" class="w-full p-3.5 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold text-sm" required />
+        <div>
+          <label id="usernameLabel" class="block text-xs font-bold text-slate-700 uppercase mb-1">User ID</label>
+          <input type="text" id="username" placeholder="admin" value="admin" class="w-full p-3.5 bg-slate-50 border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold text-sm" required />
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password</label>
           <input type="password" id="password" placeholder="••••••••" class="w-full p-3.5 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold text-sm" required />
+        </div>
+
+        <div class="flex items-center justify-between text-xs font-bold text-slate-600 px-1">
+          <label class="flex items-center space-x-2 cursor-pointer">
+            <input type="checkbox" id="rememberMe" class="w-4 h-4 text-yellow-500 rounded focus:ring-0 cursor-pointer" />
+            <span>Save Password / Remember Me</span>
+          </label>
         </div>
 
         <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-xl shadow-md transition flex items-center justify-center space-x-2 text-sm cursor-pointer">
@@ -100,7 +107,7 @@
             <div class="flex items-center space-x-2">
               <span id="userBadge" class="text-[10px] bg-yellow-400 text-slate-950 px-2 py-0.5 rounded-md font-black uppercase"></span>
               <span class="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded-md font-bold flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Cloud v3 Live
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Cloud Live
               </span>
             </div>
           </div>
@@ -115,31 +122,35 @@
     <!-- Navigation Tabs -->
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 space-y-6">
       <div class="flex items-center space-x-2 overflow-x-auto pb-2 border-b border-slate-200">
-        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-active">
+        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-active">
           <i class="fa-solid fa-chart-pie"></i>
-          <span>DASHBOARD & REVENUE</span>
+          <span>DASHBOARD</span>
         </button>
-        <button id="navDuesBtn" onclick="switchTab('dues')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
+        <button id="navDuesBtn" onclick="switchTab('dues')" class="px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-hand-holding-dollar"></i>
-          <span>DUE & FEES COLLECTION</span>
+          <span>DUE MANAGEMENT</span>
         </button>
-        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
+        <button id="navLegacyBtn" onclick="switchTab('legacy')" class="px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
+          <i class="fa-solid fa-users-line"></i>
+          <span>OLD CUSTOMERS (CARDS)</span>
+        </button>
+        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-qrcode"></i>
-          <span>QR ATTENDANCE SCANNER</span>
+          <span>QR ATTENDANCE</span>
         </button>
-        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
+        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-user-plus"></i>
           <span>NEW ADMISSION</span>
         </button>
-        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
+        <button id="navListBtn" onclick="switchTab('students')" class="px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-address-book"></i>
-          <span>CUSTOMERS & PROFILES</span>
+          <span>NEW CUSTOMERS (QR)</span>
         </button>
-        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
+        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-calendar-day"></i>
-          <span>DAILY SHIFT REPORT</span>
+          <span>SHIFT REPORT</span>
         </button>
-        <button id="navBinBtn" onclick="switchTab('bin')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
+        <button id="navBinBtn" onclick="switchTab('bin')" class="px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-trash-can"></i>
           <span>RECYCLE BIN</span>
         </button>
@@ -211,13 +222,13 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-blue-500"></div>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">New Enrolled Students</p>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">New Digital Admissions</p>
             <p id="dashTotalStudents" class="text-3xl font-black text-slate-900 mt-2">0</p>
-            <p class="text-[11px] text-slate-500 font-semibold mt-1">Digital Registrations (Sep '26)</p>
+            <p class="text-[11px] text-slate-500 font-semibold mt-1">Excludes Old Offline Registrations</p>
           </div>
           <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-green-500"></div>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Paid Revenue</p>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Collected Revenue</p>
             <p id="dashTotalPaid" class="text-3xl font-black text-green-600 mt-2">₹0</p>
             <p id="paidSplitText" class="text-[11px] font-bold text-green-600 mt-1">Adm: ₹0 | Dues: ₹0</p>
           </div>
@@ -270,29 +281,56 @@
         </div>
       </section>
 
-      <!-- 2. DUE & COLLECTION TAB -->
+      <!-- 2. DUE MANAGEMENT TAB -->
       <section id="tabDues" class="hidden space-y-4">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
-          <div class="relative w-full sm:w-80">
-            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
-            <input type="text" id="searchDueInput" oninput="renderDuesList()" placeholder="Search student or phone..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="bg-white p-4 rounded-2xl border border-red-200 shadow-sm text-center">
+            <p class="text-[10px] font-black text-slate-400 uppercase">Students with Dues</p>
+            <p id="dueKpiCount" class="text-2xl font-black text-red-600 mt-1">0 Students</p>
           </div>
-          <div class="flex items-center gap-2 w-full sm:w-auto">
+          <div class="bg-white p-4 rounded-2xl border border-red-200 shadow-sm text-center">
+            <p class="text-[10px] font-black text-slate-400 uppercase">Total Pending Due Amount</p>
+            <p id="dueKpiAmount" class="text-2xl font-black text-red-600 mt-1">₹0</p>
+          </div>
+          <div class="bg-white p-4 rounded-2xl border border-green-200 shadow-sm text-center">
+            <p class="text-[10px] font-black text-slate-400 uppercase">Fully Cleared Accounts</p>
+            <p id="dueKpiCleared" class="text-2xl font-black text-green-600 mt-1">0 Students</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
+          <div class="relative w-full sm:w-72">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+            <input type="text" id="searchDueInput" oninput="renderDuesList()" placeholder="Search due student or phone..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+          </div>
+          <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <select id="dueFilterType" onchange="renderDuesList()" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800">
               <option value="All">All Dues (New & Old)</option>
               <option value="New">Digital New (QR)</option>
               <option value="Legacy">Offline Old (Cards)</option>
             </select>
-            <button onclick="openAddOldStudentModal()" class="px-4 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-xl text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer whitespace-nowrap">
-              <i class="fa-solid fa-user-clock"></i>
-              <span>+ ADD OLD CUSTOMER</span>
-            </button>
+            <input type="date" id="dueTillDate" onchange="renderDuesList()" class="p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800" title="Filter dues till date" />
           </div>
         </div>
         <div id="duesCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </section>
 
-      <!-- 3. ATTENDANCE SCANNER TAB -->
+      <!-- 3. OLD / LEGACY CUSTOMERS TAB -->
+      <section id="tabLegacy" class="hidden space-y-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
+          <div class="relative w-full sm:w-80">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+            <input type="text" id="searchLegacyInput" oninput="renderLegacyList()" placeholder="Search old offline customer..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+          </div>
+          <button onclick="openAddOldStudentModal()" class="w-full sm:w-auto px-5 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer whitespace-nowrap">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>+ ADD NEW OLD CUSTOMER</span>
+          </button>
+        </div>
+        <div id="legacyCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </section>
+
+      <!-- 4. ATTENDANCE SCANNER TAB -->
       <section id="tabAttendance" class="hidden space-y-6">
         <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm text-center max-w-xl mx-auto space-y-6">
           <div>
@@ -320,10 +358,10 @@
         </div>
       </section>
 
-      <!-- 4. NEW ADMISSION TAB -->
+      <!-- 5. NEW ADMISSION TAB -->
       <section id="tabAdmission" class="hidden bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
         <div class="border-b border-slate-100 pb-4 mb-6">
-          <h2 class="text-xl font-black text-slate-900">New Customer Admission</h2>
+          <h2 class="text-xl font-black text-slate-900">New Customer Admission (Digital QR)</h2>
           <p class="text-xs text-slate-500 mt-1">Automatic Cloud Sync & Printable Money Receipt</p>
         </div>
         <form id="admissionForm" class="space-y-4">
@@ -393,7 +431,7 @@
             <span class="text-xs font-black text-slate-700">Outstanding Due: <span id="admDueDisplay" class="text-red-600 text-sm">₹0</span></span>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Photo * (Auto-processed)</label>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Photo * (Mandatory for QR Profiles)</label>
             <input type="file" id="admPhoto" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.webp" required class="w-full p-2.5 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
           </div>
           <button type="submit" id="admSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-sm cursor-pointer">
@@ -403,12 +441,12 @@
         </form>
       </section>
 
-      <!-- 5. CUSTOMER LIST TAB -->
+      <!-- 6. NEW CUSTOMER LIST TAB (DIGITAL ONLY) -->
       <section id="tabStudents" class="hidden space-y-4">
         <div class="flex flex-col sm:flex-row items-center gap-3">
           <div class="relative w-full">
             <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
-            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search by name, phone or code..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-sm" />
+            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search new customer by name, phone or code..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-sm" />
           </div>
           <select id="studentFilterBranch" onchange="renderStudentList()" class="w-full sm:w-56 p-3 bg-white border border-slate-200 rounded-2xl text-xs font-black text-slate-900 shadow-sm">
             <option value="All">All Branches</option>
@@ -423,7 +461,7 @@
         <div id="studentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </section>
 
-      <!-- 6. DAILY SHIFT REPORT TAB -->
+      <!-- 7. DAILY SHIFT REPORT TAB -->
       <section id="tabShift" class="hidden space-y-4">
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto space-y-5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-3 gap-2">
@@ -480,7 +518,7 @@
         </div>
       </section>
 
-      <!-- 7. RECYCLE BIN TAB -->
+      <!-- 8. RECYCLE BIN TAB -->
       <section id="tabBin" class="hidden space-y-4">
         <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
           <div>
@@ -496,6 +534,23 @@
     </main>
   </div>
 
+  <!-- ================= IMAGE ZOOM & DOWNLOAD VIEWER MODAL ================= -->
+  <div id="imageViewerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-5 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl text-center space-y-4">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 id="imageViewerTitle" class="text-xs font-black text-slate-900 uppercase">Customer Profile Photo</h3>
+        <button onclick="closeModal('imageViewerModal')" class="text-slate-400 hover:text-slate-700 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div class="w-full aspect-square bg-slate-100 rounded-2xl overflow-hidden border-2 border-yellow-400 shadow-md flex items-center justify-center">
+        <img id="imageViewerImg" src="" class="w-full h-full object-cover" />
+      </div>
+      <a id="imageViewerDownloadBtn" href="" download="Customer_Photo.jpg" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+        <i class="fa-solid fa-download"></i>
+        <span>DOWNLOAD ORIGINAL PHOTO</span>
+      </a>
+    </div>
+  </div>
+
   <!-- ================= ADVANCED PORTFOLIO MODAL ================= -->
   <div id="portfolioModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
@@ -506,7 +561,7 @@
 
       <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left space-y-2">
         <div class="flex items-center space-x-3">
-          <img id="portModalImg" src="" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm bg-slate-200" />
+          <img id="portModalImg" src="" onclick="openImageViewer(this.src, activeStudent ? activeStudent.name : 'Customer')" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm bg-slate-200 cursor-pointer hover:opacity-90" title="Click to Zoom & Download" />
           <div>
             <h4 id="portModalName" class="font-bold text-slate-900 text-sm"></h4>
             <p id="portModalDetails" class="text-xs text-slate-500"></p>
@@ -643,12 +698,17 @@
           </select>
         </div>
 
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Customer Photo (Optional for Old Students)</label>
+          <input type="file" id="oldPhoto" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.webp" class="w-full p-2 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
+        </div>
+
         <div class="p-3 bg-yellow-50 rounded-xl flex justify-between text-xs font-bold border border-yellow-200">
           <span class="text-slate-700">Initial Due:</span>
           <span id="oldDueDisplay" class="text-red-600 font-black">₹0</span>
         </div>
         <button type="submit" id="oldSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm cursor-pointer">
-          SAVE TO DUE DATABASE
+          SAVE TO OLD DATABASE
         </button>
       </form>
     </div>
@@ -799,6 +859,16 @@
     const BIN_COLLECTION = "deleted_students_v3";
     const ALL_BRANCHES = ["Tollygunge", "Rabindra Sarovar", "New Town", "Sodepur", "Howrah", "Barasat"];
     
+    // Strict Branch Credentials Registry
+    const BRANCH_CREDENTIALS = {
+      "tollygunge": { branch: "Tollygunge", pass: "netaji129", user: "tollygunge" },
+      "rabindra": { branch: "Rabindra Sarovar", pass: "swisspark54321", user: "rabindra" },
+      "newtown": { branch: "New Town", pass: "snehodia12345", user: "newtown" },
+      "sodepur": { branch: "Sodepur", pass: "hbtown6thlane", user: "sodepur" },
+      "howrah": { branch: "Howrah", pass: "dumurjola9748", user: "howrah" },
+      "barasat": { branch: "Barasat", pass: "lali9876", user: "barasat" }
+    };
+
     function getLocalDateString(d = new Date()) {
       const year = d.getFullYear();
       const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -828,38 +898,66 @@
     let activeSyncUnsub = null;
     let binSyncUnsub = null;
 
+    function handleBranchChange() {
+      const b = document.getElementById("loginBranch").value;
+      const key = Object.keys(BRANCH_CREDENTIALS).find(k => BRANCH_CREDENTIALS[k].branch === b);
+      if (key) {
+        document.getElementById("username").value = BRANCH_CREDENTIALS[key].user;
+        loadSavedCredentials(BRANCH_CREDENTIALS[key].user);
+      }
+    }
+
     function setLoginRole(role) {
       currentRole = role;
       if (role === "owner") {
         document.getElementById("roleOwnerBtn").className = "flex-1 py-2.5 text-xs font-black rounded-xl bg-yellow-400 text-slate-950 shadow-sm transition";
         document.getElementById("roleTrainerBtn").className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-600 hover:text-slate-900 transition";
         document.getElementById("branchSelectGroup").classList.add("hidden");
-        document.getElementById("usernameGroup").classList.remove("hidden");
         document.getElementById("username").value = "admin";
+        document.getElementById("username").disabled = false;
+        loadSavedCredentials("admin");
       } else {
         document.getElementById("roleTrainerBtn").className = "flex-1 py-2.5 text-xs font-black rounded-xl bg-yellow-400 text-slate-950 shadow-sm transition";
         document.getElementById("roleOwnerBtn").className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-600 hover:text-slate-900 transition";
         document.getElementById("branchSelectGroup").classList.remove("hidden");
-        document.getElementById("usernameGroup").classList.add("hidden");
+        document.getElementById("username").disabled = true;
+        handleBranchChange();
+      }
+    }
+
+    function loadSavedCredentials(userKey) {
+      const saved = localStorage.getItem(`saved_pass_${userKey}`);
+      if (saved) {
+        document.getElementById("password").value = saved;
+        document.getElementById("rememberMe").checked = true;
+      } else {
+        document.getElementById("password").value = "";
+        document.getElementById("rememberMe").checked = false;
       }
     }
 
     document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
+      const u = document.getElementById("username").value.trim().toLowerCase();
       const p = document.getElementById("password").value.trim();
+      const rem = document.getElementById("rememberMe").checked;
+
       if (currentRole === "owner") {
-        const u = document.getElementById("username").value.trim();
         if (u === "admin" && p === "owner@2026") {
           currentUser = { role: "owner", branch: "All" };
+          if (rem) localStorage.setItem("saved_pass_admin", p);
+          else localStorage.removeItem("saved_pass_admin");
         } else {
           return alert("Invalid Owner Credentials!");
         }
       } else {
-        const branch = normalizeBranch(document.getElementById("loginBranch").value);
-        if (p === "trainer123") {
-          currentUser = { role: "trainer", branch: branch };
+        const branchKey = Object.keys(BRANCH_CREDENTIALS).find(k => BRANCH_CREDENTIALS[k].user === u);
+        if (branchKey && BRANCH_CREDENTIALS[branchKey].pass === p) {
+          currentUser = { role: "trainer", branch: BRANCH_CREDENTIALS[branchKey].branch };
+          if (rem) localStorage.setItem(`saved_pass_${u}`, p);
+          else localStorage.removeItem(`saved_pass_${u}`);
         } else {
-          return alert("Invalid Trainer Password!");
+          return alert("Invalid Trainer Password for this branch!");
         }
       }
 
@@ -892,6 +990,9 @@
       initRealtimeFirestoreSync();
     });
 
+    // Auto load admin saved pass on start
+    loadSavedCredentials("admin");
+
     function handleLogout() { 
       if (activeSyncUnsub) activeSyncUnsub();
       if (binSyncUnsub) binSyncUnsub();
@@ -899,14 +1000,14 @@
     }
 
     function switchTab(tab) {
-      const allTabs = ["dashboard", "dues", "attendance", "admission", "students", "shift", "bin"];
+      const allTabs = ["dashboard", "dues", "legacy", "attendance", "admission", "students", "shift", "bin"];
       allTabs.forEach(t => {
         const cap = t.charAt(0).toUpperCase() + t.slice(1);
         const sec = document.getElementById(`tab${cap}`);
         const btn = document.getElementById(`nav${cap}Btn`);
         if (sec) sec.classList.add("hidden");
         if (btn) {
-          btn.className = "px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive";
+          btn.className = "px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-inactive";
         }
       });
 
@@ -915,7 +1016,7 @@
       const activeBtn = document.getElementById(`nav${activeCap}Btn`);
       if (activeSec) activeSec.classList.remove("hidden");
       if (activeBtn) {
-        activeBtn.className = "px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-active";
+        activeBtn.className = "px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-active";
       }
     }
 
@@ -963,6 +1064,7 @@
 
         renderDashboard();
         renderDuesList();
+        renderLegacyList();
         renderStudentList();
         renderShiftReport();
       }, (err) => console.error("Sync error:", err));
@@ -971,6 +1073,14 @@
         binStudents = snap.docs.map(d => ({ ...d.data(), id: d.id }));
         renderRecycleBin();
       });
+    }
+
+    function openImageViewer(url, name) {
+      if (!url) return;
+      document.getElementById("imageViewerImg").src = url;
+      document.getElementById("imageViewerTitle").textContent = `${name}'s Profile Photo`;
+      document.getElementById("imageViewerDownloadBtn").href = url;
+      document.getElementById("imageViewerModal").classList.remove("hidden");
     }
 
     async function processUniversalPhoto(file) {
@@ -1128,6 +1238,12 @@
       const dueAmount = Math.max(0, totalFees - paidAmount);
       const instMonth = document.getElementById("oldInstMonth").value;
       const studentCode = `LEGACY-${branch.slice(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
+      const photoFile = document.getElementById("oldPhoto").files[0];
+
+      let photoBase64 = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60";
+      if (photoFile) {
+        photoBase64 = await processUniversalPhoto(photoFile);
+      }
 
       const installments = [];
       if (paidAmount > 0) {
@@ -1156,7 +1272,7 @@
         installments: installments,
         paymentMode: "Cash",
         initialMonth: instMonth,
-        photoUrl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60",
+        photoUrl: photoBase64,
         classesAttended: 0,
         attendanceLogs: [],
         createdAt: getLocalDateString()
@@ -1165,7 +1281,7 @@
       try {
         await db.collection(DB_COLLECTION).doc(studentCode).set(legacyStudent);
         closeModal("addOldStudentModal");
-        alert("Old student due record added successfully!");
+        alert("Old student record added successfully!");
       } catch (err) {
         alert("Error: " + err.message);
       }
@@ -1236,9 +1352,30 @@
     function renderDuesList() {
       const q = document.getElementById("searchDueInput").value.toLowerCase();
       const filterType = document.getElementById("dueFilterType").value;
+      const tillDate = document.getElementById("dueTillDate").value;
       const branchFilter = currentUser.role === "trainer" ? currentUser.branch : "All";
       const container = document.getElementById("duesCardsContainer");
       container.innerHTML = "";
+
+      let totalDueCount = 0;
+      let totalDueSum = 0;
+      let clearedCount = 0;
+
+      rawStudents.forEach(s => {
+        const matchBranch = (branchFilter === "All") || (normalizeBranch(s.branch) === normalizeBranch(branchFilter));
+        if (matchBranch) {
+          if (s.dueAmount > 0) {
+            totalDueCount++;
+            totalDueSum += Number(s.dueAmount);
+          } else {
+            clearedCount++;
+          }
+        }
+      });
+
+      document.getElementById("dueKpiCount").textContent = `${totalDueCount} Students`;
+      document.getElementById("dueKpiAmount").textContent = `₹${totalDueSum}`;
+      document.getElementById("dueKpiCleared").textContent = `${clearedCount} Students`;
 
       const dueStudents = rawStudents.filter(s => {
         const hasDue = s.dueAmount > 0;
@@ -1247,7 +1384,13 @@
         let matchType = true;
         if (filterType === "New") matchType = !s.isLegacy;
         if (filterType === "Legacy") matchType = !!s.isLegacy;
-        return hasDue && matchBranch && matchSearch && matchType;
+
+        let matchDate = true;
+        if (tillDate && s.createdAt) {
+          matchDate = s.createdAt <= tillDate;
+        }
+
+        return hasDue && matchBranch && matchSearch && matchType && matchDate;
       });
 
       if (dueStudents.length === 0) {
@@ -1290,6 +1433,59 @@
       });
     }
 
+    // Render Legacy / Old Students Dedicated Tab
+    function renderLegacyList() {
+      const q = document.getElementById("searchLegacyInput").value.toLowerCase();
+      const branchFilter = currentUser.role === "trainer" ? currentUser.branch : "All";
+      const container = document.getElementById("legacyCardsContainer");
+      container.innerHTML = "";
+
+      const legacyStudents = rawStudents.filter(s => {
+        const isOld = !!s.isLegacy;
+        const matchBranch = (branchFilter === "All") || (normalizeBranch(s.branch) === normalizeBranch(branchFilter));
+        const matchSearch = (s.name && s.name.toLowerCase().includes(q)) || (s.phone && s.phone.includes(q)) || (s.studentCode && s.studentCode.toLowerCase().includes(q));
+        return isOld && matchBranch && matchSearch;
+      });
+
+      if (legacyStudents.length === 0) {
+        container.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-400 font-bold text-xs uppercase tracking-wider">No old offline customer records found</div>`;
+        return;
+      }
+
+      legacyStudents.forEach(student => {
+        const card = document.createElement("div");
+        card.className = "bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3 relative overflow-hidden";
+        
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="bg-slate-100 text-slate-700 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">Offline Card Record</span>
+            <span class="${student.dueAmount > 0 ? 'text-red-600 font-black' : 'text-green-600 font-black'} text-xs">
+              ${student.dueAmount > 0 ? `Due: ₹${student.dueAmount}` : 'Fully Paid'}
+            </span>
+          </div>
+          <div class="flex items-start space-x-3 pt-1">
+            <img src="${student.photoUrl}" onclick="openImageViewer(this.src, '${student.name}')" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-12 h-12 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm bg-slate-100 cursor-pointer hover:opacity-90" title="Click to Zoom & Download" />
+            <div>
+              <h4 class="font-black text-slate-900 text-sm">${student.name}</h4>
+              <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-100 text-yellow-900 px-1.5 py-0.5 rounded font-bold">${student.branch}</span></p>
+              <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} • Package: ₹${student.totalFees} • Paid: <b class="text-green-600">₹${student.paidAmount}</b></p>
+            </div>
+          </div>
+          <div class="flex space-x-2 pt-2 border-t border-slate-100">
+            <button onclick='showPortfolioModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center space-x-1.5 cursor-pointer">
+              <i class="fa-solid fa-receipt"></i>
+              <span>VIEW INSTALLMENTS & RECEIPT</span>
+            </button>
+            <button onclick='openCollectDueModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="bg-yellow-400 hover:bg-yellow-500 text-slate-950 text-xs font-black px-3.5 py-2.5 rounded-xl transition flex items-center gap-1 shadow-sm cursor-pointer" title="Add Next Installment">
+              <i class="fa-solid fa-plus"></i>
+              <span>PAY</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
     function resetFilters() {
       document.getElementById("filterYear").value = "All";
       document.getElementById("filterMonth").value = "All";
@@ -1298,7 +1494,6 @@
       renderDashboard();
     }
 
-    // Fixed Dashboard Logic (Separates Digital Admissions vs Legacy Collections)
     function renderDashboard() {
       const selectedBranch = currentUser.role === "trainer" ? currentUser.branch : document.getElementById("filterBranch").value;
       const selectedYear = document.getElementById("filterYear").value;
@@ -1322,9 +1517,7 @@
         return matchBranch && matchDate;
       });
 
-      // Pure Digital New Enrolled Registrations Count Only
       const totalDigitalStudents = filtered.filter(s => !s.isLegacy).length;
-      
       const totalPaid = filtered.reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
       const totalDue = filtered.reduce((acc, s) => acc + (Number(s.dueAmount) || 0), 0);
       const expectedTotal = totalPaid + totalDue;
@@ -1392,6 +1585,7 @@
       });
     }
 
+    // Render Digital New Students (QR Only)
     function renderStudentList() {
       const q = document.getElementById("searchStudentInput").value.toLowerCase();
       const branchFilter = currentUser.role === "trainer" ? currentUser.branch : document.getElementById("studentFilterBranch").value;
@@ -1399,13 +1593,14 @@
       container.innerHTML = "";
 
       const filtered = rawStudents.filter(s => {
+        const isDigital = !s.isLegacy;
         const matchBranch = (branchFilter === "All") || (normalizeBranch(s.branch) === normalizeBranch(branchFilter));
         const matchSearch = (s.name && s.name.toLowerCase().includes(q)) || (s.phone && s.phone.includes(q)) || (s.studentCode && s.studentCode.toLowerCase().includes(q));
-        return matchBranch && matchSearch;
+        return isDigital && matchBranch && matchSearch;
       });
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-400 font-bold text-xs uppercase tracking-wider">No customer records found</div>`;
+        container.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-400 font-bold text-xs uppercase tracking-wider">No new digital customer records found</div>`;
         return;
       }
 
@@ -1440,9 +1635,9 @@
             </button>
           </div>
           <div class="flex items-start space-x-3 pt-1">
-            <img src="${student.photoUrl}" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm bg-slate-100" />
+            <img src="${student.photoUrl}" onclick="openImageViewer(this.src, '${student.name}')" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm bg-slate-100 cursor-pointer hover:opacity-90" title="Click to Zoom & Download" />
             <div>
-              <h4 class="font-black text-slate-900 text-sm">${student.name} ${student.isLegacy ? '<span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-bold">Offline Card</span>' : ''}</h4>
+              <h4 class="font-black text-slate-900 text-sm">${student.name}</h4>
               <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-100 text-yellow-900 px-1.5 py-0.5 rounded font-bold">${student.branch}</span></p>
               <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days) • 📅 ${admDateFormatted}</p>
             </div>
@@ -1469,7 +1664,7 @@
               <i class="fa-solid fa-file-arrow-down"></i>
             </button>
             ${student.dueAmount > 0 ? `
-              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="p-2.5 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
+              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues before 6th class as per policy. Thank you!`)}" target="_blank" class="p-2.5 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
                 <i class="fa-brands fa-whatsapp text-sm"></i>
               </a>
             ` : ''}
@@ -1640,7 +1835,6 @@
         });
       }
 
-      // Certificate eligibility toggle
       const certBtn = document.getElementById("certBtn");
       if ((student.classesAttended || 0) >= (student.packageDays || 10) && student.dueAmount <= 0) {
         certBtn.classList.remove("opacity-50", "pointer-events-none");
@@ -2025,12 +2219,10 @@
       handleAttendance(code);
     }
 
-    // Attendance & Enforcement (Lockout on 6th class if due pending)
     async function handleAttendance(studentCode) {
       const student = rawStudents.find(s => s.studentCode === studentCode || s.id === studentCode);
       if (!student) return alert("No active customer record found for Code: " + studentCode);
 
-      // Strict rule: Max 5 classes allowed with dues; locked from 6th class
       if (student.classesAttended >= 5 && student.dueAmount > 0) {
         return alert(`⚠️ DUE LOCKOUT: ${student.name} has ₹${student.dueAmount} unpaid dues. Cannot attend 6th class onwards until fees are cleared.`);
       }
