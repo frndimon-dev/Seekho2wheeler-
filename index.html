@@ -100,7 +100,7 @@
             <div class="flex items-center space-x-2">
               <span id="userBadge" class="text-[10px] bg-yellow-400 text-slate-950 px-2 py-0.5 rounded-md font-black uppercase"></span>
               <span class="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded-md font-bold flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Cloud v3 Live
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Live Cloud Sync
               </span>
             </div>
           </div>
@@ -419,23 +419,56 @@
 
       <!-- 6. DAILY SHIFT REPORT TAB -->
       <section id="tabShift" class="hidden space-y-4">
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm max-w-xl mx-auto space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-            <h2 class="text-base font-black text-slate-900">Today's Shift Performance</h2>
-            <span class="text-xs font-bold text-slate-500" id="shiftTodayDate"></span>
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-3 gap-2">
+            <div>
+              <h2 class="text-base font-black text-slate-900">Shift Performance Report</h2>
+              <p class="text-xs text-slate-500">Live reconciliation of Admissions & Due Collections</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="date" id="shiftCustomDate" onchange="renderShiftReport()" class="p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800" />
+            </div>
           </div>
-          <div class="grid grid-cols-3 gap-3">
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
-              <p class="text-[10px] font-black text-slate-400 uppercase">Total Txns</p>
-              <p id="shiftTodayCount" class="text-2xl font-black text-slate-900 mt-1">0</p>
+              <p class="text-[10px] font-black text-slate-400 uppercase">New Admissions</p>
+              <p id="shiftAdmissionCount" class="text-2xl font-black text-slate-900 mt-1">0</p>
             </div>
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
-              <p class="text-[10px] font-black text-slate-400 uppercase">💵 Cash</p>
+              <p class="text-[10px] font-black text-slate-400 uppercase">Due Collections</p>
+              <p id="shiftDueTxnCount" class="text-2xl font-black text-slate-900 mt-1">0</p>
+            </div>
+            <div class="p-4 bg-green-50 rounded-2xl border border-green-200 text-center">
+              <p class="text-[10px] font-black text-green-700 uppercase">💵 Total Cash</p>
               <p id="shiftTodayCash" class="text-2xl font-black text-green-600 mt-1">₹0</p>
             </div>
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
-              <p class="text-[10px] font-black text-slate-400 uppercase">📱 UPI</p>
+            <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 text-center">
+              <p class="text-[10px] font-black text-blue-700 uppercase">📱 Total UPI</p>
               <p id="shiftTodayUpi" class="text-2xl font-black text-blue-600 mt-1">₹0</p>
+            </div>
+          </div>
+
+          <!-- Shift Activity Stream -->
+          <div class="space-y-2">
+            <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider">Transaction Breakdown</h4>
+            <div id="shiftTransactionLogs" class="space-y-1.5 max-h-48 overflow-y-auto pr-1 text-xs"></div>
+          </div>
+
+          <!-- WhatsApp Owner Dispatch Buttons -->
+          <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-2xl space-y-2">
+            <p class="text-xs font-black text-yellow-900 flex items-center gap-1.5">
+              <i class="fa-brands fa-whatsapp text-green-600 text-sm"></i> Send Daily Closing Report to Owner:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button onclick="shareShiftReportToWhatsapp('7980108587')" class="p-2.5 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Share to 7980108587</span>
+              </button>
+              <button onclick="shareShiftReportToWhatsapp('9748481630')" class="p-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Share to 9748481630</span>
+              </button>
             </div>
           </div>
         </div>
@@ -541,9 +574,15 @@
           <label class="block text-xs font-bold text-slate-700 mb-1">Customer Name *</label>
           <input type="text" id="oldName" required placeholder="e.g. Amit Sen" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-semibold" />
         </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number *</label>
-          <input type="tel" id="oldPhone" required placeholder="9876543210" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-semibold" />
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number *</label>
+            <input type="tel" id="oldPhone" required placeholder="9876543210" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-semibold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">WhatsApp Number *</label>
+            <input type="tel" id="oldWhatsapp" required placeholder="For bill receipt" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-semibold" />
+          </div>
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -569,10 +608,29 @@
             <input type="number" id="oldTotalFees" oninput="calcOldStudentDues()" required placeholder="3000" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Previously Paid (₹)</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Previously Paid (1st Inst. ₹)</label>
             <input type="number" id="oldPaidAmount" oninput="calcOldStudentDues()" placeholder="1500" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
           </div>
         </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">1st Installment Paid Month *</label>
+          <select id="oldInstMonth" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September" selected>September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
+        </div>
+
         <div class="p-3 bg-yellow-50 rounded-xl flex justify-between text-xs font-bold border border-yellow-200">
           <span class="text-slate-700">Initial Due:</span>
           <span id="oldDueDisplay" class="text-red-600 font-black">₹0</span>
@@ -773,6 +831,7 @@
 
       document.getElementById("admDate").value = getLocalDateString();
       document.getElementById("collectDate").value = getLocalDateString();
+      document.getElementById("shiftCustomDate").value = getLocalDateString();
 
       if (currentUser.role === "trainer") {
         document.getElementById("filterBranch").value = currentUser.branch;
@@ -792,7 +851,6 @@
         switchTab("dashboard");
       }
 
-      document.getElementById("shiftTodayDate").textContent = new Date().toLocaleDateString('en-US', { dateStyle: 'full' });
       initRealtimeFirestoreSync();
     });
 
@@ -833,13 +891,13 @@
           const totalFees = Number(data.totalFees) || 0;
           let installments = Array.isArray(data.installments) ? data.installments : [];
 
-          // Auto-migrate legacy 1-shot paid amounts to Installment #1
           if (installments.length === 0 && (Number(data.paidAmount) || 0) > 0) {
             installments.push({
               installmentNo: 1,
               amount: Number(data.paidAmount) || 0,
               mode: data.paymentMode || "Cash",
               date: data.createdAt || getLocalDateString(),
+              monthName: data.initialMonth || "September",
               classIndex: 0
             });
           }
@@ -938,7 +996,7 @@
       calcAdmFees();
     }
 
-    // New Admission Submit (Installment #1 Entry)
+    // New Admission Form Submit
     document.getElementById("admissionForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const photoFile = document.getElementById("admPhoto").files[0];
@@ -966,6 +1024,7 @@
             amount: paidAmount,
             mode: paymentMode,
             date: customDate,
+            monthName: new Date(customDate).toLocaleString('en-US', { month: 'long' }),
             classIndex: 0
           });
         }
@@ -1005,7 +1064,7 @@
       btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
 
-    // Add Old / Legacy Student Form Submit (No QR Code, Card System)
+    // Add Old / Legacy Student
     function openAddOldStudentModal() {
       document.getElementById("addOldStudentForm").reset();
       document.getElementById("oldDueDisplay").textContent = "₹0";
@@ -1023,11 +1082,13 @@
       e.preventDefault();
       const name = document.getElementById("oldName").value.trim();
       const phone = document.getElementById("oldPhone").value.trim();
+      const whatsapp = document.getElementById("oldWhatsapp").value.trim();
       const branch = normalizeBranch(currentUser.role === "owner" ? document.getElementById("oldBranch").value : currentUser.branch);
       const course = document.getElementById("oldCourse").value;
       const totalFees = Number(document.getElementById("oldTotalFees").value) || 0;
       const paidAmount = Number(document.getElementById("oldPaidAmount").value) || 0;
       const dueAmount = Math.max(0, totalFees - paidAmount);
+      const instMonth = document.getElementById("oldInstMonth").value;
       const studentCode = `LEGACY-${branch.slice(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
 
       const installments = [];
@@ -1036,7 +1097,8 @@
           installmentNo: 1,
           amount: paidAmount,
           mode: "Cash",
-          date: "Prior-Records",
+          date: `Prior (${instMonth})`,
+          monthName: instMonth,
           classIndex: 0
         });
       }
@@ -1046,7 +1108,7 @@
         isLegacy: true,
         name: name,
         phone: phone,
-        whatsapp: phone,
+        whatsapp: whatsapp,
         branch: branch,
         courseType: course,
         packageDays: 10,
@@ -1055,6 +1117,7 @@
         dueAmount: dueAmount,
         installments: installments,
         paymentMode: "Cash",
+        initialMonth: instMonth,
         photoUrl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60",
         classesAttended: 0,
         attendanceLogs: [],
@@ -1070,7 +1133,7 @@
       }
     });
 
-    // Collect Due Modal Open & Submit (Installment #2 / #3)
+    // Collect Due Modal
     function openCollectDueModal(student) {
       document.getElementById("collectStudentCode").value = student.studentCode;
       document.getElementById("collectStudentName").textContent = `${student.name} (${student.branch}) - ${student.isLegacy ? 'Offline Card Student' : 'Digital QR Student'}`;
@@ -1104,6 +1167,7 @@
         amount: colAmt,
         mode: colMode,
         date: colDate,
+        monthName: new Date(colDate).toLocaleString('en-US', { month: 'long' }),
         classIndex: student.classesAttended || 0
       };
 
@@ -1119,7 +1183,11 @@
         });
 
         closeModal("collectDueModal");
-        alert(`✅ Installment #${nextInstNo} recorded successfully!\nAmount: ₹${colAmt} (${colMode})\nRemaining Due: ₹${newDueAmount}`);
+        
+        // Auto-show Updated Portfolio with Instant Receipt Action
+        const updatedStudent = { ...student, installments: updatedInstallments, paidAmount: newPaidAmount, dueAmount: newDueAmount };
+        showPortfolioModal(updatedStudent);
+        alert(`✅ Installment #${nextInstNo} recorded!\nAmount: ₹${colAmt} (${colMode})\nRemaining Due: ₹${newDueAmount}`);
       } catch(err) {
         alert("Collection Error: " + err.message);
       }
@@ -1153,7 +1221,7 @@
         card.className = "bg-white p-5 rounded-3xl border border-red-200 shadow-sm space-y-3 relative overflow-hidden";
         
         const instCount = (student.installments || []).length;
-        const instBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">${instCount}/3 Installments Paid</span>`;
+        const instBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">${instCount}/3 Installments</span>`;
         const legacyBadge = student.isLegacy ? `<span class="bg-slate-200 text-slate-700 text-[10px] font-black px-2 py-0.5 rounded-full">Offline Card</span>` : `<span class="bg-yellow-100 text-yellow-800 text-[10px] font-black px-2 py-0.5 rounded-full">Digital QR</span>`;
 
         card.innerHTML = `
@@ -1174,7 +1242,7 @@
               <i class="fa-solid fa-hand-holding-dollar"></i>
               <span>COLLECT DUE PAYMENT</span>
             </button>
-            <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="p-2.5 bg-green-100 hover:bg-green-200 text-green-700 rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
+            <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="p-2.5 bg-green-100 hover:bg-green-200 text-green-700 rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
               <i class="fa-brands fa-whatsapp text-sm"></i>
             </a>
           </div>
@@ -1355,7 +1423,7 @@
               <i class="fa-solid fa-file-arrow-down"></i>
             </button>
             ${student.dueAmount > 0 ? `
-              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
+              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
                 <i class="fa-brands fa-whatsapp text-sm"></i>
               </a>
             ` : ''}
@@ -1365,33 +1433,81 @@
       });
     }
 
-    // Daily Shift Real-Time Stream (Combines New Admissions + Subsequent Installments Collected Today)
+    // Daily Shift Engine (Admissions + Due Collections)
     function renderShiftReport() {
-      const todayLocal = getLocalDateString();
-      let todayTxnCount = 0;
+      const selectedDate = document.getElementById("shiftCustomDate").value || getLocalDateString();
+      let admissionCount = 0;
+      let dueTxnCount = 0;
       let todayCash = 0;
       let todayUpi = 0;
+      const logsContainer = document.getElementById("shiftTransactionLogs");
+      logsContainer.innerHTML = "";
 
       rawStudents.forEach(s => {
         const matchB = currentUser.role === "owner" ? true : normalizeBranch(s.branch) === currentUser.branch;
         if (matchB) {
+          if (s.createdAt === selectedDate && !s.isLegacy) {
+            admissionCount++;
+          }
+
           (s.installments || []).forEach(inst => {
-            if (inst.date === todayLocal) {
-              todayTxnCount++;
+            if (inst.date === selectedDate) {
               const amt = Number(inst.amount) || 0;
+              if (inst.installmentNo > 1 || s.isLegacy) {
+                dueTxnCount++;
+              }
               if (inst.mode === "UPI") {
                 todayUpi += amt;
               } else {
                 todayCash += amt;
               }
+
+              const row = document.createElement("div");
+              row.className = "p-2 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center";
+              row.innerHTML = `
+                <div>
+                  <span class="font-bold text-slate-900">${s.name}</span>
+                  <span class="text-[10px] text-slate-500 block">${s.branch} • Inst #${inst.installmentNo} (${inst.mode})</span>
+                </div>
+                <span class="font-black text-green-600">+₹${amt}</span>
+              `;
+              logsContainer.appendChild(row);
             }
           });
         }
       });
 
-      document.getElementById("shiftTodayCount").textContent = todayTxnCount;
+      if (logsContainer.children.length === 0) {
+        logsContainer.innerHTML = `<div class="text-center py-4 text-slate-400 font-semibold">No transactions recorded on this date.</div>`;
+      }
+
+      document.getElementById("shiftAdmissionCount").textContent = admissionCount;
+      document.getElementById("shiftDueTxnCount").textContent = dueTxnCount;
       document.getElementById("shiftTodayCash").textContent = `₹${todayCash}`;
       document.getElementById("shiftTodayUpi").textContent = `₹${todayUpi}`;
+    }
+
+    // WhatsApp Dispatch for Daily Shift
+    function shareShiftReportToWhatsapp(targetPhone) {
+      const shiftDate = document.getElementById("shiftCustomDate").value || getLocalDateString();
+      const admCount = document.getElementById("shiftAdmissionCount").textContent;
+      const dueCount = document.getElementById("shiftDueTxnCount").textContent;
+      const cashAmt = document.getElementById("shiftTodayCash").textContent;
+      const upiAmt = document.getElementById("shiftTodayUpi").textContent;
+      const branchName = currentUser.role === "owner" ? "ALL BRANCHES (CENTRAL)" : `${currentUser.branch.toUpperCase()} BRANCH`;
+
+      const msg = `*📊 SEEKHO 2 WHEELER - DAILY SHIFT REPORT*\n` +
+                  `*Branch:* ${branchName}\n` +
+                  `*Date:* ${shiftDate}\n` +
+                  `-----------------------------------\n` +
+                  `*• New Admissions:* ${admCount}\n` +
+                  `*• Due Collections:* ${dueCount}\n` +
+                  `*💵 Total Cash Collected:* ${cashAmt}\n` +
+                  `*📱 Total UPI Collected:* ${upiAmt}\n` +
+                  `-----------------------------------\n` +
+                  `_Generated automatically via Seekho 2 Wheeler Portal._`;
+
+      window.open(`https://wa.me/91${targetPhone}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     function renderRecycleBin() {
@@ -1461,7 +1577,7 @@
       document.getElementById("portModalDue").textContent = `₹${student.dueAmount}`;
       document.getElementById("portModalImg").src = student.photoUrl;
 
-      // 3-Installments List Rendering
+      // Installments Breakdown
       const instBox = document.getElementById("portModalInstallmentsContainer");
       instBox.innerHTML = "";
       const insts = student.installments || [];
@@ -1473,13 +1589,12 @@
           row.className = "p-2 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center";
           row.innerHTML = `
             <span><b>Installment #${idx + 1}:</b> ₹${inst.amount} (${inst.mode})</span>
-            <span class="text-[10px] text-slate-500">${inst.date}</span>
+            <span class="text-[10px] text-slate-500">${inst.monthName ? `Month: ${inst.monthName} | ` : ''}${inst.date}</span>
           `;
           instBox.appendChild(row);
         });
       }
 
-      // Handle QR Visibility (Hide for legacy offline students)
       const qrBox = document.getElementById("portQrBox");
       const attSec = document.getElementById("portAttendanceSection");
       if (student.isLegacy) {
@@ -1504,7 +1619,6 @@
           const tr = document.createElement("tr");
           const log = logs[i - 1];
 
-          // Check if any installment was paid on this class
           const matchingInst = (student.installments || []).find(inst => inst.classIndex === i);
           let paymentActivityTag = "--";
           if (matchingInst) {
@@ -1548,7 +1662,7 @@
       doc.setFontSize(10);
       doc.text("SEEKHO 2 WHEELER OFFICIAL MONEY RECEIPT", 15, 25);
       doc.setFontSize(11);
-      doc.text(`Date: ${student.createdAt || getLocalDateString()}`, 155, 25);
+      doc.text(`Date: ${getLocalDateString()}`, 155, 25);
       doc.text(`Branch: ${student.branch}`, 15, 45);
       doc.text(`Student ID: ${student.studentCode}`, 15, 52);
       doc.text(`Student Name: ${student.name}`, 15, 62);
@@ -1574,20 +1688,40 @@
       doc.setTextColor(15, 23, 42);
       doc.line(15, 125, 195, 125);
       doc.setFontSize(9);
-      doc.text("Installments Summary:", 15, 133);
+      doc.text("Installments Summary & Payment Trail:", 15, 133);
       let yOffset = 139;
       (student.installments || []).forEach((inst, idx) => {
-        doc.text(`Installment #${idx + 1}: Rs. ${inst.amount} (${inst.mode}) - Date: ${inst.date}`, 15, yOffset);
+        const mText = inst.monthName ? `[${inst.monthName}] ` : '';
+        doc.text(`Installment #${idx + 1}: Rs. ${inst.amount} (${inst.mode}) - ${mText}Date: ${inst.date}`, 15, yOffset);
         yOffset += 6;
       });
 
-      doc.save(`${student.name}_Receipt.pdf`);
+      doc.save(`${student.name}_Official_Receipt.pdf`);
     }
 
     function downloadActiveReceipt() { if (activeStudent) downloadPdfReceipt(activeStudent); }
+
     function sendActiveWhatsapp() {
       if (!activeStudent) return;
-      const text = `Hello ${activeStudent.name},\nWelcome to Seekho 2 Wheeler Training Centre!\n\nYour Admission Details:\nCourse: ${activeStudent.courseType} (${activeStudent.packageDays} Days)\nTotal Fees: Rs. ${activeStudent.totalFees}\nTotal Paid: Rs. ${activeStudent.paidAmount}\nRemaining Due: Rs. ${activeStudent.dueAmount}\n\nThank you!`;
+      let instBreakdown = "";
+      (activeStudent.installments || []).forEach((inst, idx) => {
+        const mText = inst.monthName ? ` (Month: ${inst.monthName})` : '';
+        instBreakdown += `• Inst #${idx + 1}: Rs. ${inst.amount} [${inst.mode}]${mText} - ${inst.date}\n`;
+      });
+
+      const dueStatusText = activeStudent.dueAmount <= 0 ? "Rs. 0 (FULL PAID ✅)" : `Rs. ${activeStudent.dueAmount} (Pending)`;
+
+      const text = `*🏍️ SEEKHO 2 WHEELER - PAYMENT RECEIPT 🛵*\n\n` +
+                   `*Student Name:* ${activeStudent.name}\n` +
+                   `*Course:* ${activeStudent.courseType} (${activeStudent.branch} Branch)\n` +
+                   `------------------------------------\n` +
+                   `*Total Package Fees:* Rs. ${activeStudent.totalFees}\n` +
+                   `*Total Paid Amount:* Rs. ${activeStudent.paidAmount}\n` +
+                   `*Installments Breakdown:*\n${instBreakdown}` +
+                   `------------------------------------\n` +
+                   `*Remaining Outstanding Due:* ${dueStatusText}\n\n` +
+                   `_Thank you for learning with Seekho 2 Wheeler!_`;
+
       window.open(`https://wa.me/91${activeStudent.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
     }
 
