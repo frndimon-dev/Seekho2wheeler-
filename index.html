@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seekho 2 Wheeler - Training Management</title>
+  <!-- Tailwind CSS & Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+  <!-- QR Code & Scanner & PDF -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen">
+
+  <!-- AUTH SCREEN -->
+  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 bg-slate-900">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+      <div class="text-center mb-6">
+        <h1 class="text-2xl font-bold text-slate-800">শিখো ২-হুইলার</h1>
+        <p class="text-sm text-slate-500 mt-1">ট্রেনিং সেন্টার ম্যানেজমেন্ট</p>
+      </div>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700">ইউজারনেম / ব্রাঞ্চের নাম</label>
+          <input type="text" id="username" placeholder="admin অথবা টালিগঞ্জ, সোদপুর ইত্যাদি" class="mt-1 block w-full p-3 border rounded-xl border-slate-300 focus:ring-2 focus:ring-blue-500" required />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700">পাসওয়ার্ড</label>
+          <input type="password" id="password" placeholder="••••••••" class="mt-1 block w-full p-3 border rounded-xl border-slate-300 focus:ring-2 focus:ring-blue-500" required />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold p-3 rounded-xl shadow-md transition duration-200">
+          লগইন করুন
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP CONTAINER -->
+  <div id="mainApp" class="hidden flex-col min-h-screen">
+    <!-- Navbar -->
+    <header class="bg-white shadow-sm border-b px-4 py-3 flex items-center justify-between sticky top-0 z-50">
+      <div class="flex items-center space-x-2">
+        <span class="font-bold text-slate-800 text-lg">শিখো ২-হুইলার</span>
+        <span id="userBadge" class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold"></span>
+      </div>
+      <button onclick="handleLogout()" class="text-sm font-medium text-red-600 hover:text-red-700">লগআউট</button>
+    </header>
+
+    <!-- Nav Tabs -->
+    <main class="flex-1 max-w-5xl w-full mx-auto p-4 space-y-4">
+      <div class="flex space-x-2 border-b border-slate-200 pb-2 overflow-x-auto">
+        <button id="tabDashBtn" onclick="switchTab('dashboard')" class="px-4 py-2 rounded-lg font-medium text-sm bg-white text-slate-600">রেভিনিউ ড্যাশবোর্ড</button>
+        <button id="tabScanBtn" onclick="switchTab('attendance')" class="px-4 py-2 rounded-lg font-medium text-sm bg-blue-600 text-white">স্ক্যানার ও অ্যাটেন্ডেন্স</button>
+        <button id="tabAdmBtn" onclick="switchTab('admission')" class="px-4 py-2 rounded-lg font-medium text-sm bg-white text-slate-600">নতুন অ্যাডমিশন</button>
+        <button id="tabListBtn" onclick="switchTab('students')" class="px-4 py-2 rounded-lg font-medium text-sm bg-white text-slate-600">কাস্টমার তালিকা</button>
+        <button id="tabShiftBtn" onclick="switchTab('shift')" class="px-4 py-2 rounded-lg font-medium text-sm bg-white text-slate-600">ডেইলি শিফট সামারি</button>
+      </div>
+
+      <!-- 1. OWNER DASHBOARD TAB -->
+      <section id="tabDashboard" class="hidden space-y-4">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <p class="text-xs text-slate-500 font-semibold uppercase">মোট অ্যাডমিশন</p>
+            <p id="dashTotalStudents" class="text-2xl font-bold text-slate-800">0</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <p class="text-xs text-slate-500 font-semibold uppercase">মোট সংগৃহীত ফিস</p>
+            <p id="dashTotalPaid" class="text-2xl font-bold text-green-600">₹0</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <p class="text-xs text-slate-500 font-semibold uppercase">মোট বকেয়া (Due)</p>
+            <p id="dashTotalDue" class="text-2xl font-bold text-red-600">₹0</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <p class="text-xs text-slate-500 font-semibold uppercase">Bike vs Scooty</p>
+            <p id="dashVehicles" class="text-sm font-bold text-slate-700 mt-2">🏍️ 0 | 🛵 0</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. ATTENDANCE SCANNER TAB -->
+      <section id="tabAttendance" class="space-y-4">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm text-center space-y-4">
+          <h2 class="text-lg font-bold text-slate-800">QR কোড স্ক্যানার</h2>
+          <div class="max-w-xs mx-auto">
+            <div id="reader" class="w-full bg-slate-50 rounded-xl overflow-hidden min-h-[250px] border border-dashed flex items-center justify-center">
+              <p id="scannerPlaceholder" class="text-sm text-slate-400 p-4">ক্যামেরা অন করতে নিচে চাপ দিন</p>
+            </div>
+          </div>
+          <button id="toggleScannerBtn" onclick="toggleScanner()" class="bg-blue-600 text-white font-semibold px-6 py-2.5 rounded-xl shadow hover:bg-blue-700 transition">
+            ক্যামেরা অন করুন
+          </button>
+        </div>
+      </section>
+
+      <!-- 3. ADMISSION TAB -->
+      <section id="tabAdmission" class="hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <h2 class="text-lg font-bold text-slate-800 mb-4">নতুন স্টুডেন্ট অ্যাডমিশন ফর্ম</h2>
+        <form id="admissionForm" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-slate-700">কাস্টমারের পুরো নাম *</label>
+              <input type="text" id="admName" required class="w-full p-2.5 border rounded-lg border-slate-300" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">ফোন নম্বর *</label>
+              <input type="tel" id="admPhone" required class="w-full p-2.5 border rounded-lg border-slate-300" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">হোয়াটসঅ্যাপ নম্বর</label>
+              <input type="tel" id="admWhatsapp" placeholder="খালি থাকলে ফোন নম্বর ব্যবহৃত হবে" class="w-full p-2.5 border rounded-lg border-slate-300" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">কোর্স ক্যাটাগরি</label>
+              <select id="admCourse" class="w-full p-2.5 border rounded-lg border-slate-300">
+                <option value="Scooty">Scooty</option>
+                <option value="Bike">Bike</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">প্যাকেজ ডিউরেশন</label>
+              <select id="admPackage" class="w-full p-2.5 border rounded-lg border-slate-300">
+                <option value="10">10 Days Package (10 Classes)</option>
+                <option value="15">15 Days Package (15 Classes)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">টোটাল ফিস (₹) *</label>
+              <input type="number" id="admTotalFees" oninput="calculateFees()" required class="w-full p-2.5 border rounded-lg border-slate-300" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">জমা দেওয়া টাকা (₹)</label>
+              <input type="number" id="admPaidAmount" oninput="calculateFees()" class="w-full p-2.5 border rounded-lg border-slate-300" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700">বাকি টাকা (Due ₹)</label>
+              <input type="number" id="admDueAmount" readonly class="w-full p-2.5 border rounded-lg bg-slate-50 border-slate-300" />
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <input type="checkbox" id="admFullPay" onchange="toggleFullPay()" class="h-4 w-4 text-blue-600 rounded" />
+            <label for="admFullPay" class="text-sm font-medium text-slate-700">সম্পূর্ণ টাকা একবারে পরিশোধ (Full Pay)</label>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700">কাস্টমারের ছবি * (Mandatory)</label>
+            <input type="file" id="admPhoto" accept="image/*" required class="w-full p-2 border rounded-lg border-slate-300" />
+          </div>
+
+          <div class="p-3 bg-slate-50 rounded-xl space-y-2">
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" id="admHasGovId" onchange="document.getElementById('govIdBox').classList.toggle('hidden')" class="h-4 w-4 text-blue-600 rounded" />
+              <label for="admHasGovId" class="text-sm font-medium text-slate-700">Govt ID Proof যোগ করুন (Optional)</label>
+            </div>
+            <div id="govIdBox" class="hidden grid grid-cols-2 gap-2 mt-2">
+              <select id="admIdType" class="p-2 border rounded-lg">
+                <option value="Aadhaar">Aadhaar Card</option>
+                <option value="Voter">Voter Card</option>
+                <option value="DL">Driving License</option>
+              </select>
+              <input type="text" id="admIdNumber" placeholder="ID Number" class="p-2 border rounded-lg" />
+            </div>
+          </div>
+
+          <button type="submit" id="admSubmitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold p-3 rounded-xl shadow">
+            অ্যাডমিশন সম্পন্ন করুন
+          </button>
+        </form>
+      </section>
+
+      <!-- 4. CUSTOMER LIST TAB -->
+      <section id="tabStudents" class="hidden space-y-4">
+        <input type="text" id="searchBox" oninput="renderStudents()" placeholder="নাম বা ফোন নম্বর দিয়ে খুঁজুন..." class="w-full p-3 border rounded-xl border-slate-300 bg-white" />
+        <div id="studentListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+      </section>
+
+      <!-- 5. DAILY SHIFT SUMMARY TAB -->
+      <section id="tabShift" class="hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h2 class="text-lg font-bold text-slate-800">আজকের শিফট সামারি</h2>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="p-4 bg-slate-50 rounded-xl border">
+            <p class="text-xs text-slate-500 font-semibold uppercase">আজকের অ্যাডমিশন</p>
+            <p id="shiftTodayAdm" class="text-2xl font-bold text-slate-800">0</p>
+          </div>
+          <div class="p-4 bg-slate-50 rounded-xl border">
+            <p class="text-xs text-slate-500 font-semibold uppercase">আজকের মোট ক্যাশ সংগ্রহ</p>
+            <p id="shiftTodayCash" class="text-2xl font-bold text-green-600">₹0</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyAGbROD4YLWMyWkxgR0ZRe8nUW-x2Cei9E",
+      authDomain: "seekho2wheeler-11dd4.firebaseapp.com",
+      projectId: "seekho2wheeler-11dd4",
+      storageBucket: "seekho2wheeler-11dd4.firebasestorage.app",
+      messagingSenderId: "826957044553",
+      appId: "1:826957044553:web:5133ad8059dc071da7d898"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    const BRANCHES = ["টালিগঞ্জ", "রবীন্দ্র সরোবর", "নিউটাউন", "সোদপুর", "হাওড়া", "বারাসাত"];
+    let currentUser = null;
+    let studentsList = [];
+    let html5QrCode = null;
+    let isScanning = false;
+
+    // Authentication
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const u = document.getElementById("username").value.trim();
+      const p = document.getElementById("password").value.trim();
+
+      if (u === "admin" && p === "owner@2026") {
+        currentUser = { role: "owner", branch: "All" };
+      } else {
+        const found = BRANCHES.find(b => b.toLowerCase() === u.toLowerCase());
+        if (found && p === "trainer123") {
+          currentUser = { role: "trainer", branch: found };
+        } else {
+          alert("ভুল ইউজারনেম বা পাসওয়ার্ড!");
+          return;
+        }
+      }
+      document.getElementById("authScreen").classList.add("hidden");
+      document.getElementById("mainApp").classList.remove("hidden");
+      document.getElementById("userBadge").textContent = currentUser.role === "owner" ? "Owner Panel" : `${currentUser.branch} Branch`;
+      if (currentUser.role !== "owner") {
+        document.getElementById("tabDashBtn").classList.add("hidden");
+        switchTab("attendance");
+      } else {
+        document.getElementById("tabDashBtn").classList.remove("hidden");
+        switchTab("dashboard");
+      }
+      loadStudents();
+    });
+
+    function handleLogout() {
+      location.reload();
+    }
+
+    // Tabs
+    function switchTab(tab) {
+      ["Dashboard", "Attendance", "Admission", "Students", "Shift"].forEach(t => {
+        const el = document.getElementById(`tab${t}`);
+        if (el) el.classList.add("hidden");
+      });
+      const target = document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
+      if (target) target.classList.remove("hidden");
+    }
+
+    // Calculations
+    function calculateFees() {
+      const total = Number(document.getElementById("admTotalFees").value) || 0;
+      let paid = Number(document.getElementById("admPaidAmount").value) || 0;
+      if (document.getElementById("admFullPay").checked) {
+        paid = total;
+        document.getElementById("admPaidAmount").value = total;
+      }
+      document.getElementById("admDueAmount").value = Math.max(0, total - paid);
+    }
+
+    function toggleFullPay() {
+      const isFull = document.getElementById("admFullPay").checked;
+      const total = Number(document.getElementById("admTotalFees").value) || 0;
+      document.getElementById("admPaidAmount").disabled = isFull;
+      if (isFull) document.getElementById("admPaidAmount").value = total;
+      calculateFees();
+    }
+
+    // Admission Form
+    document.getElementById("admissionForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const photoFile = document.getElementById("admPhoto").files[0];
+      if (!photoFile) return alert("কাস্টমারের ছবি দেওয়া আবশ্যক!");
+
+      const btn = document.getElementById("admSubmitBtn");
+      btn.disabled = true;
+      btn.textContent = "জমা হচ্ছে...";
+
+      try {
+        const branch = currentUser.role === "owner" ? "টালিগঞ্জ" : currentUser.branch;
+        const studentCode = `STW-${branch.slice(0, 3)}-${Date.now().toString().slice(-4)}`;
+        
+        // Upload photo
+        const storageRef = storage.ref(`photos/${Date.now()}_${photoFile.name}`);
+        const snapshot = await storageRef.put(photoFile);
+        const photoUrl = await snapshot.ref.getDownloadURL();
+
+        const totalFees = Number(document.getElementById("admTotalFees").value) || 0;
+        const paidAmount = Number(document.getElementById("admPaidAmount").value) || 0;
+        const dueAmount = Number(document.getElementById("admDueAmount").value) || 0;
+
+        const newStudent = {
+          name: document.getElementById("admName").value,
+          phone: document.getElementById("admPhone").value,
+          whatsapp: document.getElementById("admWhatsapp").value || document.getElementById("admPhone").value,
+          courseType: document.getElementById("admCourse").value,
+          packageDays: Number(document.getElementById("admPackage").value),
+          totalFees, paidAmount, dueAmount,
+          branch,
+          studentCode,
+          photoUrl,
+          hasGovId: document.getElementById("admHasGovId").checked,
+          idType: document.getElementById("admIdType").value,
+          idNumber: document.getElementById("admIdNumber").value,
+          classesAttended: 0,
+          firstClassDate: null,
+          createdAt: new Date().toISOString()
+        };
+
+        const docRef = await db.collection("students").add(newStudent);
+        alert("অ্যাডমিশন সফল হয়েছে!");
+        document.getElementById("admissionForm").reset();
+        loadStudents();
+        switchTab("students");
+      } catch (err) {
+        alert("সমস্যা: " + err.message);
+      }
+      btn.disabled = false;
+      btn.textContent = "অ্যাডমিশন সম্পন্ন করুন";
+    });
+
+    // Load & Render Students
+    function loadStudents() {
+      db.collection("students").onSnapshot((snapshot) => {
+        studentsList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderDashboard();
+        renderStudents();
+        renderShiftSummary();
+      });
+    }
+
+    function renderDashboard() {
+      document.getElementById("dashTotalStudents").textContent = studentsList.length;
+      const totalPaid = studentsList.reduce((acc, s) => acc + (s.paidAmount || 0), 0);
+      const totalDue = studentsList.reduce((acc, s) => acc + (s.dueAmount || 0), 0);
+      document.getElementById("dashTotalPaid").textContent = `₹${totalPaid}`;
+      document.getElementById("dashTotalDue").textContent = `₹${totalDue}`;
+      const bikes = studentsList.filter(s => s.courseType === "Bike").length;
+      const scooties = studentsList.filter(s => s.courseType === "Scooty").length;
+      document.getElementById("dashVehicles").textContent = `🏍️ ${bikes} | 🛵 ${scooties}`;
+    }
+
+    function renderStudents() {
+      const q = document.getElementById("searchBox").value.toLowerCase();
+      const container = document.getElementById("studentListContainer");
+      container.innerHTML = "";
+
+      const filtered = studentsList.filter(s => {
+        const matchesBranch = currentUser.role === "owner" ? true : s.branch === currentUser.branch;
+        const matchesSearch = s.name.toLowerCase().includes(q) || s.phone.includes(q);
+        return matchesBranch && matchesSearch;
+      });
+
+      filtered.forEach(student => {
+        const div = document.createElement("div");
+        div.className = "bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-3";
+        div.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <img src="${student.photoUrl || 'https://via.placeholder.com/60'}" class="w-12 h-12 rounded-full object-cover border" />
+            <div>
+              <h3 class="font-bold text-slate-800">${student.name}</h3>
+              <p class="text-xs text-slate-500">${student.phone} • ${student.branch} • ${student.courseType}</p>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-xs font-semibold mb-1">
+              <span>ক্লাস: ${student.classesAttended || 0}/${student.packageDays}</span>
+              <span class="${student.dueAmount > 0 ? 'text-red-500' : 'text-green-600'}">
+                ${student.dueAmount > 0 ? `বাকি: ₹${student.dueAmount}` : 'পেইড'}
+              </span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2">
+              <div class="bg-blue-600 h-2 rounded-full" style="width: ${Math.min(100, ((student.classesAttended || 0) / student.packageDays) * 100)}%"></div>
+            </div>
+          </div>
+          <div class="flex space-x-2 pt-2 border-t">
+            <button onclick='downloadReceipt(${JSON.stringify(student)})' class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold p-2 rounded-lg">রিসিট PDF</button>
+            ${student.dueAmount > 0 ? `
+              <a href="https://wa.me/91${student.whatsapp}?text=নমস্কার%20${encodeURIComponent(student.name)},%20শিখো%20টু-হুইলার%20ট্রেনিং%20সেন্টার%20থেকে%20জানানো%20হচ্ছে%20আপনার%20₹${student.dueAmount}%20টাকা%20ফিস%20বকেয়া%20রয়েছে।" target="_blank" class="bg-green-500 text-white text-xs font-semibold p-2 rounded-lg">WhatsApp</a>
+            ` : ''}
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function renderShiftSummary() {
+      const today = new Date().toISOString().slice(0, 10);
+      const todayAdm = studentsList.filter(s => s.createdAt && s.createdAt.slice(0, 10) === today);
+      document.getElementById("shiftTodayAdm").textContent = todayAdm.length;
+      const todayCash = todayAdm.reduce((acc, s) => acc + (s.paidAmount || 0), 0);
+      document.getElementById("shiftTodayCash").textContent = `₹${todayCash}`;
+    }
+
+    // Scanner
+    function toggleScanner() {
+      const btn = document.getElementById("toggleScannerBtn");
+      if (!isScanning) {
+        document.getElementById("scannerPlaceholder").classList.add("hidden");
+        html5QrCode = new Html5Qrcode("reader");
+        html5QrCode.start(
+          { facingMode: "environment" },
+          { fps: 10, qrbox: 250 },
+          (decodedText) => {
+            try {
+              const data = JSON.parse(decodedText);
+              handleAttendance(data.studentCode);
+              toggleScanner();
+            } catch (err) {
+              alert("ইনভ্যালিড QR Code!");
+            }
+          }
+        );
+        btn.textContent = "ক্যামেরা বন্ধ করুন";
+        isScanning = true;
+      } else {
+        if (html5QrCode) html5QrCode.stop();
+        btn.textContent = "ক্যামেরা অন করুন";
+        document.getElementById("scannerPlaceholder").classList.remove("hidden");
+        isScanning = false;
+      }
+    }
+
+    async function handleAttendance(studentCode) {
+      const student = studentsList.find(s => s.studentCode === studentCode);
+      if (!student) return alert("কাস্টমার খুঁজে পাওয়া যায়নি!");
+
+      if (student.classesAttended >= 5 && student.dueAmount > 0) {
+        return alert(`⚠️ সতর্কবার্তা: ${student.name}-এর ₹${student.dueAmount} টাকা বকেয়া রয়েছে! পেমেন্ট না করলে পরবর্তী ক্লাস কাউন্ট হবে না।`);
+      }
+      if (student.classesAttended >= student.packageDays) {
+        return alert("কোর্স সম্পন্ন হয়েছে!");
+      }
+
+      await db.collection("students").doc(student.id).update({
+        classesAttended: firebase.firestore.FieldValue.increment(1),
+        lastAttendedAt: new Date().toISOString(),
+        firstClassDate: student.firstClassDate || new Date().toISOString()
+      });
+      alert(`✅ ক্লাস যোগ হয়েছে! মোট ক্লাস: ${student.classesAttended + 1}/${student.packageDays}`);
+    }
+
+    // PDF Receipt
+    async function downloadReceipt(student) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text("KOLKATA SCOOTY & BIKE TRAINING CENTRE", 20, 20);
+      doc.setFontSize(12);
+      doc.text(`Branch: ${student.branch}`, 20, 30);
+      doc.text(`Student: ${student.name}`, 20, 45);
+      doc.text(`Phone: ${student.phone}`, 20, 55);
+      doc.text(`Course: ${student.courseType} (${student.packageDays} Days)`, 20, 65);
+      doc.text(`Total Fees: Rs. ${student.totalFees}`, 20, 75);
+      doc.text(`Paid: Rs. ${student.paidAmount}`, 20, 85);
+      doc.text(`Due: Rs. ${student.dueAmount}`, 20, 95);
+
+      const qrData = JSON.stringify({ studentCode: student.studentCode, phone: student.phone });
+      const qrDataUrl = await QRCode.toDataURL(qrData);
+      doc.addImage(qrDataUrl, "JPEG", 130, 45, 50, 50);
+      doc.save(`${student.name}_Receipt.pdf`);
+    }
+  </script>
+</body>
+</html>
