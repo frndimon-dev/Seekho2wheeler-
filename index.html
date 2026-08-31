@@ -98,23 +98,23 @@
     <!-- Navigation Tabs -->
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 space-y-6">
       <div class="flex items-center space-x-2 overflow-x-auto pb-1 border-b border-slate-200">
-        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-sm border border-yellow-400 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
           <i class="fa-solid fa-chart-pie"></i>
           <span>DASHBOARD & REVENUE</span>
         </button>
-        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
           <i class="fa-solid fa-qrcode"></i>
           <span>QR ATTENDANCE SCANNER</span>
         </button>
-        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
           <i class="fa-solid fa-user-plus"></i>
           <span>NEW ADMISSION</span>
         </button>
-        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
           <i class="fa-solid fa-address-book"></i>
           <span>CUSTOMERS & PROFILES</span>
         </button>
-        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
           <i class="fa-solid fa-calendar-day"></i>
           <span>DAILY SHIFT REPORT</span>
         </button>
@@ -122,7 +122,7 @@
 
       <!-- 1. DASHBOARD TAB -->
       <section id="tabDashboard" class="space-y-6">
-        <!-- Live Multi-Filters: Year, Month, Specific Date & Branch -->
+        <!-- Live Multi-Filters -->
         <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm space-y-3">
           <div class="flex items-center justify-between border-b pb-2">
             <div class="flex items-center space-x-2">
@@ -133,7 +133,6 @@
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <!-- Branch Filter (Owner can pick all, Trainer is branch locked) -->
             <div>
               <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Branch View</label>
               <select id="filterBranch" onchange="renderDashboard()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-yellow-400">
@@ -146,23 +145,19 @@
                 <option value="Barasat">Barasat</option>
               </select>
             </div>
-
-            <!-- Year Filter -->
             <div>
               <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Filter by Year</label>
-              <select id="filterYear" onchange="handleYearChange()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-yellow-400">
-                <option value="All">All Years</option>
-                <option value="2026" selected>2026</option>
+              <select id="filterYear" onchange="renderDashboard()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-yellow-400">
+                <option value="All">All Years (Lifetime)</option>
+                <option value="2026">2026</option>
                 <option value="2025">2025</option>
               </select>
             </div>
-
-            <!-- Month Filter -->
             <div>
               <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Filter by Month</label>
-              <select id="filterMonth" onchange="handleMonthChange()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-yellow-400">
+              <select id="filterMonth" onchange="renderDashboard()" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-yellow-400">
                 <option value="All">All Months</option>
-                <option value="09" selected>September</option>
+                <option value="09">September</option>
                 <option value="08">August</option>
                 <option value="07">July</option>
                 <option value="06">June</option>
@@ -176,8 +171,6 @@
                 <option value="10">October</option>
               </select>
             </div>
-
-            <!-- Exact Date Filter -->
             <div>
               <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Specific Date (Optional)</label>
               <input type="date" id="filterExactDate" onchange="renderDashboard()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-yellow-400" />
@@ -222,7 +215,6 @@
             </h3>
             <span id="dashExpectedRevenue" class="text-xs font-black bg-yellow-50 px-3 py-1.5 rounded-xl text-yellow-800 border border-yellow-200">TOTAL EXPECTED: ₹0</span>
           </div>
-
           <div class="space-y-2">
             <div class="h-6 w-full bg-slate-100 rounded-2xl overflow-hidden flex border border-slate-200">
               <div id="graphPaidBar" class="bg-green-500 h-full transition-all duration-500 flex items-center justify-center text-[10px] text-white font-black" style="width: 0%;"></div>
@@ -241,7 +233,7 @@
           </div>
         </div>
 
-        <!-- 6 Branches Live Grid -->
+        <!-- Branch-Wise Live Cards -->
         <div id="branchGridContainer">
           <h3 class="font-black text-slate-900 text-base mb-4 flex items-center space-x-2">
             <i class="fa-solid fa-building-flag text-yellow-500"></i>
@@ -258,7 +250,6 @@
             <h2 class="text-xl font-black text-slate-900">QR Code Attendance Scanner</h2>
             <p class="text-xs text-slate-500 mt-1">Scan directly from Live Camera OR upload QR screenshot from Gallery</p>
           </div>
-
           <div class="relative mx-auto max-w-xs aspect-square bg-slate-900 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-lg flex items-center justify-center">
             <div id="reader" class="w-full h-full"></div>
             <div id="scannerOverlay" class="absolute inset-0 flex flex-col items-center justify-center text-white bg-slate-950/80 p-6 space-y-3">
@@ -266,13 +257,11 @@
               <p class="text-xs text-slate-300">Tap below to activate camera</p>
             </div>
           </div>
-
           <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
             <button id="toggleScannerBtn" onclick="toggleScanner()" class="w-full sm:w-auto px-6 py-3.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-xs">
               <i class="fa-solid fa-camera"></i>
               <span id="scannerBtnText">START CAMERA</span>
             </button>
-
             <label class="w-full sm:w-auto px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-white font-black rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-xs cursor-pointer">
               <i class="fa-solid fa-image"></i>
               <span>SCAN FROM GALLERY / FILE</span>
@@ -288,7 +277,6 @@
           <h2 class="text-xl font-black text-slate-900">New Customer Admission</h2>
           <p class="text-xs text-slate-500 mt-1">Instant registration with automatic QR generation and printable PDF receipt</p>
         </div>
-
         <form id="admissionForm" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -337,7 +325,6 @@
               <input type="number" id="admPaidAmount" oninput="calcAdmFees()" placeholder="1000" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl font-black text-sm focus:ring-2 focus:ring-yellow-400" />
             </div>
           </div>
-
           <div class="p-3 bg-yellow-50 border border-yellow-200 rounded-2xl flex items-center justify-between">
             <label class="text-xs font-bold text-slate-800 flex items-center space-x-2 cursor-pointer">
               <input type="checkbox" id="admFullPay" onchange="toggleAdmFullPay()" class="w-4 h-4 text-yellow-500 rounded focus:ring-0" />
@@ -345,12 +332,10 @@
             </label>
             <span class="text-xs font-black text-slate-700">Outstanding Due: <span id="admDueDisplay" class="text-red-600 text-sm">₹0</span></span>
           </div>
-
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Actual Photo * (Select file from camera/gallery)</label>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Actual Photo * (Camera / Gallery file)</label>
             <input type="file" id="admPhoto" accept="image/*" required class="w-full p-2.5 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
           </div>
-
           <button type="submit" id="admSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-sm">
             <i class="fa-solid fa-bolt"></i>
             <span>SAVE ADMISSION & CREATE PROFILE</span>
@@ -375,7 +360,6 @@
             <option value="Barasat">Barasat</option>
           </select>
         </div>
-
         <div id="studentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </section>
 
@@ -398,18 +382,16 @@
           </div>
         </div>
       </section>
-
     </main>
   </div>
 
-  <!-- ================= POPUP MODAL 1: SUCCESS & PORTFOLIO MODAL ================= -->
+  <!-- POPUP MODALS -->
   <div id="portfolioModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 text-center">
       <div class="w-12 h-12 bg-green-100 text-green-600 border border-green-200 rounded-full flex items-center justify-center text-xl mx-auto font-black">
         <i class="fa-solid fa-check"></i>
       </div>
       <h3 class="text-lg font-black text-slate-900">Profile & QR Ready!</h3>
-      
       <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left space-y-2">
         <div class="flex items-center space-x-3">
           <img id="portModalImg" src="" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm" />
@@ -424,11 +406,9 @@
           <span class="text-slate-600">Due: <span id="portModalDue" class="text-red-600"></span></span>
         </div>
       </div>
-
       <div class="flex justify-center p-3 bg-white rounded-2xl border border-slate-200">
         <img id="portModalQr" class="w-40 h-40" />
       </div>
-
       <div class="grid grid-cols-2 gap-2 pt-2">
         <button onclick="downloadActiveReceipt()" class="p-3 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm">
           <i class="fa-solid fa-file-pdf"></i>
@@ -443,14 +423,12 @@
     </div>
   </div>
 
-  <!-- ================= POPUP MODAL 2: EDIT CUSTOMER MODAL ================= -->
   <div id="editModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-100 pb-2">
         <h3 class="text-base font-black text-slate-900">Edit Customer Information</h3>
         <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
-
       <form id="editForm" class="space-y-3">
         <input type="hidden" id="editStudentId" />
         <div class="grid grid-cols-2 gap-3">
@@ -486,35 +464,26 @@
             <input type="number" id="editPaidAmount" oninput="calcEditFees()" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
           </div>
         </div>
-
         <div class="p-3 bg-yellow-50 rounded-xl flex justify-between text-xs font-bold border border-yellow-200">
           <span class="text-slate-700">Updated Due:</span>
           <span id="editDueDisplay" class="text-red-600">₹0</span>
         </div>
-
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Classes Attended</label>
           <input type="number" id="editClassesAttended" min="0" max="15" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
         </div>
-
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Replace Customer Photo (Optional)</label>
           <input type="file" id="editPhoto" accept="image/*" class="w-full p-2 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
         </div>
-
         <div class="flex space-x-2 pt-2">
-          <button type="submit" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm">
-            SAVE & UPDATE
-          </button>
-          <button type="button" onclick="deleteCustomer()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs">
-            DELETE
-          </button>
+          <button type="submit" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm">SAVE & UPDATE</button>
+          <button type="button" onclick="deleteCustomer()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs">DELETE</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT ENGINE ================= -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAGbROD4YLWMyWkxgR0ZRe8nUW-x2Cei9E",
@@ -529,7 +498,7 @@
 
     const ALL_BRANCHES = ["Tollygunge", "Rabindra Sarovar", "New Town", "Sodepur", "Howrah", "Barasat"];
     
-    // Normalizer for branch matching across Bengali and English
+    // Normalizer to guarantee backward compatibility with Bengali and English branch names
     function normalizeBranch(b) {
       if (!b) return "Tollygunge";
       const str = b.toString().toLowerCase();
@@ -549,7 +518,6 @@
     let html5QrCode = null;
     let isScanning = false;
 
-    // Load & Normalize local storage data immediately
     function loadLocal() {
       const stored = localStorage.getItem("seekho_students_data");
       if (stored) {
@@ -589,7 +557,6 @@
     document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const p = document.getElementById("password").value.trim();
-
       if (currentRole === "owner") {
         const u = document.getElementById("username").value.trim();
         if (u === "admin" && p === "owner@2026") {
@@ -610,7 +577,7 @@
       document.getElementById("mainApp").classList.remove("hidden");
       document.getElementById("userBadge").textContent = currentUser.role === "owner" ? "OWNER PORTAL (CENTRAL)" : `${currentUser.branch.toUpperCase()} BRANCH`;
 
-      // Branch lock behavior
+      // Branch isolation for Trainer vs Full view for Owner
       if (currentUser.role === "trainer") {
         document.getElementById("filterBranch").value = currentUser.branch;
         document.getElementById("filterBranch").disabled = true;
@@ -622,6 +589,7 @@
       } else {
         document.getElementById("filterBranch").value = "All";
         document.getElementById("filterBranch").disabled = false;
+        document.getElementById("studentFilterBranch").value = "All";
         document.getElementById("studentFilterBranch").disabled = false;
         document.getElementById("branchGridContainer").classList.remove("hidden");
         switchTab("dashboard");
@@ -634,20 +602,18 @@
       initFirebaseSync();
     });
 
-    function handleLogout() {
-      location.reload();
-    }
+    function handleLogout() { location.reload(); }
 
-    // Tab Switching with 100% Guaranteed Visual Highlight
+    // Bulletproof Tab Switching with Guaranteed Visual Highlight
     function switchTab(tab) {
-      const tabs = ["dashboard", "attendance", "admission", "students", "shift"];
-      tabs.forEach(t => {
+      const allTabs = ["dashboard", "attendance", "admission", "students", "shift"];
+      allTabs.forEach(t => {
         const cap = t.charAt(0).toUpperCase() + t.slice(1);
         const sec = document.getElementById(`tab${cap}`);
         const btn = document.getElementById(`nav${cap}Btn`);
         if (sec) sec.classList.add("hidden");
         if (btn) {
-          btn.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap transition";
+          btn.className = "px-5 py-2.5 rounded-xl text-xs font-bold bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap transition";
         }
       });
 
@@ -656,7 +622,7 @@
       const activeBtn = document.getElementById(`nav${activeCap}Btn`);
       if (activeSec) activeSec.classList.remove("hidden");
       if (activeBtn) {
-        activeBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-md border border-yellow-400 flex items-center space-x-2 whitespace-nowrap transition ring-2 ring-yellow-400/40";
+        activeBtn.className = "px-5 py-2.5 rounded-xl text-xs font-black bg-yellow-400 text-slate-950 shadow-md border border-yellow-400 flex items-center space-x-2 whitespace-nowrap transition ring-2 ring-yellow-400/50";
       }
     }
 
@@ -682,7 +648,6 @@
       } catch(e) {}
     }
 
-    // High Speed File-to-Base64 Image Processor (Guaranteed Real Upload)
     function processUserPhoto(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -730,12 +695,10 @@
       calcAdmFees();
     }
 
-    // Admission Submit
     document.getElementById("admissionForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const photoFile = document.getElementById("admPhoto").files[0];
       if (!photoFile) return alert("Please select customer actual photo!");
-
       const btn = document.getElementById("admSubmitBtn");
       btn.disabled = true;
       btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Processing Photo & Saving...</span>`;
@@ -744,7 +707,6 @@
         const realPhotoBase64 = await processUserPhoto(photoFile);
         const branch = normalizeBranch(currentUser.role === "owner" ? document.getElementById("admBranch").value : currentUser.branch);
         const studentCode = `STW-${branch.slice(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
-
         const totalFees = Number(document.getElementById("admTotalFees").value) || 0;
         const paidAmount = Number(document.getElementById("admPaidAmount").value) || 0;
         const dueAmount = Math.max(0, totalFees - paidAmount);
@@ -782,7 +744,6 @@
 
         document.getElementById("admissionForm").reset();
         document.getElementById("admDueDisplay").textContent = "₹0";
-
         showPortfolioModal(newStudent);
       } catch (err) {
         alert("Error: " + err.message);
@@ -791,26 +752,15 @@
       btn.innerHTML = `<i class="fa-solid fa-bolt"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
 
-    // Multi-Layer Filter Handlers
-    function handleYearChange() {
-      document.getElementById("filterExactDate").value = "";
-      renderDashboard();
-    }
-    function handleMonthChange() {
-      document.getElementById("filterExactDate").value = "";
-      renderDashboard();
-    }
     function resetFilters() {
       document.getElementById("filterYear").value = "All";
       document.getElementById("filterMonth").value = "All";
       document.getElementById("filterExactDate").value = "";
-      if (currentUser && currentUser.role === "owner") {
-        document.getElementById("filterBranch").value = "All";
-      }
+      if (currentUser && currentUser.role === "owner") document.getElementById("filterBranch").value = "All";
       renderDashboard();
     }
 
-    // Dashboard Engine
+    // Dashboard Engine: Recalculates both Owner and Trainer metrics in real-time
     function renderDashboard() {
       const selectedBranch = currentUser.role === "trainer" ? currentUser.branch : document.getElementById("filterBranch").value;
       const selectedYear = document.getElementById("filterYear").value;
@@ -819,10 +769,8 @@
 
       const filtered = rawStudents.filter(s => {
         const matchBranch = (selectedBranch === "All") || (normalizeBranch(s.branch) === normalizeBranch(selectedBranch));
-        
         let matchDate = true;
         const sDate = s.createdAt || new Date().toISOString();
-
         if (exactDate) {
           matchDate = sDate.slice(0, 10) === exactDate;
         } else {
@@ -832,7 +780,6 @@
           const matchMonth = (selectedMonth === "All") || (sMonth === selectedMonth);
           matchDate = matchYear && matchMonth;
         }
-
         return matchBranch && matchDate;
       });
 
@@ -864,7 +811,7 @@
       const scooties = filtered.filter(s => s.courseType === "Scooty").length;
       document.getElementById("dashVehicles").textContent = `🏍️ ${bikes} | 🛵 ${scooties}`;
 
-      // Render Branch Performance Grid
+      // 6 Branches Grid for Owner
       const grid = document.getElementById("branchSummaryGrid");
       grid.innerHTML = "";
       ALL_BRANCHES.forEach(b => {
@@ -944,7 +891,6 @@
               <i class="fa-solid fa-pen"></i>
             </button>
           </div>
-
           <div class="flex items-start space-x-3 pt-1">
             <img src="${student.photoUrl}" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm" />
             <div>
@@ -953,7 +899,6 @@
               <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days)</p>
             </div>
           </div>
-
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
               <span class="text-slate-700">Classes: ${student.classesAttended || 0}/${student.packageDays}</span>
@@ -965,7 +910,6 @@
               <div class="bg-yellow-400 h-full rounded-full transition-all" style="width: ${progress}%;"></div>
             </div>
           </div>
-
           <div class="flex space-x-2 pt-2 border-t border-slate-100">
             <button onclick='showPortfolioModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-id-card"></i>
@@ -1005,31 +949,24 @@
       document.getElementById("portModalPaid").textContent = `₹${student.paidAmount}`;
       document.getElementById("portModalDue").textContent = `₹${student.dueAmount}`;
       document.getElementById("portModalImg").src = student.photoUrl;
-
       const qrPayload = JSON.stringify({ studentCode: student.studentCode, phone: student.phone });
       const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 300, margin: 1 });
       document.getElementById("portModalQr").src = qrDataUrl;
-
       document.getElementById("portfolioModal").classList.remove("hidden");
     }
 
-    function closeModal(id) {
-      document.getElementById(id).classList.add("hidden");
-    }
+    function closeModal(id) { document.getElementById(id).classList.add("hidden"); }
 
     async function downloadPdfReceipt(student) {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-
       doc.setFillColor(250, 204, 21);
       doc.rect(0, 0, 210, 30, "F");
-
       doc.setTextColor(15, 23, 42);
       doc.setFontSize(18);
       doc.text("KOLKATA SCOOTY & BIKE TRAINING CENTRE", 15, 18);
       doc.setFontSize(10);
       doc.text("SEEKHO 2 WHEELER OFFICIAL MONEY RECEIPT", 15, 25);
-
       doc.setFontSize(11);
       doc.text(`Date: ${new Date().toLocaleDateString()}`, 155, 25);
       doc.text(`Branch: ${student.branch}`, 15, 45);
@@ -1037,24 +974,20 @@
       doc.text(`Student Name: ${student.name}`, 15, 62);
       doc.text(`Phone Number: ${student.phone}`, 15, 70);
       doc.text(`Course: ${student.courseType} (${student.packageDays} Days Package)`, 15, 78);
-
       doc.setDrawColor(226, 232, 240);
       doc.line(15, 85, 195, 85);
-
       doc.setFontSize(12);
       doc.text(`Total Package Fees: Rs. ${student.totalFees}`, 15, 96);
       doc.setTextColor(22, 163, 74);
       doc.text(`Paid Amount: Rs. ${student.paidAmount}`, 15, 104);
       doc.setTextColor(220, 38, 38);
       doc.text(`Remaining Due: Rs. ${student.dueAmount}`, 15, 112);
-
       const qrPayload = JSON.stringify({ studentCode: student.studentCode, phone: student.phone });
       const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 250 });
       doc.addImage(qrDataUrl, "JPEG", 135, 45, 55, 55);
       doc.setTextColor(100, 116, 139);
       doc.setFontSize(9);
       doc.text("Scan QR For Attendance", 143, 105);
-
       doc.setTextColor(15, 23, 42);
       doc.line(15, 125, 195, 125);
       doc.setFontSize(9);
@@ -1062,14 +995,10 @@
       doc.text("1. Any pending due payment must be cleared on or before the 5th class.", 15, 139);
       doc.text("2. Course validity is 90 days from the date of the first class.", 15, 145);
       doc.text("3. Always present this digital receipt/QR code to your trainer before every session.", 15, 151);
-
       doc.save(`${student.name}_Receipt.pdf`);
     }
 
-    function downloadActiveReceipt() {
-      if (activeStudent) downloadPdfReceipt(activeStudent);
-    }
-
+    function downloadActiveReceipt() { if (activeStudent) downloadPdfReceipt(activeStudent); }
     function sendActiveWhatsapp() {
       if (!activeStudent) return;
       const text = `Hello ${activeStudent.name},\nWelcome to Seekho 2 Wheeler Training Centre!\n\nYour Admission Details:\nCourse: ${activeStudent.courseType} (${activeStudent.packageDays} Days)\nTotal Fees: Rs. ${activeStudent.totalFees}\nPaid: Rs. ${activeStudent.paidAmount}\nRemaining Due: Rs. ${activeStudent.dueAmount}\n\nPlease show your QR Code receipt to the trainer during class. Thank you!`;
@@ -1147,11 +1076,10 @@
       }
     }
 
-    // QR Attendance Scanner (Live Camera)
+    // Live Camera Scanner
     function toggleScanner() {
       const overlay = document.getElementById("scannerOverlay");
       const text = document.getElementById("scannerBtnText");
-
       if (!isScanning) {
         overlay.classList.add("hidden");
         html5QrCode = new Html5Qrcode("reader");
@@ -1178,7 +1106,7 @@
       }
     }
 
-    // QR Attendance Scanner (Gallery / Screenshot Upload)
+    // Gallery / File Scanner
     function scanFromImage(input) {
       if (input.files && input.files.length > 0) {
         const file = input.files[0];
