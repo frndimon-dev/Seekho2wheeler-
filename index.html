@@ -15,6 +15,7 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Client-side HEIC/HEIF Converter for iOS devices -->
   <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
   <style>
     body {
@@ -99,23 +100,23 @@
     <!-- Navigation Tabs -->
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 space-y-6">
       <div class="flex items-center space-x-2 overflow-x-auto pb-1 border-b border-slate-200">
-        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer">
           <i class="fa-solid fa-chart-pie"></i>
           <span>DASHBOARD & REVENUE</span>
         </button>
-        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer">
           <i class="fa-solid fa-qrcode"></i>
           <span>QR ATTENDANCE SCANNER</span>
         </button>
-        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer">
           <i class="fa-solid fa-user-plus"></i>
           <span>NEW ADMISSION</span>
         </button>
-        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer">
           <i class="fa-solid fa-address-book"></i>
           <span>CUSTOMERS & PROFILES</span>
         </button>
-        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition">
+        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer">
           <i class="fa-solid fa-calendar-day"></i>
           <span>DAILY SHIFT REPORT</span>
         </button>
@@ -129,7 +130,7 @@
               <i class="fa-solid fa-filter text-yellow-500"></i>
               <span class="font-black text-xs text-slate-800 uppercase tracking-wider">Revenue Analytics Filters:</span>
             </div>
-            <button onclick="resetFilters()" class="text-[11px] font-bold text-slate-500 hover:text-slate-800 underline">Reset Filters</button>
+            <button onclick="resetFilters()" class="text-[11px] font-bold text-slate-500 hover:text-slate-800 underline cursor-pointer">Reset Filters</button>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -255,7 +256,7 @@
             </div>
           </div>
           <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button id="toggleScannerBtn" onclick="toggleScanner()" class="w-full sm:w-auto px-6 py-3.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-xs">
+            <button id="toggleScannerBtn" onclick="toggleScanner()" class="w-full sm:w-auto px-6 py-3.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-xs cursor-pointer">
               <i class="fa-solid fa-camera"></i>
               <span id="scannerBtnText">START CAMERA</span>
             </button>
@@ -304,6 +305,13 @@
               </select>
             </div>
             <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Payment Mode *</label>
+              <select id="admPayMode" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
+                <option value="Cash">💵 Cash</option>
+                <option value="UPI">📱 UPI / Online</option>
+              </select>
+            </div>
+            <div>
               <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Course Type</label>
               <select id="admCourse" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
                 <option value="Scooty">🛵 Scooty Training</option>
@@ -337,7 +345,7 @@
             <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Photo * (Supports JPG, PNG, HEIC, WEBP)</label>
             <input type="file" id="admPhoto" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.webp" required class="w-full p-2.5 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
           </div>
-          <button type="submit" id="admSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-sm">
+          <button type="submit" id="admSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-sm cursor-pointer">
             <i class="fa-solid fa-bolt"></i>
             <span>SAVE ADMISSION & CREATE PROFILE</span>
           </button>
@@ -371,14 +379,18 @@
             <h2 class="text-base font-black text-slate-900">Today's Shift Performance</h2>
             <span class="text-xs font-bold text-slate-500" id="shiftTodayDate"></span>
           </div>
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-3 gap-3">
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
-              <p class="text-[10px] font-black text-slate-400 uppercase">Today's Admissions</p>
-              <p id="shiftTodayCount" class="text-3xl font-black text-slate-900 mt-1">0</p>
+              <p class="text-[10px] font-black text-slate-400 uppercase">Admissions</p>
+              <p id="shiftTodayCount" class="text-2xl font-black text-slate-900 mt-1">0</p>
             </div>
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
-              <p class="text-[10px] font-black text-slate-400 uppercase">Cash Collected</p>
-              <p id="shiftTodayCash" class="text-3xl font-black text-green-600 mt-1">₹0</p>
+              <p class="text-[10px] font-black text-slate-400 uppercase">💵 Cash</p>
+              <p id="shiftTodayCash" class="text-2xl font-black text-green-600 mt-1">₹0</p>
+            </div>
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
+              <p class="text-[10px] font-black text-slate-400 uppercase">📱 UPI</p>
+              <p id="shiftTodayUpi" class="text-2xl font-black text-blue-600 mt-1">₹0</p>
             </div>
           </div>
         </div>
@@ -386,14 +398,15 @@
     </main>
   </div>
 
-  <!-- ================= POPUP MODAL 1: SUCCESS & DETAILED PORTFOLIO MODAL ================= -->
+  <!-- ================= POPUP MODAL 1: ADVANCED PORTFOLIO MODAL (ROW/COLUMN MATRIX & QR) ================= -->
   <div id="portfolioModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b pb-2">
-        <h3 class="text-base font-black text-slate-900">Student Profile & Attendance Hub</h3>
-        <button onclick="closeModal('portfolioModal')" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <h3 class="text-base font-black text-slate-900">Student Attendance Hub & Profile</h3>
+        <button onclick="closeModal('portfolioModal')" class="text-slate-400 hover:text-slate-700 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
+      <!-- Top Summary Card -->
       <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left space-y-2">
         <div class="flex items-center space-x-3">
           <img id="portModalImg" src="" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm bg-slate-200" />
@@ -404,33 +417,47 @@
         </div>
         <div class="border-t border-slate-200 pt-2 flex justify-between text-xs font-bold">
           <span class="text-slate-600">Total: <span id="portModalTotal" class="text-slate-900"></span></span>
-          <span class="text-slate-600">Paid: <span id="portModalPaid" class="text-green-600"></span></span>
+          <span class="text-slate-600">Paid: <span id="portModalPaid" class="text-green-600"></span> (<span id="portModalPayMode" class="text-blue-600 font-bold"></span>)</span>
           <span class="text-slate-600">Due: <span id="portModalDue" class="text-red-600"></span></span>
         </div>
       </div>
 
-      <!-- Live QR Display -->
-      <div class="flex justify-center p-3 bg-white rounded-2xl border border-slate-200">
-        <img id="portModalQr" class="w-36 h-36" />
-      </div>
-
-      <!-- Detailed Attendance Log List -->
+      <!-- Attendance Row/Column Matrix Table -->
       <div class="space-y-2 text-left">
         <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center justify-between">
-          <span><i class="fa-solid fa-calendar-check text-yellow-500"></i> Class Attendance Log</span>
+          <span><i class="fa-solid fa-table-cells text-yellow-500"></i> Attendance Flow Matrix</span>
           <span id="portModalLogCount" class="text-[10px] bg-yellow-100 text-yellow-900 px-2 py-0.5 rounded-full font-bold"></span>
         </h4>
-        <div id="portModalLogsList" class="bg-slate-50 p-3 rounded-2xl border border-slate-200 max-h-36 overflow-y-auto space-y-1.5 text-xs">
-          <!-- Dynamically populated attendance logs with date & exact time -->
+        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 font-black border-b border-slate-200">
+                <th class="p-2.5">Class #</th>
+                <th class="p-2.5">Date</th>
+                <th class="p-2.5">Time</th>
+                <th class="p-2.5">Course</th>
+                <th class="p-2.5 text-right">Status</th>
+              </tr>
+            </thead>
+            <tbody id="portModalMatrixBody" class="divide-y divide-slate-100 font-semibold text-slate-800">
+              <!-- Matrix Rows Populated Dynamically -->
+            </tbody>
+          </table>
         </div>
       </div>
 
+      <!-- Live QR Display -->
+      <div class="flex flex-col items-center justify-center p-3 bg-white rounded-2xl border border-slate-200 space-y-1">
+        <img id="portModalQr" class="w-32 h-32" />
+        <span class="text-[10px] font-bold text-slate-400">Scan for Real-Time Attendance Logging</span>
+      </div>
+
       <div class="grid grid-cols-2 gap-2 pt-1">
-        <button onclick="downloadActiveReceipt()" class="p-3 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm">
+        <button onclick="downloadActiveReceipt()" class="p-3 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm cursor-pointer">
           <i class="fa-solid fa-file-pdf"></i>
           <span>PDF RECEIPT</span>
         </button>
-        <button onclick="sendActiveWhatsapp()" class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm">
+        <button onclick="sendActiveWhatsapp()" class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm cursor-pointer">
           <i class="fa-brands fa-whatsapp"></i>
           <span>WHATSAPP BILL</span>
         </button>
@@ -443,7 +470,7 @@
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-100 pb-2">
         <h3 class="text-base font-black text-slate-900">Edit Customer Information</h3>
-        <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+        <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-slate-700 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
       <form id="editForm" class="space-y-3">
         <input type="hidden" id="editStudentId" />
@@ -476,6 +503,13 @@
             </select>
           </div>
           <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Payment Mode</label>
+            <select id="editPayMode" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
+              <option value="Cash">💵 Cash</option>
+              <option value="UPI">📱 UPI / Online</option>
+            </select>
+          </div>
+          <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Total Fees (₹)</label>
             <input type="number" id="editTotalFees" oninput="calcEditFees()" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
           </div>
@@ -497,8 +531,8 @@
           <input type="file" id="editPhoto" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.webp" class="w-full p-2 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
         </div>
         <div class="flex space-x-2 pt-2">
-          <button type="submit" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm">SAVE & UPDATE</button>
-          <button type="button" onclick="deleteCustomer()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs">DELETE</button>
+          <button type="submit" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm cursor-pointer">SAVE & UPDATE</button>
+          <button type="button" onclick="deleteCustomer()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs cursor-pointer">DELETE</button>
         </div>
       </form>
     </div>
@@ -537,6 +571,7 @@
     let html5QrCode = null;
     let isScanning = false;
 
+    // Load & Normalize Local Data
     function loadLocal() {
       const stored = localStorage.getItem("seekho_students_data");
       if (stored) {
@@ -550,6 +585,7 @@
               paidAmount: Number(s.paidAmount) || 0,
               dueAmount: Number(s.dueAmount) || 0,
               totalFees: Number(s.totalFees) || 0,
+              paymentMode: s.paymentMode || "Cash",
               createdAt: recordDate,
               attendanceLogs: s.attendanceLogs || [],
               photoUrl: s.photoUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60"
@@ -630,6 +666,7 @@
 
     function handleLogout() { location.reload(); }
 
+    // Bulletproof Tab Switching with Guaranteed Active State
     function switchTab(tab) {
       const allTabs = ["dashboard", "attendance", "admission", "students", "shift"];
       allTabs.forEach(t => {
@@ -638,10 +675,10 @@
         const btn = document.getElementById(`nav${cap}Btn`);
         if (sec) sec.classList.add("hidden");
         if (btn) {
-          btn.style.backgroundColor = "#ffffff";
-          btn.style.color = "#334155";
-          btn.style.fontWeight = "600";
-          btn.style.border = "1px solid #e2e8f0";
+          btn.style.setProperty("background-color", "#ffffff", "important");
+          btn.style.setProperty("color", "#334155", "important");
+          btn.style.setProperty("font-weight", "700", "important");
+          btn.style.setProperty("border", "1px solid #e2e8f0", "important");
         }
       });
 
@@ -650,14 +687,14 @@
       const activeBtn = document.getElementById(`nav${activeCap}Btn`);
       if (activeSec) activeSec.classList.remove("hidden");
       if (activeBtn) {
-        activeBtn.style.backgroundColor = "#facc15";
-        activeBtn.style.color = "#020617";
-        activeBtn.style.fontWeight = "900";
-        activeBtn.style.border = "1px solid #facc15";
+        activeBtn.style.setProperty("background-color", "#facc15", "important");
+        activeBtn.style.setProperty("color", "#020617", "important");
+        activeBtn.style.setProperty("font-weight", "900", "important");
+        activeBtn.style.setProperty("border", "1px solid #facc15", "important");
       }
     }
 
-    // Real-Time 2-Way Firestore Engine
+    // Real-Time 2-Way Cloud Sync
     function initFirebaseSync() {
       try {
         db.collection("students").onSnapshot((snap) => {
@@ -673,6 +710,7 @@
                 paidAmount: Number(data.paidAmount) || 0,
                 dueAmount: Number(data.dueAmount) || 0,
                 totalFees: Number(data.totalFees) || 0,
+                paymentMode: data.paymentMode || "Cash",
                 createdAt: rDate,
                 attendanceLogs: data.attendanceLogs || [],
                 photoUrl: data.photoUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60"
@@ -768,6 +806,7 @@
         const totalFees = Number(document.getElementById("admTotalFees").value) || 0;
         const paidAmount = Number(document.getElementById("admPaidAmount").value) || 0;
         const dueAmount = Math.max(0, totalFees - paidAmount);
+        const paymentMode = document.getElementById("admPayMode").value;
 
         const newStudent = {
           id: `local_${Date.now()}`,
@@ -780,6 +819,7 @@
           totalFees: totalFees,
           paidAmount: paidAmount,
           dueAmount: dueAmount,
+          paymentMode: paymentMode,
           studentCode: studentCode,
           photoUrl: realPhotoBase64,
           classesAttended: 0,
@@ -872,6 +912,7 @@
       const scooties = filtered.filter(s => s.courseType === "Scooty").length;
       document.getElementById("dashVehicles").textContent = `🏍️ ${bikes} | 🛵 ${scooties}`;
 
+      // 6 Branches live performance
       const grid = document.getElementById("branchSummaryGrid");
       grid.innerHTML = "";
       ALL_BRANCHES.forEach(b => {
@@ -908,7 +949,7 @@
       });
     }
 
-    // Customer List Render with Multi-Color Step Progress Bar
+    // Customer List Render
     function renderStudentList() {
       const q = document.getElementById("searchStudentInput").value.toLowerCase();
       const branchFilter = currentUser.role === "trainer" ? currentUser.branch : document.getElementById("studentFilterBranch").value;
@@ -933,7 +974,6 @@
         const totalClasses = student.packageDays || 10;
         const attended = student.classesAttended || 0;
 
-        // Payment Countdown Calculation
         let countdownBadgeHtml = "";
         if (student.dueAmount > 0) {
           const classesLeft = Math.max(0, 6 - attended);
@@ -946,7 +986,6 @@
           countdownBadgeHtml = `<div class="bg-green-100 text-green-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">Fees Cleared</div>`;
         }
 
-        // Multi-Color Discrete Progress Step Indicator
         const colors = ["bg-yellow-400", "bg-amber-500", "bg-blue-500", "bg-indigo-500", "bg-emerald-500", "bg-teal-500", "bg-green-500"];
         let stepBarsHtml = "";
         for (let i = 1; i <= totalClasses; i++) {
@@ -959,7 +998,7 @@
         card.innerHTML = `
           <div class="flex items-center justify-between">
             ${countdownBadgeHtml}
-            <button onclick='openEditModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-yellow-400 hover:text-slate-950 text-slate-600 transition flex items-center justify-center text-xs" title="Edit Customer">
+            <button onclick='openEditModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-yellow-400 hover:text-slate-950 text-slate-600 transition flex items-center justify-center text-xs cursor-pointer" title="Edit Customer">
               <i class="fa-solid fa-pen"></i>
             </button>
           </div>
@@ -968,11 +1007,10 @@
             <div>
               <h4 class="font-black text-slate-900 text-sm">${student.name}</h4>
               <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-100 text-yellow-900 px-1.5 py-0.5 rounded font-bold">${student.branch}</span></p>
-              <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days) • 📅 ${admDateFormatted}</p>
+              <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days) • 📅 ${admDateFormatted} • <b>${student.paymentMode || 'Cash'}</b></p>
             </div>
           </div>
 
-          <!-- Multi-Color Step Progress -->
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
               <span class="text-slate-700">Completed: ${attended}/${totalClasses} Classes</span>
@@ -986,15 +1024,15 @@
           </div>
 
           <div class="flex space-x-2 pt-2 border-t border-slate-100">
-            <button onclick='showPortfolioModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center space-x-1.5">
+            <button onclick='showPortfolioModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center space-x-1.5 cursor-pointer">
               <i class="fa-solid fa-id-card"></i>
               <span>PROFILE, QR & LOGS</span>
             </button>
-            <button onclick='downloadPdfReceipt(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="bg-yellow-400 hover:bg-yellow-500 text-slate-950 text-xs font-black px-3 py-2.5 rounded-xl transition flex items-center space-x-1 shadow-sm" title="Download Receipt">
+            <button onclick='downloadPdfReceipt(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="bg-yellow-400 hover:bg-yellow-500 text-slate-950 text-xs font-black px-3 py-2.5 rounded-xl transition flex items-center space-x-1 shadow-sm cursor-pointer" title="Download Receipt">
               <i class="fa-solid fa-file-arrow-down"></i>
             </button>
             ${student.dueAmount > 0 ? `
-              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues before the 5th class as per policy. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center shadow-sm" title="WhatsApp Reminder">
+              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues before the 5th class as per policy. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
                 <i class="fa-brands fa-whatsapp text-sm"></i>
               </a>
             ` : ''}
@@ -1004,6 +1042,7 @@
       });
     }
 
+    // Daily Shift Performance Report
     function renderShiftReport() {
       const todayStr = new Date().toISOString().slice(0, 10);
       const todayStudents = rawStudents.filter(s => {
@@ -1011,18 +1050,29 @@
         const matchD = (s.createdAt || "2026-09-01").slice(0, 10) === todayStr;
         return matchB && matchD;
       });
+
       document.getElementById("shiftTodayCount").textContent = todayStudents.length;
-      const todayCash = todayStudents.reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
+
+      const todayCash = todayStudents
+        .filter(s => (s.paymentMode || "Cash") === "Cash")
+        .reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
+
+      const todayUpi = todayStudents
+        .filter(s => s.paymentMode === "UPI")
+        .reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
+
       document.getElementById("shiftTodayCash").textContent = `₹${todayCash}`;
+      document.getElementById("shiftTodayUpi").textContent = `₹${todayUpi}`;
     }
 
-    // Modal with Live Attendance Logs
+    // Modal with Attendance Matrix
     async function showPortfolioModal(student) {
       activeStudent = student;
       document.getElementById("portModalName").textContent = student.name;
       document.getElementById("portModalDetails").textContent = `${student.phone} • ${student.branch} • ${student.courseType}`;
       document.getElementById("portModalTotal").textContent = `₹${student.totalFees}`;
       document.getElementById("portModalPaid").textContent = `₹${student.paidAmount}`;
+      document.getElementById("portModalPayMode").textContent = student.paymentMode || "Cash";
       document.getElementById("portModalDue").textContent = `₹${student.dueAmount}`;
       document.getElementById("portModalImg").src = student.photoUrl;
 
@@ -1030,29 +1080,38 @@
       const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 300, margin: 1 });
       document.getElementById("portModalQr").src = qrDataUrl;
 
-      // Populate Live Attendance Logs (Date & Time)
-      const logsContainer = document.getElementById("portModalLogsList");
+      const matrixBody = document.getElementById("portModalMatrixBody");
       const logsCountBadge = document.getElementById("portModalLogCount");
-      logsContainer.innerHTML = "";
+      matrixBody.innerHTML = "";
 
+      const totalClasses = student.packageDays || 10;
       const logs = student.attendanceLogs || [];
-      logsCountBadge.textContent = `${logs.length}/${student.packageDays} Classes Completed`;
+      logsCountBadge.textContent = `${logs.length}/${totalClasses} Completed`;
 
-      if (logs.length === 0) {
-        logsContainer.innerHTML = `<p class="text-slate-400 text-center py-2 italic font-semibold">No classes attended yet. Scan QR to add class record.</p>`;
-      } else {
-        logs.forEach((log, index) => {
-          const item = document.createElement("div");
-          item.className = "flex justify-between items-center bg-white p-2 rounded-xl border border-slate-100 shadow-2xs";
-          item.innerHTML = `
-            <div class="flex items-center space-x-2">
-              <span class="w-5 h-5 bg-yellow-400 text-slate-950 font-black rounded-full flex items-center justify-center text-[10px]">${index + 1}</span>
-              <span class="font-bold text-slate-800">Class #${index + 1} (${student.courseType})</span>
-            </div>
-            <span class="text-slate-500 font-semibold text-[11px]">${log.date} • ${log.time}</span>
+      for (let i = 1; i <= totalClasses; i++) {
+        const tr = document.createElement("tr");
+        const log = logs[i - 1];
+
+        if (log) {
+          tr.className = "bg-green-50/60";
+          tr.innerHTML = `
+            <td class="p-2.5 font-bold text-slate-900">#${i}</td>
+            <td class="p-2.5 font-bold text-slate-700">${log.date}</td>
+            <td class="p-2.5 font-bold text-slate-600">${log.time}</td>
+            <td class="p-2.5 font-bold text-slate-800">${student.courseType}</td>
+            <td class="p-2.5 text-right font-black text-green-600">✅ Completed</td>
           `;
-          logsContainer.appendChild(item);
-        });
+        } else {
+          tr.className = "bg-slate-50/40 text-slate-400";
+          tr.innerHTML = `
+            <td class="p-2.5">#${i}</td>
+            <td class="p-2.5 font-normal">--</td>
+            <td class="p-2.5 font-normal">--</td>
+            <td class="p-2.5 font-normal">${student.courseType}</td>
+            <td class="p-2.5 text-right font-bold text-slate-400">⏳ Pending</td>
+          `;
+        }
+        matrixBody.appendChild(tr);
       }
 
       document.getElementById("portfolioModal").classList.remove("hidden");
@@ -1082,7 +1141,7 @@
       doc.setFontSize(12);
       doc.text(`Total Package Fees: Rs. ${student.totalFees}`, 15, 96);
       doc.setTextColor(22, 163, 74);
-      doc.text(`Paid Amount: Rs. ${student.paidAmount}`, 15, 104);
+      doc.text(`Paid Amount: Rs. ${student.paidAmount} (${student.paymentMode || 'Cash'})`, 15, 104);
       doc.setTextColor(220, 38, 38);
       doc.text(`Remaining Due: Rs. ${student.dueAmount}`, 15, 112);
       const qrPayload = JSON.stringify({ studentCode: student.studentCode, phone: student.phone });
@@ -1104,7 +1163,7 @@
     function downloadActiveReceipt() { if (activeStudent) downloadPdfReceipt(activeStudent); }
     function sendActiveWhatsapp() {
       if (!activeStudent) return;
-      const text = `Hello ${activeStudent.name},\nWelcome to Seekho 2 Wheeler Training Centre!\n\nYour Admission Details:\nCourse: ${activeStudent.courseType} (${activeStudent.packageDays} Days)\nTotal Fees: Rs. ${activeStudent.totalFees}\nPaid: Rs. ${activeStudent.paidAmount}\nRemaining Due: Rs. ${activeStudent.dueAmount}\n\nPlease show your QR Code receipt to the trainer during class. Thank you!`;
+      const text = `Hello ${activeStudent.name},\nWelcome to Seekho 2 Wheeler Training Centre!\n\nYour Admission Details:\nCourse: ${activeStudent.courseType} (${activeStudent.packageDays} Days)\nTotal Fees: Rs. ${activeStudent.totalFees}\nPaid: Rs. ${activeStudent.paidAmount} (${activeStudent.paymentMode || 'Cash'})\nRemaining Due: Rs. ${activeStudent.dueAmount}\n\nPlease show your QR Code receipt to the trainer during class. Thank you!`;
       window.open(`https://wa.me/91${activeStudent.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
     }
 
@@ -1115,6 +1174,7 @@
       document.getElementById("editWhatsapp").value = student.whatsapp || student.phone;
       document.getElementById("editDate").value = (student.createdAt || "2026-09-01").slice(0, 10);
       document.getElementById("editBranch").value = normalizeBranch(student.branch);
+      document.getElementById("editPayMode").value = student.paymentMode || "Cash";
       document.getElementById("editTotalFees").value = student.totalFees;
       document.getElementById("editPaidAmount").value = student.paidAmount;
       document.getElementById("editClassesAttended").value = student.classesAttended || 0;
@@ -1146,6 +1206,7 @@
         rawStudents[idx].whatsapp = document.getElementById("editWhatsapp").value.trim();
         rawStudents[idx].createdAt = new Date(editedDate).toISOString();
         rawStudents[idx].branch = normalizeBranch(document.getElementById("editBranch").value);
+        rawStudents[idx].paymentMode = document.getElementById("editPayMode").value;
         rawStudents[idx].totalFees = total;
         rawStudents[idx].paidAmount = paid;
         rawStudents[idx].dueAmount = due;
@@ -1230,7 +1291,7 @@
       }
     }
 
-    // QR Attendance Increment with Automatic Timestamp Logging
+    // QR Attendance Increment & Time Logging
     function handleAttendance(studentCode) {
       const idx = rawStudents.findIndex(s => s.studentCode === studentCode);
       if (idx === -1) return alert("Customer record not found!");
@@ -1243,7 +1304,6 @@
         return alert(`Course already completed (${student.classesAttended}/${student.packageDays} classes)!`);
       }
 
-      // Add Attendance Log (Date and Time)
       const now = new Date();
       const newLog = {
         date: now.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
