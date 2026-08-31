@@ -22,14 +22,14 @@
       color: #0f172a;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-    .tab-btn-active {
+    .custom-tab-active {
       background-color: #facc15 !important;
-      color: #000000 !important;
+      color: #0f172a !important;
       font-weight: 900 !important;
       border: 2px solid #ca8a04 !important;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
     }
-    .tab-btn-inactive {
+    .custom-tab-inactive {
       background-color: #ffffff !important;
       color: #475569 !important;
       font-weight: 700 !important;
@@ -47,7 +47,7 @@
           <i class="fa-solid fa-motorcycle"></i>
         </div>
         <h1 class="text-2xl font-black text-slate-900 tracking-tight">SEEKHO 2 WHEELER</h1>
-        <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">Training Centre Portal</p>
+        <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">Cloud Management Portal</p>
       </div>
 
       <div class="flex bg-slate-100 p-1.5 rounded-2xl mb-6 border border-slate-200">
@@ -100,7 +100,7 @@
             <div class="flex items-center space-x-2">
               <span id="userBadge" class="text-[10px] bg-yellow-400 text-slate-950 px-2 py-0.5 rounded-md font-black uppercase"></span>
               <span class="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded-md font-bold flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Cloud Live
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Cloud v3 Live
               </span>
             </div>
           </div>
@@ -115,25 +115,29 @@
     <!-- Navigation Tabs -->
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 space-y-6">
       <div class="flex items-center space-x-2 overflow-x-auto pb-2 border-b border-slate-200">
-        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer tab-btn-active">
+        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-active">
           <i class="fa-solid fa-chart-pie"></i>
           <span>DASHBOARD & REVENUE</span>
         </button>
-        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer tab-btn-inactive">
+        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-qrcode"></i>
           <span>QR ATTENDANCE SCANNER</span>
         </button>
-        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer tab-btn-inactive">
+        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-user-plus"></i>
           <span>NEW ADMISSION</span>
         </button>
-        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer tab-btn-inactive">
+        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-address-book"></i>
           <span>CUSTOMERS & PROFILES</span>
         </button>
-        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer tab-btn-inactive">
+        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-calendar-day"></i>
           <span>DAILY SHIFT REPORT</span>
+        </button>
+        <button id="navBinBtn" onclick="switchTab('bin')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
+          <i class="fa-solid fa-trash-can"></i>
+          <span>RECYCLE BIN</span>
         </button>
       </div>
 
@@ -143,7 +147,7 @@
           <div class="flex items-center justify-between border-b pb-2">
             <div class="flex items-center space-x-2">
               <i class="fa-solid fa-filter text-yellow-500"></i>
-              <span class="font-black text-xs text-slate-800 uppercase tracking-wider">Live Analytics Filters:</span>
+              <span class="font-black text-xs text-slate-800 uppercase tracking-wider">Live Cloud Analytics Filters:</span>
             </div>
             <button onclick="resetFilters()" class="text-[11px] font-bold text-slate-500 hover:text-slate-800 underline cursor-pointer">Reset Filters</button>
           </div>
@@ -199,7 +203,7 @@
             <div class="absolute top-0 right-0 w-1.5 h-full bg-blue-500"></div>
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Students</p>
             <p id="dashTotalStudents" class="text-3xl font-black text-slate-900 mt-2">0</p>
-            <p class="text-[11px] text-slate-500 font-semibold mt-1">Enrolled Registrations</p>
+            <p class="text-[11px] text-slate-500 font-semibold mt-1">Active Registrations</p>
           </div>
           <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-green-500"></div>
@@ -261,7 +265,7 @@
         <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm text-center max-w-xl mx-auto space-y-6">
           <div>
             <h2 class="text-xl font-black text-slate-900">QR Code Attendance Scanner</h2>
-            <p class="text-xs text-slate-500 mt-1">Scan directly from Live Camera OR upload QR screenshot from Gallery</p>
+            <p class="text-xs text-slate-500 mt-1">Instant Single-Scan Attendance with Automatic UI Updating</p>
           </div>
           <div class="relative mx-auto max-w-xs aspect-square bg-slate-900 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-lg flex items-center justify-center">
             <div id="reader" class="w-full h-full"></div>
@@ -288,13 +292,13 @@
       <section id="tabAdmission" class="hidden bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
         <div class="border-b border-slate-100 pb-4 mb-6">
           <h2 class="text-xl font-black text-slate-900">New Customer Admission</h2>
-          <p class="text-xs text-slate-500 mt-1">Instant registration with automatic QR generation and printable PDF receipt</p>
+          <p class="text-xs text-slate-500 mt-1">Automatic Cloud Sync & Printable Money Receipt</p>
         </div>
         <form id="admissionForm" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Name *</label>
-              <input type="text" id="admName" required placeholder="e.g. John Doe" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
+              <input type="text" id="admName" required placeholder="e.g. Rahul Sharma" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Phone Number *</label>
@@ -357,12 +361,12 @@
             <span class="text-xs font-black text-slate-700">Outstanding Due: <span id="admDueDisplay" class="text-red-600 text-sm">₹0</span></span>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Photo * (Supports all formats, auto-compressed)</label>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Photo * (Auto-processed)</label>
             <input type="file" id="admPhoto" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.webp" required class="w-full p-2.5 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
           </div>
           <button type="submit" id="admSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-sm cursor-pointer">
             <i class="fa-solid fa-cloud-arrow-up"></i>
-            <span>SAVE ADMISSION & SYNC CLOUD</span>
+            <span>SAVE ADMISSION & CREATE PROFILE</span>
           </button>
         </form>
       </section>
@@ -372,7 +376,7 @@
         <div class="flex flex-col sm:flex-row items-center gap-3">
           <div class="relative w-full">
             <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
-            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search by name, phone or code..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-sm" />
+            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search by name, phone or student ID..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-sm" />
           </div>
           <select id="studentFilterBranch" onchange="renderStudentList()" class="w-full sm:w-56 p-3 bg-white border border-slate-200 rounded-2xl text-xs font-black text-slate-900 shadow-sm">
             <option value="All">All Branches</option>
@@ -409,6 +413,20 @@
             </div>
           </div>
         </div>
+      </section>
+
+      <!-- 6. RECYCLE BIN TAB -->
+      <section id="tabBin" class="hidden space-y-4">
+        <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+          <div>
+            <h2 class="text-base font-black text-slate-900 flex items-center gap-2">
+              <i class="fa-solid fa-trash-can text-red-500"></i> Cloud Recycle Bin
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">Restore accidentally deleted customer profiles or delete permanently</p>
+          </div>
+          <span id="binCountBadge" class="text-xs font-black bg-red-100 text-red-700 px-3 py-1 rounded-xl">0 Records</span>
+        </div>
+        <div id="binCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </section>
     </main>
   </div>
@@ -458,7 +476,7 @@
       </div>
 
       <div class="flex flex-col items-center justify-center p-3 bg-white rounded-2xl border border-slate-200 space-y-1">
-        <img id="portModalQr" class="w-32 h-32" />
+        <img id="portModalQr" class="w-36 h-36" />
         <span class="text-[10px] font-bold text-slate-400">Scan for Real-Time Attendance Logging</span>
       </div>
 
@@ -542,7 +560,7 @@
         </div>
         <div class="flex space-x-2 pt-2">
           <button type="submit" id="editSaveBtn" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm cursor-pointer">SAVE & UPDATE</button>
-          <button type="button" onclick="deleteCustomer()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs cursor-pointer">DELETE</button>
+          <button type="button" onclick="moveCustomerToRecycleBin()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs cursor-pointer">MOVE TO BIN</button>
         </div>
       </form>
     </div>
@@ -560,6 +578,8 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
+    const DB_COLLECTION = "students_v3";
+    const BIN_COLLECTION = "deleted_students_v3";
     const ALL_BRANCHES = ["Tollygunge", "Rabindra Sarovar", "New Town", "Sodepur", "Howrah", "Barasat"];
     
     function getLocalDateString(d = new Date()) {
@@ -584,10 +604,12 @@
     let currentRole = "owner";
     let currentUser = null;
     let rawStudents = [];
+    let binStudents = [];
     let activeStudent = null;
     let html5QrCode = null;
     let isScanning = false;
-    let firestoreUnsubscribe = null;
+    let activeSyncUnsub = null;
+    let binSyncUnsub = null;
 
     function setLoginRole(role) {
       currentRole = role;
@@ -652,19 +674,20 @@
     });
 
     function handleLogout() { 
-      if (firestoreUnsubscribe) firestoreUnsubscribe();
+      if (activeSyncUnsub) activeSyncUnsub();
+      if (binSyncUnsub) binSyncUnsub();
       location.reload(); 
     }
 
     function switchTab(tab) {
-      const allTabs = ["dashboard", "attendance", "admission", "students", "shift"];
+      const allTabs = ["dashboard", "attendance", "admission", "students", "shift", "bin"];
       allTabs.forEach(t => {
         const cap = t.charAt(0).toUpperCase() + t.slice(1);
         const sec = document.getElementById(`tab${cap}`);
         const btn = document.getElementById(`nav${cap}Btn`);
         if (sec) sec.classList.add("hidden");
         if (btn) {
-          btn.className = "px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer tab-btn-inactive";
+          btn.className = "px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive";
         }
       });
 
@@ -673,22 +696,22 @@
       const activeBtn = document.getElementById(`nav${activeCap}Btn`);
       if (activeSec) activeSec.classList.remove("hidden");
       if (activeBtn) {
-        activeBtn.className = "px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer tab-btn-active";
+        activeBtn.className = "px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-active";
       }
     }
 
-    // Direct Firestore 2-Way Synchronizer
     function initRealtimeFirestoreSync() {
-      if (firestoreUnsubscribe) firestoreUnsubscribe();
+      if (activeSyncUnsub) activeSyncUnsub();
+      if (binSyncUnsub) binSyncUnsub();
 
-      firestoreUnsubscribe = db.collection("students").onSnapshot((snap) => {
+      // Listen to Active Students
+      activeSyncUnsub = db.collection(DB_COLLECTION).onSnapshot((snap) => {
         rawStudents = snap.docs.map(d => {
           const data = d.data();
-          const docCode = data.studentCode || d.id;
           return {
             ...data,
             id: d.id,
-            studentCode: docCode,
+            studentCode: data.studentCode || d.id,
             branch: normalizeBranch(data.branch),
             paidAmount: Number(data.paidAmount) || 0,
             dueAmount: Number(data.dueAmount) || 0,
@@ -696,6 +719,7 @@
             paymentMode: data.paymentMode || "Cash",
             createdAt: data.createdAt ? data.createdAt.slice(0, 10) : getLocalDateString(),
             attendanceLogs: data.attendanceLogs || [],
+            classesAttended: Number(data.classesAttended) || 0,
             photoUrl: data.photoUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60"
           };
         });
@@ -703,12 +727,15 @@
         renderDashboard();
         renderStudentList();
         renderShiftReport();
-      }, (err) => {
-        console.error("Firestore sync error:", err);
+      }, (err) => console.error("Sync error:", err));
+
+      // Listen to Recycle Bin
+      binSyncUnsub = db.collection(BIN_COLLECTION).onSnapshot((snap) => {
+        binStudents = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+        renderRecycleBin();
       });
     }
 
-    // Ultra-fast client side compressor (Generates tiny Base64 ~10KB - Zero upload failure)
     async function processUniversalPhoto(file) {
       return new Promise(async (resolve) => {
         try {
@@ -728,7 +755,7 @@
             img.src = e.target.result;
             img.onload = () => {
               const canvas = document.createElement("canvas");
-              const maxDim = 200;
+              const maxDim = 220;
               let width = img.width;
               let height = img.height;
               if (width > height) {
@@ -812,8 +839,7 @@
           createdAt: customDate
         };
 
-        // Write directly to cloud using doc ID
-        await db.collection("students").doc(studentCode).set(newStudent, { merge: true });
+        await db.collection(DB_COLLECTION).doc(studentCode).set(newStudent);
 
         document.getElementById("admissionForm").reset();
         document.getElementById("admDate").value = getLocalDateString();
@@ -824,7 +850,7 @@
         alert("Cloud Error: " + err.message);
       }
       btn.disabled = false;
-      btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>SAVE ADMISSION & SYNC CLOUD</span>`;
+      btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
 
     function resetFilters() {
@@ -886,7 +912,6 @@
       const scooties = filtered.filter(s => s.courseType === "Scooty").length;
       document.getElementById("dashVehicles").textContent = `🏍️ ${bikes} | 🛵 ${scooties}`;
 
-      // Live 6 Branch Performance
       const grid = document.getElementById("branchSummaryGrid");
       grid.innerHTML = "";
       ALL_BRANCHES.forEach(b => {
@@ -1037,6 +1062,64 @@
       document.getElementById("shiftTodayUpi").textContent = `₹${todayUpi}`;
     }
 
+    function renderRecycleBin() {
+      const container = document.getElementById("binCardsContainer");
+      const badge = document.getElementById("binCountBadge");
+      badge.textContent = `${binStudents.length} Records`;
+      container.innerHTML = "";
+
+      if (binStudents.length === 0) {
+        container.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-400 font-bold text-xs uppercase tracking-wider">Recycle bin is completely empty</div>`;
+        return;
+      }
+
+      binStudents.forEach(student => {
+        const card = document.createElement("div");
+        card.className = "bg-white p-4 rounded-2xl border border-red-200 shadow-sm flex items-center justify-between";
+        card.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <img src="${student.photoUrl}" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-12 h-12 rounded-xl object-cover bg-slate-100" />
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm">${student.name}</h4>
+              <p class="text-xs text-slate-500">${student.studentCode} • ${student.branch}</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="restoreFromBin('${student.studentCode}')" class="px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer">
+              <i class="fa-solid fa-rotate-left"></i> Restore
+            </button>
+            <button onclick="permanentDelete('${student.studentCode}')" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer">
+              <i class="fa-solid fa-trash"></i> Delete Forever
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    async function restoreFromBin(studentCode) {
+      const student = binStudents.find(s => s.studentCode === studentCode);
+      if (!student) return;
+      try {
+        await db.collection(DB_COLLECTION).doc(studentCode).set(student);
+        await db.collection(BIN_COLLECTION).doc(studentCode).delete();
+        alert("Student profile restored successfully!");
+      } catch(err) {
+        alert("Restore Error: " + err.message);
+      }
+    }
+
+    async function permanentDelete(studentCode) {
+      if (confirm("Are you sure you want to permanently delete this customer? This cannot be undone.")) {
+        try {
+          await db.collection(BIN_COLLECTION).doc(studentCode).delete();
+          alert("Record permanently deleted.");
+        } catch(err) {
+          alert("Delete Error: " + err.message);
+        }
+      }
+    }
+
     async function showPortfolioModal(student) {
       activeStudent = student;
       document.getElementById("portModalName").textContent = student.name;
@@ -1047,7 +1130,8 @@
       document.getElementById("portModalDue").textContent = `₹${student.dueAmount}`;
       document.getElementById("portModalImg").src = student.photoUrl;
 
-      const qrPayload = JSON.stringify({ studentCode: student.studentCode || student.id, phone: student.phone });
+      // Clean single string payload in QR Code
+      const qrPayload = student.studentCode;
       const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 300, margin: 1 });
       document.getElementById("portModalQr").src = qrDataUrl;
 
@@ -1113,8 +1197,8 @@
       doc.text(`Paid Amount: Rs. ${student.paidAmount} (${student.paymentMode || 'Cash'})`, 15, 104);
       doc.setTextColor(220, 38, 38);
       doc.text(`Remaining Due: Rs. ${student.dueAmount}`, 15, 112);
-      const qrPayload = JSON.stringify({ studentCode: student.studentCode || student.id, phone: student.phone });
-      const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 250 });
+      
+      const qrDataUrl = await QRCode.toDataURL(student.studentCode, { width: 250 });
       doc.addImage(qrDataUrl, "JPEG", 135, 45, 55, 55);
       doc.setTextColor(100, 116, 139);
       doc.setFontSize(9);
@@ -1137,7 +1221,7 @@
     }
 
     function openEditModal(student) {
-      document.getElementById("editStudentCode").value = student.studentCode || student.id;
+      document.getElementById("editStudentCode").value = student.studentCode;
       document.getElementById("editName").value = student.name;
       document.getElementById("editPhone").value = student.phone;
       document.getElementById("editWhatsapp").value = student.whatsapp || student.phone;
@@ -1191,8 +1275,7 @@
           updateData.photoUrl = await processUniversalPhoto(newPhotoFile);
         }
 
-        // Set with merge guarantees it creates or updates safely
-        await db.collection("students").doc(studentCode).set(updateData, { merge: true });
+        await db.collection(DB_COLLECTION).doc(studentCode).set(updateData, { merge: true });
         alert("Customer details updated successfully in Cloud!");
         closeModal("editModal");
       } catch(err) {
@@ -1202,13 +1285,17 @@
       saveBtn.innerText = "SAVE & UPDATE";
     });
 
-    async function deleteCustomer() {
+    async function moveCustomerToRecycleBin() {
       const studentCode = document.getElementById("editStudentCode").value;
-      if (confirm("Are you sure you want to delete this customer record permanently from cloud?")) {
+      const student = rawStudents.find(s => s.studentCode === studentCode);
+      if (!student) return;
+
+      if (confirm("Move this customer record to Recycle Bin?")) {
         try {
-          await db.collection("students").doc(studentCode).delete();
+          await db.collection(BIN_COLLECTION).doc(studentCode).set(student);
+          await db.collection(DB_COLLECTION).doc(studentCode).delete();
           closeModal("editModal");
-          alert("Record deleted permanently!");
+          alert("Customer moved to Recycle Bin.");
         } catch(err) {
           alert("Delete Error: " + err.message);
         }
@@ -1225,17 +1312,8 @@
           { facingMode: "environment" },
           { fps: 10, qrbox: { width: 220, height: 220 } },
           (decodedText) => {
-            try {
-              let parsedCode = decodedText;
-              try {
-                const data = JSON.parse(decodedText);
-                parsedCode = data.studentCode || data.id || decodedText;
-              } catch(e){}
-              handleAttendance(parsedCode);
-              toggleScanner();
-            } catch (err) {
-              alert("Invalid QR Code!");
-            }
+            handleDecodedCode(decodedText);
+            toggleScanner();
           }
         );
         text.textContent = "STOP CAMERA";
@@ -1254,27 +1332,26 @@
         const html5Qr = new Html5Qrcode("reader");
         html5Qr.scanFile(file, true)
           .then(decodedText => {
-            try {
-              let parsedCode = decodedText;
-              try {
-                const data = JSON.parse(decodedText);
-                parsedCode = data.studentCode || data.id || decodedText;
-              } catch(e){}
-              handleAttendance(parsedCode);
-            } catch (err) {
-              alert("Invalid QR Code in picture!");
-            }
+            handleDecodedCode(decodedText);
           })
           .catch(err => {
-            alert("No valid QR code detected in this picture. Please use a clearer screenshot.");
+            alert("No valid QR code detected in this picture.");
           });
       }
     }
 
+    function handleDecodedCode(decodedText) {
+      let code = decodedText.trim();
+      try {
+        const parsed = JSON.parse(decodedText);
+        code = parsed.studentCode || parsed.id || decodedText;
+      } catch(e) {}
+      handleAttendance(code);
+    }
+
     async function handleAttendance(studentCode) {
-      // Find matching student by code or doc ID
       const student = rawStudents.find(s => s.studentCode === studentCode || s.id === studentCode);
-      if (!student) return alert("Customer record not found in Cloud for code: " + studentCode);
+      if (!student) return alert("No active customer record found for Code: " + studentCode);
 
       if (student.classesAttended >= 5 && student.dueAmount > 0) {
         return alert(`⚠️ DUE LOCKOUT: ${student.name} has ₹${student.dueAmount} unpaid dues. Cannot attend beyond 5th class until fees are cleared.`);
@@ -1292,10 +1369,9 @@
 
       const updatedLogs = student.attendanceLogs ? [...student.attendanceLogs, newLog] : [newLog];
       const newAttended = (student.classesAttended || 0) + 1;
-      const targetDocId = student.studentCode || student.id;
 
       try {
-        await db.collection("students").doc(targetDocId).set({
+        await db.collection(DB_COLLECTION).doc(student.studentCode).set({
           attendanceLogs: updatedLogs,
           classesAttended: newAttended,
           lastAttendedAt: now.toISOString(),
