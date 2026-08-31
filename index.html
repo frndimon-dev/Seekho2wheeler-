@@ -100,7 +100,7 @@
             <div class="flex items-center space-x-2">
               <span id="userBadge" class="text-[10px] bg-yellow-400 text-slate-950 px-2 py-0.5 rounded-md font-black uppercase"></span>
               <span class="text-[10px] bg-green-100 text-green-800 px-2 py-0.5 rounded-md font-bold flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Live Cloud Sync
+                <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span> Cloud v3 Live
               </span>
             </div>
           </div>
@@ -153,7 +153,13 @@
               <i class="fa-solid fa-filter text-yellow-500"></i>
               <span class="font-black text-xs text-slate-800 uppercase tracking-wider">Live Cloud Analytics Filters:</span>
             </div>
-            <button onclick="resetFilters()" class="text-[11px] font-bold text-slate-500 hover:text-slate-800 underline cursor-pointer">Reset Filters</button>
+            <div class="flex items-center gap-2">
+              <button onclick="exportToExcelCSV()" class="px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                <i class="fa-solid fa-file-excel"></i>
+                <span>EXPORT EXCEL/CSV</span>
+              </button>
+              <button onclick="resetFilters()" class="text-[11px] font-bold text-slate-500 hover:text-slate-800 underline cursor-pointer">Reset</button>
+            </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -549,14 +555,19 @@
         <span class="text-[10px] font-bold text-slate-400">Scan for Real-Time Attendance Logging</span>
       </div>
 
-      <div class="grid grid-cols-2 gap-2 pt-1">
+      <!-- Action Buttons (Receipt, Certificate, WhatsApp) -->
+      <div class="grid grid-cols-3 gap-2 pt-1">
         <button onclick="downloadActiveReceipt()" class="p-3 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm cursor-pointer">
           <i class="fa-solid fa-file-pdf"></i>
-          <span>PDF RECEIPT</span>
+          <span>RECEIPT</span>
+        </button>
+        <button id="certBtn" onclick="generateCourseCertificate()" class="p-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm cursor-pointer">
+          <i class="fa-solid fa-award"></i>
+          <span>CERTIFICATE</span>
         </button>
         <button onclick="sendActiveWhatsapp()" class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm cursor-pointer">
           <i class="fa-brands fa-whatsapp"></i>
-          <span>WHATSAPP BILL</span>
+          <span>WHATSAPP</span>
         </button>
       </div>
     </div>
@@ -683,11 +694,11 @@
     </div>
   </div>
 
-  <!-- ================= EDIT CUSTOMER MODAL ================= -->
+  <!-- ================= EDIT CUSTOMER & INSTALLMENTS MODAL ================= -->
   <div id="editModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-        <h3 class="text-base font-black text-slate-900">Edit Customer Information</h3>
+        <h3 class="text-base font-black text-slate-900">Edit Customer & Installments</h3>
         <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-slate-700 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
       <form id="editForm" class="space-y-3">
@@ -725,6 +736,13 @@
             <input type="number" id="editTotalFees" oninput="calcEditFees()" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
           </div>
         </div>
+
+        <!-- Editable Installments List -->
+        <div class="space-y-2 pt-1 border-t border-slate-100">
+          <label class="block text-xs font-black text-slate-800 uppercase">Manage Installments (Edit Amounts)</label>
+          <div id="editInstallmentsList" class="space-y-2"></div>
+        </div>
+
         <div class="p-3 bg-yellow-50 rounded-xl flex justify-between text-xs font-bold border border-yellow-200">
           <span class="text-slate-700">Updated Due:</span>
           <span id="editDueDisplay" class="text-red-600 font-black">₹0</span>
@@ -1064,7 +1082,7 @@
       btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
 
-    // Add Old / Legacy Student
+    // Add Old Student
     function openAddOldStudentModal() {
       document.getElementById("addOldStudentForm").reset();
       document.getElementById("oldDueDisplay").textContent = "₹0";
@@ -1183,8 +1201,6 @@
         });
 
         closeModal("collectDueModal");
-        
-        // Auto-show Updated Portfolio with Instant Receipt Action
         const updatedStudent = { ...student, installments: updatedInstallments, paidAmount: newPaidAmount, dueAmount: newDueAmount };
         showPortfolioModal(updatedStudent);
         alert(`✅ Installment #${nextInstNo} recorded!\nAmount: ₹${colAmt} (${colMode})\nRemaining Due: ₹${newDueAmount}`);
@@ -1423,7 +1439,7 @@
               <i class="fa-solid fa-file-arrow-down"></i>
             </button>
             ${student.dueAmount > 0 ? `
-              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
+              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="p-2.5 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
                 <i class="fa-brands fa-whatsapp text-sm"></i>
               </a>
             ` : ''}
@@ -1433,7 +1449,7 @@
       });
     }
 
-    // Daily Shift Engine (Admissions + Due Collections)
+    // Daily Shift Report Engine
     function renderShiftReport() {
       const selectedDate = document.getElementById("shiftCustomDate").value || getLocalDateString();
       let admissionCount = 0;
@@ -1487,7 +1503,6 @@
       document.getElementById("shiftTodayUpi").textContent = `₹${todayUpi}`;
     }
 
-    // WhatsApp Dispatch for Daily Shift
     function shareShiftReportToWhatsapp(targetPhone) {
       const shiftDate = document.getElementById("shiftCustomDate").value || getLocalDateString();
       const admCount = document.getElementById("shiftAdmissionCount").textContent;
@@ -1595,6 +1610,14 @@
         });
       }
 
+      // Certificate eligibility toggle
+      const certBtn = document.getElementById("certBtn");
+      if ((student.classesAttended || 0) >= (student.packageDays || 10) && student.dueAmount <= 0) {
+        certBtn.classList.remove("opacity-50", "pointer-events-none");
+      } else {
+        certBtn.classList.add("opacity-50");
+      }
+
       const qrBox = document.getElementById("portQrBox");
       const attSec = document.getElementById("portAttendanceSection");
       if (student.isLegacy) {
@@ -1699,6 +1722,58 @@
       doc.save(`${student.name}_Official_Receipt.pdf`);
     }
 
+    // Professional Course Completion Certificate Generator
+    function generateCourseCertificate() {
+      if (!activeStudent) return;
+      if (activeStudent.dueAmount > 0) {
+        return alert("Cannot issue certificate with pending dues! Please clear all dues first.");
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: "landscape" });
+
+      doc.setFillColor(255, 251, 235);
+      doc.rect(0, 0, 297, 210, "F");
+
+      doc.setDrawColor(202, 138, 4);
+      doc.setLineWidth(4);
+      doc.rect(10, 10, 277, 190);
+      doc.setLineWidth(1);
+      doc.rect(14, 14, 269, 182);
+
+      doc.setTextColor(15, 23, 42);
+      doc.setFontSize(28);
+      doc.setFont("helvetica", "bold");
+      doc.text("CERTIFICATE OF COMPLETION", 148.5, 45, { align: "center" });
+
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(100, 116, 139);
+      doc.text("THIS CERTIFICATE IS PROUDLY PRESENTED TO", 148.5, 60, { align: "center" });
+
+      doc.setTextColor(180, 83, 9);
+      doc.setFontSize(26);
+      doc.setFont("helvetica", "bold");
+      doc.text(activeStudent.name.toUpperCase(), 148.5, 80, { align: "center" });
+
+      doc.setTextColor(51, 65, 85);
+      doc.setFontSize(13);
+      doc.setFont("helvetica", "normal");
+      doc.text(`for successfully completing the ${activeStudent.packageDays}-Day Professional ${activeStudent.courseType} Riding Course`, 148.5, 100, { align: "center" });
+      doc.text(`conducted at Seekho 2 Wheeler Training Centre (${activeStudent.branch} Branch).`, 148.5, 110, { align: "center" });
+
+      doc.setDrawColor(203, 213, 225);
+      doc.line(40, 160, 100, 160);
+      doc.line(197, 160, 257, 160);
+
+      doc.setFontSize(10);
+      doc.setTextColor(100, 116, 139);
+      doc.text(`Date of Issue: ${getLocalDateString()}`, 70, 168, { align: "center" });
+      doc.text("Authorized Trainer Signature", 227, 168, { align: "center" });
+
+      doc.save(`${activeStudent.name}_Completion_Certificate.pdf`);
+    }
+
     function downloadActiveReceipt() { if (activeStudent) downloadPdfReceipt(activeStudent); }
 
     function sendActiveWhatsapp() {
@@ -1725,6 +1800,7 @@
       window.open(`https://wa.me/91${activeStudent.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
     }
 
+    // Modal Edit & Editable Installments List
     function openEditModal(student) {
       document.getElementById("editStudentCode").value = student.studentCode;
       document.getElementById("editName").value = student.name;
@@ -1735,15 +1811,45 @@
       document.getElementById("editTotalFees").value = student.totalFees;
       document.getElementById("editClassesAttended").value = student.classesAttended || 0;
       document.getElementById("editPhoto").value = "";
+
+      const instListContainer = document.getElementById("editInstallmentsList");
+      instListContainer.innerHTML = "";
+      const insts = student.installments || [];
+
+      insts.forEach((inst, index) => {
+        const row = document.createElement("div");
+        row.className = "flex items-center gap-2 p-2 bg-slate-50 border border-slate-200 rounded-xl";
+        row.innerHTML = `
+          <span class="text-xs font-bold text-slate-600">Inst #${inst.installmentNo}:</span>
+          <input type="number" value="${inst.amount}" oninput="calcEditFees()" class="edit-inst-amount w-24 p-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold" />
+          <select class="edit-inst-mode p-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold">
+            <option value="Cash" ${inst.mode === 'Cash' ? 'selected' : ''}>Cash</option>
+            <option value="UPI" ${inst.mode === 'UPI' ? 'selected' : ''}>UPI</option>
+          </select>
+          <button type="button" onclick="deleteEditInstallment(${index})" class="text-red-500 hover:text-red-700 p-1 cursor-pointer" title="Delete Installment"><i class="fa-solid fa-trash-can"></i></button>
+        `;
+        instListContainer.appendChild(row);
+      });
+
       calcEditFees();
       document.getElementById("editModal").classList.remove("hidden");
     }
 
-    function calcEditFees() {
+    function deleteEditInstallment(idx) {
       const studentCode = document.getElementById("editStudentCode").value;
       const student = rawStudents.find(s => s.studentCode === studentCode);
+      if (!student) return;
+      if (confirm(`Remove installment #${idx + 1}?`)) {
+        student.installments.splice(idx, 1);
+        openEditModal(student);
+      }
+    }
+
+    function calcEditFees() {
       const total = Number(document.getElementById("editTotalFees").value) || 0;
-      const paid = student ? student.paidAmount : 0;
+      const instInputs = document.querySelectorAll(".edit-inst-amount");
+      let paid = 0;
+      instInputs.forEach(input => { paid += Number(input.value) || 0; });
       const due = Math.max(0, total - paid);
       document.getElementById("editDueDisplay").textContent = `₹${due}`;
     }
@@ -1755,7 +1861,24 @@
       if (!student) return;
 
       const total = Number(document.getElementById("editTotalFees").value) || 0;
-      const due = Math.max(0, total - student.paidAmount);
+      const instInputs = document.querySelectorAll(".edit-inst-amount");
+      const modeInputs = document.querySelectorAll(".edit-inst-mode");
+      
+      const updatedInstallments = [];
+      let newPaid = 0;
+      instInputs.forEach((input, i) => {
+        const amt = Number(input.value) || 0;
+        newPaid += amt;
+        updatedInstallments.push({
+          ...(student.installments[i] || {}),
+          installmentNo: i + 1,
+          amount: amt,
+          mode: modeInputs[i].value,
+          date: student.installments[i] ? student.installments[i].date : getLocalDateString()
+        });
+      });
+
+      const due = Math.max(0, total - newPaid);
       const editedDate = document.getElementById("editDate").value;
       const newPhotoFile = document.getElementById("editPhoto").files[0];
 
@@ -1771,7 +1894,9 @@
           createdAt: editedDate,
           branch: normalizeBranch(document.getElementById("editBranch").value),
           totalFees: total,
+          paidAmount: newPaid,
           dueAmount: due,
+          installments: updatedInstallments,
           classesAttended: Number(document.getElementById("editClassesAttended").value) || 0
         };
 
@@ -1780,7 +1905,7 @@
         }
 
         await db.collection(DB_COLLECTION).doc(studentCode).set(updateData, { merge: true });
-        alert("Customer details updated successfully in Cloud!");
+        alert("Customer & Installment details updated successfully!");
         closeModal("editModal");
       } catch(err) {
         alert("Update Error: " + err.message);
@@ -1804,6 +1929,25 @@
           alert("Delete Error: " + err.message);
         }
       }
+    }
+
+    // 1-Click Excel / CSV Export
+    function exportToExcelCSV() {
+      if (rawStudents.length === 0) return alert("No records available to export!");
+
+      let csv = "Student Code,Name,Phone,WhatsApp,Branch,Course,Total Fees,Paid Amount,Due Amount,Classes Attended,Created Date,Type\n";
+      rawStudents.forEach(s => {
+        csv += `"${s.studentCode}","${s.name}","${s.phone}","${s.whatsapp || ''}","${s.branch}","${s.courseType}",${s.totalFees},${s.paidAmount},${s.dueAmount},${s.classesAttended || 0},"${s.createdAt}","${s.isLegacy ? 'Offline Legacy' : 'Digital QR'}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Seekho2Wheeler_Students_Report_${getLocalDateString()}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
 
     function toggleScanner() {
