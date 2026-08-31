@@ -17,8 +17,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body {
-      background-color: #0f172a;
-      color: #f8fafc;
+      background-color: #f8fafc;
+      color: #0f172a;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
   </style>
@@ -26,25 +26,25 @@
 <body class="min-h-screen flex flex-col antialiased selection:bg-yellow-400 selection:text-slate-900">
 
   <!-- ================= AUTHENTICATION SCREEN ================= -->
-  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 bg-slate-950">
-    <div class="bg-slate-900 border-t-8 border-yellow-400 p-8 rounded-3xl shadow-2xl w-full max-w-md border border-slate-800">
+  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 bg-slate-100">
+    <div class="bg-white border-t-8 border-yellow-400 p-8 rounded-3xl shadow-xl w-full max-w-md border border-slate-200">
       <div class="text-center mb-6">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-400 text-slate-950 rounded-2xl text-2xl font-black mb-3 shadow-lg shadow-yellow-400/20">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-400 text-slate-900 rounded-2xl text-2xl font-black mb-3 shadow-md">
           <i class="fa-solid fa-motorcycle"></i>
         </div>
-        <h1 class="text-2xl font-black text-white tracking-tight">SEEKHO 2 WHEELER</h1>
-        <p class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Training Centre Portal</p>
+        <h1 class="text-2xl font-black text-slate-900 tracking-tight">SEEKHO 2 WHEELER</h1>
+        <p class="text-xs font-bold text-slate-500 mt-1 uppercase tracking-wider">Training Centre Portal</p>
       </div>
 
-      <div class="flex bg-slate-800 p-1 rounded-xl mb-6 border border-slate-700">
-        <button type="button" id="roleOwnerBtn" onclick="setLoginRole('owner')" class="flex-1 py-2.5 text-xs font-black rounded-lg bg-yellow-400 text-slate-950 shadow transition">OWNER PORTAL</button>
-        <button type="button" id="roleTrainerBtn" onclick="setLoginRole('trainer')" class="flex-1 py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition">TRAINER PORTAL</button>
+      <div class="flex bg-slate-100 p-1.5 rounded-2xl mb-6 border border-slate-200">
+        <button type="button" id="roleOwnerBtn" onclick="setLoginRole('owner')" class="flex-1 py-2.5 text-xs font-black rounded-xl bg-yellow-400 text-slate-950 shadow-sm transition">OWNER PORTAL</button>
+        <button type="button" id="roleTrainerBtn" onclick="setLoginRole('trainer')" class="flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-600 hover:text-slate-900 transition">TRAINER PORTAL</button>
       </div>
 
       <form id="loginForm" class="space-y-4">
         <div id="branchSelectGroup" class="hidden">
-          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Select Branch</label>
-          <select id="loginBranch" class="w-full p-3.5 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-bold text-sm">
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Select Branch</label>
+          <select id="loginBranch" class="w-full p-3.5 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-bold text-sm">
             <option value="Tollygunge">Tollygunge Branch</option>
             <option value="Rabindra Sarovar">Rabindra Sarovar Branch</option>
             <option value="New Town">New Town Branch</option>
@@ -55,16 +55,16 @@
         </div>
 
         <div id="usernameGroup">
-          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">User ID</label>
-          <input type="text" id="username" placeholder="admin" value="admin" class="w-full p-3.5 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold text-sm" required />
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">User ID</label>
+          <input type="text" id="username" placeholder="admin" value="admin" class="w-full p-3.5 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold text-sm" required />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Password</label>
-          <input type="password" id="password" placeholder="••••••••" class="w-full p-3.5 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold text-sm" required />
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Password</label>
+          <input type="password" id="password" placeholder="••••••••" class="w-full p-3.5 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold text-sm" required />
         </div>
 
-        <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-xl shadow-lg shadow-yellow-400/20 transition flex items-center justify-center space-x-2 text-sm">
+        <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-xl shadow-md transition flex items-center justify-center space-x-2 text-sm">
           <span>SECURE LOGIN</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
@@ -75,20 +75,20 @@
   <!-- ================= MAIN DASHBOARD APP ================= -->
   <div id="mainApp" class="hidden flex-col min-h-screen">
     <!-- Navbar -->
-    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 sticky top-0 z-40 shadow-lg">
+    <header class="bg-white border-b border-slate-200 px-4 py-3 sticky top-0 z-40 shadow-sm">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center text-slate-950 font-black shadow-md">
+          <div class="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center text-slate-950 font-black shadow-sm">
             <i class="fa-solid fa-motorcycle text-lg"></i>
           </div>
           <div>
-            <span class="font-black text-white text-lg tracking-tight">SEEKHO 2 WHEELER</span>
+            <span class="font-black text-slate-900 text-lg tracking-tight">SEEKHO 2 WHEELER</span>
             <div class="flex items-center space-x-2">
-              <span id="userBadge" class="text-[10px] bg-yellow-400 text-slate-950 px-2 py-0.5 rounded font-black uppercase"></span>
+              <span id="userBadge" class="text-[10px] bg-yellow-400 text-slate-950 px-2 py-0.5 rounded-md font-black uppercase"></span>
             </div>
           </div>
         </div>
-        <button onclick="handleLogout()" class="px-3.5 py-2 text-xs font-black text-red-400 bg-red-950/40 border border-red-900 hover:bg-red-900/60 rounded-xl transition flex items-center space-x-1.5">
+        <button onclick="handleLogout()" class="px-3.5 py-2 text-xs font-black text-red-600 bg-red-50 border border-red-200 hover:bg-red-100 rounded-xl transition flex items-center space-x-1.5">
           <i class="fa-solid fa-arrow-right-from-bracket"></i>
           <span>LOGOUT</span>
         </button>
@@ -99,24 +99,24 @@
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 space-y-6">
 
       <!-- Navigation Tabs -->
-      <div class="flex items-center space-x-2 overflow-x-auto pb-1 border-b border-slate-800">
-        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-md flex items-center space-x-2 whitespace-nowrap">
+      <div class="flex items-center space-x-2 overflow-x-auto pb-1 border-b border-slate-200">
+        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-sm flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-chart-pie"></i>
           <span>DASHBOARD & REVENUE</span>
         </button>
-        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-qrcode"></i>
           <span>QR ATTENDANCE SCANNER</span>
         </button>
-        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-user-plus"></i>
           <span>NEW ADMISSION</span>
         </button>
-        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-address-book"></i>
           <span>CUSTOMERS & PROFILES</span>
         </button>
-        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-calendar-day"></i>
           <span>DAILY SHIFT REPORT</span>
         </button>
@@ -125,13 +125,13 @@
       <!-- 1. DASHBOARD VIEW -->
       <section id="tabDashboard" class="space-y-6">
         <!-- Dual Filter Bar -->
-        <div class="bg-slate-900 p-4 rounded-3xl border border-slate-800 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
           <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-filter text-yellow-400"></i>
-            <span class="font-bold text-xs text-slate-300 uppercase">Live Filters:</span>
+            <i class="fa-solid fa-filter text-yellow-500"></i>
+            <span class="font-bold text-xs text-slate-700 uppercase">Live Filters:</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full md:w-auto">
-            <select id="filterBranch" onchange="renderDashboard()" class="p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs font-bold text-white focus:ring-2 focus:ring-yellow-400">
+            <select id="filterBranch" onchange="renderDashboard()" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-yellow-400">
               <option value="All">All Branches (Central)</option>
               <option value="Tollygunge">Tollygunge</option>
               <option value="Rabindra Sarovar">Rabindra Sarovar</option>
@@ -140,7 +140,7 @@
               <option value="Howrah">Howrah</option>
               <option value="Barasat">Barasat</option>
             </select>
-            <select id="filterMonth" onchange="renderDashboard()" class="p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs font-bold text-white focus:ring-2 focus:ring-yellow-400">
+            <select id="filterMonth" onchange="renderDashboard()" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-yellow-400">
               <option value="All">All Months (Lifetime)</option>
               <option value="2026-09" selected>September 2026</option>
               <option value="2026-08">August 2026</option>
@@ -151,54 +151,54 @@
 
         <!-- 4 Key Metrics (KPI Cards) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow relative overflow-hidden">
+          <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-blue-500"></div>
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Students</p>
-            <p id="dashTotalStudents" class="text-3xl font-black text-white mt-2">0</p>
+            <p id="dashTotalStudents" class="text-3xl font-black text-slate-900 mt-2">0</p>
             <p class="text-[11px] text-slate-500 font-semibold mt-1">Enrolled Registrations</p>
           </div>
-          <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow relative overflow-hidden">
+          <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-green-500"></div>
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Paid Revenue</p>
-            <p id="dashTotalPaid" class="text-3xl font-black text-green-400 mt-2">₹0</p>
-            <p id="paidPercentText" class="text-[11px] font-bold text-green-400 mt-1">0% Collected</p>
+            <p id="dashTotalPaid" class="text-3xl font-black text-green-600 mt-2">₹0</p>
+            <p id="paidPercentText" class="text-[11px] font-bold text-green-600 mt-1">0% Collected</p>
           </div>
-          <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow relative overflow-hidden">
+          <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-red-500"></div>
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Due Revenue</p>
-            <p id="dashTotalDue" class="text-3xl font-black text-red-400 mt-2">₹0</p>
-            <p id="duePercentText" class="text-[11px] font-bold text-red-400 mt-1">0% Outstanding</p>
+            <p id="dashTotalDue" class="text-3xl font-black text-red-600 mt-2">₹0</p>
+            <p id="duePercentText" class="text-[11px] font-bold text-red-600 mt-1">0% Outstanding</p>
           </div>
-          <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow relative overflow-hidden">
+          <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-yellow-400"></div>
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Vehicle Breakdown</p>
-            <p id="dashVehicles" class="text-lg font-black text-yellow-400 mt-2">🏍️ 0 | 🛵 0</p>
+            <p id="dashVehicles" class="text-lg font-black text-slate-900 mt-2">🏍️ 0 | 🛵 0</p>
             <p class="text-[11px] text-slate-500 font-semibold mt-1">Bike vs Scooty</p>
           </div>
         </div>
 
         <!-- Visual Revenue Split Graph Card -->
-        <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-md space-y-4">
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
           <div class="flex items-center justify-between">
-            <h3 class="font-black text-white text-base flex items-center space-x-2">
-              <i class="fa-solid fa-chart-simple text-yellow-400"></i>
+            <h3 class="font-black text-slate-900 text-base flex items-center space-x-2">
+              <i class="fa-solid fa-chart-simple text-yellow-500"></i>
               <span>REVENUE RATIO & COLLECTION METRIC</span>
             </h3>
-            <span id="dashExpectedRevenue" class="text-xs font-black bg-slate-800 px-3 py-1.5 rounded-xl text-yellow-400 border border-slate-700">TOTAL EXPECTED: ₹0</span>
+            <span id="dashExpectedRevenue" class="text-xs font-black bg-yellow-50 px-3 py-1.5 rounded-xl text-yellow-800 border border-yellow-200">TOTAL EXPECTED: ₹0</span>
           </div>
 
           <!-- Progress Bar Graph -->
           <div class="space-y-2">
-            <div class="h-6 w-full bg-slate-950 rounded-2xl overflow-hidden flex border border-slate-800">
-              <div id="graphPaidBar" class="bg-green-500 h-full transition-all duration-500 flex items-center justify-center text-[10px] text-slate-950 font-black" style="width: 0%;"></div>
+            <div class="h-6 w-full bg-slate-100 rounded-2xl overflow-hidden flex border border-slate-200">
+              <div id="graphPaidBar" class="bg-green-500 h-full transition-all duration-500 flex items-center justify-center text-[10px] text-white font-black" style="width: 0%;"></div>
               <div id="graphDueBar" class="bg-red-500 h-full transition-all duration-500 flex items-center justify-center text-[10px] text-white font-black" style="width: 0%;"></div>
             </div>
             <div class="flex justify-between text-xs font-bold px-1">
-              <div class="flex items-center space-x-1.5 text-green-400">
+              <div class="flex items-center space-x-1.5 text-green-600">
                 <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
                 <span>Paid Ratio: <b id="graphPaidPercent">0%</b></span>
               </div>
-              <div class="flex items-center space-x-1.5 text-red-400">
+              <div class="flex items-center space-x-1.5 text-red-600">
                 <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
                 <span>Due Ratio: <b id="graphDuePercent">0%</b></span>
               </div>
@@ -208,8 +208,8 @@
 
         <!-- 6 Branches Summary Cards Grid -->
         <div>
-          <h3 class="font-black text-white text-base mb-4 flex items-center space-x-2">
-            <i class="fa-solid fa-building-flag text-yellow-400"></i>
+          <h3 class="font-black text-slate-900 text-base mb-4 flex items-center space-x-2">
+            <i class="fa-solid fa-building-flag text-yellow-500"></i>
             <span>BRANCH-WISE LIVE PERFORMANCE</span>
           </h3>
           <div id="branchSummaryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -218,21 +218,21 @@
 
       <!-- 2. ATTENDANCE & SCANNER VIEW -->
       <section id="tabAttendance" class="hidden space-y-6">
-        <div class="bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-800 text-center max-w-xl mx-auto space-y-6">
+        <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm text-center max-w-xl mx-auto space-y-6">
           <div>
-            <h2 class="text-xl font-black text-white">QR Code Attendance Scanner</h2>
-            <p class="text-xs text-slate-400 mt-1">Scan student ID QR code from receipt to increment class attendance</p>
+            <h2 class="text-xl font-black text-slate-900">QR Code Attendance Scanner</h2>
+            <p class="text-xs text-slate-500 mt-1">Scan student ID QR code from receipt to increment class attendance</p>
           </div>
 
-          <div class="relative mx-auto max-w-xs aspect-square bg-slate-950 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-2xl flex items-center justify-center">
+          <div class="relative mx-auto max-w-xs aspect-square bg-slate-900 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-lg flex items-center justify-center">
             <div id="reader" class="w-full h-full"></div>
-            <div id="scannerOverlay" class="absolute inset-0 flex flex-col items-center justify-center text-white bg-slate-950/90 p-6 space-y-3">
+            <div id="scannerOverlay" class="absolute inset-0 flex flex-col items-center justify-center text-white bg-slate-950/80 p-6 space-y-3">
               <i class="fa-solid fa-camera text-4xl text-yellow-400"></i>
-              <p class="text-xs text-slate-400">Tap below to activate camera</p>
+              <p class="text-xs text-slate-300">Tap below to activate camera</p>
             </div>
           </div>
 
-          <button id="toggleScannerBtn" onclick="toggleScanner()" class="w-full sm:w-auto px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 mx-auto text-sm">
+          <button id="toggleScannerBtn" onclick="toggleScanner()" class="w-full sm:w-auto px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-md transition flex items-center justify-center space-x-2 mx-auto text-sm">
             <i class="fa-solid fa-camera"></i>
             <span id="scannerBtnText">START CAMERA</span>
           </button>
@@ -240,29 +240,29 @@
       </section>
 
       <!-- 3. ADMISSION FORM VIEW -->
-      <section id="tabAdmission" class="hidden bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-800 max-w-2xl mx-auto">
-        <div class="border-b border-slate-800 pb-4 mb-6">
-          <h2 class="text-xl font-black text-white">New Customer Admission</h2>
-          <p class="text-xs text-slate-400 mt-1">Instant registration with automatic QR generation and PDF receipt</p>
+      <section id="tabAdmission" class="hidden bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
+        <div class="border-b border-slate-100 pb-4 mb-6">
+          <h2 class="text-xl font-black text-slate-900">New Customer Admission</h2>
+          <p class="text-xs text-slate-500 mt-1">Instant registration with automatic QR generation and PDF receipt</p>
         </div>
 
         <form id="admissionForm" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Customer Name *</label>
-              <input type="text" id="admName" required placeholder="e.g. John Doe" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Name *</label>
+              <input type="text" id="admName" required placeholder="e.g. John Doe" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Phone Number *</label>
-              <input type="tel" id="admPhone" required placeholder="9876543210" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Phone Number *</label>
+              <input type="tel" id="admPhone" required placeholder="9876543210" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">WhatsApp Number *</label>
-              <input type="tel" id="admWhatsapp" required placeholder="Required for invoice" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp Number *</label>
+              <input type="tel" id="admWhatsapp" required placeholder="Required for invoice" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Select Branch *</label>
-              <select id="admBranch" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Select Branch *</label>
+              <select id="admBranch" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
                 <option value="Tollygunge">Tollygunge</option>
                 <option value="Rabindra Sarovar">Rabindra Sarovar</option>
                 <option value="New Town">New Town</option>
@@ -272,43 +272,43 @@
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Course Type</label>
-              <select id="admCourse" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Course Type</label>
+              <select id="admCourse" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
                 <option value="Scooty">🛵 Scooty Training</option>
                 <option value="Bike">🏍️ Bike Training</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Package Duration</label>
-              <select id="admPackage" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Package Duration</label>
+              <select id="admPackage" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
                 <option value="10">10 Days (10 Classes)</option>
                 <option value="15">15 Days (15 Classes)</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Total Fees (₹) *</label>
-              <input type="number" id="admTotalFees" oninput="calcAdmFees()" required placeholder="3000" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl font-black text-sm focus:ring-2 focus:ring-yellow-400" />
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Total Fees (₹) *</label>
+              <input type="number" id="admTotalFees" oninput="calcAdmFees()" required placeholder="3000" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl font-black text-sm focus:ring-2 focus:ring-yellow-400" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Paid Amount (₹)</label>
-              <input type="number" id="admPaidAmount" oninput="calcAdmFees()" placeholder="1000" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl font-black text-sm focus:ring-2 focus:ring-yellow-400" />
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Paid Amount (₹)</label>
+              <input type="number" id="admPaidAmount" oninput="calcAdmFees()" placeholder="1000" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl font-black text-sm focus:ring-2 focus:ring-yellow-400" />
             </div>
           </div>
 
-          <div class="p-3 bg-slate-800/80 border border-slate-700 rounded-2xl flex items-center justify-between">
-            <label class="text-xs font-bold text-slate-300 flex items-center space-x-2 cursor-pointer">
-              <input type="checkbox" id="admFullPay" onchange="toggleAdmFullPay()" class="w-4 h-4 text-yellow-400 rounded focus:ring-0" />
+          <div class="p-3 bg-yellow-50 border border-yellow-200 rounded-2xl flex items-center justify-between">
+            <label class="text-xs font-bold text-slate-800 flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" id="admFullPay" onchange="toggleAdmFullPay()" class="w-4 h-4 text-yellow-500 rounded focus:ring-0" />
               <span>Full Payment Complete</span>
             </label>
-            <span class="text-xs font-black text-slate-300">Outstanding Due: <span id="admDueDisplay" class="text-red-400 text-sm">₹0</span></span>
+            <span class="text-xs font-black text-slate-700">Outstanding Due: <span id="admDueDisplay" class="text-red-600 text-sm">₹0</span></span>
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Customer Photo * (Auto-Optimized)</label>
-            <input type="file" id="admPhoto" accept="image/*" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-slate-300 rounded-xl text-xs" />
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Customer Photo * (Auto-Optimized)</label>
+            <input type="file" id="admPhoto" accept="image/*" required class="w-full p-2.5 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
           </div>
 
-          <button type="submit" id="admSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm">
+          <button type="submit" id="admSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-2xl shadow-md transition flex items-center justify-center space-x-2 text-sm">
             <i class="fa-solid fa-bolt"></i>
             <span>SAVE ADMISSION & CREATE PROFILE</span>
           </button>
@@ -319,10 +319,10 @@
       <section id="tabStudents" class="hidden space-y-4">
         <div class="flex flex-col sm:flex-row items-center gap-3">
           <div class="relative w-full">
-            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-500"></i>
-            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search by name or phone..." class="w-full pl-11 pr-4 py-3 bg-slate-900 border border-slate-800 rounded-2xl text-xs font-semibold text-white focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search by name or phone..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-sm" />
           </div>
-          <select id="studentFilterBranch" onchange="renderStudentList()" class="w-full sm:w-56 p-3 bg-slate-900 border border-slate-800 rounded-2xl text-xs font-black text-white">
+          <select id="studentFilterBranch" onchange="renderStudentList()" class="w-full sm:w-56 p-3 bg-white border border-slate-200 rounded-2xl text-xs font-black text-slate-900 shadow-sm">
             <option value="All">All Branches</option>
             <option value="Tollygunge">Tollygunge</option>
             <option value="Rabindra Sarovar">Rabindra Sarovar</option>
@@ -338,19 +338,19 @@
 
       <!-- 5. DAILY SHIFT SUMMARY VIEW -->
       <section id="tabShift" class="hidden space-y-4">
-        <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 max-w-xl mx-auto space-y-4">
-          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-            <h2 class="text-base font-black text-white">Today's Shift Performance</h2>
-            <span class="text-xs font-bold text-slate-400" id="shiftTodayDate"></span>
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm max-w-xl mx-auto space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h2 class="text-base font-black text-slate-900">Today's Shift Performance</h2>
+            <span class="text-xs font-bold text-slate-500" id="shiftTodayDate"></span>
           </div>
           <div class="grid grid-cols-2 gap-4">
-            <div class="p-4 bg-slate-950 rounded-2xl border border-slate-800 text-center">
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
               <p class="text-[10px] font-black text-slate-400 uppercase">Today's Admissions</p>
-              <p id="shiftTodayCount" class="text-3xl font-black text-white mt-1">0</p>
+              <p id="shiftTodayCount" class="text-3xl font-black text-slate-900 mt-1">0</p>
             </div>
-            <div class="p-4 bg-slate-950 rounded-2xl border border-slate-800 text-center">
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
               <p class="text-[10px] font-black text-slate-400 uppercase">Cash Collected</p>
-              <p id="shiftTodayCash" class="text-3xl font-black text-green-400 mt-1">₹0</p>
+              <p id="shiftTodayCash" class="text-3xl font-black text-green-600 mt-1">₹0</p>
             </div>
           </div>
         </div>
@@ -360,72 +360,72 @@
   </div>
 
   <!-- ================= POPUP MODAL 1: SUCCESS & PORTFOLIO MODAL ================= -->
-  <div id="portfolioModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 rounded-3xl max-w-md w-full p-6 border-t-8 border-yellow-400 border-slate-800 shadow-2xl space-y-4 text-center">
-      <div class="w-12 h-12 bg-green-950 text-green-400 border border-green-800 rounded-full flex items-center justify-center text-xl mx-auto font-black">
+  <div id="portfolioModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 text-center">
+      <div class="w-12 h-12 bg-green-100 text-green-600 border border-green-200 rounded-full flex items-center justify-center text-xl mx-auto font-black">
         <i class="fa-solid fa-check"></i>
       </div>
-      <h3 class="text-lg font-black text-white">Profile & QR Ready!</h3>
+      <h3 class="text-lg font-black text-slate-900">Profile & QR Ready!</h3>
       
-      <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-left space-y-2">
+      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left space-y-2">
         <div class="flex items-center space-x-3">
-          <img id="portModalImg" src="" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400" />
+          <img id="portModalImg" src="" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm" />
           <div>
-            <h4 id="portModalName" class="font-bold text-white text-sm"></h4>
-            <p id="portModalDetails" class="text-xs text-slate-400"></p>
+            <h4 id="portModalName" class="font-bold text-slate-900 text-sm"></h4>
+            <p id="portModalDetails" class="text-xs text-slate-500"></p>
           </div>
         </div>
-        <div class="border-t border-slate-800 pt-2 flex justify-between text-xs font-bold">
-          <span class="text-slate-400">Total: <span id="portModalTotal" class="text-white"></span></span>
-          <span class="text-slate-400">Paid: <span id="portModalPaid" class="text-green-400"></span></span>
-          <span class="text-slate-400">Due: <span id="portModalDue" class="text-red-400"></span></span>
+        <div class="border-t border-slate-200 pt-2 flex justify-between text-xs font-bold">
+          <span class="text-slate-600">Total: <span id="portModalTotal" class="text-slate-900"></span></span>
+          <span class="text-slate-600">Paid: <span id="portModalPaid" class="text-green-600"></span></span>
+          <span class="text-slate-600">Due: <span id="portModalDue" class="text-red-600"></span></span>
         </div>
       </div>
 
-      <div class="flex justify-center p-3 bg-white rounded-2xl border">
+      <div class="flex justify-center p-3 bg-white rounded-2xl border border-slate-200">
         <img id="portModalQr" class="w-40 h-40" />
       </div>
 
       <div class="grid grid-cols-2 gap-2 pt-2">
-        <button onclick="downloadActiveReceipt()" class="p-3 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-xl text-xs font-black flex items-center justify-center space-x-1">
+        <button onclick="downloadActiveReceipt()" class="p-3 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm">
           <i class="fa-solid fa-file-pdf"></i>
           <span>PDF RECEIPT</span>
         </button>
-        <button onclick="sendActiveWhatsapp()" class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-black flex items-center justify-center space-x-1">
+        <button onclick="sendActiveWhatsapp()" class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm">
           <i class="fa-brands fa-whatsapp"></i>
           <span>WHATSAPP BILL</span>
         </button>
       </div>
-      <button onclick="closeModal('portfolioModal')" class="text-xs font-bold text-slate-500 hover:text-slate-300">Close Window</button>
+      <button onclick="closeModal('portfolioModal')" class="text-xs font-bold text-slate-400 hover:text-slate-600">Close Window</button>
     </div>
   </div>
 
   <!-- ================= POPUP MODAL 2: FULL EDIT CUSTOMER MODAL ================= -->
-  <div id="editModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-slate-900 rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border-slate-800 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-        <h3 class="text-base font-black text-white">Edit Customer Information</h3>
-        <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+  <div id="editModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+        <h3 class="text-base font-black text-slate-900">Edit Customer Information</h3>
+        <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <form id="editForm" class="space-y-3">
         <input type="hidden" id="editStudentId" />
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Customer Name</label>
-            <input type="text" id="editName" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs" />
+            <label class="block text-xs font-bold text-slate-700 mb-1">Customer Name</label>
+            <input type="text" id="editName" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Phone Number</label>
-            <input type="tel" id="editPhone" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs" />
+            <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number</label>
+            <input type="tel" id="editPhone" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">WhatsApp</label>
-            <input type="tel" id="editWhatsapp" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs" />
+            <label class="block text-xs font-bold text-slate-700 mb-1">WhatsApp</label>
+            <input type="tel" id="editWhatsapp" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Branch</label>
-            <select id="editBranch" class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-bold">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Branch</label>
+            <select id="editBranch" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
               <option value="Tollygunge">Tollygunge</option>
               <option value="Rabindra Sarovar">Rabindra Sarovar</option>
               <option value="New Town">New Town</option>
@@ -435,27 +435,27 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Total Fees (₹)</label>
-            <input type="number" id="editTotalFees" oninput="calcEditFees()" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-black" />
+            <label class="block text-xs font-bold text-slate-700 mb-1">Total Fees (₹)</label>
+            <input type="number" id="editTotalFees" oninput="calcEditFees()" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-300 mb-1">Paid Amount (₹)</label>
-            <input type="number" id="editPaidAmount" oninput="calcEditFees()" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-black" />
+            <label class="block text-xs font-bold text-slate-700 mb-1">Paid Amount (₹)</label>
+            <input type="number" id="editPaidAmount" oninput="calcEditFees()" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
           </div>
         </div>
 
-        <div class="p-3 bg-slate-950 rounded-xl flex justify-between text-xs font-bold border border-slate-800">
-          <span class="text-slate-400">Updated Due:</span>
-          <span id="editDueDisplay" class="text-red-400">₹0</span>
+        <div class="p-3 bg-yellow-50 rounded-xl flex justify-between text-xs font-bold border border-yellow-200">
+          <span class="text-slate-700">Updated Due:</span>
+          <span id="editDueDisplay" class="text-red-600">₹0</span>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1">Classes Attended</label>
-          <input type="number" id="editClassesAttended" min="0" max="15" class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-black" />
+          <label class="block text-xs font-bold text-slate-700 mb-1">Classes Attended</label>
+          <input type="number" id="editClassesAttended" min="0" max="15" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
         </div>
 
         <div class="flex space-x-2 pt-2">
-          <button type="submit" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs">
+          <button type="submit" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm">
             SAVE & UPDATE
           </button>
           <button type="button" onclick="deleteCustomer()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs">
@@ -468,7 +468,6 @@
 
   <!-- ================= LOGIC & DUAL-STORAGE SYSTEM ================= -->
   <script>
-    // Firebase Config (Sync engine)
     const firebaseConfig = {
       apiKey: "AIzaSyAGbROD4YLWMyWkxgR0ZRe8nUW-x2Cei9E",
       authDomain: "seekho2wheeler-11dd4.firebaseapp.com",
@@ -488,7 +487,6 @@
     let html5QrCode = null;
     let isScanning = false;
 
-    // Load Local Data Immediately (Zero Hang)
     function loadLocal() {
       const stored = localStorage.getItem("seekho_students_data");
       if (stored) {
@@ -500,24 +498,22 @@
     }
     loadLocal();
 
-    // Login Role Switcher
     function setLoginRole(role) {
       currentRole = role;
       if (role === "owner") {
-        document.getElementById("roleOwnerBtn").className = "flex-1 py-2.5 text-xs font-black rounded-lg bg-yellow-400 text-slate-950 shadow transition";
-        document.getElementById("roleTrainerBtn").className = "flex-1 py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition";
+        document.getElementById("roleOwnerBtn").className = "flex-1 py-2.5 text-xs font-black rounded-xl bg-yellow-400 text-slate-950 shadow-sm transition";
+        document.getElementById("roleTrainerBtn").className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-600 hover:text-slate-900 transition";
         document.getElementById("branchSelectGroup").classList.add("hidden");
         document.getElementById("usernameGroup").classList.remove("hidden");
         document.getElementById("username").value = "admin";
       } else {
-        document.getElementById("roleTrainerBtn").className = "flex-1 py-2.5 text-xs font-black rounded-lg bg-yellow-400 text-slate-950 shadow transition";
-        document.getElementById("roleOwnerBtn").className = "flex-1 py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition";
+        document.getElementById("roleTrainerBtn").className = "flex-1 py-2.5 text-xs font-black rounded-xl bg-yellow-400 text-slate-950 shadow-sm transition";
+        document.getElementById("roleOwnerBtn").className = "flex-1 py-2.5 text-xs font-bold rounded-xl text-slate-600 hover:text-slate-900 transition";
         document.getElementById("branchSelectGroup").classList.remove("hidden");
         document.getElementById("usernameGroup").classList.add("hidden");
       }
     }
 
-    // Login Submit
     document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const p = document.getElementById("password").value.trim();
@@ -569,15 +565,14 @@
         const sec = document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}`);
         const btn = document.getElementById(`nav${t.charAt(0).toUpperCase() + t.slice(1)}Btn`);
         if (sec) sec.classList.add("hidden");
-        if (btn) btn.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap";
+        if (btn) btn.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap";
       });
       const activeSec = document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
       const activeBtn = document.getElementById(`nav${tab.charAt(0).toUpperCase() + tab.slice(1)}Btn`);
       if (activeSec) activeSec.classList.remove("hidden");
-      if (activeBtn) activeBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-md flex items-center space-x-2 whitespace-nowrap";
+      if (activeBtn) activeBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-sm flex items-center space-x-2 whitespace-nowrap";
     }
 
-    // Real-Time Sync Listener
     function initFirebaseSync() {
       try {
         db.collection("students").onSnapshot((snap) => {
@@ -592,7 +587,6 @@
       } catch(e) {}
     }
 
-    // High Speed Canvas Compressor
     function compressImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -622,7 +616,6 @@
       });
     }
 
-    // Fee Calculations
     function calcAdmFees() {
       const total = Number(document.getElementById("admTotalFees").value) || 0;
       let paid = Number(document.getElementById("admPaidAmount").value) || 0;
@@ -642,7 +635,6 @@
       calcAdmFees();
     }
 
-    // Instant Admission Submit
     document.getElementById("admissionForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const photoFile = document.getElementById("admPhoto").files[0];
@@ -680,14 +672,12 @@
           createdAt: new Date().toISOString()
         };
 
-        // 1. Instant local persistence & UI update
         rawStudents.unshift(newStudent);
         saveLocal();
         renderDashboard();
         renderStudentList();
         renderShiftReport();
 
-        // 2. Async Firebase Save
         try {
           db.collection("students").add(newStudent).then(docRef => {
             newStudent.id = docRef.id;
@@ -698,7 +688,6 @@
         document.getElementById("admissionForm").reset();
         document.getElementById("admDueDisplay").textContent = "₹0";
 
-        // Show instant Portfolio & QR popup
         showPortfolioModal(newStudent);
       } catch (err) {
         alert("Error saving: " + err.message);
@@ -707,7 +696,6 @@
       btn.innerHTML = `<i class="fa-solid fa-bolt"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
 
-    // Dashboard & Metrics Calculation
     function renderDashboard() {
       const selectedBranch = document.getElementById("filterBranch").value;
       const selectedMonth = document.getElementById("filterMonth").value;
@@ -746,7 +734,6 @@
       const scooties = filtered.filter(s => s.courseType === "Scooty").length;
       document.getElementById("dashVehicles").textContent = `🏍️ ${bikes} | 🛵 ${scooties}`;
 
-      // 6 Branches Summary Cards Grid
       const grid = document.getElementById("branchSummaryGrid");
       grid.innerHTML = "";
       ALL_BRANCHES.forEach(b => {
@@ -755,22 +742,21 @@
         const bDue = bStudents.reduce((acc, s) => acc + (Number(s.dueAmount) || 0), 0);
 
         const card = document.createElement("div");
-        card.className = "bg-slate-900 p-4 rounded-2xl border border-slate-800 shadow space-y-2";
+        card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2";
         card.innerHTML = `
-          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-            <span class="font-black text-white text-sm">${b}</span>
-            <span class="text-[10px] font-black bg-slate-800 text-yellow-400 border border-slate-700 px-2 py-0.5 rounded">${bStudents.length} Students</span>
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+            <span class="font-black text-slate-900 text-sm">${b}</span>
+            <span class="text-[10px] font-black bg-yellow-100 text-yellow-900 border border-yellow-300 px-2 py-0.5 rounded-md">${bStudents.length} Students</span>
           </div>
           <div class="flex justify-between text-xs font-bold">
-            <span class="text-green-400">Paid: ₹${bPaid}</span>
-            <span class="text-red-400">Due: ₹${bDue}</span>
+            <span class="text-green-600">Paid: ₹${bPaid}</span>
+            <span class="text-red-600">Due: ₹${bDue}</span>
           </div>
         `;
         grid.appendChild(card);
       });
     }
 
-    // Customer List Render
     function renderStudentList() {
       const q = document.getElementById("searchStudentInput").value.toLowerCase();
       const branchFilter = document.getElementById("studentFilterBranch").value;
@@ -784,26 +770,26 @@
       });
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-500 font-bold text-xs uppercase tracking-wider">No customer records found</div>`;
+        container.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-400 font-bold text-xs uppercase tracking-wider">No customer records found</div>`;
         return;
       }
 
       filtered.forEach(student => {
         const card = document.createElement("div");
-        card.className = "bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow space-y-4 hover:border-slate-700 transition";
+        card.className = "bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4 hover:shadow-md transition";
         const progress = Math.min(100, Math.round(((student.classesAttended || 0) / student.packageDays) * 100));
 
         card.innerHTML = `
           <div class="flex items-start justify-between">
             <div class="flex items-center space-x-3">
-              <img src="${student.photoUrl || 'https://via.placeholder.com/80'}" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400" />
+              <img src="${student.photoUrl || 'https://via.placeholder.com/80'}" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm" />
               <div>
-                <h4 class="font-black text-white text-sm">${student.name}</h4>
-                <p class="text-xs text-slate-400 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-400/20 text-yellow-400 px-1.5 py-0.5 rounded font-black">${student.branch}</span></p>
-                <p class="text-[11px] font-semibold text-slate-500 mt-0.5">${student.courseType} (${student.packageDays} Days)</p>
+                <h4 class="font-black text-slate-900 text-sm">${student.name}</h4>
+                <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-100 text-yellow-900 px-1.5 py-0.5 rounded font-bold">${student.branch}</span></p>
+                <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days)</p>
               </div>
             </div>
-            <button onclick='openEditModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-yellow-400 hover:text-slate-950 text-slate-300 transition flex items-center justify-center text-xs" title="Edit Customer">
+            <button onclick='openEditModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-yellow-400 hover:text-slate-950 text-slate-600 transition flex items-center justify-center text-xs" title="Edit Customer">
               <i class="fa-solid fa-pen"></i>
             </button>
           </div>
@@ -811,27 +797,27 @@
           <!-- Progress -->
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
-              <span class="text-slate-300">Classes: ${student.classesAttended || 0}/${student.packageDays}</span>
-              <span class="${student.dueAmount > 0 ? 'text-red-400 bg-red-950/60 border border-red-900 px-2 py-0.5 rounded' : 'text-green-400 bg-green-950/60 border border-green-900 px-2 py-0.5 rounded'}">
+              <span class="text-slate-700">Classes: ${student.classesAttended || 0}/${student.packageDays}</span>
+              <span class="${student.dueAmount > 0 ? 'text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-md' : 'text-green-600 bg-green-50 border border-green-200 px-2 py-0.5 rounded-md'}">
                 ${student.dueAmount > 0 ? `Due: ₹${student.dueAmount}` : 'Fully Paid'}
               </span>
             </div>
-            <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
               <div class="bg-yellow-400 h-full rounded-full transition-all" style="width: ${progress}%;"></div>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="flex space-x-2 pt-2 border-t border-slate-800">
-            <button onclick='showPortfolioModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center space-x-1.5">
+          <div class="flex space-x-2 pt-2 border-t border-slate-100">
+            <button onclick='showPortfolioModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-id-card"></i>
               <span>PROFILE & QR</span>
             </button>
-            <button onclick='downloadPdfReceipt(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="bg-yellow-400 hover:bg-yellow-500 text-slate-950 text-xs font-black px-3 py-2.5 rounded-xl transition flex items-center space-x-1" title="Download Receipt">
+            <button onclick='downloadPdfReceipt(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="bg-yellow-400 hover:bg-yellow-500 text-slate-950 text-xs font-black px-3 py-2.5 rounded-xl transition flex items-center space-x-1 shadow-sm" title="Download Receipt">
               <i class="fa-solid fa-file-arrow-down"></i>
             </button>
             ${student.dueAmount > 0 ? `
-              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues before the 5th class as per policy. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center" title="WhatsApp Reminder">
+              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues before the 5th class as per policy. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center shadow-sm" title="WhatsApp Reminder">
                 <i class="fa-brands fa-whatsapp text-sm"></i>
               </a>
             ` : ''}
@@ -841,7 +827,6 @@
       });
     }
 
-    // Daily Shift Report
     function renderShiftReport() {
       const todayStr = new Date().toISOString().slice(0, 10);
       const todayStudents = rawStudents.filter(s => s.createdAt && s.createdAt.slice(0, 10) === todayStr && (currentUser.role === "owner" ? true : s.branch === currentUser.branch));
@@ -850,7 +835,6 @@
       document.getElementById("shiftTodayCash").textContent = `₹${todayCash}`;
     }
 
-    // Portfolio Popup Logic
     async function showPortfolioModal(student) {
       activeStudent = student;
       document.getElementById("portModalName").textContent = student.name;
@@ -871,7 +855,6 @@
       document.getElementById(id).classList.add("hidden");
     }
 
-    // PDF Generator
     async function downloadPdfReceipt(student) {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
@@ -931,7 +914,6 @@
       window.open(`https://wa.me/91${activeStudent.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
     }
 
-    // Edit Modal Logic
     function openEditModal(student) {
       document.getElementById("editStudentId").value = student.id;
       document.getElementById("editName").value = student.name;
@@ -975,7 +957,6 @@
         renderStudentList();
         renderShiftReport();
 
-        // Async sync
         try {
           db.collection("students").doc(id).update(rawStudents[idx]).catch(()=>{});
         } catch(e) {}
@@ -998,7 +979,6 @@
       }
     }
 
-    // QR Attendance Scanner
     function toggleScanner() {
       const overlay = document.getElementById("scannerOverlay");
       const text = document.getElementById("scannerBtnText");
