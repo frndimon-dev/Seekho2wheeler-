@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seekho 2 Wheeler - Training Management System</title>
+  <title>Seekho 2 Wheeler - Management Portal</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -11,62 +11,61 @@
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
   <!-- QR Code, Scanner & PDF -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap');
     body {
-      font-family: 'Hind Siliguri', system-ui, -apple-system, sans-serif;
-      background-color: #f8fafc;
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
   </style>
 </head>
-<body class="text-slate-900 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col antialiased selection:bg-yellow-400 selection:text-slate-900">
 
-  <!-- ================= AUTH SCREEN ================= -->
+  <!-- ================= AUTHENTICATION SCREEN ================= -->
   <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 bg-slate-950">
-    <div class="bg-white border-t-8 border-yellow-400 p-8 rounded-3xl shadow-2xl w-full max-w-md">
+    <div class="bg-slate-900 border-t-8 border-yellow-400 p-8 rounded-3xl shadow-2xl w-full max-w-md border border-slate-800">
       <div class="text-center mb-6">
-        <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-400 text-slate-950 rounded-2xl text-2xl font-black mb-3 shadow-lg">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-yellow-400 text-slate-950 rounded-2xl text-2xl font-black mb-3 shadow-lg shadow-yellow-400/20">
           <i class="fa-solid fa-motorcycle"></i>
         </div>
-        <h1 class="text-2xl font-bold text-slate-900">শিখো ২-হুইলার</h1>
-        <p class="text-sm font-medium text-slate-500 mt-1">ট্রেনিং সেন্টার ম্যানেজমেন্ট পোর্টাল</p>
+        <h1 class="text-2xl font-black text-white tracking-tight">SEEKHO 2 WHEELER</h1>
+        <p class="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Training Centre Portal</p>
       </div>
 
-      <div class="flex bg-slate-100 p-1 rounded-xl mb-6">
-        <button type="button" id="roleOwnerBtn" onclick="setLoginRole('owner')" class="flex-1 py-2 text-sm font-bold rounded-lg bg-yellow-400 text-slate-950 shadow-sm transition">ওনার প্যানেল</button>
-        <button type="button" id="roleTrainerBtn" onclick="setLoginRole('trainer')" class="flex-1 py-2 text-sm font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition">ট্রেনার প্যানেল</button>
+      <div class="flex bg-slate-800 p-1 rounded-xl mb-6 border border-slate-700">
+        <button type="button" id="roleOwnerBtn" onclick="setLoginRole('owner')" class="flex-1 py-2.5 text-xs font-black rounded-lg bg-yellow-400 text-slate-950 shadow transition">OWNER PORTAL</button>
+        <button type="button" id="roleTrainerBtn" onclick="setLoginRole('trainer')" class="flex-1 py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition">TRAINER PORTAL</button>
       </div>
 
       <form id="loginForm" class="space-y-4">
         <div id="branchSelectGroup" class="hidden">
-          <label class="block text-sm font-bold text-slate-700 mb-1">ব্রাঞ্চ নির্বাচন করুন</label>
-          <select id="loginBranch" class="w-full p-3.5 border border-slate-300 rounded-xl bg-slate-50 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-            <option value="টালিগঞ্জ">টালিগঞ্জ ব্রাঞ্চ</option>
-            <option value="রবীন্দ্র সরোবর">রবীন্দ্র সরোবর ব্রাঞ্চ</option>
-            <option value="নিউটাউন">নিউটাউন ব্রাঞ্চ</option>
-            <option value="সোদপুর">সোদপুর ব্রাঞ্চ</option>
-            <option value="হাওড়া">হাওড়া ব্রাঞ্চ</option>
-            <option value="বারাসাত">বারাসাত ব্রাঞ্চ</option>
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Select Branch</label>
+          <select id="loginBranch" class="w-full p-3.5 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-bold text-sm">
+            <option value="Tollygunge">Tollygunge Branch</option>
+            <option value="Rabindra Sarovar">Rabindra Sarovar Branch</option>
+            <option value="New Town">New Town Branch</option>
+            <option value="Sodepur">Sodepur Branch</option>
+            <option value="Howrah">Howrah Branch</option>
+            <option value="Barasat">Barasat Branch</option>
           </select>
         </div>
 
         <div id="usernameGroup">
-          <label class="block text-sm font-bold text-slate-700 mb-1">ইউজার আইডি</label>
-          <input type="text" id="username" placeholder="admin" value="admin" class="w-full p-3.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none" required />
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">User ID</label>
+          <input type="text" id="username" placeholder="admin" value="admin" class="w-full p-3.5 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold text-sm" required />
         </div>
 
         <div>
-          <label class="block text-sm font-bold text-slate-700 mb-1">পাসওয়ার্ড</label>
-          <input type="password" id="password" placeholder="••••••••" class="w-full p-3.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none" required />
+          <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Password</label>
+          <input type="password" id="password" placeholder="••••••••" class="w-full p-3.5 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold text-sm" required />
         </div>
 
-        <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-bold py-3.5 rounded-xl shadow-lg hover:shadow-xl transition flex items-center justify-center space-x-2">
-          <span>লগইন করুন</span>
+        <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-xl shadow-lg shadow-yellow-400/20 transition flex items-center justify-center space-x-2 text-sm">
+          <span>SECURE LOGIN</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
       </form>
@@ -76,22 +75,22 @@
   <!-- ================= MAIN DASHBOARD APP ================= -->
   <div id="mainApp" class="hidden flex-col min-h-screen">
     <!-- Navbar -->
-    <header class="bg-white border-b border-slate-200 px-4 py-3 sticky top-0 z-40 shadow-sm">
+    <header class="bg-slate-900 border-b border-slate-800 px-4 py-3 sticky top-0 z-40 shadow-lg">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center text-slate-950 font-black shadow-md">
             <i class="fa-solid fa-motorcycle text-lg"></i>
           </div>
           <div>
-            <span class="font-black text-slate-900 text-lg tracking-tight">শিখো ২-হুইলার</span>
+            <span class="font-black text-white text-lg tracking-tight">SEEKHO 2 WHEELER</span>
             <div class="flex items-center space-x-2">
-              <span id="userBadge" class="text-xs bg-yellow-100 border border-yellow-300 text-yellow-900 px-2 py-0.5 rounded-md font-bold"></span>
+              <span id="userBadge" class="text-[10px] bg-yellow-400 text-slate-950 px-2 py-0.5 rounded font-black uppercase"></span>
             </div>
           </div>
         </div>
-        <button onclick="handleLogout()" class="px-3.5 py-2 text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 rounded-xl transition flex items-center space-x-1.5">
+        <button onclick="handleLogout()" class="px-3.5 py-2 text-xs font-black text-red-400 bg-red-950/40 border border-red-900 hover:bg-red-900/60 rounded-xl transition flex items-center space-x-1.5">
           <i class="fa-solid fa-arrow-right-from-bracket"></i>
-          <span>লগআউট</span>
+          <span>LOGOUT</span>
         </button>
       </div>
     </header>
@@ -100,108 +99,108 @@
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 space-y-6">
 
       <!-- Navigation Tabs -->
-      <div class="flex items-center space-x-2 overflow-x-auto pb-1 border-b border-slate-200">
-        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-yellow-400 text-slate-950 shadow-sm flex items-center space-x-2 whitespace-nowrap">
+      <div class="flex items-center space-x-2 overflow-x-auto pb-1 border-b border-slate-800">
+        <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-md flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-chart-pie"></i>
-          <span>রেভিনিউ ড্যাশবোর্ড</span>
+          <span>DASHBOARD & REVENUE</span>
         </button>
-        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-qrcode"></i>
-          <span>স্ক্যানার ও অ্যাটেন্ডেন্স</span>
+          <span>QR ATTENDANCE SCANNER</span>
         </button>
-        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navAdmBtn" onclick="switchTab('admission')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-user-plus"></i>
-          <span>নতুন অ্যাডমিশন</span>
+          <span>NEW ADMISSION</span>
         </button>
-        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navListBtn" onclick="switchTab('students')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-address-book"></i>
-          <span>কাস্টমার তালিকা</span>
+          <span>CUSTOMERS & PROFILES</span>
         </button>
-        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap">
+        <button id="navShiftBtn" onclick="switchTab('shift')" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap">
           <i class="fa-solid fa-calendar-day"></i>
-          <span>ডেইলি শিফট সামারি</span>
+          <span>DAILY SHIFT REPORT</span>
         </button>
       </div>
 
       <!-- 1. DASHBOARD VIEW -->
       <section id="tabDashboard" class="space-y-6">
         <!-- Dual Filter Bar -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
-          <div class="flex items-center space-x-2 w-full md:w-auto">
-            <i class="fa-solid fa-filter text-yellow-500 text-lg"></i>
-            <span class="font-bold text-sm text-slate-700">ফিল্টার প্যানেল:</span>
+        <div class="bg-slate-900 p-4 rounded-3xl border border-slate-800 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-filter text-yellow-400"></i>
+            <span class="font-bold text-xs text-slate-300 uppercase">Live Filters:</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full md:w-auto">
-            <select id="filterBranch" onchange="renderDashboard()" class="p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-              <option value="All">🏢 সমস্ত ব্রাঞ্চ (All Branches)</option>
-              <option value="টালিগঞ্জ">টালিগঞ্জ</option>
-              <option value="রবীন্দ্র সরোবর">রবীন্দ্র সরোবর</option>
-              <option value="নিউটাউন">নিউটাউন</option>
-              <option value="সোদপুর">সোদপুর</option>
-              <option value="হাওড়া">হাওড়া</option>
-              <option value="বারাসাত">বারাসাত</option>
+            <select id="filterBranch" onchange="renderDashboard()" class="p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs font-bold text-white focus:ring-2 focus:ring-yellow-400">
+              <option value="All">All Branches (Central)</option>
+              <option value="Tollygunge">Tollygunge</option>
+              <option value="Rabindra Sarovar">Rabindra Sarovar</option>
+              <option value="New Town">New Town</option>
+              <option value="Sodepur">Sodepur</option>
+              <option value="Howrah">Howrah</option>
+              <option value="Barasat">Barasat</option>
             </select>
-            <select id="filterMonth" onchange="renderDashboard()" class="p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-              <option value="All">📅 সমস্ত মাস (All Months)</option>
-              <option value="2026-09" selected>সেপ্টেম্বর ২০২৬</option>
-              <option value="2026-08">আগস্ট ২০২৬</option>
-              <option value="2026-07">জুলাই ২০২৬</option>
+            <select id="filterMonth" onchange="renderDashboard()" class="p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs font-bold text-white focus:ring-2 focus:ring-yellow-400">
+              <option value="All">All Months (Lifetime)</option>
+              <option value="2026-09" selected>September 2026</option>
+              <option value="2026-08">August 2026</option>
+              <option value="2026-07">July 2026</option>
             </select>
           </div>
         </div>
 
         <!-- 4 Key Metrics (KPI Cards) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">মোট অ্যাডমিশন</p>
-            <p id="dashTotalStudents" class="text-3xl font-black text-slate-900 mt-2">0</p>
-            <p class="text-xs text-slate-400 mt-1">সর্বমোট রেজিস্টার্ড স্টুডেন্ট</p>
+          <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-1.5 h-full bg-blue-500"></div>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Students</p>
+            <p id="dashTotalStudents" class="text-3xl font-black text-white mt-2">0</p>
+            <p class="text-[11px] text-slate-500 font-semibold mt-1">Enrolled Registrations</p>
           </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-2 h-full bg-green-500"></div>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">সংগৃহীত পেমেন্ট (Paid)</p>
-            <p id="dashTotalPaid" class="text-3xl font-black text-green-600 mt-2">₹0</p>
-            <p id="paidPercentText" class="text-xs font-bold text-green-600 mt-1">০% সংগৃহীত</p>
+          <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-1.5 h-full bg-green-500"></div>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Paid Revenue</p>
+            <p id="dashTotalPaid" class="text-3xl font-black text-green-400 mt-2">₹0</p>
+            <p id="paidPercentText" class="text-[11px] font-bold text-green-400 mt-1">0% Collected</p>
           </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-2 h-full bg-red-500"></div>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">বকেয়া ফিস (Due)</p>
-            <p id="dashTotalDue" class="text-3xl font-black text-red-600 mt-2">₹0</p>
-            <p id="duePercentText" class="text-xs font-bold text-red-600 mt-1">০% বকেয়া</p>
+          <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-1.5 h-full bg-red-500"></div>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Due Revenue</p>
+            <p id="dashTotalDue" class="text-3xl font-black text-red-400 mt-2">₹0</p>
+            <p id="duePercentText" class="text-[11px] font-bold text-red-400 mt-1">0% Outstanding</p>
           </div>
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-2 h-full bg-yellow-400"></div>
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">কোর্স ও যানবাহন অনুপাত</p>
-            <p id="dashVehicles" class="text-lg font-black text-slate-800 mt-2">🏍️ 0 | 🛵 0</p>
-            <p class="text-xs text-slate-400 mt-1">Bike vs Scooty ব্যাচ</p>
+          <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-1.5 h-full bg-yellow-400"></div>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Vehicle Breakdown</p>
+            <p id="dashVehicles" class="text-lg font-black text-yellow-400 mt-2">🏍️ 0 | 🛵 0</p>
+            <p class="text-[11px] text-slate-500 font-semibold mt-1">Bike vs Scooty</p>
           </div>
         </div>
 
         <!-- Visual Revenue Split Graph Card -->
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+        <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-md space-y-4">
           <div class="flex items-center justify-between">
-            <h3 class="font-black text-slate-900 text-lg flex items-center space-x-2">
-              <i class="fa-solid fa-chart-simple text-yellow-500"></i>
-              <span>রেভিনিউ অনুপাত ও কালেকশন গ্রাফ</span>
+            <h3 class="font-black text-white text-base flex items-center space-x-2">
+              <i class="fa-solid fa-chart-simple text-yellow-400"></i>
+              <span>REVENUE RATIO & COLLECTION METRIC</span>
             </h3>
-            <span id="dashExpectedRevenue" class="text-sm font-bold bg-slate-100 px-3 py-1 rounded-xl text-slate-700">টোটাল এক্সপেক্টেড: ₹0</span>
+            <span id="dashExpectedRevenue" class="text-xs font-black bg-slate-800 px-3 py-1.5 rounded-xl text-yellow-400 border border-slate-700">TOTAL EXPECTED: ₹0</span>
           </div>
 
           <!-- Progress Bar Graph -->
           <div class="space-y-2">
-            <div class="h-6 w-full bg-slate-100 rounded-2xl overflow-hidden flex shadow-inner">
-              <div id="graphPaidBar" class="bg-green-500 h-full transition-all duration-500 flex items-center justify-center text-[10px] text-white font-black" style="width: 0%;"></div>
+            <div class="h-6 w-full bg-slate-950 rounded-2xl overflow-hidden flex border border-slate-800">
+              <div id="graphPaidBar" class="bg-green-500 h-full transition-all duration-500 flex items-center justify-center text-[10px] text-slate-950 font-black" style="width: 0%;"></div>
               <div id="graphDueBar" class="bg-red-500 h-full transition-all duration-500 flex items-center justify-center text-[10px] text-white font-black" style="width: 0%;"></div>
             </div>
             <div class="flex justify-between text-xs font-bold px-1">
-              <div class="flex items-center space-x-1.5 text-green-600">
-                <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
-                <span>পেইড রেশিও: <b id="graphPaidPercent">0%</b></span>
+              <div class="flex items-center space-x-1.5 text-green-400">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block"></span>
+                <span>Paid Ratio: <b id="graphPaidPercent">0%</b></span>
               </div>
-              <div class="flex items-center space-x-1.5 text-red-600">
-                <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
-                <span>ডিউ রেশিও: <b id="graphDuePercent">0%</b></span>
+              <div class="flex items-center space-x-1.5 text-red-400">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
+                <span>Due Ratio: <b id="graphDuePercent">0%</b></span>
               </div>
             </div>
           </div>
@@ -209,9 +208,9 @@
 
         <!-- 6 Branches Summary Cards Grid -->
         <div>
-          <h3 class="font-black text-slate-900 text-lg mb-4 flex items-center space-x-2">
-            <i class="fa-solid fa-building-flag text-yellow-500"></i>
-            <span>৬টি ব্রাঞ্চের লাইভ রেভিনিউ সামারি</span>
+          <h3 class="font-black text-white text-base mb-4 flex items-center space-x-2">
+            <i class="fa-solid fa-building-flag text-yellow-400"></i>
+            <span>BRANCH-WISE LIVE PERFORMANCE</span>
           </h3>
           <div id="branchSummaryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </div>
@@ -219,133 +218,118 @@
 
       <!-- 2. ATTENDANCE & SCANNER VIEW -->
       <section id="tabAttendance" class="hidden space-y-6">
-        <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm text-center max-w-xl mx-auto space-y-6">
+        <div class="bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-800 text-center max-w-xl mx-auto space-y-6">
           <div>
-            <h2 class="text-xl font-black text-slate-900">QR কোড ক্লাস স্ক্যানার</h2>
-            <p class="text-xs text-slate-500 mt-1">কাস্টমারের রিসিট বা ফোনের কিউআর কোড স্ক্যান করে সরাসরি ক্লাস কাউন্ট করুন</p>
+            <h2 class="text-xl font-black text-white">QR Code Attendance Scanner</h2>
+            <p class="text-xs text-slate-400 mt-1">Scan student ID QR code from receipt to increment class attendance</p>
           </div>
 
-          <div class="relative mx-auto max-w-xs aspect-square bg-slate-900 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-xl flex items-center justify-center">
+          <div class="relative mx-auto max-w-xs aspect-square bg-slate-950 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-2xl flex items-center justify-center">
             <div id="reader" class="w-full h-full"></div>
-            <div id="scannerOverlay" class="absolute inset-0 flex flex-col items-center justify-center text-white bg-slate-950/80 p-6 space-y-3">
+            <div id="scannerOverlay" class="absolute inset-0 flex flex-col items-center justify-center text-white bg-slate-950/90 p-6 space-y-3">
               <i class="fa-solid fa-camera text-4xl text-yellow-400"></i>
-              <p class="text-xs text-slate-300">ক্যামেরা অন করার জন্য নিচের বোতামে চাপ দিন</p>
+              <p class="text-xs text-slate-400">Tap below to activate camera</p>
             </div>
           </div>
 
-          <button id="toggleScannerBtn" onclick="toggleScanner()" class="w-full sm:w-auto px-8 py-3.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 mx-auto">
+          <button id="toggleScannerBtn" onclick="toggleScanner()" class="w-full sm:w-auto px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-2xl shadow-lg transition flex items-center justify-center space-x-2 mx-auto text-sm">
             <i class="fa-solid fa-camera"></i>
-            <span id="scannerBtnText">ক্যামেরা চালু করুন</span>
+            <span id="scannerBtnText">START CAMERA</span>
           </button>
         </div>
       </section>
 
       <!-- 3. ADMISSION FORM VIEW -->
-      <section id="tabAdmission" class="hidden bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
-        <div class="border-b border-slate-100 pb-4 mb-6">
-          <h2 class="text-xl font-black text-slate-900">নতুন কাস্টমার অ্যাডমিশন ফর্ম</h2>
-          <p class="text-xs text-slate-500 mt-1">কাস্টমারের তথ্য দিয়ে ফর্ম জমা দিলে স্বয়ংক্রিয়ভাবে পোর্টফোলিও ও কিউআর রিসিট তৈরি হবে</p>
+      <section id="tabAdmission" class="hidden bg-slate-900 p-6 md:p-8 rounded-3xl border border-slate-800 max-w-2xl mx-auto">
+        <div class="border-b border-slate-800 pb-4 mb-6">
+          <h2 class="text-xl font-black text-white">New Customer Admission</h2>
+          <p class="text-xs text-slate-400 mt-1">Instant registration with automatic QR generation and PDF receipt</p>
         </div>
 
         <form id="admissionForm" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">কাস্টমারের পুরো নাম *</label>
-              <input type="text" id="admName" required placeholder="উদাঃ রাহুল শর্মা" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Customer Name *</label>
+              <input type="text" id="admName" required placeholder="e.g. John Doe" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">ফোন নম্বর *</label>
-              <input type="tel" id="admPhone" required placeholder="9876543210" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Phone Number *</label>
+              <input type="tel" id="admPhone" required placeholder="9876543210" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">হোয়াটসঅ্যাপ নম্বর * (Mandatory)</label>
-              <input type="tel" id="admWhatsapp" required placeholder="বিল ও নোটিফিকেশনের জন্য" class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">WhatsApp Number *</label>
+              <input type="tel" id="admWhatsapp" required placeholder="Required for invoice" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-semibold" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">ব্রাঞ্চ নির্বাচন *</label>
-              <select id="admBranch" class="w-full p-3 border border-slate-300 rounded-xl bg-slate-50 focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold">
-                <option value="টালিগঞ্জ">টালিগঞ্জ</option>
-                <option value="রবীন্দ্র সরোবর">রবীন্দ্র সরোবর</option>
-                <option value="নিউটাউন">নিউটাউন</option>
-                <option value="সোদপুর">সোদপুর</option>
-                <option value="হাওড়া">হাওড়া</option>
-                <option value="বারাসাত">বারাসাত</option>
+              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Select Branch *</label>
+              <select id="admBranch" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
+                <option value="Tollygunge">Tollygunge</option>
+                <option value="Rabindra Sarovar">Rabindra Sarovar</option>
+                <option value="New Town">New Town</option>
+                <option value="Sodepur">Sodepur</option>
+                <option value="Howrah">Howrah</option>
+                <option value="Barasat">Barasat</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">কোর্স ক্যাটাগরি</label>
-              <select id="admCourse" class="w-full p-3 border border-slate-300 rounded-xl bg-slate-50 focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold">
-                <option value="Scooty">🛵 Scooty (স্কুটি)</option>
-                <option value="Bike">🏍️ Bike (বাইক)</option>
+              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Course Type</label>
+              <select id="admCourse" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
+                <option value="Scooty">🛵 Scooty Training</option>
+                <option value="Bike">🏍️ Bike Training</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">প্যাকেজ ডিউরেশন</label>
-              <select id="admPackage" class="w-full p-3 border border-slate-300 rounded-xl bg-slate-50 focus:ring-2 focus:ring-yellow-400 focus:outline-none font-semibold">
-                <option value="10">১০ দিনের প্যাকেজ (10 Classes)</option>
-                <option value="15">১৫ দিনের প্যাকেজ (15 Classes)</option>
+              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Package Duration</label>
+              <select id="admPackage" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
+                <option value="10">10 Days (10 Classes)</option>
+                <option value="15">15 Days (15 Classes)</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">টোটাল ফিস (₹) *</label>
-              <input type="number" id="admTotalFees" oninput="calcAdmFees()" required placeholder="3000" class="w-full p-3 border border-slate-300 rounded-xl font-bold focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Total Fees (₹) *</label>
+              <input type="number" id="admTotalFees" oninput="calcAdmFees()" required placeholder="3000" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl font-black text-sm focus:ring-2 focus:ring-yellow-400" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">জমা দেওয়া টাকা (₹)</label>
-              <input type="number" id="admPaidAmount" oninput="calcAdmFees()" placeholder="1000" class="w-full p-3 border border-slate-300 rounded-xl font-bold focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+              <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Paid Amount (₹)</label>
+              <input type="number" id="admPaidAmount" oninput="calcAdmFees()" placeholder="1000" class="w-full p-3 bg-slate-800 border border-slate-700 text-white rounded-xl font-black text-sm focus:ring-2 focus:ring-yellow-400" />
             </div>
           </div>
 
-          <div class="p-3 bg-yellow-50 border border-yellow-200 rounded-2xl flex items-center justify-between">
-            <label class="text-xs font-bold text-yellow-900 flex items-center space-x-2 cursor-pointer">
-              <input type="checkbox" id="admFullPay" onchange="toggleAdmFullPay()" class="w-4 h-4 text-yellow-500 rounded focus:ring-0" />
-              <span>একবারে সম্পূর্ণ টাকা পরিশোধ (Full Payment)</span>
+          <div class="p-3 bg-slate-800/80 border border-slate-700 rounded-2xl flex items-center justify-between">
+            <label class="text-xs font-bold text-slate-300 flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" id="admFullPay" onchange="toggleAdmFullPay()" class="w-4 h-4 text-yellow-400 rounded focus:ring-0" />
+              <span>Full Payment Complete</span>
             </label>
-            <span class="text-sm font-black text-slate-800">বাকি ডিউ: <span id="admDueDisplay" class="text-red-600">₹0</span></span>
+            <span class="text-xs font-black text-slate-300">Outstanding Due: <span id="admDueDisplay" class="text-red-400 text-sm">₹0</span></span>
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">কাস্টমারের ছবি * (অটো-কম্প্রেস হয়ে যাবে)</label>
-            <input type="file" id="admPhoto" accept="image/*" required class="w-full p-2.5 border border-slate-300 rounded-xl text-xs bg-slate-50" />
+            <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Customer Photo * (Auto-Optimized)</label>
+            <input type="file" id="admPhoto" accept="image/*" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-slate-300 rounded-xl text-xs" />
           </div>
 
-          <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-            <label class="text-xs font-bold text-slate-700 flex items-center space-x-2 cursor-pointer">
-              <input type="checkbox" id="admHasId" onchange="document.getElementById('idProofBox').classList.toggle('hidden')" class="w-4 h-4 rounded text-yellow-500" />
-              <span>Govt ID Proof যোগ করুন (Optional)</span>
-            </label>
-            <div id="idProofBox" class="hidden grid grid-cols-2 gap-2 pt-2">
-              <select id="admIdType" class="p-2.5 border border-slate-300 rounded-xl text-xs bg-white font-semibold">
-                <option value="Aadhaar">Aadhaar Card</option>
-                <option value="Voter">Voter Card</option>
-                <option value="DL">Driving License</option>
-              </select>
-              <input type="text" id="admIdNumber" placeholder="ID Number" class="p-2.5 border border-slate-300 rounded-xl text-xs bg-white" />
-            </div>
-          </div>
-
-          <button type="submit" id="admSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-2xl shadow-xl transition flex items-center justify-center space-x-2">
-            <i class="fa-solid fa-cloud-arrow-up"></i>
-            <span>অ্যাডমিশন সম্পন্ন ও পোর্টফোলিও তৈরি করুন</span>
+          <button type="submit" id="admSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-4 rounded-2xl shadow-xl transition flex items-center justify-center space-x-2 text-sm">
+            <i class="fa-solid fa-bolt"></i>
+            <span>SAVE ADMISSION & CREATE PROFILE</span>
           </button>
         </form>
       </section>
 
-      <!-- 4. CUSTOMER LIST VIEW (WITH FULL EDIT MODAL) -->
+      <!-- 4. CUSTOMER LIST VIEW (WITH FULL CRUD & EDIT MODAL) -->
       <section id="tabStudents" class="hidden space-y-4">
         <div class="flex flex-col sm:flex-row items-center gap-3">
           <div class="relative w-full">
-            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
-            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="নাম বা মোবাইল নম্বর দিয়ে খুঁজুন..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-sm font-medium focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-sm" />
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-500"></i>
+            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search by name or phone..." class="w-full pl-11 pr-4 py-3 bg-slate-900 border border-slate-800 rounded-2xl text-xs font-semibold text-white focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
           </div>
-          <select id="studentFilterBranch" onchange="renderStudentList()" class="w-full sm:w-56 p-3 bg-white border border-slate-200 rounded-2xl text-sm font-bold shadow-sm">
-            <option value="All">সমস্ত ব্রাঞ্চ</option>
-            <option value="টালিগঞ্জ">টালিগঞ্জ</option>
-            <option value="রবীন্দ্র সরোবর">রবীন্দ্র সরোবর</option>
-            <option value="নিউটাউন">নিউটাউন</option>
-            <option value="সোদপুর">সোদপুর</option>
-            <option value="হাওড়া">হাওড়া</option>
-            <option value="বারাসাত">বারাসাত</option>
+          <select id="studentFilterBranch" onchange="renderStudentList()" class="w-full sm:w-56 p-3 bg-slate-900 border border-slate-800 rounded-2xl text-xs font-black text-white">
+            <option value="All">All Branches</option>
+            <option value="Tollygunge">Tollygunge</option>
+            <option value="Rabindra Sarovar">Rabindra Sarovar</option>
+            <option value="New Town">New Town</option>
+            <option value="Sodepur">Sodepur</option>
+            <option value="Howrah">Howrah</option>
+            <option value="Barasat">Barasat</option>
           </select>
         </div>
 
@@ -354,19 +338,19 @@
 
       <!-- 5. DAILY SHIFT SUMMARY VIEW -->
       <section id="tabShift" class="hidden space-y-4">
-        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm max-w-xl mx-auto space-y-4">
-          <div class="flex items-center justify-between border-b pb-3">
-            <h2 class="text-lg font-black text-slate-900">আজকের শিফট রিপোর্ট</h2>
-            <span class="text-xs font-bold text-slate-500" id="shiftTodayDate"></span>
+        <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 max-w-xl mx-auto space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h2 class="text-base font-black text-white">Today's Shift Performance</h2>
+            <span class="text-xs font-bold text-slate-400" id="shiftTodayDate"></span>
           </div>
           <div class="grid grid-cols-2 gap-4">
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
-              <p class="text-xs font-bold text-slate-500 uppercase">আজকের অ্যাডমিশন</p>
-              <p id="shiftTodayCount" class="text-3xl font-black text-slate-900 mt-1">0</p>
+            <div class="p-4 bg-slate-950 rounded-2xl border border-slate-800 text-center">
+              <p class="text-[10px] font-black text-slate-400 uppercase">Today's Admissions</p>
+              <p id="shiftTodayCount" class="text-3xl font-black text-white mt-1">0</p>
             </div>
-            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
-              <p class="text-xs font-bold text-slate-500 uppercase">আজকের মোট ক্যাশ</p>
-              <p id="shiftTodayCash" class="text-3xl font-black text-green-600 mt-1">₹0</p>
+            <div class="p-4 bg-slate-950 rounded-2xl border border-slate-800 text-center">
+              <p class="text-[10px] font-black text-slate-400 uppercase">Cash Collected</p>
+              <p id="shiftTodayCash" class="text-3xl font-black text-green-400 mt-1">₹0</p>
             </div>
           </div>
         </div>
@@ -375,111 +359,116 @@
     </main>
   </div>
 
-  <!-- ================= POPUP MODAL 1: SUCCESS / PORTFOLIO MODAL ================= -->
-  <div id="portfolioModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-yellow-400 shadow-2xl space-y-4 text-center">
-      <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl mx-auto font-black">
+  <!-- ================= POPUP MODAL 1: SUCCESS & PORTFOLIO MODAL ================= -->
+  <div id="portfolioModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 rounded-3xl max-w-md w-full p-6 border-t-8 border-yellow-400 border-slate-800 shadow-2xl space-y-4 text-center">
+      <div class="w-12 h-12 bg-green-950 text-green-400 border border-green-800 rounded-full flex items-center justify-center text-xl mx-auto font-black">
         <i class="fa-solid fa-check"></i>
       </div>
-      <h3 class="text-xl font-black text-slate-900" id="portModalTitle">কাস্টমার পোর্টফোলিও তৈরি হয়েছে!</h3>
+      <h3 class="text-lg font-black text-white">Profile & QR Ready!</h3>
       
-      <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left space-y-2">
+      <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-left space-y-2">
         <div class="flex items-center space-x-3">
-          <img id="portModalImg" src="" class="w-14 h-14 rounded-full object-cover border-2 border-yellow-400 shadow" />
+          <img id="portModalImg" src="" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400" />
           <div>
-            <h4 id="portModalName" class="font-bold text-slate-900 text-base"></h4>
-            <p id="portModalDetails" class="text-xs text-slate-500"></p>
+            <h4 id="portModalName" class="font-bold text-white text-sm"></h4>
+            <p id="portModalDetails" class="text-xs text-slate-400"></p>
           </div>
         </div>
-        <div class="border-t pt-2 flex justify-between text-xs font-bold">
-          <span>মোট ফিস: <span id="portModalTotal"></span></span>
-          <span>পেইড: <span id="portModalPaid" class="text-green-600"></span></span>
-          <span>বকেয়া: <span id="portModalDue" class="text-red-600"></span></span>
+        <div class="border-t border-slate-800 pt-2 flex justify-between text-xs font-bold">
+          <span class="text-slate-400">Total: <span id="portModalTotal" class="text-white"></span></span>
+          <span class="text-slate-400">Paid: <span id="portModalPaid" class="text-green-400"></span></span>
+          <span class="text-slate-400">Due: <span id="portModalDue" class="text-red-400"></span></span>
         </div>
       </div>
 
-      <div class="flex justify-center p-2 bg-white rounded-2xl border">
+      <div class="flex justify-center p-3 bg-white rounded-2xl border">
         <img id="portModalQr" class="w-40 h-40" />
       </div>
 
       <div class="grid grid-cols-2 gap-2 pt-2">
-        <button onclick="downloadActiveReceipt()" class="p-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1">
+        <button onclick="downloadActiveReceipt()" class="p-3 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-xl text-xs font-black flex items-center justify-center space-x-1">
           <i class="fa-solid fa-file-pdf"></i>
-          <span>PDF রিসিট ডাউনলোড</span>
+          <span>PDF RECEIPT</span>
         </button>
-        <button onclick="sendActiveWhatsapp()" class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-bold flex items-center justify-center space-x-1">
+        <button onclick="sendActiveWhatsapp()" class="p-3 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-black flex items-center justify-center space-x-1">
           <i class="fa-brands fa-whatsapp"></i>
-          <span>WhatsApp-এ পাঠান</span>
+          <span>WHATSAPP BILL</span>
         </button>
       </div>
-      <button onclick="closeModal('portfolioModal')" class="text-xs font-bold text-slate-400 hover:text-slate-600">বন্ধ করুন</button>
+      <button onclick="closeModal('portfolioModal')" class="text-xs font-bold text-slate-500 hover:text-slate-300">Close Window</button>
     </div>
   </div>
 
   <!-- ================= POPUP MODAL 2: FULL EDIT CUSTOMER MODAL ================= -->
-  <div id="editModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b pb-2">
-        <h3 class="text-lg font-black text-slate-900">কাস্টমার তথ্য এডিট ও পেমেন্ট আপডেট</h3>
-        <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+  <div id="editModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border-slate-800 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <h3 class="text-base font-black text-white">Edit Customer Information</h3>
+        <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
 
       <form id="editForm" class="space-y-3">
         <input type="hidden" id="editStudentId" />
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">কাস্টমারের নাম</label>
-            <input type="text" id="editName" required class="w-full p-2.5 border rounded-xl text-xs" />
+            <label class="block text-xs font-bold text-slate-300 mb-1">Customer Name</label>
+            <input type="text" id="editName" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">ফোন নম্বর</label>
-            <input type="tel" id="editPhone" required class="w-full p-2.5 border rounded-xl text-xs" />
+            <label class="block text-xs font-bold text-slate-300 mb-1">Phone Number</label>
+            <input type="tel" id="editPhone" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">হোয়াটসঅ্যাপ নম্বর</label>
-            <input type="tel" id="editWhatsapp" required class="w-full p-2.5 border rounded-xl text-xs" />
+            <label class="block text-xs font-bold text-slate-300 mb-1">WhatsApp</label>
+            <input type="tel" id="editWhatsapp" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">ব্রাঞ্চ</label>
-            <select id="editBranch" class="w-full p-2.5 border rounded-xl text-xs font-semibold">
-              <option value="টালিগঞ্জ">টালিগঞ্জ</option>
-              <option value="রবীন্দ্র সরোবর">রবীন্দ্র সরোবর</option>
-              <option value="নিউটাউন">নিউটাউন</option>
-              <option value="সোদপুর">সোদপুর</option>
-              <option value="হাওড়া">হাওড়া</option>
-              <option value="বারাসাত">বারাসাত</option>
+            <label class="block text-xs font-bold text-slate-300 mb-1">Branch</label>
+            <select id="editBranch" class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-bold">
+              <option value="Tollygunge">Tollygunge</option>
+              <option value="Rabindra Sarovar">Rabindra Sarovar</option>
+              <option value="New Town">New Town</option>
+              <option value="Sodepur">Sodepur</option>
+              <option value="Howrah">Howrah</option>
+              <option value="Barasat">Barasat</option>
             </select>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">টোটাল ফিস (₹)</label>
-            <input type="number" id="editTotalFees" oninput="calcEditFees()" required class="w-full p-2.5 border rounded-xl text-xs font-bold" />
+            <label class="block text-xs font-bold text-slate-300 mb-1">Total Fees (₹)</label>
+            <input type="number" id="editTotalFees" oninput="calcEditFees()" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-black" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">জমা দেওয়া টাকা (₹)</label>
-            <input type="number" id="editPaidAmount" oninput="calcEditFees()" required class="w-full p-2.5 border rounded-xl text-xs font-bold" />
+            <label class="block text-xs font-bold text-slate-300 mb-1">Paid Amount (₹)</label>
+            <input type="number" id="editPaidAmount" oninput="calcEditFees()" required class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-black" />
           </div>
         </div>
 
-        <div class="p-3 bg-yellow-50 rounded-xl flex justify-between text-xs font-bold">
-          <span>আপডেটেড ডিউ:</span>
-          <span id="editDueDisplay" class="text-red-600">₹0</span>
+        <div class="p-3 bg-slate-950 rounded-xl flex justify-between text-xs font-bold border border-slate-800">
+          <span class="text-slate-400">Updated Due:</span>
+          <span id="editDueDisplay" class="text-red-400">₹0</span>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">ক্লাস সংখ্যা অ্যাডজাস্ট করুন</label>
-          <input type="number" id="editClassesAttended" min="0" max="15" class="w-full p-2.5 border rounded-xl text-xs font-bold" />
+          <label class="block text-xs font-bold text-slate-300 mb-1">Classes Attended</label>
+          <input type="number" id="editClassesAttended" min="0" max="15" class="w-full p-2.5 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-black" />
         </div>
 
-        <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition shadow">
-          তথ্য সেভ ও আপডেট করুন
-        </button>
+        <div class="flex space-x-2 pt-2">
+          <button type="submit" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs">
+            SAVE & UPDATE
+          </button>
+          <button type="button" onclick="deleteCustomer()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs">
+            DELETE
+          </button>
+        </div>
       </form>
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <!-- ================= LOGIC & DUAL-STORAGE SYSTEM ================= -->
   <script>
-    // Firebase Config
+    // Firebase Config (Sync engine)
     const firebaseConfig = {
       apiKey: "AIzaSyAGbROD4YLWMyWkxgR0ZRe8nUW-x2Cei9E",
       authDomain: "seekho2wheeler-11dd4.firebaseapp.com",
@@ -491,7 +480,7 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    const ALL_BRANCHES = ["টালিগঞ্জ", "রবীন্দ্র সরোবর", "নিউটাউন", "সোদপুর", "হাওড়া", "বারাসাত"];
+    const ALL_BRANCHES = ["Tollygunge", "Rabindra Sarovar", "New Town", "Sodepur", "Howrah", "Barasat"];
     let currentRole = "owner";
     let currentUser = null;
     let rawStudents = [];
@@ -499,18 +488,30 @@
     let html5QrCode = null;
     let isScanning = false;
 
+    // Load Local Data Immediately (Zero Hang)
+    function loadLocal() {
+      const stored = localStorage.getItem("seekho_students_data");
+      if (stored) {
+        try { rawStudents = JSON.parse(stored); } catch(e) {}
+      }
+    }
+    function saveLocal() {
+      localStorage.setItem("seekho_students_data", JSON.stringify(rawStudents));
+    }
+    loadLocal();
+
     // Login Role Switcher
     function setLoginRole(role) {
       currentRole = role;
       if (role === "owner") {
-        document.getElementById("roleOwnerBtn").className = "flex-1 py-2 text-sm font-bold rounded-lg bg-yellow-400 text-slate-950 shadow-sm transition";
-        document.getElementById("roleTrainerBtn").className = "flex-1 py-2 text-sm font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition";
+        document.getElementById("roleOwnerBtn").className = "flex-1 py-2.5 text-xs font-black rounded-lg bg-yellow-400 text-slate-950 shadow transition";
+        document.getElementById("roleTrainerBtn").className = "flex-1 py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition";
         document.getElementById("branchSelectGroup").classList.add("hidden");
         document.getElementById("usernameGroup").classList.remove("hidden");
         document.getElementById("username").value = "admin";
       } else {
-        document.getElementById("roleTrainerBtn").className = "flex-1 py-2 text-sm font-bold rounded-lg bg-yellow-400 text-slate-950 shadow-sm transition";
-        document.getElementById("roleOwnerBtn").className = "flex-1 py-2 text-sm font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition";
+        document.getElementById("roleTrainerBtn").className = "flex-1 py-2.5 text-xs font-black rounded-lg bg-yellow-400 text-slate-950 shadow transition";
+        document.getElementById("roleOwnerBtn").className = "flex-1 py-2.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white transition";
         document.getElementById("branchSelectGroup").classList.remove("hidden");
         document.getElementById("usernameGroup").classList.add("hidden");
       }
@@ -526,20 +527,20 @@
         if (u === "admin" && p === "owner@2026") {
           currentUser = { role: "owner", branch: "All" };
         } else {
-          return alert("ভুল ওনার আইডি বা পাসওয়ার্ড!");
+          return alert("Invalid Owner Credentials!");
         }
       } else {
         const branch = document.getElementById("loginBranch").value;
         if (p === "trainer123") {
           currentUser = { role: "trainer", branch: branch };
         } else {
-          return alert("ভুল ট্রেনার পাসওয়ার্ড!");
+          return alert("Invalid Trainer Password!");
         }
       }
 
       document.getElementById("authScreen").classList.add("hidden");
       document.getElementById("mainApp").classList.remove("hidden");
-      document.getElementById("userBadge").textContent = currentUser.role === "owner" ? "Owner Portal (Central)" : `${currentUser.branch} Branch`;
+      document.getElementById("userBadge").textContent = currentUser.role === "owner" ? "OWNER PORTAL (CENTRAL)" : `${currentUser.branch.toUpperCase()} BRANCH`;
 
       if (currentUser.role === "trainer") {
         document.getElementById("navDashBtn").classList.add("hidden");
@@ -552,8 +553,11 @@
         switchTab("dashboard");
       }
 
-      document.getElementById("shiftTodayDate").textContent = new Date().toLocaleDateString('bn-BD', { dateStyle: 'full' });
-      initDatabaseListener();
+      document.getElementById("shiftTodayDate").textContent = new Date().toLocaleDateString('en-US', { dateStyle: 'full' });
+      renderDashboard();
+      renderStudentList();
+      renderShiftReport();
+      initFirebaseSync();
     });
 
     function handleLogout() {
@@ -565,27 +569,30 @@
         const sec = document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}`);
         const btn = document.getElementById(`nav${t.charAt(0).toUpperCase() + t.slice(1)}Btn`);
         if (sec) sec.classList.add("hidden");
-        if (btn) btn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 flex items-center space-x-2 whitespace-nowrap";
+        if (btn) btn.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800 flex items-center space-x-2 whitespace-nowrap";
       });
       const activeSec = document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`);
       const activeBtn = document.getElementById(`nav${tab.charAt(0).toUpperCase() + tab.slice(1)}Btn`);
       if (activeSec) activeSec.classList.remove("hidden");
-      if (activeBtn) activeBtn.className = "px-5 py-2.5 rounded-xl font-bold text-sm bg-yellow-400 text-slate-950 shadow-sm flex items-center space-x-2 whitespace-nowrap";
+      if (activeBtn) activeBtn.className = "px-5 py-2.5 rounded-xl font-black text-xs bg-yellow-400 text-slate-950 shadow-md flex items-center space-x-2 whitespace-nowrap";
     }
 
-    // Database Real-Time Sync
-    function initDatabaseListener() {
-      db.collection("students").onSnapshot((snap) => {
-        rawStudents = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        renderDashboard();
-        renderStudentList();
-        renderShiftReport();
-      }, (err) => {
-        console.error("Firestore Error:", err);
-      });
+    // Real-Time Sync Listener
+    function initFirebaseSync() {
+      try {
+        db.collection("students").onSnapshot((snap) => {
+          if (!snap.empty) {
+            rawStudents = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            saveLocal();
+            renderDashboard();
+            renderStudentList();
+            renderShiftReport();
+          }
+        }, () => {});
+      } catch(e) {}
     }
 
-    // Image Compressor Function (<80KB Canvas)
+    // High Speed Canvas Compressor
     function compressImage(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -595,31 +602,27 @@
           img.src = event.target.result;
           img.onload = () => {
             const canvas = document.createElement("canvas");
-            const maxDimension = 400;
+            const maxDimension = 300;
             let width = img.width;
             let height = img.height;
             if (width > height) {
-              if (width > maxDimension) {
-                height *= maxDimension / width;
-                width = maxDimension;
-              }
+              if (width > maxDimension) { height *= maxDimension / width; width = maxDimension; }
             } else {
-              if (height > maxDimension) {
-                width *= maxDimension / height;
-                height = maxDimension;
-              }
+              if (height > maxDimension) { width *= maxDimension / height; height = maxDimension; }
             }
             canvas.width = width;
             canvas.height = height;
             const ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL("image/jpeg", 0.7));
+            resolve(canvas.toDataURL("image/jpeg", 0.6));
           };
+          img.onerror = () => resolve("https://via.placeholder.com/80");
         };
+        reader.onerror = () => resolve("https://via.placeholder.com/80");
       });
     }
 
-    // Admission Calculations
+    // Fee Calculations
     function calcAdmFees() {
       const total = Number(document.getElementById("admTotalFees").value) || 0;
       let paid = Number(document.getElementById("admPaidAmount").value) || 0;
@@ -639,26 +642,28 @@
       calcAdmFees();
     }
 
-    // Admission Form Submit
+    // Instant Admission Submit
     document.getElementById("admissionForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const photoFile = document.getElementById("admPhoto").files[0];
-      if (!photoFile) return alert("কাস্টমারের ছবি দেওয়া আবশ্যক!");
-
       const btn = document.getElementById("admSubmitBtn");
       btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>প্রসেস ও সেভ হচ্ছে...</span>`;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Saving...</span>`;
 
       try {
-        const compressedBase64 = await compressImage(photoFile);
+        let compressedBase64 = "https://via.placeholder.com/80";
+        if (photoFile) {
+          compressedBase64 = await compressImage(photoFile);
+        }
         const branch = currentUser.role === "owner" ? document.getElementById("admBranch").value : currentUser.branch;
-        const studentCode = `STW-${branch.slice(0, 3)}-${Date.now().toString().slice(-4)}`;
+        const studentCode = `STW-${branch.slice(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
 
         const totalFees = Number(document.getElementById("admTotalFees").value) || 0;
         const paidAmount = Number(document.getElementById("admPaidAmount").value) || 0;
         const dueAmount = Math.max(0, totalFees - paidAmount);
 
         const newStudent = {
+          id: `local_${Date.now()}`,
           name: document.getElementById("admName").value.trim(),
           phone: document.getElementById("admPhone").value.trim(),
           whatsapp: document.getElementById("admWhatsapp").value.trim(),
@@ -670,30 +675,39 @@
           dueAmount: dueAmount,
           studentCode: studentCode,
           photoUrl: compressedBase64,
-          hasGovId: document.getElementById("admHasId").checked,
-          idType: document.getElementById("admIdType").value,
-          idNumber: document.getElementById("admIdNumber").value.trim(),
           classesAttended: 0,
           firstClassDate: null,
           createdAt: new Date().toISOString()
         };
 
-        const docRef = await db.collection("students").add(newStudent);
-        newStudent.id = docRef.id;
+        // 1. Instant local persistence & UI update
+        rawStudents.unshift(newStudent);
+        saveLocal();
+        renderDashboard();
+        renderStudentList();
+        renderShiftReport();
+
+        // 2. Async Firebase Save
+        try {
+          db.collection("students").add(newStudent).then(docRef => {
+            newStudent.id = docRef.id;
+            saveLocal();
+          }).catch(()=>{});
+        } catch(e) {}
 
         document.getElementById("admissionForm").reset();
         document.getElementById("admDueDisplay").textContent = "₹0";
 
-        // Open Instant Portfolio Modal
+        // Show instant Portfolio & QR popup
         showPortfolioModal(newStudent);
       } catch (err) {
-        alert("সমস্যা হয়েছে: " + err.message);
+        alert("Error saving: " + err.message);
       }
       btn.disabled = false;
-      btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>অ্যাডমিশন সম্পন্ন ও পোর্টফোলিও তৈরি করুন</span>`;
+      btn.innerHTML = `<i class="fa-solid fa-bolt"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
 
-    // Dashboard & Graphs Render
+    // Dashboard & Metrics Calculation
     function renderDashboard() {
       const selectedBranch = document.getElementById("filterBranch").value;
       const selectedMonth = document.getElementById("filterMonth").value;
@@ -705,8 +719,8 @@
       });
 
       const totalStudents = filtered.length;
-      const totalPaid = filtered.reduce((acc, s) => acc + (s.paidAmount || 0), 0);
-      const totalDue = filtered.reduce((acc, s) => acc + (s.dueAmount || 0), 0);
+      const totalPaid = filtered.reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
+      const totalDue = filtered.reduce((acc, s) => acc + (Number(s.dueAmount) || 0), 0);
       const expectedTotal = totalPaid + totalDue;
 
       const paidPercent = expectedTotal > 0 ? Math.round((totalPaid / expectedTotal) * 100) : 0;
@@ -715,10 +729,10 @@
       document.getElementById("dashTotalStudents").textContent = totalStudents;
       document.getElementById("dashTotalPaid").textContent = `₹${totalPaid}`;
       document.getElementById("dashTotalDue").textContent = `₹${totalDue}`;
-      document.getElementById("dashExpectedRevenue").textContent = `টোটাল এক্সপেক্টেড: ₹${expectedTotal}`;
+      document.getElementById("dashExpectedRevenue").textContent = `TOTAL EXPECTED: ₹${expectedTotal}`;
 
-      document.getElementById("paidPercentText").textContent = `${paidPercent}% সংগৃহীত`;
-      document.getElementById("duePercentText").textContent = `${duePercent}% বকেয়া`;
+      document.getElementById("paidPercentText").textContent = `${paidPercent}% Collected`;
+      document.getElementById("duePercentText").textContent = `${duePercent}% Outstanding`;
 
       document.getElementById("graphPaidBar").style.width = `${paidPercent}%`;
       document.getElementById("graphPaidBar").textContent = paidPercent > 10 ? `${paidPercent}% Paid` : '';
@@ -732,24 +746,24 @@
       const scooties = filtered.filter(s => s.courseType === "Scooty").length;
       document.getElementById("dashVehicles").textContent = `🏍️ ${bikes} | 🛵 ${scooties}`;
 
-      // 6 Branches Grid Render
+      // 6 Branches Summary Cards Grid
       const grid = document.getElementById("branchSummaryGrid");
       grid.innerHTML = "";
       ALL_BRANCHES.forEach(b => {
         const bStudents = rawStudents.filter(s => s.branch === b && (selectedMonth === "All" || (s.createdAt && s.createdAt.slice(0, 7) === selectedMonth)));
-        const bPaid = bStudents.reduce((acc, s) => acc + (s.paidAmount || 0), 0);
-        const bDue = bStudents.reduce((acc, s) => acc + (s.dueAmount || 0), 0);
+        const bPaid = bStudents.reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
+        const bDue = bStudents.reduce((acc, s) => acc + (Number(s.dueAmount) || 0), 0);
 
         const card = document.createElement("div");
-        card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2";
+        card.className = "bg-slate-900 p-4 rounded-2xl border border-slate-800 shadow space-y-2";
         card.innerHTML = `
-          <div class="flex items-center justify-between border-b pb-2">
-            <span class="font-black text-slate-800 text-sm">${b}</span>
-            <span class="text-xs font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">${bStudents.length} জন ভর্তি</span>
+          <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+            <span class="font-black text-white text-sm">${b}</span>
+            <span class="text-[10px] font-black bg-slate-800 text-yellow-400 border border-slate-700 px-2 py-0.5 rounded">${bStudents.length} Students</span>
           </div>
           <div class="flex justify-between text-xs font-bold">
-            <span class="text-green-600">পেইড: ₹${bPaid}</span>
-            <span class="text-red-600">ডিউ: ₹${bDue}</span>
+            <span class="text-green-400">Paid: ₹${bPaid}</span>
+            <span class="text-red-400">Due: ₹${bDue}</span>
           </div>
         `;
         grid.appendChild(card);
@@ -770,26 +784,26 @@
       });
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-400 font-bold text-sm">কোনো কাস্টমারের রেকর্ড পাওয়া যায়নি</div>`;
+        container.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-500 font-bold text-xs uppercase tracking-wider">No customer records found</div>`;
         return;
       }
 
       filtered.forEach(student => {
         const card = document.createElement("div");
-        card.className = "bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-4 hover:shadow-md transition";
+        card.className = "bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow space-y-4 hover:border-slate-700 transition";
         const progress = Math.min(100, Math.round(((student.classesAttended || 0) / student.packageDays) * 100));
 
         card.innerHTML = `
           <div class="flex items-start justify-between">
             <div class="flex items-center space-x-3">
-              <img src="${student.photoUrl || 'https://via.placeholder.com/80'}" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm" />
+              <img src="${student.photoUrl || 'https://via.placeholder.com/80'}" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400" />
               <div>
-                <h4 class="font-black text-slate-900 text-base leading-tight">${student.name}</h4>
-                <p class="text-xs font-bold text-slate-500 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-100 text-yellow-900 px-1.5 py-0.5 rounded">${student.branch}</span></p>
-                <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days)</p>
+                <h4 class="font-black text-white text-sm">${student.name}</h4>
+                <p class="text-xs text-slate-400 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-400/20 text-yellow-400 px-1.5 py-0.5 rounded font-black">${student.branch}</span></p>
+                <p class="text-[11px] font-semibold text-slate-500 mt-0.5">${student.courseType} (${student.packageDays} Days)</p>
               </div>
             </div>
-            <button onclick='openEditModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-yellow-400 hover:text-slate-950 text-slate-600 transition flex items-center justify-center text-xs" title="এডিট করুন">
+            <button onclick='openEditModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-yellow-400 hover:text-slate-950 text-slate-300 transition flex items-center justify-center text-xs" title="Edit Customer">
               <i class="fa-solid fa-pen"></i>
             </button>
           </div>
@@ -797,27 +811,27 @@
           <!-- Progress -->
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
-              <span>ক্লাস অগ্রগতি: ${student.classesAttended || 0}/${student.packageDays}</span>
-              <span class="${student.dueAmount > 0 ? 'text-red-600 bg-red-50 px-2 py-0.5 rounded-md' : 'text-green-600 bg-green-50 px-2 py-0.5 rounded-md'}">
-                ${student.dueAmount > 0 ? `বাকি: ₹${student.dueAmount}` : 'সম্পূর্ণ পেইড'}
+              <span class="text-slate-300">Classes: ${student.classesAttended || 0}/${student.packageDays}</span>
+              <span class="${student.dueAmount > 0 ? 'text-red-400 bg-red-950/60 border border-red-900 px-2 py-0.5 rounded' : 'text-green-400 bg-green-950/60 border border-green-900 px-2 py-0.5 rounded'}">
+                ${student.dueAmount > 0 ? `Due: ₹${student.dueAmount}` : 'Fully Paid'}
               </span>
             </div>
-            <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+            <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
               <div class="bg-yellow-400 h-full rounded-full transition-all" style="width: ${progress}%;"></div>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="flex space-x-2 pt-2 border-t border-slate-100">
-            <button onclick='showPortfolioModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center space-x-1.5">
+          <div class="flex space-x-2 pt-2 border-t border-slate-800">
+            <button onclick='showPortfolioModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-id-card"></i>
-              <span>পোর্টফোলিও ও QR</span>
+              <span>PROFILE & QR</span>
             </button>
-            <button onclick='downloadPdfReceipt(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center space-x-1" title="রিসিট ডাউনলোড">
+            <button onclick='downloadPdfReceipt(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="bg-yellow-400 hover:bg-yellow-500 text-slate-950 text-xs font-black px-3 py-2.5 rounded-xl transition flex items-center space-x-1" title="Download Receipt">
               <i class="fa-solid fa-file-arrow-down"></i>
             </button>
             ${student.dueAmount > 0 ? `
-              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`নমস্কার ${student.name},\nশিখো ২-হুইলার ট্রেনিং সেন্টারের পক্ষ থেকে জানানো হচ্ছে আপনার ₹${student.dueAmount} টাকা ফিস বকেয়া রয়েছে। নিয়ম অনুযায়ী ৫ম ক্লাসের মধ্যে পরিশোধ আবশ্যক। ধন্যবাদ!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center" title="WhatsApp Reminder">
+              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues before the 5th class as per policy. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center" title="WhatsApp Reminder">
                 <i class="fa-brands fa-whatsapp text-sm"></i>
               </a>
             ` : ''}
@@ -832,11 +846,11 @@
       const todayStr = new Date().toISOString().slice(0, 10);
       const todayStudents = rawStudents.filter(s => s.createdAt && s.createdAt.slice(0, 10) === todayStr && (currentUser.role === "owner" ? true : s.branch === currentUser.branch));
       document.getElementById("shiftTodayCount").textContent = todayStudents.length;
-      const todayCash = todayStudents.reduce((acc, s) => acc + (s.paidAmount || 0), 0);
+      const todayCash = todayStudents.reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
       document.getElementById("shiftTodayCash").textContent = `₹${todayCash}`;
     }
 
-    // Portfolio / Receipt Modal Logic
+    // Portfolio Popup Logic
     async function showPortfolioModal(student) {
       activeStudent = student;
       document.getElementById("portModalName").textContent = student.name;
@@ -857,12 +871,12 @@
       document.getElementById(id).classList.add("hidden");
     }
 
-    // PDF Download
+    // PDF Generator
     async function downloadPdfReceipt(student) {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
 
-      doc.setFillColor(250, 204, 21); // Yellow Header
+      doc.setFillColor(250, 204, 21);
       doc.rect(0, 0, 210, 30, "F");
 
       doc.setTextColor(15, 23, 42);
@@ -872,12 +886,12 @@
       doc.text("SEEKHO 2 WHEELER OFFICIAL MONEY RECEIPT", 15, 25);
 
       doc.setFontSize(11);
-      doc.text(`Receipt Date: ${new Date().toLocaleDateString()}`, 145, 25);
+      doc.text(`Date: ${new Date().toLocaleDateString()}`, 155, 25);
       doc.text(`Branch: ${student.branch}`, 15, 45);
       doc.text(`Student ID: ${student.studentCode}`, 15, 52);
       doc.text(`Student Name: ${student.name}`, 15, 62);
       doc.text(`Phone Number: ${student.phone}`, 15, 70);
-      doc.text(`Course Type: ${student.courseType} (${student.packageDays} Days Package)`, 15, 78);
+      doc.text(`Course: ${student.courseType} (${student.packageDays} Days Package)`, 15, 78);
 
       doc.setDrawColor(226, 232, 240);
       doc.line(15, 85, 195, 85);
@@ -889,7 +903,6 @@
       doc.setTextColor(220, 38, 38);
       doc.text(`Remaining Due: Rs. ${student.dueAmount}`, 15, 112);
 
-      // Add QR in PDF
       const qrPayload = JSON.stringify({ studentCode: student.studentCode, phone: student.phone });
       const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 250 });
       doc.addImage(qrDataUrl, "JPEG", 135, 45, 55, 55);
@@ -901,7 +914,7 @@
       doc.line(15, 125, 195, 125);
       doc.setFontSize(9);
       doc.text("Rules & Validity:", 15, 133);
-      doc.text("1. Any pending due payment must be cleared by or before the 5th class.", 15, 139);
+      doc.text("1. Any pending due payment must be cleared on or before the 5th class.", 15, 139);
       doc.text("2. Course validity is 90 days from the date of the first class.", 15, 145);
       doc.text("3. Always present this digital receipt/QR code to your trainer before every session.", 15, 151);
 
@@ -914,7 +927,7 @@
 
     function sendActiveWhatsapp() {
       if (!activeStudent) return;
-      const text = `নমস্কার ${activeStudent.name},\nশিখো ২-হুইলার ট্রেনিং সেন্টারে আপনার অ্যাডমিশন সফল হয়েছে!\n\nকোর্স: ${activeStudent.courseType} (${activeStudent.packageDays} দিন)\nমোট ফিস: ₹${activeStudent.totalFees}\nজমা: ₹${activeStudent.paidAmount}\nবাকি (Due): ₹${activeStudent.dueAmount}\n\nআপনার ট্রেনারকে রিসিটের QR কোড দেখিয়ে প্রতিটি ক্লাস কাউন্ট করিয়ে নেবেন। ধন্যবাদ!`;
+      const text = `Hello ${activeStudent.name},\nWelcome to Seekho 2 Wheeler Training Centre!\n\nYour Admission Details:\nCourse: ${activeStudent.courseType} (${activeStudent.packageDays} Days)\nTotal Fees: Rs. ${activeStudent.totalFees}\nPaid: Rs. ${activeStudent.paidAmount}\nRemaining Due: Rs. ${activeStudent.dueAmount}\n\nPlease show your QR Code receipt to the trainer during class. Thank you!`;
       window.open(`https://wa.me/91${activeStudent.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
     }
 
@@ -939,34 +952,53 @@
       document.getElementById("editDueDisplay").textContent = `₹${due}`;
     }
 
-    document.getElementById("editForm").addEventListener("submit", async (e) => {
+    document.getElementById("editForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const id = document.getElementById("editStudentId").value;
       const total = Number(document.getElementById("editTotalFees").value) || 0;
       const paid = Number(document.getElementById("editPaidAmount").value) || 0;
       const due = Math.max(0, total - paid);
 
-      const updateData = {
-        name: document.getElementById("editName").value.trim(),
-        phone: document.getElementById("editPhone").value.trim(),
-        whatsapp: document.getElementById("editWhatsapp").value.trim(),
-        branch: document.getElementById("editBranch").value,
-        totalFees: total,
-        paidAmount: paid,
-        dueAmount: due,
-        classesAttended: Number(document.getElementById("editClassesAttended").value) || 0
-      };
+      const idx = rawStudents.findIndex(s => s.id === id);
+      if (idx !== -1) {
+        rawStudents[idx].name = document.getElementById("editName").value.trim();
+        rawStudents[idx].phone = document.getElementById("editPhone").value.trim();
+        rawStudents[idx].whatsapp = document.getElementById("editWhatsapp").value.trim();
+        rawStudents[idx].branch = document.getElementById("editBranch").value;
+        rawStudents[idx].totalFees = total;
+        rawStudents[idx].paidAmount = paid;
+        rawStudents[idx].dueAmount = due;
+        rawStudents[idx].classesAttended = Number(document.getElementById("editClassesAttended").value) || 0;
 
-      try {
-        await db.collection("students").doc(id).update(updateData);
-        alert("কাস্টমার তথ্য সফলভাবে আপডেট হয়েছে!");
+        saveLocal();
+        renderDashboard();
+        renderStudentList();
+        renderShiftReport();
+
+        // Async sync
+        try {
+          db.collection("students").doc(id).update(rawStudents[idx]).catch(()=>{});
+        } catch(e) {}
+
+        alert("Customer details updated successfully!");
         closeModal("editModal");
-      } catch (err) {
-        alert("আপডেট করতে ব্যর্থ: " + err.message);
       }
     });
 
-    // Scanner
+    function deleteCustomer() {
+      const id = document.getElementById("editStudentId").value;
+      if (confirm("Are you sure you want to delete this customer record?")) {
+        rawStudents = rawStudents.filter(s => s.id !== id);
+        saveLocal();
+        renderDashboard();
+        renderStudentList();
+        renderShiftReport();
+        try { db.collection("students").doc(id).delete().catch(()=>{}); } catch(e) {}
+        closeModal("editModal");
+      }
+    }
+
+    // QR Attendance Scanner
     function toggleScanner() {
       const overlay = document.getElementById("scannerOverlay");
       const text = document.getElementById("scannerBtnText");
@@ -983,37 +1015,41 @@
               handleAttendance(data.studentCode);
               toggleScanner();
             } catch (err) {
-              alert("ভুল বা ইনভ্যালিড কিউআর কোড!");
+              alert("Invalid QR Code!");
             }
           }
         );
-        text.textContent = "ক্যামেরা বন্ধ করুন";
+        text.textContent = "STOP CAMERA";
         isScanning = true;
       } else {
         if (html5QrCode) html5QrCode.stop();
-        text.textContent = "ক্যামেরা চালু করুন";
+        text.textContent = "START CAMERA";
         overlay.classList.remove("hidden");
         isScanning = false;
       }
     }
 
-    async function handleAttendance(studentCode) {
-      const student = rawStudents.find(s => s.studentCode === studentCode);
-      if (!student) return alert("কাস্টমার খুঁজে পাওয়া যায়নি!");
+    function handleAttendance(studentCode) {
+      const idx = rawStudents.findIndex(s => s.studentCode === studentCode);
+      if (idx === -1) return alert("Customer record not found!");
 
+      const student = rawStudents[idx];
       if (student.classesAttended >= 5 && student.dueAmount > 0) {
-        return alert(`⚠️ সতর্কবার্তা: ${student.name}-এর ₹${student.dueAmount} টাকা বকেয়া রয়েছে! ৫টির বেশি ক্লাস সম্পন্ন হয়েছে। পেমেন্ট ক্লিয়ার না করলে পরবর্তী ক্লাস কাউন্ট করা যাবে না।`);
+        return alert(`⚠️ DUE LOCKOUT: ${student.name} has ₹${student.dueAmount} unpaid dues. Cannot attend beyond 5th class until fees are cleared.`);
       }
       if (student.classesAttended >= student.packageDays) {
-        return alert(`কোর্স সম্পূর্ণ হয়েছে! (${student.classesAttended}/${student.packageDays} ক্লাস)`);
+        return alert(`Course already completed (${student.classesAttended}/${student.packageDays} classes)!`);
       }
 
-      await db.collection("students").doc(student.id).update({
-        classesAttended: firebase.firestore.FieldValue.increment(1),
-        lastAttendedAt: new Date().toISOString(),
-        firstClassDate: student.firstClassDate || new Date().toISOString()
-      });
-      alert(`✅ ক্লাস সফলভাবে কাউন্ট হয়েছে! বর্তমান ক্লাস: ${(student.classesAttended || 0) + 1}/${student.packageDays}`);
+      student.classesAttended = (student.classesAttended || 0) + 1;
+      student.lastAttendedAt = new Date().toISOString();
+      if (!student.firstClassDate) student.firstClassDate = new Date().toISOString();
+
+      saveLocal();
+      renderStudentList();
+      try { db.collection("students").doc(student.id).update(student).catch(()=>{}); } catch(e) {}
+
+      alert(`✅ Attendance Counted! Current Classes: ${student.classesAttended}/${student.packageDays}`);
     }
   </script>
 </body>
