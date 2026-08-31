@@ -15,7 +15,6 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <!-- Client-side HEIC/HEIF Converter for iOS devices -->
   <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
   <style>
     body {
@@ -124,7 +123,6 @@
 
       <!-- 1. DASHBOARD TAB -->
       <section id="tabDashboard" class="space-y-6">
-        <!-- Live Multi-Filters -->
         <div class="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm space-y-3">
           <div class="flex items-center justify-between border-b pb-2">
             <div class="flex items-center space-x-2">
@@ -180,7 +178,6 @@
           </div>
         </div>
 
-        <!-- 4 Key Metrics Cards -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-blue-500"></div>
@@ -208,7 +205,6 @@
           </div>
         </div>
 
-        <!-- Revenue Split Visual Ratio Bar -->
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="font-black text-slate-900 text-base flex items-center space-x-2">
@@ -235,7 +231,6 @@
           </div>
         </div>
 
-        <!-- Branch-Wise Live Performance Cards -->
         <div id="branchGridContainer">
           <h3 class="font-black text-slate-900 text-base mb-4 flex items-center space-x-2">
             <i class="fa-solid fa-building-flag text-yellow-500"></i>
@@ -391,16 +386,17 @@
     </main>
   </div>
 
-  <!-- POPUP MODALS -->
+  <!-- ================= POPUP MODAL 1: SUCCESS & DETAILED PORTFOLIO MODAL ================= -->
   <div id="portfolioModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 text-center">
-      <div class="w-12 h-12 bg-green-100 text-green-600 border border-green-200 rounded-full flex items-center justify-center text-xl mx-auto font-black">
-        <i class="fa-solid fa-check"></i>
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="text-base font-black text-slate-900">Student Profile & Attendance Hub</h3>
+        <button onclick="closeModal('portfolioModal')" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
-      <h3 class="text-lg font-black text-slate-900">Profile & QR Ready!</h3>
+
       <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left space-y-2">
         <div class="flex items-center space-x-3">
-          <img id="portModalImg" src="" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm" />
+          <img id="portModalImg" src="" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm bg-slate-200" />
           <div>
             <h4 id="portModalName" class="font-bold text-slate-900 text-sm"></h4>
             <p id="portModalDetails" class="text-xs text-slate-500"></p>
@@ -412,10 +408,24 @@
           <span class="text-slate-600">Due: <span id="portModalDue" class="text-red-600"></span></span>
         </div>
       </div>
+
+      <!-- Live QR Display -->
       <div class="flex justify-center p-3 bg-white rounded-2xl border border-slate-200">
-        <img id="portModalQr" class="w-40 h-40" />
+        <img id="portModalQr" class="w-36 h-36" />
       </div>
-      <div class="grid grid-cols-2 gap-2 pt-2">
+
+      <!-- Detailed Attendance Log List -->
+      <div class="space-y-2 text-left">
+        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center justify-between">
+          <span><i class="fa-solid fa-calendar-check text-yellow-500"></i> Class Attendance Log</span>
+          <span id="portModalLogCount" class="text-[10px] bg-yellow-100 text-yellow-900 px-2 py-0.5 rounded-full font-bold"></span>
+        </h4>
+        <div id="portModalLogsList" class="bg-slate-50 p-3 rounded-2xl border border-slate-200 max-h-36 overflow-y-auto space-y-1.5 text-xs">
+          <!-- Dynamically populated attendance logs with date & exact time -->
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 pt-1">
         <button onclick="downloadActiveReceipt()" class="p-3 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm">
           <i class="fa-solid fa-file-pdf"></i>
           <span>PDF RECEIPT</span>
@@ -425,10 +435,10 @@
           <span>WHATSAPP BILL</span>
         </button>
       </div>
-      <button onclick="closeModal('portfolioModal')" class="text-xs font-bold text-slate-400 hover:text-slate-600">Close Window</button>
     </div>
   </div>
 
+  <!-- ================= POPUP MODAL 2: EDIT CUSTOMER MODAL ================= -->
   <div id="editModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-100 pb-2">
@@ -527,14 +537,12 @@
     let html5QrCode = null;
     let isScanning = false;
 
-    // Load & Migrate Local Data (Migrates old un-dated records to 2026-09-01)
     function loadLocal() {
       const stored = localStorage.getItem("seekho_students_data");
       if (stored) {
         try { 
           rawStudents = JSON.parse(stored).map(s => {
             let recordDate = s.createdAt || "2026-09-01";
-            // If date was 2026-08-31 or older, normalize to 2026-09-01 for September 2026 tracking
             if (recordDate.startsWith("2026-08")) recordDate = "2026-09-01T00:00:00.000Z";
             return {
               ...s,
@@ -543,6 +551,7 @@
               dueAmount: Number(s.dueAmount) || 0,
               totalFees: Number(s.totalFees) || 0,
               createdAt: recordDate,
+              attendanceLogs: s.attendanceLogs || [],
               photoUrl: s.photoUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60"
             };
           });
@@ -593,9 +602,7 @@
       document.getElementById("mainApp").classList.remove("hidden");
       document.getElementById("userBadge").textContent = currentUser.role === "owner" ? "OWNER PORTAL (CENTRAL)" : `${currentUser.branch.toUpperCase()} BRANCH`;
 
-      // Set default admission date to today (2026-09-01)
-      const todayISO = new Date().toISOString().slice(0, 10);
-      document.getElementById("admDate").value = todayISO;
+      document.getElementById("admDate").value = new Date().toISOString().slice(0, 10);
 
       if (currentUser.role === "trainer") {
         document.getElementById("filterBranch").value = currentUser.branch;
@@ -623,7 +630,6 @@
 
     function handleLogout() { location.reload(); }
 
-    // Bulletproof Tab Switching with Guaranteed Yellow Highlight
     function switchTab(tab) {
       const allTabs = ["dashboard", "attendance", "admission", "students", "shift"];
       allTabs.forEach(t => {
@@ -651,6 +657,7 @@
       }
     }
 
+    // Real-Time 2-Way Firestore Engine
     function initFirebaseSync() {
       try {
         db.collection("students").onSnapshot((snap) => {
@@ -667,6 +674,7 @@
                 dueAmount: Number(data.dueAmount) || 0,
                 totalFees: Number(data.totalFees) || 0,
                 createdAt: rDate,
+                attendanceLogs: data.attendanceLogs || [],
                 photoUrl: data.photoUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60"
               };
             });
@@ -679,12 +687,10 @@
       } catch(e) {}
     }
 
-    // Universal Multi-Device / HEIC / Image File Processor
     async function processUniversalPhoto(file) {
       return new Promise(async (resolve) => {
         try {
           let convertedBlob = file;
-          // If iOS HEIC/HEIF format, convert via heic2any
           if (file.name.toLowerCase().endsWith(".heic") || file.name.toLowerCase().endsWith(".heif") || file.type.includes("heic")) {
             try {
               convertedBlob = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.7 });
@@ -742,7 +748,7 @@
       calcAdmFees();
     }
 
-    // Admission Form Submit (With Mandatory Admission Date Support)
+    // New Admission Form Submit
     document.getElementById("admissionForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const photoFile = document.getElementById("admPhoto").files[0];
@@ -777,6 +783,7 @@
           studentCode: studentCode,
           photoUrl: realPhotoBase64,
           classesAttended: 0,
+          attendanceLogs: [],
           firstClassDate: null,
           createdAt: new Date(customDate).toISOString()
         };
@@ -813,7 +820,7 @@
       renderDashboard();
     }
 
-    // Real-Time Dashboard Engine
+    // Dashboard Engine
     function renderDashboard() {
       const selectedBranch = currentUser.role === "trainer" ? currentUser.branch : document.getElementById("filterBranch").value;
       const selectedYear = document.getElementById("filterYear").value;
@@ -865,7 +872,6 @@
       const scooties = filtered.filter(s => s.courseType === "Scooty").length;
       document.getElementById("dashVehicles").textContent = `🏍️ ${bikes} | 🛵 ${scooties}`;
 
-      // Render 6 Branches live performance
       const grid = document.getElementById("branchSummaryGrid");
       grid.innerHTML = "";
       ALL_BRANCHES.forEach(b => {
@@ -902,7 +908,7 @@
       });
     }
 
-    // Customer List Render
+    // Customer List Render with Multi-Color Step Progress Bar
     function renderStudentList() {
       const q = document.getElementById("searchStudentInput").value.toLowerCase();
       const branchFilter = currentUser.role === "trainer" ? currentUser.branch : document.getElementById("studentFilterBranch").value;
@@ -923,19 +929,29 @@
       filtered.forEach(student => {
         const card = document.createElement("div");
         card.className = "bg-white p-5 rounded-3xl border border-slate-200 shadow-sm space-y-3 hover:shadow-md transition relative overflow-hidden";
-        const progress = Math.min(100, Math.round(((student.classesAttended || 0) / student.packageDays) * 100));
+        
+        const totalClasses = student.packageDays || 10;
+        const attended = student.classesAttended || 0;
 
-        const classes = student.classesAttended || 0;
+        // Payment Countdown Calculation
         let countdownBadgeHtml = "";
         if (student.dueAmount > 0) {
-          const classesLeft = Math.max(0, 6 - classes);
-          if (classes >= 6) {
+          const classesLeft = Math.max(0, 6 - attended);
+          if (attended >= 6) {
             countdownBadgeHtml = `<div class="bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider flex items-center space-x-1 animate-pulse"><i class="fa-solid fa-triangle-exclamation"></i><span>PAYMENT OVERDUE - LOCKED</span></div>`;
           } else {
             countdownBadgeHtml = `<div class="bg-amber-100 border border-amber-300 text-amber-900 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center space-x-1"><i class="fa-solid fa-clock"></i><span>${classesLeft} Classes to go for next payment</span></div>`;
           }
         } else {
           countdownBadgeHtml = `<div class="bg-green-100 text-green-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">Fees Cleared</div>`;
+        }
+
+        // Multi-Color Discrete Progress Step Indicator
+        const colors = ["bg-yellow-400", "bg-amber-500", "bg-blue-500", "bg-indigo-500", "bg-emerald-500", "bg-teal-500", "bg-green-500"];
+        let stepBarsHtml = "";
+        for (let i = 1; i <= totalClasses; i++) {
+          const colorClass = i <= attended ? colors[(i - 1) % colors.length] : "bg-slate-100";
+          stepBarsHtml += `<div class="flex-1 h-2.5 rounded-full ${colorClass} transition-all" title="Class ${i}"></div>`;
         }
 
         const admDateFormatted = (student.createdAt || "2026-09-01").slice(0, 10);
@@ -955,21 +971,24 @@
               <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days) • 📅 ${admDateFormatted}</p>
             </div>
           </div>
+
+          <!-- Multi-Color Step Progress -->
           <div class="space-y-1.5">
             <div class="flex justify-between text-xs font-bold">
-              <span class="text-slate-700">Classes: ${student.classesAttended || 0}/${student.packageDays}</span>
+              <span class="text-slate-700">Completed: ${attended}/${totalClasses} Classes</span>
               <span class="${student.dueAmount > 0 ? 'text-red-600 font-black' : 'text-green-600'}">
                 ${student.dueAmount > 0 ? `Due: ₹${student.dueAmount}` : 'Fully Paid'}
               </span>
             </div>
-            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden border border-slate-200">
-              <div class="bg-yellow-400 h-full rounded-full transition-all" style="width: ${progress}%;"></div>
+            <div class="flex space-x-1 w-full bg-slate-50 p-1 rounded-xl border border-slate-200">
+              ${stepBarsHtml}
             </div>
           </div>
+
           <div class="flex space-x-2 pt-2 border-t border-slate-100">
             <button onclick='showPortfolioModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 rounded-xl transition flex items-center justify-center space-x-1.5">
               <i class="fa-solid fa-id-card"></i>
-              <span>PROFILE & QR</span>
+              <span>PROFILE, QR & LOGS</span>
             </button>
             <button onclick='downloadPdfReceipt(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="bg-yellow-400 hover:bg-yellow-500 text-slate-950 text-xs font-black px-3 py-2.5 rounded-xl transition flex items-center space-x-1 shadow-sm" title="Download Receipt">
               <i class="fa-solid fa-file-arrow-down"></i>
@@ -997,6 +1016,7 @@
       document.getElementById("shiftTodayCash").textContent = `₹${todayCash}`;
     }
 
+    // Modal with Live Attendance Logs
     async function showPortfolioModal(student) {
       activeStudent = student;
       document.getElementById("portModalName").textContent = student.name;
@@ -1009,6 +1029,32 @@
       const qrPayload = JSON.stringify({ studentCode: student.studentCode, phone: student.phone });
       const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 300, margin: 1 });
       document.getElementById("portModalQr").src = qrDataUrl;
+
+      // Populate Live Attendance Logs (Date & Time)
+      const logsContainer = document.getElementById("portModalLogsList");
+      const logsCountBadge = document.getElementById("portModalLogCount");
+      logsContainer.innerHTML = "";
+
+      const logs = student.attendanceLogs || [];
+      logsCountBadge.textContent = `${logs.length}/${student.packageDays} Classes Completed`;
+
+      if (logs.length === 0) {
+        logsContainer.innerHTML = `<p class="text-slate-400 text-center py-2 italic font-semibold">No classes attended yet. Scan QR to add class record.</p>`;
+      } else {
+        logs.forEach((log, index) => {
+          const item = document.createElement("div");
+          item.className = "flex justify-between items-center bg-white p-2 rounded-xl border border-slate-100 shadow-2xs";
+          item.innerHTML = `
+            <div class="flex items-center space-x-2">
+              <span class="w-5 h-5 bg-yellow-400 text-slate-950 font-black rounded-full flex items-center justify-center text-[10px]">${index + 1}</span>
+              <span class="font-bold text-slate-800">Class #${index + 1} (${student.courseType})</span>
+            </div>
+            <span class="text-slate-500 font-semibold text-[11px]">${log.date} • ${log.time}</span>
+          `;
+          logsContainer.appendChild(item);
+        });
+      }
+
       document.getElementById("portfolioModal").classList.remove("hidden");
     }
 
@@ -1115,7 +1161,7 @@
         renderShiftReport();
 
         try {
-          db.collection("students").doc(id).update(rawStudents[idx]).catch(()=>{});
+          db.collection("students").doc(id).set(rawStudents[idx], { merge: true }).catch(()=>{});
         } catch(e) {}
 
         alert("Customer details updated successfully!");
@@ -1184,6 +1230,7 @@
       }
     }
 
+    // QR Attendance Increment with Automatic Timestamp Logging
     function handleAttendance(studentCode) {
       const idx = rawStudents.findIndex(s => s.studentCode === studentCode);
       if (idx === -1) return alert("Customer record not found!");
@@ -1196,15 +1243,26 @@
         return alert(`Course already completed (${student.classesAttended}/${student.packageDays} classes)!`);
       }
 
+      // Add Attendance Log (Date and Time)
+      const now = new Date();
+      const newLog = {
+        date: now.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
+        time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
+        timestamp: now.toISOString()
+      };
+
+      if (!student.attendanceLogs) student.attendanceLogs = [];
+      student.attendanceLogs.push(newLog);
+
       student.classesAttended = (student.classesAttended || 0) + 1;
-      student.lastAttendedAt = new Date().toISOString();
-      if (!student.firstClassDate) student.firstClassDate = new Date().toISOString();
+      student.lastAttendedAt = now.toISOString();
+      if (!student.firstClassDate) student.firstClassDate = now.toISOString();
 
       saveLocal();
       renderStudentList();
-      try { db.collection("students").doc(student.id).update(student).catch(()=>{}); } catch(e) {}
+      try { db.collection("students").doc(student.id).set(student, { merge: true }).catch(()=>{}); } catch(e) {}
 
-      alert(`✅ Attendance Counted! Current Classes: ${student.classesAttended}/${student.packageDays}`);
+      alert(`✅ Attendance Counted! Current Classes: ${student.classesAttended}/${student.packageDays}\nLogged at: ${newLog.date} ${newLog.time}`);
     }
   </script>
 </body>
