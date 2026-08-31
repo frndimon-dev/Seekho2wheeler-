@@ -211,19 +211,19 @@
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-blue-500"></div>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Students</p>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">New Enrolled Students</p>
             <p id="dashTotalStudents" class="text-3xl font-black text-slate-900 mt-2">0</p>
-            <p class="text-[11px] text-slate-500 font-semibold mt-1">Active Registrations</p>
+            <p class="text-[11px] text-slate-500 font-semibold mt-1">Digital Registrations (Sep '26)</p>
           </div>
           <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-green-500"></div>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Paid Revenue</p>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Paid Revenue</p>
             <p id="dashTotalPaid" class="text-3xl font-black text-green-600 mt-2">₹0</p>
-            <p id="paidPercentText" class="text-[11px] font-bold text-green-600 mt-1">0% Collected</p>
+            <p id="paidSplitText" class="text-[11px] font-bold text-green-600 mt-1">Adm: ₹0 | Dues: ₹0</p>
           </div>
           <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 right-0 w-1.5 h-full bg-red-500"></div>
-            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Due Revenue</p>
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Total Outstanding Due</p>
             <p id="dashTotalDue" class="text-3xl font-black text-red-600 mt-2">₹0</p>
             <p id="duePercentText" class="text-[11px] font-bold text-red-600 mt-1">0% Outstanding</p>
           </div>
@@ -275,13 +275,13 @@
         <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
           <div class="relative w-full sm:w-80">
             <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
-            <input type="text" id="searchDueInput" oninput="renderDuesList()" placeholder="Search due student..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+            <input type="text" id="searchDueInput" oninput="renderDuesList()" placeholder="Search student or phone..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
           </div>
           <div class="flex items-center gap-2 w-full sm:w-auto">
             <select id="dueFilterType" onchange="renderDuesList()" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800">
-              <option value="All">All Students (New & Old)</option>
-              <option value="New">Digital New (With QR)</option>
-              <option value="Legacy">Offline Old (No QR)</option>
+              <option value="All">All Dues (New & Old)</option>
+              <option value="New">Digital New (QR)</option>
+              <option value="Legacy">Offline Old (Cards)</option>
             </select>
             <button onclick="openAddOldStudentModal()" class="px-4 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-xl text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer whitespace-nowrap">
               <i class="fa-solid fa-user-clock"></i>
@@ -297,7 +297,7 @@
         <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm text-center max-w-xl mx-auto space-y-6">
           <div>
             <h2 class="text-xl font-black text-slate-900">QR Code Attendance Scanner</h2>
-            <p class="text-xs text-slate-500 mt-1">Instant Single-Scan Attendance with Real-Time Matrix Logs</p>
+            <p class="text-xs text-slate-500 mt-1">Automatic Attendance Logging & Due Enforcement</p>
           </div>
           <div class="relative mx-auto max-w-xs aspect-square bg-slate-900 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-lg flex items-center justify-center">
             <div id="reader" class="w-full h-full"></div>
@@ -519,10 +519,11 @@
         </div>
       </div>
 
-      <!-- 3-Installments Breakdown List -->
+      <!-- Installments Breakdown List -->
       <div class="space-y-1 text-left">
-        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider">
-          <i class="fa-solid fa-list-check text-yellow-500"></i> Fee Installments (Max 3)
+        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center justify-between">
+          <span><i class="fa-solid fa-list-check text-yellow-500"></i> Fee Installments Trail</span>
+          <button onclick="openAddInstallmentDirect()" class="text-[10px] font-bold bg-yellow-400 hover:bg-yellow-500 text-slate-950 px-2 py-0.5 rounded-md cursor-pointer">+ Add Installment</button>
         </h4>
         <div id="portModalInstallmentsContainer" class="space-y-1.5 text-xs font-semibold text-slate-700"></div>
       </div>
@@ -653,11 +654,11 @@
     </div>
   </div>
 
-  <!-- ================= COLLECT INSTALLMENT MODAL (MAX 3) ================= -->
+  <!-- ================= DYNAMIC COLLECT INSTALLMENT MODAL ================= -->
   <div id="collectDueModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-green-500 border border-slate-200 shadow-2xl space-y-4">
       <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-        <h3 class="text-base font-black text-slate-900">Collect Next Installment</h3>
+        <h3 class="text-base font-black text-slate-900">Add Next Installment</h3>
         <button onclick="closeModal('collectDueModal')" class="text-slate-400 hover:text-slate-700 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
       <form id="collectDueForm" class="space-y-3">
@@ -671,8 +672,21 @@
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Collection Date *</label>
-            <input type="date" id="collectDate" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold" />
+            <label class="block text-xs font-bold text-slate-700 mb-1">Collection Month *</label>
+            <select id="collectMonth" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September" selected>September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Payment Mode *</label>
@@ -682,13 +696,19 @@
             </select>
           </div>
         </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Amount to Collect (₹) *</label>
-          <input type="number" id="collectAmount" required placeholder="Enter amount" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl text-sm font-black focus:ring-2 focus:ring-yellow-400" />
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Date (Optional)</label>
+            <input type="date" id="collectDate" class="w-full p-2 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Amount to Pay (₹) *</label>
+            <input type="number" id="collectAmount" required placeholder="500" class="w-full p-2 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black focus:ring-2 focus:ring-yellow-400" />
+          </div>
         </div>
         <button type="submit" id="collectSubmitBtn" class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-3.5 rounded-xl transition text-xs shadow-md cursor-pointer flex items-center justify-center gap-1.5">
           <i class="fa-solid fa-receipt"></i>
-          <span>RECORD PAYMENT & UPDATE CLOUD</span>
+          <span>RECORD INSTALLMENT & UPDATE</span>
         </button>
       </form>
     </div>
@@ -1082,7 +1102,7 @@
       btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
 
-    // Add Old Student
+    // Add Old Student Form Submit
     function openAddOldStudentModal() {
       document.getElementById("addOldStudentForm").reset();
       document.getElementById("oldDueDisplay").textContent = "₹0";
@@ -1151,7 +1171,7 @@
       }
     });
 
-    // Collect Due Modal
+    // Dynamic Installment Add Engine
     function openCollectDueModal(student) {
       document.getElementById("collectStudentCode").value = student.studentCode;
       document.getElementById("collectStudentName").textContent = `${student.name} (${student.branch}) - ${student.isLegacy ? 'Offline Card Student' : 'Digital QR Student'}`;
@@ -1161,6 +1181,12 @@
       document.getElementById("collectDueModal").classList.remove("hidden");
     }
 
+    function openAddInstallmentDirect() {
+      if (activeStudent) {
+        openCollectDueModal(activeStudent);
+      }
+    }
+
     document.getElementById("collectDueForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const code = document.getElementById("collectStudentCode").value;
@@ -1168,24 +1194,21 @@
       if (!student) return alert("Student record not found!");
 
       const colAmt = Number(document.getElementById("collectAmount").value) || 0;
-      const colDate = document.getElementById("collectDate").value;
+      const colMonth = document.getElementById("collectMonth").value;
+      const colDate = document.getElementById("collectDate").value || getLocalDateString();
       const colMode = document.getElementById("collectMode").value;
 
       if (colAmt <= 0) return alert("Please enter valid amount!");
       if (colAmt > student.dueAmount) return alert("Amount cannot exceed current outstanding due!");
 
       const currentInstallments = student.installments || [];
-      if (currentInstallments.length >= 3) {
-        return alert("Maximum limit of 3 installments reached for this student!");
-      }
-
       const nextInstNo = currentInstallments.length + 1;
       const newInstallment = {
         installmentNo: nextInstNo,
         amount: colAmt,
         mode: colMode,
         date: colDate,
-        monthName: new Date(colDate).toLocaleString('en-US', { month: 'long' }),
+        monthName: colMonth,
         classIndex: student.classesAttended || 0
       };
 
@@ -1203,7 +1226,7 @@
         closeModal("collectDueModal");
         const updatedStudent = { ...student, installments: updatedInstallments, paidAmount: newPaidAmount, dueAmount: newDueAmount };
         showPortfolioModal(updatedStudent);
-        alert(`✅ Installment #${nextInstNo} recorded!\nAmount: ₹${colAmt} (${colMode})\nRemaining Due: ₹${newDueAmount}`);
+        alert(`✅ Installment #${nextInstNo} recorded!\nAmount: ₹${colAmt} [${colMode}] (Month: ${colMonth})\nRemaining Due: ₹${newDueAmount}`);
       } catch(err) {
         alert("Collection Error: " + err.message);
       }
@@ -1237,7 +1260,7 @@
         card.className = "bg-white p-5 rounded-3xl border border-red-200 shadow-sm space-y-3 relative overflow-hidden";
         
         const instCount = (student.installments || []).length;
-        const instBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">${instCount}/3 Installments</span>`;
+        const instBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">${instCount} Installments</span>`;
         const legacyBadge = student.isLegacy ? `<span class="bg-slate-200 text-slate-700 text-[10px] font-black px-2 py-0.5 rounded-full">Offline Card</span>` : `<span class="bg-yellow-100 text-yellow-800 text-[10px] font-black px-2 py-0.5 rounded-full">Digital QR</span>`;
 
         card.innerHTML = `
@@ -1256,7 +1279,7 @@
           <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
             <button onclick='openCollectDueModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1 shadow-sm cursor-pointer">
               <i class="fa-solid fa-hand-holding-dollar"></i>
-              <span>COLLECT DUE PAYMENT</span>
+              <span>+ ADD INSTALLMENT</span>
             </button>
             <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="p-2.5 bg-green-100 hover:bg-green-200 text-green-700 rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
               <i class="fa-brands fa-whatsapp text-sm"></i>
@@ -1275,6 +1298,7 @@
       renderDashboard();
     }
 
+    // Fixed Dashboard Logic (Separates Digital Admissions vs Legacy Collections)
     function renderDashboard() {
       const selectedBranch = currentUser.role === "trainer" ? currentUser.branch : document.getElementById("filterBranch").value;
       const selectedYear = document.getElementById("filterYear").value;
@@ -1298,20 +1322,25 @@
         return matchBranch && matchDate;
       });
 
-      const totalStudents = filtered.length;
+      // Pure Digital New Enrolled Registrations Count Only
+      const totalDigitalStudents = filtered.filter(s => !s.isLegacy).length;
+      
       const totalPaid = filtered.reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
       const totalDue = filtered.reduce((acc, s) => acc + (Number(s.dueAmount) || 0), 0);
       const expectedTotal = totalPaid + totalDue;
 
+      const admRev = filtered.filter(s => !s.isLegacy).reduce((acc, s) => acc + ((s.installments && s.installments[0]) ? Number(s.installments[0].amount) : Number(s.paidAmount)), 0);
+      const dueRev = Math.max(0, totalPaid - admRev);
+
       const paidPercent = expectedTotal > 0 ? Math.round((totalPaid / expectedTotal) * 100) : 0;
       const duePercent = expectedTotal > 0 ? Math.round((totalDue / expectedTotal) * 100) : 0;
 
-      document.getElementById("dashTotalStudents").textContent = totalStudents;
+      document.getElementById("dashTotalStudents").textContent = totalDigitalStudents;
       document.getElementById("dashTotalPaid").textContent = `₹${totalPaid}`;
+      document.getElementById("paidSplitText").textContent = `Adm: ₹${admRev} | Dues: ₹${dueRev}`;
       document.getElementById("dashTotalDue").textContent = `₹${totalDue}`;
       document.getElementById("dashExpectedRevenue").textContent = `TOTAL EXPECTED: ₹${expectedTotal}`;
 
-      document.getElementById("paidPercentText").textContent = `${paidPercent}% Collected`;
       document.getElementById("duePercentText").textContent = `${duePercent}% Outstanding`;
 
       document.getElementById("graphPaidBar").style.width = `${paidPercent}%`;
@@ -1322,8 +1351,8 @@
       document.getElementById("graphPaidPercent").textContent = `${paidPercent}%`;
       document.getElementById("graphDuePercent").textContent = `${duePercent}%`;
 
-      const bikes = filtered.filter(s => s.courseType === "Bike").length;
-      const scooties = filtered.filter(s => s.courseType === "Scooty").length;
+      const bikes = filtered.filter(s => s.courseType === "Bike" && !s.isLegacy).length;
+      const scooties = filtered.filter(s => s.courseType === "Scooty" && !s.isLegacy).length;
       document.getElementById("dashVehicles").textContent = `🏍️ ${bikes} | 🛵 ${scooties}`;
 
       const grid = document.getElementById("branchSummaryGrid");
@@ -1343,6 +1372,7 @@
           return matchB && matchD;
         });
 
+        const bDigitalCount = bStudents.filter(s => !s.isLegacy).length;
         const bPaid = bStudents.reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
         const bDue = bStudents.reduce((acc, s) => acc + (Number(s.dueAmount) || 0), 0);
 
@@ -1351,7 +1381,7 @@
         card.innerHTML = `
           <div class="flex items-center justify-between border-b border-slate-100 pb-2">
             <span class="font-black text-slate-900 text-sm">${b}</span>
-            <span class="text-[10px] font-black bg-yellow-100 text-yellow-900 border border-yellow-300 px-2 py-0.5 rounded-md">${bStudents.length} Students</span>
+            <span class="text-[10px] font-black bg-yellow-100 text-yellow-900 border border-yellow-300 px-2 py-0.5 rounded-md">${bDigitalCount} New Digital</span>
           </div>
           <div class="flex justify-between text-xs font-bold">
             <span class="text-green-600">Paid: ₹${bPaid}</span>
@@ -1483,7 +1513,7 @@
               row.innerHTML = `
                 <div>
                   <span class="font-bold text-slate-900">${s.name}</span>
-                  <span class="text-[10px] text-slate-500 block">${s.branch} • Inst #${inst.installmentNo} (${inst.mode})</span>
+                  <span class="text-[10px] text-slate-500 block">${s.branch} • Inst #${inst.installmentNo} (${inst.mode}) [Month: ${inst.monthName || 'N/A'}]</span>
                 </div>
                 <span class="font-black text-green-600">+₹${amt}</span>
               `;
@@ -1722,7 +1752,6 @@
       doc.save(`${student.name}_Official_Receipt.pdf`);
     }
 
-    // Professional Course Completion Certificate Generator
     function generateCourseCertificate() {
       if (!activeStudent) return;
       if (activeStudent.dueAmount > 0) {
@@ -1931,7 +1960,6 @@
       }
     }
 
-    // 1-Click Excel / CSV Export
     function exportToExcelCSV() {
       if (rawStudents.length === 0) return alert("No records available to export!");
 
@@ -1997,12 +2025,14 @@
       handleAttendance(code);
     }
 
+    // Attendance & Enforcement (Lockout on 6th class if due pending)
     async function handleAttendance(studentCode) {
       const student = rawStudents.find(s => s.studentCode === studentCode || s.id === studentCode);
       if (!student) return alert("No active customer record found for Code: " + studentCode);
 
+      // Strict rule: Max 5 classes allowed with dues; locked from 6th class
       if (student.classesAttended >= 5 && student.dueAmount > 0) {
-        return alert(`⚠️ DUE LOCKOUT: ${student.name} has ₹${student.dueAmount} unpaid dues. Cannot attend beyond 5th class until fees are cleared.`);
+        return alert(`⚠️ DUE LOCKOUT: ${student.name} has ₹${student.dueAmount} unpaid dues. Cannot attend 6th class onwards until fees are cleared.`);
       }
       if (student.classesAttended >= (student.packageDays || 10)) {
         return alert(`Course already completed (${student.classesAttended}/${student.packageDays || 10} classes)!`);
