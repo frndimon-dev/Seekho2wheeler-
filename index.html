@@ -119,6 +119,10 @@
           <i class="fa-solid fa-chart-pie"></i>
           <span>DASHBOARD & REVENUE</span>
         </button>
+        <button id="navDuesBtn" onclick="switchTab('dues')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
+          <i class="fa-solid fa-hand-holding-dollar"></i>
+          <span>DUE & FEES COLLECTION</span>
+        </button>
         <button id="navScanBtn" onclick="switchTab('attendance')" class="px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2 whitespace-nowrap transition cursor-pointer custom-tab-inactive">
           <i class="fa-solid fa-qrcode"></i>
           <span>QR ATTENDANCE SCANNER</span>
@@ -260,12 +264,34 @@
         </div>
       </section>
 
-      <!-- 2. ATTENDANCE SCANNER TAB -->
+      <!-- 2. DUE & COLLECTION TAB -->
+      <section id="tabDues" class="hidden space-y-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-white p-4 rounded-3xl border border-slate-200 shadow-sm">
+          <div class="relative w-full sm:w-80">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+            <input type="text" id="searchDueInput" oninput="renderDuesList()" placeholder="Search due student..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none" />
+          </div>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <select id="dueFilterType" onchange="renderDuesList()" class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800">
+              <option value="All">All Students (New & Old)</option>
+              <option value="New">Digital New (With QR)</option>
+              <option value="Legacy">Offline Old (No QR)</option>
+            </select>
+            <button onclick="openAddOldStudentModal()" class="px-4 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black rounded-xl text-xs transition flex items-center gap-1.5 shadow-sm cursor-pointer whitespace-nowrap">
+              <i class="fa-solid fa-user-clock"></i>
+              <span>+ ADD OLD CUSTOMER</span>
+            </button>
+          </div>
+        </div>
+        <div id="duesCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </section>
+
+      <!-- 3. ATTENDANCE SCANNER TAB -->
       <section id="tabAttendance" class="hidden space-y-6">
         <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm text-center max-w-xl mx-auto space-y-6">
           <div>
             <h2 class="text-xl font-black text-slate-900">QR Code Attendance Scanner</h2>
-            <p class="text-xs text-slate-500 mt-1">Instant Single-Scan Attendance with Automatic UI Updating</p>
+            <p class="text-xs text-slate-500 mt-1">Instant Single-Scan Attendance with Real-Time Matrix Logs</p>
           </div>
           <div class="relative mx-auto max-w-xs aspect-square bg-slate-900 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-lg flex items-center justify-center">
             <div id="reader" class="w-full h-full"></div>
@@ -288,7 +314,7 @@
         </div>
       </section>
 
-      <!-- 3. NEW ADMISSION TAB -->
+      <!-- 4. NEW ADMISSION TAB -->
       <section id="tabAdmission" class="hidden bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
         <div class="border-b border-slate-100 pb-4 mb-6">
           <h2 class="text-xl font-black text-slate-900">New Customer Admission</h2>
@@ -324,7 +350,7 @@
               </select>
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Payment Mode *</label>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Payment Mode (1st Installment) *</label>
               <select id="admPayMode" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl focus:ring-2 focus:ring-yellow-400 text-sm font-bold">
                 <option value="Cash">💵 Cash</option>
                 <option value="UPI">📱 UPI / Online</option>
@@ -349,7 +375,7 @@
               <input type="number" id="admTotalFees" oninput="calcAdmFees()" required placeholder="3000" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl font-black text-sm focus:ring-2 focus:ring-yellow-400" />
             </div>
             <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Paid Amount (₹)</label>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Paid Amount (1st Installment ₹)</label>
               <input type="number" id="admPaidAmount" oninput="calcAdmFees()" placeholder="1000" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl font-black text-sm focus:ring-2 focus:ring-yellow-400" />
             </div>
           </div>
@@ -371,12 +397,12 @@
         </form>
       </section>
 
-      <!-- 4. CUSTOMER LIST TAB -->
+      <!-- 5. CUSTOMER LIST TAB -->
       <section id="tabStudents" class="hidden space-y-4">
         <div class="flex flex-col sm:flex-row items-center gap-3">
           <div class="relative w-full">
             <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
-            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search by name, phone or student ID..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-sm" />
+            <input type="text" id="searchStudentInput" oninput="renderStudentList()" placeholder="Search by name, phone or code..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-sm" />
           </div>
           <select id="studentFilterBranch" onchange="renderStudentList()" class="w-full sm:w-56 p-3 bg-white border border-slate-200 rounded-2xl text-xs font-black text-slate-900 shadow-sm">
             <option value="All">All Branches</option>
@@ -391,7 +417,7 @@
         <div id="studentCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </section>
 
-      <!-- 5. DAILY SHIFT REPORT TAB -->
+      <!-- 6. DAILY SHIFT REPORT TAB -->
       <section id="tabShift" class="hidden space-y-4">
         <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm max-w-xl mx-auto space-y-4">
           <div class="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -400,7 +426,7 @@
           </div>
           <div class="grid grid-cols-3 gap-3">
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
-              <p class="text-[10px] font-black text-slate-400 uppercase">Admissions</p>
+              <p class="text-[10px] font-black text-slate-400 uppercase">Total Txns</p>
               <p id="shiftTodayCount" class="text-2xl font-black text-slate-900 mt-1">0</p>
             </div>
             <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 text-center">
@@ -415,7 +441,7 @@
         </div>
       </section>
 
-      <!-- 6. RECYCLE BIN TAB -->
+      <!-- 7. RECYCLE BIN TAB -->
       <section id="tabBin" class="hidden space-y-4">
         <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
           <div>
@@ -449,12 +475,21 @@
         </div>
         <div class="border-t border-slate-200 pt-2 flex justify-between text-xs font-bold">
           <span class="text-slate-600">Total: <span id="portModalTotal" class="text-slate-900"></span></span>
-          <span class="text-slate-600">Paid: <span id="portModalPaid" class="text-green-600"></span> (<span id="portModalPayMode" class="text-blue-600 font-bold"></span>)</span>
+          <span class="text-slate-600">Paid: <span id="portModalPaid" class="text-green-600"></span></span>
           <span class="text-slate-600">Due: <span id="portModalDue" class="text-red-600"></span></span>
         </div>
       </div>
 
-      <div class="space-y-2 text-left">
+      <!-- 3-Installments Breakdown List -->
+      <div class="space-y-1 text-left">
+        <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider">
+          <i class="fa-solid fa-list-check text-yellow-500"></i> Fee Installments (Max 3)
+        </h4>
+        <div id="portModalInstallmentsContainer" class="space-y-1.5 text-xs font-semibold text-slate-700"></div>
+      </div>
+
+      <!-- Attendance Row Matrix -->
+      <div id="portAttendanceSection" class="space-y-2 text-left">
         <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center justify-between">
           <span><i class="fa-solid fa-table-cells text-yellow-500"></i> Attendance Flow Matrix</span>
           <span id="portModalLogCount" class="text-[10px] bg-yellow-100 text-yellow-900 px-2 py-0.5 rounded-full font-bold"></span>
@@ -464,8 +499,8 @@
             <thead>
               <tr class="bg-slate-100 text-slate-700 font-black border-b border-slate-200">
                 <th class="p-2.5">Class #</th>
-                <th class="p-2.5">Date</th>
-                <th class="p-2.5">Time</th>
+                <th class="p-2.5">Date & Time</th>
+                <th class="p-2.5">Payment Activity</th>
                 <th class="p-2.5 text-right">Status</th>
               </tr>
             </thead>
@@ -475,7 +510,8 @@
         </div>
       </div>
 
-      <div class="flex flex-col items-center justify-center p-3 bg-white rounded-2xl border border-slate-200 space-y-1">
+      <!-- Live QR Display (Digital Only) -->
+      <div id="portQrBox" class="flex flex-col items-center justify-center p-3 bg-white rounded-2xl border border-slate-200 space-y-1">
         <img id="portModalQr" class="w-36 h-36" />
         <span class="text-[10px] font-bold text-slate-400">Scan for Real-Time Attendance Logging</span>
       </div>
@@ -490,6 +526,102 @@
           <span>WHATSAPP BILL</span>
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- ================= ADD OLD / LEGACY STUDENT MODAL ================= -->
+  <div id="addOldStudentModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+        <h3 class="text-base font-black text-slate-900">Add Old / Legacy Student (Offline Card)</h3>
+        <button onclick="closeModal('addOldStudentModal')" class="text-slate-400 hover:text-slate-700 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <form id="addOldStudentForm" class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Customer Name *</label>
+          <input type="text" id="oldName" required placeholder="e.g. Amit Sen" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-semibold" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Phone Number *</label>
+          <input type="tel" id="oldPhone" required placeholder="9876543210" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-semibold" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Branch *</label>
+            <select id="oldBranch" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
+              <option value="Tollygunge">Tollygunge</option>
+              <option value="Rabindra Sarovar">Rabindra Sarovar</option>
+              <option value="New Town">New Town</option>
+              <option value="Sodepur">Sodepur</option>
+              <option value="Howrah">Howrah</option>
+              <option value="Barasat">Barasat</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Course</label>
+            <select id="oldCourse" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
+              <option value="Scooty">🛵 Scooty</option>
+              <option value="Bike">🏍️ Bike</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Total Fees (₹) *</label>
+            <input type="number" id="oldTotalFees" oninput="calcOldStudentDues()" required placeholder="3000" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Previously Paid (₹)</label>
+            <input type="number" id="oldPaidAmount" oninput="calcOldStudentDues()" placeholder="1500" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
+          </div>
+        </div>
+        <div class="p-3 bg-yellow-50 rounded-xl flex justify-between text-xs font-bold border border-yellow-200">
+          <span class="text-slate-700">Initial Due:</span>
+          <span id="oldDueDisplay" class="text-red-600 font-black">₹0</span>
+        </div>
+        <button type="submit" id="oldSubmitBtn" class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm cursor-pointer">
+          SAVE TO DUE DATABASE
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= COLLECT INSTALLMENT MODAL (MAX 3) ================= -->
+  <div id="collectDueModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-green-500 border border-slate-200 shadow-2xl space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+        <h3 class="text-base font-black text-slate-900">Collect Next Installment</h3>
+        <button onclick="closeModal('collectDueModal')" class="text-slate-400 hover:text-slate-700 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <form id="collectDueForm" class="space-y-3">
+        <input type="hidden" id="collectStudentCode" />
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 space-y-1">
+          <p id="collectStudentName" class="font-bold text-slate-900 text-sm"></p>
+          <div class="flex justify-between text-xs">
+            <span class="text-slate-500">Current Outstanding:</span>
+            <span id="collectCurrentDue" class="font-black text-red-600">₹0</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Collection Date *</label>
+            <input type="date" id="collectDate" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Payment Mode *</label>
+            <select id="collectMode" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
+              <option value="Cash">💵 Cash</option>
+              <option value="UPI">📱 UPI / Online</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Amount to Collect (₹) *</label>
+          <input type="number" id="collectAmount" required placeholder="Enter amount" class="w-full p-3 bg-white border border-slate-300 text-slate-900 rounded-xl text-sm font-black focus:ring-2 focus:ring-yellow-400" />
+        </div>
+        <button type="submit" id="collectSubmitBtn" class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-3.5 rounded-xl transition text-xs shadow-md cursor-pointer flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-receipt"></i>
+          <span>RECORD PAYMENT & UPDATE CLOUD</span>
+        </button>
+      </form>
     </div>
   </div>
 
@@ -531,24 +663,13 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Payment Mode</label>
-            <select id="editPayMode" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
-              <option value="Cash">💵 Cash</option>
-              <option value="UPI">📱 UPI / Online</option>
-            </select>
-          </div>
-          <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Total Fees (₹)</label>
             <input type="number" id="editTotalFees" oninput="calcEditFees()" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Paid Amount (₹)</label>
-            <input type="number" id="editPaidAmount" oninput="calcEditFees()" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
           </div>
         </div>
         <div class="p-3 bg-yellow-50 rounded-xl flex justify-between text-xs font-bold border border-yellow-200">
           <span class="text-slate-700">Updated Due:</span>
-          <span id="editDueDisplay" class="text-red-600">₹0</span>
+          <span id="editDueDisplay" class="text-red-600 font-black">₹0</span>
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Classes Attended</label>
@@ -651,11 +772,13 @@
       document.getElementById("userBadge").textContent = currentUser.role === "owner" ? "OWNER PORTAL (CENTRAL)" : `${currentUser.branch.toUpperCase()} BRANCH`;
 
       document.getElementById("admDate").value = getLocalDateString();
+      document.getElementById("collectDate").value = getLocalDateString();
 
       if (currentUser.role === "trainer") {
         document.getElementById("filterBranch").value = currentUser.branch;
         document.getElementById("filterBranch").disabled = true;
         document.getElementById("admBranch").value = currentUser.branch;
+        document.getElementById("oldBranch").value = currentUser.branch;
         document.getElementById("studentFilterBranch").value = currentUser.branch;
         document.getElementById("studentFilterBranch").disabled = true;
         document.getElementById("branchGridContainer").classList.add("hidden");
@@ -680,7 +803,7 @@
     }
 
     function switchTab(tab) {
-      const allTabs = ["dashboard", "attendance", "admission", "students", "shift", "bin"];
+      const allTabs = ["dashboard", "dues", "attendance", "admission", "students", "shift", "bin"];
       allTabs.forEach(t => {
         const cap = t.charAt(0).toUpperCase() + t.slice(1);
         const sec = document.getElementById(`tab${cap}`);
@@ -704,19 +827,37 @@
       if (activeSyncUnsub) activeSyncUnsub();
       if (binSyncUnsub) binSyncUnsub();
 
-      // Listen to Active Students
       activeSyncUnsub = db.collection(DB_COLLECTION).onSnapshot((snap) => {
         rawStudents = snap.docs.map(d => {
           const data = d.data();
+          const totalFees = Number(data.totalFees) || 0;
+          let installments = Array.isArray(data.installments) ? data.installments : [];
+
+          // Auto-migrate legacy 1-shot paid amounts to Installment #1
+          if (installments.length === 0 && (Number(data.paidAmount) || 0) > 0) {
+            installments.push({
+              installmentNo: 1,
+              amount: Number(data.paidAmount) || 0,
+              mode: data.paymentMode || "Cash",
+              date: data.createdAt || getLocalDateString(),
+              classIndex: 0
+            });
+          }
+
+          const paidAmount = installments.reduce((acc, inst) => acc + (Number(inst.amount) || 0), 0);
+          const dueAmount = Math.max(0, totalFees - paidAmount);
+
           return {
             ...data,
             id: d.id,
             studentCode: data.studentCode || d.id,
+            isLegacy: !!data.isLegacy,
             branch: normalizeBranch(data.branch),
-            paidAmount: Number(data.paidAmount) || 0,
-            dueAmount: Number(data.dueAmount) || 0,
-            totalFees: Number(data.totalFees) || 0,
-            paymentMode: data.paymentMode || "Cash",
+            paidAmount: paidAmount,
+            dueAmount: dueAmount,
+            totalFees: totalFees,
+            installments: installments,
+            paymentMode: data.paymentMode || (installments[0] ? installments[0].mode : "Cash"),
             createdAt: data.createdAt ? data.createdAt.slice(0, 10) : getLocalDateString(),
             attendanceLogs: data.attendanceLogs || [],
             classesAttended: Number(data.classesAttended) || 0,
@@ -725,11 +866,11 @@
         });
 
         renderDashboard();
+        renderDuesList();
         renderStudentList();
         renderShiftReport();
       }, (err) => console.error("Sync error:", err));
 
-      // Listen to Recycle Bin
       binSyncUnsub = db.collection(BIN_COLLECTION).onSnapshot((snap) => {
         binStudents = snap.docs.map(d => ({ ...d.data(), id: d.id }));
         renderRecycleBin();
@@ -797,7 +938,7 @@
       calcAdmFees();
     }
 
-    // New Admission Form Submit
+    // New Admission Submit (Installment #1 Entry)
     document.getElementById("admissionForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const photoFile = document.getElementById("admPhoto").files[0];
@@ -808,20 +949,30 @@
 
       const btn = document.getElementById("admSubmitBtn");
       btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Compressing & Saving...</span>`;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i><span>Saving & Uploading...</span>`;
 
       try {
         const branch = normalizeBranch(currentUser.role === "owner" ? document.getElementById("admBranch").value : currentUser.branch);
         const studentCode = `STW-${branch.slice(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
         const totalFees = Number(document.getElementById("admTotalFees").value) || 0;
         const paidAmount = Number(document.getElementById("admPaidAmount").value) || 0;
-        const dueAmount = Math.max(0, totalFees - paidAmount);
         const paymentMode = document.getElementById("admPayMode").value;
-
         const photoBase64 = await processUniversalPhoto(photoFile);
+
+        const installments = [];
+        if (paidAmount > 0) {
+          installments.push({
+            installmentNo: 1,
+            amount: paidAmount,
+            mode: paymentMode,
+            date: customDate,
+            classIndex: 0
+          });
+        }
 
         const newStudent = {
           studentCode: studentCode,
+          isLegacy: false,
           name: document.getElementById("admName").value.trim(),
           phone: document.getElementById("admPhone").value.trim(),
           whatsapp: document.getElementById("admWhatsapp").value.trim(),
@@ -830,7 +981,8 @@
           packageDays: Number(document.getElementById("admPackage").value),
           totalFees: totalFees,
           paidAmount: paidAmount,
-          dueAmount: dueAmount,
+          dueAmount: Math.max(0, totalFees - paidAmount),
+          installments: installments,
           paymentMode: paymentMode,
           photoUrl: photoBase64,
           classesAttended: 0,
@@ -845,13 +997,191 @@
         document.getElementById("admDate").value = getLocalDateString();
         document.getElementById("admDueDisplay").textContent = "₹0";
         showPortfolioModal(newStudent);
-        alert("Admission saved successfully!");
+        alert("Digital Admission registered successfully!");
       } catch (err) {
         alert("Cloud Error: " + err.message);
       }
       btn.disabled = false;
       btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
+
+    // Add Old / Legacy Student Form Submit (No QR Code, Card System)
+    function openAddOldStudentModal() {
+      document.getElementById("addOldStudentForm").reset();
+      document.getElementById("oldDueDisplay").textContent = "₹0";
+      document.getElementById("addOldStudentModal").classList.remove("hidden");
+    }
+
+    function calcOldStudentDues() {
+      const total = Number(document.getElementById("oldTotalFees").value) || 0;
+      const paid = Number(document.getElementById("oldPaidAmount").value) || 0;
+      const due = Math.max(0, total - paid);
+      document.getElementById("oldDueDisplay").textContent = `₹${due}`;
+    }
+
+    document.getElementById("addOldStudentForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("oldName").value.trim();
+      const phone = document.getElementById("oldPhone").value.trim();
+      const branch = normalizeBranch(currentUser.role === "owner" ? document.getElementById("oldBranch").value : currentUser.branch);
+      const course = document.getElementById("oldCourse").value;
+      const totalFees = Number(document.getElementById("oldTotalFees").value) || 0;
+      const paidAmount = Number(document.getElementById("oldPaidAmount").value) || 0;
+      const dueAmount = Math.max(0, totalFees - paidAmount);
+      const studentCode = `LEGACY-${branch.slice(0, 3).toUpperCase()}-${Date.now().toString().slice(-4)}`;
+
+      const installments = [];
+      if (paidAmount > 0) {
+        installments.push({
+          installmentNo: 1,
+          amount: paidAmount,
+          mode: "Cash",
+          date: "Prior-Records",
+          classIndex: 0
+        });
+      }
+
+      const legacyStudent = {
+        studentCode: studentCode,
+        isLegacy: true,
+        name: name,
+        phone: phone,
+        whatsapp: phone,
+        branch: branch,
+        courseType: course,
+        packageDays: 10,
+        totalFees: totalFees,
+        paidAmount: paidAmount,
+        dueAmount: dueAmount,
+        installments: installments,
+        paymentMode: "Cash",
+        photoUrl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60",
+        classesAttended: 0,
+        attendanceLogs: [],
+        createdAt: getLocalDateString()
+      };
+
+      try {
+        await db.collection(DB_COLLECTION).doc(studentCode).set(legacyStudent);
+        closeModal("addOldStudentModal");
+        alert("Old student due record added successfully!");
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    });
+
+    // Collect Due Modal Open & Submit (Installment #2 / #3)
+    function openCollectDueModal(student) {
+      document.getElementById("collectStudentCode").value = student.studentCode;
+      document.getElementById("collectStudentName").textContent = `${student.name} (${student.branch}) - ${student.isLegacy ? 'Offline Card Student' : 'Digital QR Student'}`;
+      document.getElementById("collectCurrentDue").textContent = `₹${student.dueAmount}`;
+      document.getElementById("collectAmount").value = student.dueAmount;
+      document.getElementById("collectDate").value = getLocalDateString();
+      document.getElementById("collectDueModal").classList.remove("hidden");
+    }
+
+    document.getElementById("collectDueForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const code = document.getElementById("collectStudentCode").value;
+      const student = rawStudents.find(s => s.studentCode === code);
+      if (!student) return alert("Student record not found!");
+
+      const colAmt = Number(document.getElementById("collectAmount").value) || 0;
+      const colDate = document.getElementById("collectDate").value;
+      const colMode = document.getElementById("collectMode").value;
+
+      if (colAmt <= 0) return alert("Please enter valid amount!");
+      if (colAmt > student.dueAmount) return alert("Amount cannot exceed current outstanding due!");
+
+      const currentInstallments = student.installments || [];
+      if (currentInstallments.length >= 3) {
+        return alert("Maximum limit of 3 installments reached for this student!");
+      }
+
+      const nextInstNo = currentInstallments.length + 1;
+      const newInstallment = {
+        installmentNo: nextInstNo,
+        amount: colAmt,
+        mode: colMode,
+        date: colDate,
+        classIndex: student.classesAttended || 0
+      };
+
+      const updatedInstallments = [...currentInstallments, newInstallment];
+      const newPaidAmount = updatedInstallments.reduce((acc, inst) => acc + (Number(inst.amount) || 0), 0);
+      const newDueAmount = Math.max(0, student.totalFees - newPaidAmount);
+
+      try {
+        await db.collection(DB_COLLECTION).doc(code).update({
+          installments: updatedInstallments,
+          paidAmount: newPaidAmount,
+          dueAmount: newDueAmount
+        });
+
+        closeModal("collectDueModal");
+        alert(`✅ Installment #${nextInstNo} recorded successfully!\nAmount: ₹${colAmt} (${colMode})\nRemaining Due: ₹${newDueAmount}`);
+      } catch(err) {
+        alert("Collection Error: " + err.message);
+      }
+    });
+
+    // Render Dues List
+    function renderDuesList() {
+      const q = document.getElementById("searchDueInput").value.toLowerCase();
+      const filterType = document.getElementById("dueFilterType").value;
+      const branchFilter = currentUser.role === "trainer" ? currentUser.branch : "All";
+      const container = document.getElementById("duesCardsContainer");
+      container.innerHTML = "";
+
+      const dueStudents = rawStudents.filter(s => {
+        const hasDue = s.dueAmount > 0;
+        const matchBranch = (branchFilter === "All") || (normalizeBranch(s.branch) === normalizeBranch(branchFilter));
+        const matchSearch = (s.name && s.name.toLowerCase().includes(q)) || (s.phone && s.phone.includes(q)) || (s.studentCode && s.studentCode.toLowerCase().includes(q));
+        let matchType = true;
+        if (filterType === "New") matchType = !s.isLegacy;
+        if (filterType === "Legacy") matchType = !!s.isLegacy;
+        return hasDue && matchBranch && matchSearch && matchType;
+      });
+
+      if (dueStudents.length === 0) {
+        container.innerHTML = `<div class="col-span-2 text-center py-10 text-slate-400 font-bold text-xs uppercase tracking-wider">No outstanding dues pending</div>`;
+        return;
+      }
+
+      dueStudents.forEach(student => {
+        const card = document.createElement("div");
+        card.className = "bg-white p-5 rounded-3xl border border-red-200 shadow-sm space-y-3 relative overflow-hidden";
+        
+        const instCount = (student.installments || []).length;
+        const instBadge = `<span class="bg-blue-100 text-blue-800 text-[10px] font-black px-2 py-0.5 rounded-full">${instCount}/3 Installments Paid</span>`;
+        const legacyBadge = student.isLegacy ? `<span class="bg-slate-200 text-slate-700 text-[10px] font-black px-2 py-0.5 rounded-full">Offline Card</span>` : `<span class="bg-yellow-100 text-yellow-800 text-[10px] font-black px-2 py-0.5 rounded-full">Digital QR</span>`;
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              ${legacyBadge}
+              ${instBadge}
+            </div>
+            <span class="text-red-600 text-sm font-black">Due: ₹${student.dueAmount}</span>
+          </div>
+          <div>
+            <h4 class="font-black text-slate-900 text-sm">${student.name}</h4>
+            <p class="text-xs text-slate-500"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="font-bold">${student.branch}</span> • ${student.courseType}</p>
+            <p class="text-[11px] text-slate-600 font-semibold mt-1">Total Package: ₹${student.totalFees} | Total Paid: <b class="text-green-600">₹${student.paidAmount}</b></p>
+          </div>
+          <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+            <button onclick='openCollectDueModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="flex-1 bg-green-500 hover:bg-green-600 text-white font-black py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1 shadow-sm cursor-pointer">
+              <i class="fa-solid fa-hand-holding-dollar"></i>
+              <span>COLLECT DUE PAYMENT</span>
+            </button>
+            <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="p-2.5 bg-green-100 hover:bg-green-200 text-green-700 rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+            </a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
 
     function resetFilters() {
       document.getElementById("filterYear").value = "All";
@@ -974,12 +1304,7 @@
 
         let countdownBadgeHtml = "";
         if (student.dueAmount > 0) {
-          const classesLeft = Math.max(0, 6 - attended);
-          if (attended >= 6) {
-            countdownBadgeHtml = `<div class="bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider flex items-center space-x-1 animate-pulse"><i class="fa-solid fa-triangle-exclamation"></i><span>PAYMENT OVERDUE - LOCKED</span></div>`;
-          } else {
-            countdownBadgeHtml = `<div class="bg-amber-100 border border-amber-300 text-amber-900 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center space-x-1"><i class="fa-solid fa-clock"></i><span>${classesLeft} Classes to go for next payment</span></div>`;
-          }
+          countdownBadgeHtml = `<div class="bg-amber-100 border border-amber-300 text-amber-900 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center space-x-1"><i class="fa-solid fa-clock"></i><span>Due: ₹${student.dueAmount}</span></div>`;
         } else {
           countdownBadgeHtml = `<div class="bg-green-100 text-green-800 text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">Fees Cleared</div>`;
         }
@@ -1003,9 +1328,9 @@
           <div class="flex items-start space-x-3 pt-1">
             <img src="${student.photoUrl}" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-14 h-14 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm bg-slate-100" />
             <div>
-              <h4 class="font-black text-slate-900 text-sm">${student.name}</h4>
+              <h4 class="font-black text-slate-900 text-sm">${student.name} ${student.isLegacy ? '<span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded font-bold">Offline Card</span>' : ''}</h4>
               <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-phone text-[10px]"></i> ${student.phone} • <span class="bg-yellow-100 text-yellow-900 px-1.5 py-0.5 rounded font-bold">${student.branch}</span></p>
-              <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days) • 📅 ${admDateFormatted} • <b>${student.paymentMode || 'Cash'}</b></p>
+              <p class="text-[11px] font-semibold text-slate-400 mt-0.5">${student.courseType} (${student.packageDays} Days) • 📅 ${admDateFormatted}</p>
             </div>
           </div>
 
@@ -1030,7 +1355,7 @@
               <i class="fa-solid fa-file-arrow-down"></i>
             </button>
             ${student.dueAmount > 0 ? `
-              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues before the 5th class as per policy. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
+              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour outstanding due is Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="bg-green-500 hover:bg-green-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
                 <i class="fa-brands fa-whatsapp text-sm"></i>
               </a>
             ` : ''}
@@ -1040,24 +1365,31 @@
       });
     }
 
+    // Daily Shift Real-Time Stream (Combines New Admissions + Subsequent Installments Collected Today)
     function renderShiftReport() {
       const todayLocal = getLocalDateString();
-      const todayStudents = rawStudents.filter(s => {
+      let todayTxnCount = 0;
+      let todayCash = 0;
+      let todayUpi = 0;
+
+      rawStudents.forEach(s => {
         const matchB = currentUser.role === "owner" ? true : normalizeBranch(s.branch) === currentUser.branch;
-        const matchD = (s.createdAt || getLocalDateString()) === todayLocal;
-        return matchB && matchD;
+        if (matchB) {
+          (s.installments || []).forEach(inst => {
+            if (inst.date === todayLocal) {
+              todayTxnCount++;
+              const amt = Number(inst.amount) || 0;
+              if (inst.mode === "UPI") {
+                todayUpi += amt;
+              } else {
+                todayCash += amt;
+              }
+            }
+          });
+        }
       });
 
-      document.getElementById("shiftTodayCount").textContent = todayStudents.length;
-
-      const todayCash = todayStudents
-        .filter(s => (s.paymentMode || "Cash") === "Cash")
-        .reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
-
-      const todayUpi = todayStudents
-        .filter(s => s.paymentMode === "UPI")
-        .reduce((acc, s) => acc + (Number(s.paidAmount) || 0), 0);
-
+      document.getElementById("shiftTodayCount").textContent = todayTxnCount;
       document.getElementById("shiftTodayCash").textContent = `₹${todayCash}`;
       document.getElementById("shiftTodayUpi").textContent = `₹${todayUpi}`;
     }
@@ -1126,45 +1458,78 @@
       document.getElementById("portModalDetails").textContent = `${student.phone} • ${student.branch} • ${student.courseType} (${student.packageDays} Days)`;
       document.getElementById("portModalTotal").textContent = `₹${student.totalFees}`;
       document.getElementById("portModalPaid").textContent = `₹${student.paidAmount}`;
-      document.getElementById("portModalPayMode").textContent = student.paymentMode || "Cash";
       document.getElementById("portModalDue").textContent = `₹${student.dueAmount}`;
       document.getElementById("portModalImg").src = student.photoUrl;
 
-      // Clean single string payload in QR Code
-      const qrPayload = student.studentCode;
-      const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 300, margin: 1 });
-      document.getElementById("portModalQr").src = qrDataUrl;
-
-      const matrixBody = document.getElementById("portModalMatrixBody");
-      const logsCountBadge = document.getElementById("portModalLogCount");
-      matrixBody.innerHTML = "";
-
-      const totalClasses = student.packageDays || 10;
-      const logs = student.attendanceLogs || [];
-      logsCountBadge.textContent = `${logs.length}/${totalClasses} Completed`;
-
-      for (let i = 1; i <= totalClasses; i++) {
-        const tr = document.createElement("tr");
-        const log = logs[i - 1];
-
-        if (log) {
-          tr.className = "bg-green-50/60";
-          tr.innerHTML = `
-            <td class="p-2.5 font-bold text-slate-900">Class #${i}</td>
-            <td class="p-2.5 font-bold text-slate-700">${log.date}</td>
-            <td class="p-2.5 font-bold text-slate-600">${log.time}</td>
-            <td class="p-2.5 text-right font-black text-green-600">✅ Completed</td>
+      // 3-Installments List Rendering
+      const instBox = document.getElementById("portModalInstallmentsContainer");
+      instBox.innerHTML = "";
+      const insts = student.installments || [];
+      if (insts.length === 0) {
+        instBox.innerHTML = `<div class="p-2 bg-slate-50 rounded-xl text-slate-400">No installments recorded yet.</div>`;
+      } else {
+        insts.forEach((inst, idx) => {
+          const row = document.createElement("div");
+          row.className = "p-2 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center";
+          row.innerHTML = `
+            <span><b>Installment #${idx + 1}:</b> ₹${inst.amount} (${inst.mode})</span>
+            <span class="text-[10px] text-slate-500">${inst.date}</span>
           `;
-        } else {
-          tr.className = "bg-slate-50/40 text-slate-400";
-          tr.innerHTML = `
-            <td class="p-2.5">Class #${i}</td>
-            <td class="p-2.5 font-normal">--</td>
-            <td class="p-2.5 font-normal">--</td>
-            <td class="p-2.5 text-right font-bold text-slate-400">⏳ Pending</td>
-          `;
+          instBox.appendChild(row);
+        });
+      }
+
+      // Handle QR Visibility (Hide for legacy offline students)
+      const qrBox = document.getElementById("portQrBox");
+      const attSec = document.getElementById("portAttendanceSection");
+      if (student.isLegacy) {
+        qrBox.classList.add("hidden");
+        attSec.classList.add("hidden");
+      } else {
+        qrBox.classList.remove("hidden");
+        attSec.classList.remove("hidden");
+        const qrPayload = student.studentCode;
+        const qrDataUrl = await QRCode.toDataURL(qrPayload, { width: 300, margin: 1 });
+        document.getElementById("portModalQr").src = qrDataUrl;
+
+        const matrixBody = document.getElementById("portModalMatrixBody");
+        const logsCountBadge = document.getElementById("portModalLogCount");
+        matrixBody.innerHTML = "";
+
+        const totalClasses = student.packageDays || 10;
+        const logs = student.attendanceLogs || [];
+        logsCountBadge.textContent = `${logs.length}/${totalClasses} Completed`;
+
+        for (let i = 1; i <= totalClasses; i++) {
+          const tr = document.createElement("tr");
+          const log = logs[i - 1];
+
+          // Check if any installment was paid on this class
+          const matchingInst = (student.installments || []).find(inst => inst.classIndex === i);
+          let paymentActivityTag = "--";
+          if (matchingInst) {
+            paymentActivityTag = `<span class="bg-green-100 text-green-800 text-[10px] font-black px-2 py-0.5 rounded">Inst #${matchingInst.installmentNo}: ₹${matchingInst.amount} (${matchingInst.mode})</span>`;
+          }
+
+          if (log) {
+            tr.className = "bg-green-50/60";
+            tr.innerHTML = `
+              <td class="p-2.5 font-bold text-slate-900">Class #${i}</td>
+              <td class="p-2.5 font-bold text-slate-700">${log.date} ${log.time}</td>
+              <td class="p-2.5">${paymentActivityTag}</td>
+              <td class="p-2.5 text-right font-black text-green-600">✅ Completed</td>
+            `;
+          } else {
+            tr.className = "bg-slate-50/40 text-slate-400";
+            tr.innerHTML = `
+              <td class="p-2.5">Class #${i}</td>
+              <td class="p-2.5 font-normal">--</td>
+              <td class="p-2.5">${paymentActivityTag}</td>
+              <td class="p-2.5 text-right font-bold text-slate-400">⏳ Pending</td>
+            `;
+          }
+          matrixBody.appendChild(tr);
         }
-        matrixBody.appendChild(tr);
       }
 
       document.getElementById("portfolioModal").classList.remove("hidden");
@@ -1194,29 +1559,35 @@
       doc.setFontSize(12);
       doc.text(`Total Package Fees: Rs. ${student.totalFees}`, 15, 96);
       doc.setTextColor(22, 163, 74);
-      doc.text(`Paid Amount: Rs. ${student.paidAmount} (${student.paymentMode || 'Cash'})`, 15, 104);
+      doc.text(`Total Paid Amount: Rs. ${student.paidAmount}`, 15, 104);
       doc.setTextColor(220, 38, 38);
       doc.text(`Remaining Due: Rs. ${student.dueAmount}`, 15, 112);
-      
-      const qrDataUrl = await QRCode.toDataURL(student.studentCode, { width: 250 });
-      doc.addImage(qrDataUrl, "JPEG", 135, 45, 55, 55);
-      doc.setTextColor(100, 116, 139);
-      doc.setFontSize(9);
-      doc.text("Scan QR For Attendance", 143, 105);
+
+      if (!student.isLegacy) {
+        const qrDataUrl = await QRCode.toDataURL(student.studentCode, { width: 250 });
+        doc.addImage(qrDataUrl, "JPEG", 135, 45, 55, 55);
+        doc.setTextColor(100, 116, 139);
+        doc.setFontSize(9);
+        doc.text("Scan QR For Attendance", 143, 105);
+      }
+
       doc.setTextColor(15, 23, 42);
       doc.line(15, 125, 195, 125);
       doc.setFontSize(9);
-      doc.text("Rules & Validity:", 15, 133);
-      doc.text("1. Any pending due payment must be cleared on or before the 5th class.", 15, 139);
-      doc.text("2. Course validity is 90 days from the date of the first class.", 15, 145);
-      doc.text("3. Always present this digital receipt/QR code to your trainer before every session.", 15, 151);
+      doc.text("Installments Summary:", 15, 133);
+      let yOffset = 139;
+      (student.installments || []).forEach((inst, idx) => {
+        doc.text(`Installment #${idx + 1}: Rs. ${inst.amount} (${inst.mode}) - Date: ${inst.date}`, 15, yOffset);
+        yOffset += 6;
+      });
+
       doc.save(`${student.name}_Receipt.pdf`);
     }
 
     function downloadActiveReceipt() { if (activeStudent) downloadPdfReceipt(activeStudent); }
     function sendActiveWhatsapp() {
       if (!activeStudent) return;
-      const text = `Hello ${activeStudent.name},\nWelcome to Seekho 2 Wheeler Training Centre!\n\nYour Admission Details:\nCourse: ${activeStudent.courseType} (${activeStudent.packageDays} Days)\nTotal Fees: Rs. ${activeStudent.totalFees}\nPaid: Rs. ${activeStudent.paidAmount} (${activeStudent.paymentMode || 'Cash'})\nRemaining Due: Rs. ${activeStudent.dueAmount}\n\nPlease show your QR Code receipt to the trainer during class. Thank you!`;
+      const text = `Hello ${activeStudent.name},\nWelcome to Seekho 2 Wheeler Training Centre!\n\nYour Admission Details:\nCourse: ${activeStudent.courseType} (${activeStudent.packageDays} Days)\nTotal Fees: Rs. ${activeStudent.totalFees}\nTotal Paid: Rs. ${activeStudent.paidAmount}\nRemaining Due: Rs. ${activeStudent.dueAmount}\n\nThank you!`;
       window.open(`https://wa.me/91${activeStudent.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
     }
 
@@ -1227,9 +1598,7 @@
       document.getElementById("editWhatsapp").value = student.whatsapp || student.phone;
       document.getElementById("editDate").value = student.createdAt || getLocalDateString();
       document.getElementById("editBranch").value = normalizeBranch(student.branch);
-      document.getElementById("editPayMode").value = student.paymentMode || "Cash";
       document.getElementById("editTotalFees").value = student.totalFees;
-      document.getElementById("editPaidAmount").value = student.paidAmount;
       document.getElementById("editClassesAttended").value = student.classesAttended || 0;
       document.getElementById("editPhoto").value = "";
       calcEditFees();
@@ -1237,8 +1606,10 @@
     }
 
     function calcEditFees() {
+      const studentCode = document.getElementById("editStudentCode").value;
+      const student = rawStudents.find(s => s.studentCode === studentCode);
       const total = Number(document.getElementById("editTotalFees").value) || 0;
-      const paid = Number(document.getElementById("editPaidAmount").value) || 0;
+      const paid = student ? student.paidAmount : 0;
       const due = Math.max(0, total - paid);
       document.getElementById("editDueDisplay").textContent = `₹${due}`;
     }
@@ -1246,9 +1617,11 @@
     document.getElementById("editForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const studentCode = document.getElementById("editStudentCode").value;
+      const student = rawStudents.find(s => s.studentCode === studentCode);
+      if (!student) return;
+
       const total = Number(document.getElementById("editTotalFees").value) || 0;
-      const paid = Number(document.getElementById("editPaidAmount").value) || 0;
-      const due = Math.max(0, total - paid);
+      const due = Math.max(0, total - student.paidAmount);
       const editedDate = document.getElementById("editDate").value;
       const newPhotoFile = document.getElementById("editPhoto").files[0];
 
@@ -1258,15 +1631,12 @@
 
       try {
         const updateData = {
-          studentCode: studentCode,
           name: document.getElementById("editName").value.trim(),
           phone: document.getElementById("editPhone").value.trim(),
           whatsapp: document.getElementById("editWhatsapp").value.trim(),
           createdAt: editedDate,
           branch: normalizeBranch(document.getElementById("editBranch").value),
-          paymentMode: document.getElementById("editPayMode").value,
           totalFees: total,
-          paidAmount: paid,
           dueAmount: due,
           classesAttended: Number(document.getElementById("editClassesAttended").value) || 0
         };
