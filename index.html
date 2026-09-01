@@ -95,7 +95,6 @@
 
   <!-- ================= MAIN APP ================= -->
   <div id="mainApp" class="hidden flex-col min-h-screen">
-    <!-- Navbar -->
     <header class="bg-white border-b border-slate-200 px-4 py-3 sticky top-0 z-40 shadow-sm">
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <div class="flex items-center space-x-3">
@@ -119,7 +118,6 @@
       </div>
     </header>
 
-    <!-- Navigation Tabs -->
     <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 space-y-6">
       <div class="flex items-center space-x-2 overflow-x-auto pb-2 border-b border-slate-200">
         <button id="navDashBtn" onclick="switchTab('dashboard')" class="px-4 py-2.5 rounded-xl text-xs flex items-center space-x-1.5 whitespace-nowrap transition cursor-pointer custom-tab-active">
@@ -309,7 +307,7 @@
               <option value="New">Digital New (QR)</option>
               <option value="Legacy">Offline Old (Cards)</option>
             </select>
-            <input type="date" id="dueTillDate" onchange="renderDuesList()" class="p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800" title="Filter dues till date" />
+            <input type="date" id="dueTillDate" onchange="renderDuesList()" class="p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800" />
           </div>
         </div>
         <div id="duesCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
@@ -335,7 +333,7 @@
         <div class="bg-white p-6 md:p-8 rounded-3xl border border-slate-200 shadow-sm text-center max-w-xl mx-auto space-y-6">
           <div>
             <h2 class="text-xl font-black text-slate-900">QR Code Attendance Scanner</h2>
-            <p class="text-xs text-slate-500 mt-1">Automatic Attendance Logging & Due Enforcement</p>
+            <p class="text-xs text-slate-500 mt-1">24-Hour Single Scan Attendance Guard</p>
           </div>
           <div class="relative mx-auto max-w-xs aspect-square bg-slate-900 rounded-3xl overflow-hidden border-4 border-yellow-400 shadow-lg flex items-center justify-center">
             <div id="reader" class="w-full h-full"></div>
@@ -493,13 +491,11 @@
             </div>
           </div>
 
-          <!-- Shift Activity Stream -->
           <div class="space-y-2">
             <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider">Transaction Breakdown</h4>
             <div id="shiftTransactionLogs" class="space-y-1.5 max-h-48 overflow-y-auto pr-1 text-xs"></div>
           </div>
 
-          <!-- WhatsApp Owner Dispatch Buttons -->
           <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-2xl space-y-2">
             <p class="text-xs font-black text-yellow-900 flex items-center gap-1.5">
               <i class="fa-brands fa-whatsapp text-green-600 text-sm"></i> Send Daily Closing Report to Owner:
@@ -574,7 +570,6 @@
         </div>
       </div>
 
-      <!-- Installments Breakdown List -->
       <div class="space-y-1 text-left">
         <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center justify-between">
           <span><i class="fa-solid fa-list-check text-yellow-500"></i> Fee Installments Trail</span>
@@ -583,7 +578,6 @@
         <div id="portModalInstallmentsContainer" class="space-y-1.5 text-xs font-semibold text-slate-700"></div>
       </div>
 
-      <!-- Attendance Row Matrix -->
       <div id="portAttendanceSection" class="space-y-2 text-left">
         <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider flex items-center justify-between">
           <span><i class="fa-solid fa-table-cells text-yellow-500"></i> Attendance Flow Matrix</span>
@@ -605,13 +599,11 @@
         </div>
       </div>
 
-      <!-- Live QR Display (Digital Only) -->
       <div id="portQrBox" class="flex flex-col items-center justify-center p-3 bg-white rounded-2xl border border-slate-200 space-y-1">
         <img id="portModalQr" class="w-36 h-36" />
         <span class="text-[10px] font-bold text-slate-400">Scan for Real-Time Attendance Logging</span>
       </div>
 
-      <!-- Action Buttons (Receipt, Certificate, WhatsApp) -->
       <div class="grid grid-cols-3 gap-2 pt-1">
         <button onclick="downloadActiveReceipt()" class="p-3 bg-yellow-400 hover:bg-yellow-500 text-slate-950 rounded-xl text-xs font-black flex items-center justify-center space-x-1 shadow-sm cursor-pointer">
           <i class="fa-solid fa-file-pdf"></i>
@@ -714,7 +706,7 @@
     </div>
   </div>
 
-  <!-- ================= DYNAMIC COLLECT INSTALLMENT MODAL ================= -->
+  <!-- ================= DYNAMIC COLLECT INSTALLMENT & UPI MODAL ================= -->
   <div id="collectDueModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 border-t-8 border-green-500 border border-slate-200 shadow-2xl space-y-4">
       <div class="flex justify-between items-center border-b border-slate-100 pb-2">
@@ -750,9 +742,9 @@
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Payment Mode *</label>
-            <select id="collectMode" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
+            <select id="collectMode" onchange="toggleUpiQrPrompt()" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold">
               <option value="Cash">💵 Cash</option>
-              <option value="UPI">📱 UPI / Online</option>
+              <option value="UPI">📱 UPI / Online QR</option>
             </select>
           </div>
         </div>
@@ -763,9 +755,17 @@
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Amount to Pay (₹) *</label>
-            <input type="number" id="collectAmount" required placeholder="500" class="w-full p-2 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black focus:ring-2 focus:ring-yellow-400" />
+            <input type="number" id="collectAmount" oninput="updateDynamicUpiQr()" required placeholder="500" class="w-full p-2 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black focus:ring-2 focus:ring-yellow-400" />
           </div>
         </div>
+
+        <!-- Dynamic Live UPI QR Display for Cashless Collection -->
+        <div id="dynamicUpiBox" class="hidden p-3 bg-blue-50 border border-blue-200 rounded-2xl text-center space-y-2">
+          <p class="text-[11px] font-black text-blue-900 uppercase">Scan with GPay / PhonePe / Paytm</p>
+          <img id="dynamicUpiQrImg" class="w-32 h-32 mx-auto rounded-xl border border-slate-300" />
+          <p id="dynamicUpiText" class="text-[10px] font-bold text-slate-600"></p>
+        </div>
+
         <button type="submit" id="collectSubmitBtn" class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-3.5 rounded-xl transition text-xs shadow-md cursor-pointer flex items-center justify-center gap-1.5">
           <i class="fa-solid fa-receipt"></i>
           <span>RECORD INSTALLMENT & UPDATE</span>
@@ -774,11 +774,11 @@
     </div>
   </div>
 
-  <!-- ================= EDIT CUSTOMER & INSTALLMENTS MODAL ================= -->
+  <!-- ================= EDIT CUSTOMER MODAL ================= -->
   <div id="editModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 border-t-8 border-yellow-400 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-        <h3 class="text-base font-black text-slate-900">Edit Customer & Installments</h3>
+        <h3 class="text-base font-black text-slate-900">Edit Customer Profile</h3>
         <button onclick="closeModal('editModal')" class="text-slate-400 hover:text-slate-700 cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
       </div>
       <form id="editForm" class="space-y-3">
@@ -797,7 +797,7 @@
             <input type="tel" id="editWhatsapp" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs" />
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Admission Date *</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Admission Date</label>
             <input type="date" id="editDate" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-bold" />
           </div>
           <div>
@@ -812,14 +812,13 @@
             </select>
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Total Fees (₹)</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Total Fees (₹) <span id="feeLockBadge" class="text-[10px] text-red-500 font-bold hidden">(Owner Locked)</span></label>
             <input type="number" id="editTotalFees" oninput="calcEditFees()" required class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
           </div>
         </div>
 
-        <!-- Editable Installments List -->
         <div class="space-y-2 pt-1 border-t border-slate-100">
-          <label class="block text-xs font-black text-slate-800 uppercase">Manage Installments (Edit Amounts)</label>
+          <label class="block text-xs font-black text-slate-800 uppercase">Installments Breakdown</label>
           <div id="editInstallmentsList" class="space-y-2"></div>
         </div>
 
@@ -832,12 +831,12 @@
           <input type="number" id="editClassesAttended" min="0" max="15" class="w-full p-2.5 bg-white border border-slate-300 text-slate-900 rounded-xl text-xs font-black" />
         </div>
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Replace Customer Photo (JPG, PNG, HEIC)</label>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Replace Customer Photo</label>
           <input type="file" id="editPhoto" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.webp" class="w-full p-2 bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs" />
         </div>
         <div class="flex space-x-2 pt-2">
           <button type="submit" id="editSaveBtn" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-slate-950 font-black py-3 rounded-xl transition text-xs shadow-sm cursor-pointer">SAVE & UPDATE</button>
-          <button type="button" onclick="moveCustomerToRecycleBin()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs cursor-pointer">MOVE TO BIN</button>
+          <button type="button" id="editMoveBinBtn" onclick="moveCustomerToRecycleBin()" class="px-4 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl transition text-xs cursor-pointer">MOVE TO BIN</button>
         </div>
       </form>
     </div>
@@ -858,8 +857,8 @@
     const DB_COLLECTION = "students_v3";
     const BIN_COLLECTION = "deleted_students_v3";
     const ALL_BRANCHES = ["Tollygunge", "Rabindra Sarovar", "New Town", "Sodepur", "Howrah", "Barasat"];
-    
-    // Strict Branch Credentials Registry
+    const OFFICIAL_UPI_ID = "7980108587@ybl"; // Official Business UPI ID for Dynamic QR
+
     const BRANCH_CREDENTIALS = {
       "tollygunge": { branch: "Tollygunge", pass: "netaji129", user: "tollygunge" },
       "rabindra": { branch: "Rabindra Sarovar", pass: "swisspark54321", user: "rabindra" },
@@ -895,6 +894,7 @@
     let activeStudent = null;
     let html5QrCode = null;
     let isScanning = false;
+    let isProcessingScan = false;
     let activeSyncUnsub = null;
     let binSyncUnsub = null;
 
@@ -977,6 +977,10 @@
         document.getElementById("studentFilterBranch").value = currentUser.branch;
         document.getElementById("studentFilterBranch").disabled = true;
         document.getElementById("branchGridContainer").classList.add("hidden");
+        document.getElementById("editTotalFees").disabled = true;
+        document.getElementById("editClassesAttended").disabled = true;
+        document.getElementById("feeLockBadge").classList.remove("hidden");
+        document.getElementById("editMoveBinBtn").classList.add("hidden");
         switchTab("dashboard");
       } else {
         document.getElementById("filterBranch").value = "All";
@@ -984,13 +988,16 @@
         document.getElementById("studentFilterBranch").value = "All";
         document.getElementById("studentFilterBranch").disabled = false;
         document.getElementById("branchGridContainer").classList.remove("hidden");
+        document.getElementById("editTotalFees").disabled = false;
+        document.getElementById("editClassesAttended").disabled = false;
+        document.getElementById("feeLockBadge").classList.add("hidden");
+        document.getElementById("editMoveBinBtn").classList.remove("hidden");
         switchTab("dashboard");
       }
 
       initRealtimeFirestoreSync();
     });
 
-    // Auto load admin saved pass on start
     loadSavedCredentials("admin");
 
     function handleLogout() { 
@@ -1058,6 +1065,7 @@
             createdAt: data.createdAt ? data.createdAt.slice(0, 10) : getLocalDateString(),
             attendanceLogs: data.attendanceLogs || [],
             classesAttended: Number(data.classesAttended) || 0,
+            lastAttendedDate: data.lastAttendedDate || null,
             photoUrl: data.photoUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60"
           };
         });
@@ -1144,7 +1152,6 @@
       calcAdmFees();
     }
 
-    // New Admission Form Submit
     document.getElementById("admissionForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const photoFile = document.getElementById("admPhoto").files[0];
@@ -1194,6 +1201,7 @@
           photoUrl: photoBase64,
           classesAttended: 0,
           attendanceLogs: [],
+          lastAttendedDate: null,
           firstClassDate: null,
           createdAt: customDate
         };
@@ -1212,7 +1220,6 @@
       btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i><span>SAVE ADMISSION & CREATE PROFILE</span>`;
     });
 
-    // Add Old Student Form Submit
     function openAddOldStudentModal() {
       document.getElementById("addOldStudentForm").reset();
       document.getElementById("oldDueDisplay").textContent = "₹0";
@@ -1275,6 +1282,7 @@
         photoUrl: photoBase64,
         classesAttended: 0,
         attendanceLogs: [],
+        lastAttendedDate: null,
         createdAt: getLocalDateString()
       };
 
@@ -1287,19 +1295,43 @@
       }
     });
 
-    // Dynamic Installment Add Engine
     function openCollectDueModal(student) {
       document.getElementById("collectStudentCode").value = student.studentCode;
       document.getElementById("collectStudentName").textContent = `${student.name} (${student.branch}) - ${student.isLegacy ? 'Offline Card Student' : 'Digital QR Student'}`;
       document.getElementById("collectCurrentDue").textContent = `₹${student.dueAmount}`;
       document.getElementById("collectAmount").value = student.dueAmount;
       document.getElementById("collectDate").value = getLocalDateString();
+      document.getElementById("collectMode").value = "Cash";
+      toggleUpiQrPrompt();
       document.getElementById("collectDueModal").classList.remove("hidden");
     }
 
     function openAddInstallmentDirect() {
       if (activeStudent) {
         openCollectDueModal(activeStudent);
+      }
+    }
+
+    async function toggleUpiQrPrompt() {
+      const mode = document.getElementById("collectMode").value;
+      const upiBox = document.getElementById("dynamicUpiBox");
+      if (mode === "UPI") {
+        upiBox.classList.remove("hidden");
+        updateDynamicUpiQr();
+      } else {
+        upiBox.classList.add("hidden");
+      }
+    }
+
+    async function updateDynamicUpiQr() {
+      const amt = document.getElementById("collectAmount").value;
+      const code = document.getElementById("collectStudentCode").value;
+      const student = rawStudents.find(s => s.studentCode === code);
+      if (amt > 0 && student) {
+        const upiUri = `upi://pay?pa=${OFFICIAL_UPI_ID}&pn=Seekho2Wheeler&am=${amt}&tn=Fees_${student.name.replace(/\s+/g, '_')}`;
+        const qrData = await QRCode.toDataURL(upiUri, { width: 200, margin: 1 });
+        document.getElementById("dynamicUpiQrImg").src = qrData;
+        document.getElementById("dynamicUpiText").textContent = `Pay ₹${amt} to ${OFFICIAL_UPI_ID}`;
       }
     }
 
@@ -1348,7 +1380,6 @@
       }
     });
 
-    // Render Dues List
     function renderDuesList() {
       const q = document.getElementById("searchDueInput").value.toLowerCase();
       const filterType = document.getElementById("dueFilterType").value;
@@ -1433,7 +1464,6 @@
       });
     }
 
-    // Render Legacy / Old Students Dedicated Tab
     function renderLegacyList() {
       const q = document.getElementById("searchLegacyInput").value.toLowerCase();
       const branchFilter = currentUser.role === "trainer" ? currentUser.branch : "All";
@@ -1590,7 +1620,6 @@
       });
     }
 
-    // Render Digital New Students (QR Only)
     function renderStudentList() {
       const q = document.getElementById("searchStudentInput").value.toLowerCase();
       const branchFilter = currentUser.role === "trainer" ? currentUser.branch : document.getElementById("studentFilterBranch").value;
@@ -1677,7 +1706,6 @@
       });
     }
 
-    // Daily Shift Report Engine
     function renderShiftReport() {
       const selectedDate = document.getElementById("shiftCustomDate").value || getLocalDateString();
       let admissionCount = 0;
@@ -1820,7 +1848,6 @@
       document.getElementById("portModalDue").textContent = `₹${student.dueAmount}`;
       document.getElementById("portModalImg").src = student.photoUrl;
 
-      // Installments Breakdown
       const instBox = document.getElementById("portModalInstallmentsContainer");
       instBox.innerHTML = "";
       const insts = student.installments || [];
@@ -2026,7 +2053,6 @@
       window.location.href = `whatsapp://send?phone=91${activeStudent.whatsapp}&text=${encodeURIComponent(text)}`;
     }
 
-    // Modal Edit & Editable Installments List
     function openEditModal(student) {
       document.getElementById("editStudentCode").value = student.studentCode;
       document.getElementById("editName").value = student.name;
@@ -2052,7 +2078,7 @@
             <option value="Cash" ${inst.mode === 'Cash' ? 'selected' : ''}>Cash</option>
             <option value="UPI" ${inst.mode === 'UPI' ? 'selected' : ''}>UPI</option>
           </select>
-          <button type="button" onclick="deleteEditInstallment(${index})" class="text-red-500 hover:text-red-700 p-1 cursor-pointer" title="Delete Installment"><i class="fa-solid fa-trash-can"></i></button>
+          ${currentUser.role === 'owner' ? `<button type="button" onclick="deleteEditInstallment(${index})" class="text-red-500 hover:text-red-700 p-1 cursor-pointer" title="Delete Installment"><i class="fa-solid fa-trash-can"></i></button>` : ''}
         `;
         instListContainer.appendChild(row);
       });
@@ -2062,6 +2088,7 @@
     }
 
     function deleteEditInstallment(idx) {
+      if (currentUser.role !== 'owner') return alert("Only Owner can delete an installment!");
       const studentCode = document.getElementById("editStudentCode").value;
       const student = rawStudents.find(s => s.studentCode === studentCode);
       if (!student) return;
@@ -2131,7 +2158,7 @@
         }
 
         await db.collection(DB_COLLECTION).doc(studentCode).set(updateData, { merge: true });
-        alert("Customer & Installment details updated successfully!");
+        alert("Customer details updated successfully!");
         closeModal("editModal");
       } catch(err) {
         alert("Update Error: " + err.message);
@@ -2141,6 +2168,7 @@
     });
 
     async function moveCustomerToRecycleBin() {
+      if (currentUser.role !== 'owner') return alert("Only Owner can delete or move records to Recycle Bin!");
       const studentCode = document.getElementById("editStudentCode").value;
       const student = rawStudents.find(s => s.studentCode === studentCode);
       if (!student) return;
@@ -2185,17 +2213,22 @@
           { facingMode: "environment" },
           { fps: 10, qrbox: { width: 220, height: 220 } },
           (decodedText) => {
-            handleDecodedCode(decodedText);
-            toggleScanner();
+            if (!isProcessingScan) {
+              isProcessingScan = true;
+              handleDecodedCode(decodedText);
+              toggleScanner(); // Stop camera instantly on detect
+            }
           }
         );
         text.textContent = "STOP CAMERA";
         isScanning = true;
+        isProcessingScan = false;
       } else {
         if (html5QrCode) html5QrCode.stop();
         text.textContent = "START CAMERA";
         overlay.classList.remove("hidden");
         isScanning = false;
+        isProcessingScan = false;
       }
     }
 
@@ -2224,38 +2257,56 @@
 
     async function handleAttendance(studentCode) {
       const student = rawStudents.find(s => s.studentCode === studentCode || s.id === studentCode);
-      if (!student) return alert("No active customer record found for Code: " + studentCode);
-
-      // Lockout on 6th class onwards if due pending
-      if (student.classesAttended >= 5 && student.dueAmount > 0) {
-        return alert(`⚠️ DUE LOCKOUT: ${student.name} has ₹${student.dueAmount} unpaid dues. Cannot attend 6th class onwards until fees are cleared.`);
+      if (!student) {
+        isProcessingScan = false;
+        return alert("❌ No active customer record found for Code: " + studentCode);
       }
+
+      const todayStr = getLocalDateString();
+
+      // 24-Hour Single Scan Attendance Guard
+      if (student.lastAttendedDate === todayStr) {
+        isProcessingScan = false;
+        return alert(`⚠️ ALREADY RECORDED TODAY!\n${student.name} has already attended Class #${student.classesAttended} today (${todayStr}).\nNext attendance can only be taken tomorrow.`);
+      }
+
+      // 6th Class Due Enforcement Lockout
+      if (student.classesAttended >= 5 && student.dueAmount > 0) {
+        isProcessingScan = false;
+        return alert(`⚠️ DUE LOCKOUT: ${student.name} has ₹${student.dueAmount} pending fees.\nCannot attend 6th class onwards until dues are cleared.`);
+      }
+
       if (student.classesAttended >= (student.packageDays || 10)) {
+        isProcessingScan = false;
         return alert(`Course already completed (${student.classesAttended}/${student.packageDays || 10} classes)!`);
       }
 
       const now = new Date();
+      const newAttended = (student.classesAttended || 0) + 1;
+
       const newLog = {
+        classNumber: newAttended,
         date: now.toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' }),
         time: now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }),
         timestamp: now.toISOString()
       };
 
       const updatedLogs = student.attendanceLogs ? [...student.attendanceLogs, newLog] : [newLog];
-      const newAttended = (student.classesAttended || 0) + 1;
 
       try {
         await db.collection(DB_COLLECTION).doc(student.studentCode).set({
           attendanceLogs: updatedLogs,
           classesAttended: newAttended,
+          lastAttendedDate: todayStr,
           lastAttendedAt: now.toISOString(),
           firstClassDate: student.firstClassDate || now.toISOString()
         }, { merge: true });
         
-        alert(`✅ Attendance Counted!\nStudent: ${student.name}\nCompleted: ${newAttended}/${student.packageDays || 10}\nLogged At: ${newLog.date} ${newLog.time}`);
+        alert(`🎉 ATTENDANCE RECORDED!\n=========================\nStudent: ${student.name}\nProgress: Class ${newAttended} of ${student.packageDays || 10}\nLogged At: ${newLog.date} ${newLog.time}`);
       } catch(err) {
         alert("Attendance Sync Error: " + err.message);
       }
+      isProcessingScan = false;
     }
   </script>
 </body>
