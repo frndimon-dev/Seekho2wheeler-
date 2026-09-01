@@ -1424,7 +1424,7 @@
               <i class="fa-solid fa-hand-holding-dollar"></i>
               <span>+ ADD INSTALLMENT</span>
             </button>
-            <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" target="_blank" class="p-2.5 bg-green-100 hover:bg-green-200 text-green-700 rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
+            <a href="whatsapp://send?phone=91${student.whatsapp}&text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues at the earliest. Thank you!`)}" class="p-2.5 bg-green-100 hover:bg-green-200 text-green-700 rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
               <i class="fa-brands fa-whatsapp text-sm"></i>
             </a>
           </div>
@@ -1459,9 +1459,14 @@
         card.innerHTML = `
           <div class="flex items-center justify-between">
             <span class="bg-slate-100 text-slate-700 text-[10px] font-black px-2.5 py-1 rounded-full uppercase">Offline Card Record</span>
-            <span class="${student.dueAmount > 0 ? 'text-red-600 font-black' : 'text-green-600 font-black'} text-xs">
-              ${student.dueAmount > 0 ? `Due: ₹${student.dueAmount}` : 'Fully Paid'}
-            </span>
+            <div class="flex items-center space-x-2">
+              <span class="${student.dueAmount > 0 ? 'text-red-600 font-black' : 'text-green-600 font-black'} text-xs">
+                ${student.dueAmount > 0 ? `Due: ₹${student.dueAmount}` : 'Fully Paid'}
+              </span>
+              <button onclick='openEditModal(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="w-7 h-7 rounded-lg bg-slate-100 hover:bg-yellow-400 hover:text-slate-950 text-slate-600 transition flex items-center justify-center text-xs cursor-pointer" title="Edit Customer">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+            </div>
           </div>
           <div class="flex items-start space-x-3 pt-1">
             <img src="${student.photoUrl}" onclick="openImageViewer(this.src, '${student.name}')" onerror="this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=60'" class="w-12 h-12 rounded-2xl object-cover border-2 border-yellow-400 shadow-sm bg-slate-100 cursor-pointer hover:opacity-90" title="Click to Zoom & Download" />
@@ -1663,11 +1668,9 @@
             <button onclick='downloadPdfReceipt(${JSON.stringify(student).replace(/'/g, "&apos;")})' class="bg-yellow-400 hover:bg-yellow-500 text-slate-950 text-xs font-black px-3 py-2.5 rounded-xl transition flex items-center space-x-1 shadow-sm cursor-pointer" title="Download Receipt">
               <i class="fa-solid fa-file-arrow-down"></i>
             </button>
-            ${student.dueAmount > 0 ? `
-              <a href="https://wa.me/91${student.whatsapp}?text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues before 6th class as per policy. Thank you!`)}" target="_blank" class="p-2.5 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
-                <i class="fa-brands fa-whatsapp text-sm"></i>
-              </a>
-            ` : ''}
+            <a href="whatsapp://send?phone=91${student.whatsapp}&text=${encodeURIComponent(`Hello ${student.name},\nThis is a payment reminder from Seekho 2 Wheeler Training Centre.\nYour total course fees is Rs. ${student.totalFees}.\nTotal Paid so far: Rs. ${student.paidAmount}.\nRemaining Due: Rs. ${student.dueAmount}.\nPlease clear your dues before 6th class as per policy. Thank you!`)}" class="p-2.5 bg-green-500 hover:bg-green-600 text-white rounded-xl text-xs font-bold transition flex items-center shadow-sm cursor-pointer" title="WhatsApp Reminder">
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+            </a>
           </div>
         `;
         container.appendChild(card);
@@ -1747,7 +1750,7 @@
                   `-----------------------------------\n` +
                   `_Generated automatically via Seekho 2 Wheeler Portal._`;
 
-      window.open(`https://wa.me/91${targetPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+      window.location.href = `whatsapp://send?phone=91${targetPhone}&text=${encodeURIComponent(msg)}`;
     }
 
     function renderRecycleBin() {
@@ -1925,7 +1928,7 @@
       doc.text(`Remaining Due: Rs. ${student.dueAmount}`, 15, 112);
 
       if (!student.isLegacy) {
-        const qrDataUrl = await QRCode.toDataURL(student.studentCode, { width: 250 });
+        const qrDataUrl = await QRCode.toDataURL(student.studentCode, { width: 180, margin: 0 });
         doc.addImage(qrDataUrl, "JPEG", 135, 45, 55, 55);
         doc.setTextColor(100, 116, 139);
         doc.setFontSize(9);
@@ -2020,7 +2023,7 @@
                    `*Remaining Outstanding Due:* ${dueStatusText}\n\n` +
                    `_Thank you for learning with Seekho 2 Wheeler!_`;
 
-      window.open(`https://wa.me/91${activeStudent.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
+      window.location.href = `whatsapp://send?phone=91${activeStudent.whatsapp}&text=${encodeURIComponent(text)}`;
     }
 
     // Modal Edit & Editable Installments List
@@ -2223,6 +2226,7 @@
       const student = rawStudents.find(s => s.studentCode === studentCode || s.id === studentCode);
       if (!student) return alert("No active customer record found for Code: " + studentCode);
 
+      // Lockout on 6th class onwards if due pending
       if (student.classesAttended >= 5 && student.dueAmount > 0) {
         return alert(`⚠️ DUE LOCKOUT: ${student.name} has ₹${student.dueAmount} unpaid dues. Cannot attend 6th class onwards until fees are cleared.`);
       }
