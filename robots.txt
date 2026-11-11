@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://seekho2wheeler.com/sitemap.xml
