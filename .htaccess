@@ -1,0 +1,31 @@
+ErrorDocument 404 /404.html
+DirectoryIndex index.html
+Redirect 301 /pages/about.html /about/
+Redirect 301 /pages/courses.html /courses/
+Redirect 301 /pages/branches.html /branches/
+Redirect 301 /pages/gallery.html /gallery/
+Redirect 301 /pages/blog.html /blog/
+Redirect 301 /pages/reviews.html /reviews/
+Redirect 301 /pages/contact.html /contact/
+Redirect 301 /pages/booking.html /book/
+Redirect 301 /pages/faq.html /faq/
+Redirect 301 /women-training /ladies-training/
+Redirect 301 /p/women-empowerment /ladies-training/
+Redirect 301 /p/doorstep-training /courses/doorstep-training/
+Redirect 301 /p/our-mission /about/
+Redirect 301 /p/our-journey /about/
+Redirect 301 /p/our-story /about/
+Redirect 301 /locations/rabindra-sarobar /branches/rabindra-sarovar/
+Redirect 301 /locations/tollygunge /branches/tollygunge/
+Redirect 301 /locations/barasat /branches/barasat/
+Redirect 301 /locations/new-town /branches/new-town/
+Redirect 301 /locations/sodepur /branches/sodepur/
+Redirect 301 /locations/howrah /branches/howrah/
+Redirect 301 /locations/patuli /branches/patuli/
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/webp "access plus 1 year"
+ExpiresByType image/png "access plus 1 year"
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
