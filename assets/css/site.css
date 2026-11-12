@@ -442,3 +442,4 @@ footer{margin-top:0}
 @media (prefers-reduced-motion:reduce){.up,.words .w>span,.floats .fl,.mapfl{animation:none!important;opacity:1;transform:none}.shine::after{display:none}}
 main{overflow-x:clip}
 @media (min-width:861px){.dvis{padding:0 0 60px 60px}.dvis img{width:100%;aspect-ratio:4/3.6}.dvis .card2{left:-10px;bottom:0;width:340px;padding:24px}.dvis .card2 .price-out output{font-size:44px}}
+.mapfl{left:auto;right:16px}
