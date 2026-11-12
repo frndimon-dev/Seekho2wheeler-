@@ -935,3 +935,103 @@ h2{font-size:clamp(28px,3.8vw,46px)}
 .her2 h2{font-size:clamp(32px,4.4vw,54px)}
 .scard b,.minis b,.dbody output,.st .n{font-style:normal}
 .gold{transform:none}
+
+/* =====================================================================
+   v31 PREMIUM PASS — restraint: navy + ivory + one soft gold, calm caps,
+   thin gold line icons, more air, quieter cards.
+   ===================================================================== */
+:root{--navy-2:#0b1533;--navy:#16285c;--gold:#c9a24a;--gold-l:#e6cf95;--gold-d:#a37a26;--ivory:#f7f4ee;--warm:#f7f4ee;--ink:#141a2e;--muted:#5d6273;--line:#e8e2d6;--yellow:#c9a24a}
+body{background:#fff}
+section{padding:120px 0}
+@media (max-width:760px){section{padding:76px 0}}
+.warm,.cream{background:var(--ivory)}
+.navy,.her2,.phero2,.xhero,.endcta,.statwrap{--on-dark:1}
+.navy,.her2,.phero2{background:linear-gradient(160deg,#0f1d45 0%,#0b1533 60%,#091028 100%)}
+
+/* Type: calm capitals in Sora, light weight for the key words */
+:root{--head:"Sora","Plus Jakarta Sans",system-ui,sans-serif}
+h1,h2{font-family:var(--head)!important;font-style:normal!important;text-transform:uppercase;font-weight:600!important;letter-spacing:.04em!important;line-height:1.12!important}
+h2{font-size:clamp(26px,3.2vw,40px)!important}
+.xhero h1{font-size:clamp(32px,4.6vw,58px)!important;max-width:18ch}
+.ph2t h1{font-size:clamp(28px,3.6vw,46px)!important}
+.her2 h2{font-size:clamp(30px,3.8vw,46px)!important}
+h3{font-family:var(--font);font-weight:700;letter-spacing:-.01em}
+section:not(.phero2):not(.her2):not(.navy):not(.xhero) h2{background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important;color:var(--navy-2)!important;filter:none!important}
+.endcta h2,.phero2 h1,.her2 h2,.navy h2,.xhero h1{color:#fff!important;text-shadow:none!important;-webkit-text-fill-color:#fff}
+/* key words: same capitals, light weight, soft gold (no box, no glow) */
+.gold,.xhero h1 .gold .w>span{background:none!important;box-shadow:none!important;padding:0!important;border-radius:0!important;transform:none!important;filter:none!important;font-weight:300!important;color:var(--gold-l)!important;-webkit-text-fill-color:var(--gold-l)!important;text-shadow:none!important}
+section:not(.phero2):not(.her2):not(.navy):not(.xhero):not(.endcta) .gold{color:var(--gold-d)!important;-webkit-text-fill-color:var(--gold-d)!important}
+/* eyebrow: gold small caps after a short gold rule (no plate) */
+.eyebrow{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important;color:var(--gold-d)!important;font:600 12px/1 var(--font)!important;letter-spacing:.28em!important;gap:14px!important}
+.eyebrow::before{content:""!important;width:32px!important;height:1px!important;background:currentColor!important;padding:0!important;align-self:center!important}
+.phero2 .eyebrow,.her2 .eyebrow,.navy .eyebrow,.endcta .eyebrow,.ph2t .eyebrow,.xhero .eyebrow{color:var(--gold-l)!important}
+/* title rule: one thin gold line, still */
+.sh h2::after,.ph2t h1::after{width:48px!important;height:2px!important;margin-top:20px!important;background:linear-gradient(90deg,var(--gold),var(--gold-l))!important;animation:none!important;box-shadow:none!important;border-radius:0!important}
+.sh .sub,.lead{color:var(--muted);font-size:17px;line-height:1.75}
+.sh{margin-bottom:52px}
+
+/* Buttons: gold and outline only */
+.btn{border-radius:999px;font-weight:600;letter-spacing:.02em;padding:15px 28px}
+.btn-yellow,.btn-primary{background:linear-gradient(135deg,#e6cf95 0%,#c9a24a 55%,#b18a33 100%)!important;color:#0b1533!important;box-shadow:0 10px 30px rgba(201,162,74,.28)!important}
+.btn-wa{background:transparent!important;border:1px solid rgba(37,180,100,.6)!important;color:#1d9a57!important;box-shadow:none!important}
+.phero2 .btn-wa,.her2 .btn-wa,.navy .btn-wa,.endcta .btn-wa,.xhero .btn-wa{color:#7fe0a8!important;border-color:rgba(127,224,168,.5)!important}
+.btn-glass,.btn-outline-w{background:transparent!important;border:1px solid rgba(255,255,255,.35)!important;color:#fff!important}
+.btn-line,.btn-ghost{border:1px solid var(--navy-2)!important;color:var(--navy-2)!important;background:transparent!important}
+.btn-navy{background:var(--navy-2)!important}
+.top .btn{background:var(--navy-2)!important;color:#fff!important}.top .btn svg{color:var(--gold-l)!important}
+.shine::after{display:none}
+.fab .c{background:var(--navy-2)}.fab .w{background:#1d9a57}
+
+/* Icons: thin gold line icons in an ivory circle */
+.i3d{filter:none!important;width:26px!important;height:26px!important;padding:13px!important;box-sizing:content-box!important;background:var(--ivory)!important;border:1px solid var(--line)!important;border-radius:50%!important;margin-bottom:16px}
+.feat .fi{width:auto!important;height:auto!important;background:none!important}
+.feat .fi .i3d,.ds .i3d,.gf .i3d,.abadge .i3d,.areas .i3d,.phase .pc .i3d,.notecard .i3d,.keys .i3d{margin:0!important}
+.gf .i3d,.her2 .i3d,.navy .i3d,.phero2 .i3d{background:rgba(255,255,255,.06)!important;border-color:rgba(230,207,149,.35)!important}
+.areas .i3d{width:16px!important;height:16px!important;padding:6px!important}
+.scard .i3d,.st .i3d{width:24px!important;height:24px!important;padding:12px!important}
+.scard:hover .i3d,.feat:hover .i3d,.st:hover .i3d,.ds:hover .i3d{animation:none}
+
+/* Cards: quieter, more air */
+.scard,.feat,.st,.ds,.bcard,.pcard,.rev.fcard,.phase,.faq details,.dcard,.setup,.addr,.tcard{border:1px solid var(--line)!important;box-shadow:0 1px 2px rgba(11,21,51,.04),0 12px 32px rgba(11,21,51,.05)!important;border-radius:20px!important}
+.scard:hover,.feat:hover,.st:hover,.bcard:hover,.pcard:hover,.rev.fcard:hover{transform:translateY(-4px)!important;box-shadow:0 2px 4px rgba(11,21,51,.05),0 22px 48px rgba(11,21,51,.09)!important}
+.feat{padding:22px!important;background:#fff}
+.st{padding:30px 26px!important}
+.st .n{font-family:var(--head)!important;font-weight:300!important;-webkit-text-stroke:0!important;color:var(--gold)!important;font-size:30px!important;top:24px!important;right:26px!important}
+.scard{padding:28px 24px!important}
+.scard b{font-family:var(--head)!important;font-weight:300!important;font-size:clamp(30px,3.4vw,46px)!important;background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important;color:var(--navy-2)!important;-webkit-text-fill-color:var(--navy-2)!important;letter-spacing:-.01em}
+.scard>span:last-child{text-transform:uppercase;letter-spacing:.14em;font-size:11px!important;font-weight:600!important;color:var(--muted)}
+.minis b,.dbody output{background:none!important;color:var(--navy-2)!important;-webkit-text-fill-color:var(--navy-2)!important;font-family:var(--head)!important;font-weight:300!important}
+.tag{background:rgba(201,162,74,.14)!important;color:var(--gold-d)!important;font-weight:600;letter-spacing:.04em}
+.ccard .tag,.pcard .ph .tag{background:rgba(11,21,51,.72)!important;color:var(--gold-l)!important;backdrop-filter:blur(6px)}
+.ccard .row b{color:var(--gold-l)!important}
+.ccard .no{font-family:var(--head);font-weight:300;color:rgba(255,255,255,.7)}
+.bcard .since{background:rgba(11,21,51,.75)!important}.bcard .main{background:var(--gold)!important;color:#0b1533!important}
+.bcard .cl{color:var(--gold-d)!important}
+.chips li{background:var(--ivory)!important;border-color:var(--line)!important;font-weight:500!important}
+.phase .pn{background:transparent!important;border:1px solid var(--gold)!important;color:var(--gold-d)!important}
+.goal{background:var(--ivory)!important;border-left-color:var(--gold)!important}
+.dbody .price-out{background:var(--ivory)!important}
+.dbody input[type=range]{accent-color:var(--gold)!important}
+.areas li{border-color:var(--line)!important;box-shadow:none!important;font-weight:600!important}
+.rbar span{background:linear-gradient(90deg,var(--gold),var(--gold-l))!important}
+.flow span{background:#fff!important}
+.flow i{color:var(--gold)!important}
+.stars{color:var(--gold)!important;letter-spacing:3px}
+.av{background:var(--navy)!important}
+.rev .who .g{color:var(--gold-d)}
+.qcard{border-radius:20px!important;box-shadow:0 24px 60px rgba(0,0,0,.3)!important}
+.gf{background:rgba(255,255,255,.04)!important;border-color:rgba(230,207,149,.25)!important;font-weight:500!important}
+.pill{border-color:rgba(230,207,149,.3)!important;background:rgba(11,21,51,.35)!important;font-weight:500}
+.pill .dot{background:var(--gold-l)!important;animation:none!important}
+.sdots button.on{background:var(--gold)!important}
+.ticker{display:none}
+/* end CTA: solid navy, gold line, no photo */
+.endcta{background:linear-gradient(135deg,#132457,#0b1533)!important;padding:80px 64px!important}
+.endcta img{display:none!important}
+@media (max-width:640px){.endcta{padding:52px 26px!important}}
+/* hero photo: slightly richer grade */
+.xhero .sl img,.ph2i img,.h2pic img,.bcard .ph img,.ccard img,.gcard img,.pcard .ph img,.aimg img,.collage img,.lpic img,.dcard img{filter:saturate(1.06) contrast(1.04)}
+.ph2i img,.h2pic img{border:0!important;border-radius:24px!important}
+footer{background:#091028!important}
+.social a:hover{background:var(--gold)!important}
+footer .fh{font:600 12px/1 var(--font)!important;letter-spacing:.24em!important;color:var(--gold-l)!important;text-transform:uppercase;margin-bottom:18px!important}
