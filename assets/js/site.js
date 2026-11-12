@@ -86,4 +86,22 @@
     }); }, { threshold: .5 });
     cs.forEach(function (c) { co.observe(c); });
   }
+
+  // Hero photo slider.
+  var sl = document.querySelectorAll('.xhero .sl'), dots = document.querySelectorAll('.sdots button'), cur = 0, tmr;
+  function go(n) { sl[cur].classList.remove('on'); dots[cur] && dots[cur].classList.remove('on'); cur = (n + sl.length) % sl.length; sl[cur].classList.add('on'); dots[cur] && dots[cur].classList.add('on'); }
+  if (sl.length > 1) { tmr = setInterval(function () { go(cur + 1); }, 5500);
+    dots.forEach(function (d, i) { d.addEventListener('click', function () { clearInterval(tmr); go(i); }); }); }
+
+  // Rails: progress bar + mouse drag.
+  document.querySelectorAll('.rail').forEach(function (r) {
+    var bar = document.getElementById('bar-' + r.id.replace('rail-', ''));
+    function upd() { if (!bar) return; var m = r.scrollWidth - r.clientWidth; bar.style.width = (m > 0 ? Math.max(12, (r.clientWidth / r.scrollWidth) * 100 + (r.scrollLeft / m) * (100 - (r.clientWidth / r.scrollWidth) * 100)) : 100) + '%'; }
+    r.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd); upd();
+    var down = false, sx = 0, sl0 = 0, moved = false;
+    r.addEventListener('mousedown', function (e) { down = true; moved = false; sx = e.pageX; sl0 = r.scrollLeft; r.classList.add('drag'); });
+    window.addEventListener('mouseup', function () { down = false; r.classList.remove('drag'); });
+    r.addEventListener('mousemove', function (e) { if (!down) return; var dx = e.pageX - sx; if (Math.abs(dx) > 5) moved = true; r.scrollLeft = sl0 - dx; });
+    r.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+  });
 })();
