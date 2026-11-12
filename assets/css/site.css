@@ -1049,3 +1049,117 @@ h2{font-size:clamp(28px,3.6vw,44px)!important}
 .gf .i3d,.her2 .i3d,.navy .i3d,.phero2 .i3d{background:rgba(255,255,255,.08)!important;border-color:rgba(230,207,149,.3)!important}
 .areas .i3d{width:22px!important;height:22px!important;padding:4px!important;border-radius:10px!important}
 .scard:hover .i3d,.feat:hover .i3d,.st:hover .i3d,.ds:hover .i3d{animation:wig .6s ease!important}
+
+/* ===== v34 sample: vibrant Seekho (logo blue + orange + yellow), compact cards, floating cards, motion ===== */
+:root{--blue:#1f47c4;--blue-d:#12307f;--orange:#f26b1d;--sun:#ffc72c;--navy-2:#0d1d4f;--gold:#f26b1d;--gold-l:#ffc72c;--gold-d:#e05a12;--ivory:#f5f7ff;--warm:#f5f7ff;--line:#e3e8f6}
+.warm,.cream{background:linear-gradient(180deg,#f5f7ff,#eef2ff)}
+.navy,.her2,.phero2{background:radial-gradient(circle at 85% 10%,rgba(255,199,44,.22),transparent 40%),radial-gradient(circle at 10% 90%,rgba(242,107,29,.22),transparent 45%),linear-gradient(135deg,#1f47c4 0%,#12307f 55%,#0d1d4f 100%)!important}
+section{padding:84px 0}
+/* hero: colour, not fade */
+.xhero::after{background:linear-gradient(180deg,rgba(13,29,79,0) 35%,rgba(18,48,127,.85) 80%,#12307f 100%)!important}
+.xhero{background:#12307f!important}
+.statwrap{background:linear-gradient(#12307f 50%,#fff 50%)!important}
+@media (max-width:760px){.statwrap{background:#12307f!important}}
+/* headline highlight: logo orange→yellow gradient word with a soft glow */
+.gold,.xhero h1 .gold .w>span{background:linear-gradient(95deg,#ff8a1c 0%,#ffc72c 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;filter:drop-shadow(0 4px 14px rgba(255,150,30,.35))!important;font-weight:800!important}
+section:not(.phero2):not(.her2):not(.navy):not(.xhero):not(.endcta) .gold{background:linear-gradient(95deg,#1f47c4,#f26b1d)!important;-webkit-background-clip:text!important;background-clip:text!important}
+/* eyebrow: coloured pill */
+.eyebrow{background:linear-gradient(90deg,rgba(31,71,196,.10),rgba(242,107,29,.10))!important;color:var(--blue)!important;padding:8px 14px!important;border-radius:999px!important;letter-spacing:.18em!important}
+.eyebrow::before{width:8px!important;height:8px!important;border-radius:50%!important;background:var(--orange)!important}
+.phero2 .eyebrow,.her2 .eyebrow,.navy .eyebrow,.ph2t .eyebrow,.xhero .eyebrow,.endcta .eyebrow{background:rgba(255,255,255,.14)!important;color:#fff!important}
+.sh h2::after,.ph2t h1::after{width:64px!important;height:4px!important;border-radius:9px!important;background:linear-gradient(90deg,var(--blue),var(--orange),var(--sun))!important}
+/* buttons: logo colours */
+.btn-yellow,.btn-primary{background:linear-gradient(135deg,#ffd54a,#ffb21c)!important;color:#0d1d4f!important;box-shadow:0 10px 26px rgba(255,170,30,.4)!important}
+.btn-wa{background:#1fa855!important;color:#fff!important;border:0!important}
+.btn-navy{background:linear-gradient(135deg,#1f47c4,#12307f)!important}
+.shine::after{display:block!important}
+/* COMPACT cards on tablet/phone: 2 per row, small icon beside text */
+.feats{grid-template-columns:1fr 1fr!important;gap:12px!important}
+.feat{padding:14px!important;gap:12px!important;align-items:center!important;border-radius:16px!important;background:#fff}
+.feat h3{font-size:15px!important}.feat p{font-size:13px!important}
+.i3d{width:30px!important;height:30px!important;padding:8px!important;border-radius:12px!important;background:linear-gradient(145deg,#eef2ff,#fff4ea)!important;margin-bottom:0!important}
+.scard .i3d,.st .i3d{width:34px!important;height:34px!important;margin-bottom:10px!important}
+.steps4{grid-template-columns:repeat(4,1fr)!important;gap:12px!important}
+.st{padding:18px 16px!important;border-radius:18px!important}
+.st h3{font-size:16px!important}.st p{font-size:13px!important}
+.st .n{font-size:22px!important;color:var(--orange)!important;top:14px!important;right:16px!important}
+@media (max-width:900px){.steps4{grid-template-columns:repeat(2,1fr)!important}}
+@media (max-width:420px){.feats{grid-template-columns:1fr!important}}
+/* cards get a coloured top edge + lift */
+.feat,.st,.scard,.ds{border:1px solid var(--line)!important;box-shadow:0 10px 28px rgba(31,71,196,.08)!important;position:relative;overflow:hidden}
+.st::before,.scard::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--orange),var(--sun))}
+.scard b{color:var(--blue-d)!important;-webkit-text-fill-color:var(--blue-d)!important;font-weight:800!important}
+/* floating cards back on the hero (all sizes) */
+.floats{display:block!important}
+@media (max-width:1024px){.floats{position:absolute!important;top:16px!important;right:12px!important;height:auto!important;z-index:3}.floats .fl{position:relative!important;margin-bottom:8px;animation:up .8s forwards,bob 5s ease-in-out infinite!important}.f2{display:flex!important}}
+.glass{background:rgba(13,29,79,.55)!important;backdrop-filter:blur(12px)}
+/* about photo: floating stat card on the collage */
+.abadge{background:linear-gradient(135deg,#1f47c4,#12307f)!important;color:#fff!important}.abadge b{color:#ffc72c!important}.abadge small{color:#dbe3ff!important}
+/* section headings smaller, punchier */
+h2{font-size:clamp(26px,3.4vw,40px)!important}
+@media (max-width:1024px){.xhero .wrap{position:static!important}.xhero{position:relative}.floats{top:74px!important;right:14px!important;left:auto!important}.floats .fl{padding:8px 12px!important;max-width:200px}.f2{display:none!important}}
+@media (max-width:760px){.floats{top:62px!important}}
+.collage{min-height:0!important;display:grid;grid-template-columns:1.2fr 1fr;gap:12px;align-items:end}
+.collage>img{position:static!important;width:100%!important;height:auto!important;aspect-ratio:4/5;border:0!important}
+.collage>.c1{aspect-ratio:4/4.4}
+.collage .abadge{position:static!important;grid-column:1/-1;justify-self:start;animation:none!important}
+@media (max-width:760px){.floats{position:static!important;margin:0 0 14px!important}.floats .f1{display:inline-flex!important}.xhero .pill{display:none}}
+.abadge .i3d{width:30px!important;height:30px!important}
+
+/* ===== BRAND (from the logo): royal blue #0b3a8f, orange #ff5a0a, yellow #ffc514, cream #fbf6e8 ===== */
+:root{--rb:#0b3a8f;--rb2:#0a2f75;--or:#ff5a0a;--ye:#ffc514;--cr:#fbf6e8;--blue:#0b3a8f;--blue-d:#0a2f75;--navy-2:#0b3a8f;--orange:#ff5a0a;--sun:#ffc514;--gold:#ff5a0a;--gold-d:#ff5a0a;--gold-l:#ffc514;--ivory:#fbf6e8;--warm:#fbf6e8;--line:#f1e3bd}
+body{background:#fff}
+.warm,.cream{background:var(--cr)!important}
+/* blue only in the hero band and footer */
+.xhero,.statwrap{background:var(--rb)!important}
+.statwrap{background:linear-gradient(var(--rb) 50%,#fff 50%)!important}
+@media (max-width:760px){.statwrap{background:var(--rb)!important}}
+.xhero::after{background:linear-gradient(180deg,transparent 55%,var(--rb) 100%)!important}
+/* everything that was dark blue becomes cream with blue text */
+.navy,.her2,.phero2{background:var(--cr)!important;color:var(--rb)!important}
+.navy h2,.her2 h2,.phero2 h1,.ph2t h1{color:var(--rb)!important;-webkit-text-fill-color:var(--rb)!important;text-shadow:none!important}
+.navy p,.her2 p,.phero2 p,.navy .sh .sub,.ph2t p,.ph2t .crumbs,.ph2t .crumbs a{color:#4a4a5a!important}
+.navy .arrows button{color:var(--rb)!important;border-color:var(--rb)!important}
+.her2 .gf,.phero2 .gf{background:#fff!important;color:var(--rb)!important;border:2px solid var(--ye)!important}
+.btn-glass,.btn-outline-w{color:var(--rb)!important;border:2px solid var(--rb)!important}
+.xhero .btn-glass,.xhero .btn-outline-w{color:#fff!important;border-color:rgba(255,255,255,.6)!important}
+.xhero h1{color:#fff!important}
+section:not(.xhero) h2,.ph2t h1{color:var(--rb)!important;-webkit-text-fill-color:var(--rb)!important}
+/* highlight word: brand orange with a yellow outline glow (like the "2" in the logo) */
+.gold,.xhero h1 .gold .w>span{background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important;color:var(--or)!important;-webkit-text-fill-color:var(--or)!important;filter:none!important;text-shadow:0 0 0 transparent!important;-webkit-text-stroke:0}
+.xhero h1 .gold .w>span,.xhero h1 .gold{color:var(--ye)!important;-webkit-text-fill-color:var(--ye)!important}
+/* eyebrow: orange text pill with yellow edge */
+.eyebrow,.phero2 .eyebrow,.her2 .eyebrow,.navy .eyebrow,.ph2t .eyebrow{background:#fff3e8!important;color:var(--or)!important;border:1.5px solid var(--ye)!important}
+.xhero .eyebrow,.xhero .pill{background:rgba(255,255,255,.12)!important;color:#fff!important;border-color:rgba(255,197,20,.6)!important}
+.eyebrow::before{background:var(--or)!important}
+.sh h2::after,.ph2t h1::after{background:linear-gradient(90deg,var(--rb) 0 33%,var(--or) 33% 66%,var(--ye) 66%)!important;height:5px!important}
+/* cards: white with the logo's yellow outline */
+.scard,.feat,.st,.ds,.bcard,.pcard,.rev.fcard,.phase,.dcard,.qcard{border:2px solid #ffe08a!important;box-shadow:0 10px 26px rgba(11,58,143,.08)!important}
+.st::before,.scard::before{background:linear-gradient(90deg,var(--rb) 0 33%,var(--or) 33% 66%,var(--ye) 66%)!important}
+.scard b,.minis b{color:var(--rb)!important;-webkit-text-fill-color:var(--rb)!important}
+.st .n{color:var(--or)!important}
+.i3d{background:var(--cr)!important;border:1.5px solid #ffe08a!important}
+/* buttons */
+.btn-yellow,.btn-primary{background:linear-gradient(180deg,#ffd447,var(--ye))!important;color:var(--rb)!important;border:2px solid #f0a800!important;box-shadow:0 8px 20px rgba(255,170,0,.35)!important}
+.btn-navy,.top .btn{background:var(--rb)!important;color:#fff!important;border:2px solid var(--ye)!important}
+.top .btn svg{color:var(--ye)!important}
+.fab .c{background:var(--or)!important}
+.tag{background:#fff3e8!important;color:var(--or)!important}
+.ccard .tag,.pcard .ph .tag{background:var(--ye)!important;color:var(--rb)!important}
+.ccard .row b{color:var(--ye)!important}
+.bcard .main{background:var(--or)!important;color:#fff!important}.bcard .cl{color:var(--or)!important}
+.abadge{background:var(--rb)!important;border:2px solid var(--ye)!important}.abadge b{color:var(--ye)!important}
+.av{background:var(--rb)!important}.stars{color:#ffb000!important}
+.rbar span,.sdots button.on{background:var(--or)!important}
+.glass{background:rgba(11,58,143,.7)!important;border:1.5px solid rgba(255,197,20,.6)!important}
+.phase .pn{border-color:var(--or)!important;color:var(--or)!important}
+.goal{border-left-color:var(--or)!important}
+/* end CTA in brand orange */
+.endcta{background:linear-gradient(135deg,#ff7a1a,var(--or))!important;border:3px solid var(--ye)}
+.endcta h2,.endcta p{color:#fff!important;-webkit-text-fill-color:#fff!important}
+.endcta .eyebrow{background:rgba(255,255,255,.2)!important;color:#fff!important}
+.endcta .btn-yellow{background:#fff!important;color:var(--or)!important;border-color:#fff!important}
+footer{background:var(--rb2)!important;border-top:4px solid var(--ye)}
+.top{border-bottom:3px solid var(--ye)!important}
+section .endcta h2,section .endcta h2 *{color:#fff!important;-webkit-text-fill-color:#fff!important}
+.phero2 + .statwrap{background:var(--cr)!important}
