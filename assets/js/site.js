@@ -3,6 +3,20 @@
   var b = document.querySelector('.burger'), n = document.querySelector('.nav');
   if (b && n) b.addEventListener('click', function () { n.classList.toggle('open'); b.setAttribute('aria-expanded', n.classList.contains('open')); });
 
+  // Stagger children of .stagger and split hero headline into animated words.
+  document.querySelectorAll('.stagger').forEach(function (g) { Array.prototype.forEach.call(g.children, function (c, i) { c.style.setProperty('--d', (Math.min(i, 8) * 0.09) + 's'); }); });
+  document.querySelectorAll('h1.words').forEach(function (h) {
+    var i = 0;
+    (function walk(n) { Array.prototype.slice.call(n.childNodes).forEach(function (c) {
+      if (c.nodeType === 3) { var f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach(function (t) {
+        if (!t) return; if (/^\s+$/.test(t)) { f.appendChild(document.createTextNode(t)); return; }
+        var o = document.createElement('span'); o.className = 'w'; var x = document.createElement('span'); x.textContent = t; x.style.setProperty('--i', i++); o.appendChild(x); f.appendChild(o); });
+        n.replaceChild(f, c); } else if (c.nodeType === 1) walk(c); }); })(h);
+  });
+  // Gentle parallax on the hero photo.
+  var hp = document.querySelector('.xhero picture img');
+  if (hp && !matchMedia('(prefers-reduced-motion: reduce)').matches) window.addEventListener('scroll', function () { var y = window.scrollY; if (y < 900) hp.style.translate = '0 ' + (y * 0.25) + 'px'; }, { passive: true });
+
   var els = document.querySelectorAll('.rv');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
@@ -49,8 +63,9 @@
   var map = document.getElementById('cmap'), det = document.getElementById('cdet');
   document.querySelectorAll('.clist button').forEach(function (b) {
     b.addEventListener('click', function () {
-      document.querySelectorAll('.clist button').forEach(function (x) { x.classList.remove('on'); });
-      b.classList.add('on');
+      document.querySelectorAll('.clist button').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      b.setAttribute('aria-pressed', 'true');
+      var cn = document.getElementById('cname'); if (cn) cn.textContent = b.dataset.name;
       if (map) map.src = 'https://www.google.com/maps?q=' + encodeURIComponent(b.dataset.q) + '&z=15&output=embed';
       if (det) det.href = '/branches/' + b.dataset.slug + '/';
     });
