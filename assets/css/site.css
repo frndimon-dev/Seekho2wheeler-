@@ -872,3 +872,9 @@ img.rv{opacity:1}
 }
 .h2pic{padding-bottom:0}
 .h2pic .qcard{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:-28px 18px 0!important}
+/* v25: photo blocks beside text: top-aligned, badge below the photo (never over people) */
+.about-g{align-items:start}
+.aimg{position:sticky;top:100px}
+.aimg .abadge{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:14px 0 0;animation:none}
+.phero2 + .statwrap + section{padding-top:56px}
+@media (max-width:900px){.aimg{position:static}}
