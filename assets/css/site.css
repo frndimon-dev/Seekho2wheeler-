@@ -1035,3 +1035,10 @@ section:not(.phero2):not(.her2):not(.navy):not(.xhero):not(.endcta) .gold{color:
 footer{background:#091028!important}
 .social a:hover{background:var(--gold)!important}
 footer .fh{font:600 12px/1 var(--font)!important;letter-spacing:.24em!important;color:var(--gold-l)!important;text-transform:uppercase;margin-bottom:18px!important}
+
+/* v32: owner — headlines must be bold, not thin */
+h1,h2{font-weight:800!important;letter-spacing:.005em!important;line-height:1.08!important}
+.gold,.xhero h1 .gold .w>span{font-weight:800!important}
+.xhero h1{font-size:clamp(34px,5vw,64px)!important}
+h2{font-size:clamp(28px,3.6vw,44px)!important}
+.scard b,.minis b,.dbody output,.st .n{font-weight:700!important}
