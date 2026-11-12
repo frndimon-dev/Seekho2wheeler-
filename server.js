@@ -5,6 +5,9 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=
   '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.xml': 'application/xml',
   '.txt': 'text/plain; charset=utf-8', '.mp4': 'video/mp4', '.ico': 'image/x-icon', '.json': 'application/json' };
 const HIDDEN = new Set(['server.js', 'package.json', 'README.md']);
+// Old site addresses (from .htaccess "Redirect 301 /old /new") keep working.
+const REDIRECTS = {};
+try { fs.readFileSync(path.join(ROOT, '.htaccess'), 'utf8').split('\n').forEach(l => { const m = l.match(/^Redirect 301 (\S+) (\S+)/); if (m) REDIRECTS[m[1].replace(/\/$/, '')] = m[2]; }); } catch (e) {}
 const TEXT = new Set(['.html', '.css', '.js', '.svg', '.xml', '.txt', '.json']);
 function send(res, file, code, req) {
   const ext = path.extname(file);
@@ -22,6 +25,8 @@ function send(res, file, code, req) {
 http.createServer((req, res) => {
   let p;
   try { p = decodeURIComponent(req.url.split('?')[0]); } catch { p = '/'; }
+  const r = REDIRECTS[p.replace(/\/$/, '')];
+  if (r) { res.writeHead(301, { Location: r }); return res.end(); }
   const f = path.normalize(path.join(ROOT, p));
   if (!f.startsWith(ROOT) || p.includes('/.') || HIDDEN.has(path.basename(f))) return send(res, path.join(ROOT, '404.html'), 404, req);
   fs.stat(f, (e, s) => {
