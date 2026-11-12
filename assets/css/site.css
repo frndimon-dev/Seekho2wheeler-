@@ -801,3 +801,40 @@ img.rv{opacity:1}
 @media (max-width:640px){.cgrid,.bgrid,.pgrid,.feats.f3,.tline{grid-template-columns:1fr}.pcard.big{grid-column:auto;flex-direction:column}.pcard.big .ph{min-height:220px}.phero{min-height:0}.phero .wrap{padding:90px 0 70px}.phero + .statwrap{margin-top:0}.mapcard{min-height:320px}}
 .cgrid .ccard{aspect-ratio:4/4.6}
 .feat p:empty,.st p:empty,.ds p:empty{display:none}.feat{align-items:center}
+
+/* ===== v21: split page header (no text on faces), phases, areas, social ===== */
+.phero2{background:radial-gradient(circle at 90% 0%,rgba(255,199,44,.16),transparent 45%),var(--navy-2);color:#fff;padding:56px 0 96px}
+.ph2{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.ph2t .crumbs{color:#aab6d8;margin-bottom:14px;font-size:14px}.ph2t .crumbs a{color:#fff}
+.ph2t .eyebrow{color:var(--yellow)}
+.ph2t h1{color:#fff;font-size:clamp(34px,4.6vw,58px);line-height:1.04;margin:4px 0 12px}
+.ph2t p{color:#d4dcf0;font-size:clamp(16px,1.6vw,18px);max-width:560px;margin-bottom:22px}
+.ph2t .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.ph2i img{width:100%;aspect-ratio:4/3.2;object-fit:cover;object-position:center 30%;border-radius:28px;box-shadow:0 30px 70px rgba(0,0,0,.35);border:6px solid rgba(255,255,255,.08)}
+.phero2 + .statwrap{margin-top:-56px;background:transparent}
+@media (max-width:760px){.phero2{padding:0 0 70px}.ph2{grid-template-columns:1fr;gap:0}.ph2i{order:-1;margin:0 -16px 22px}.ph2i img{border-radius:0;border:0;aspect-ratio:4/3;box-shadow:none}.ph2t h1{font-size:clamp(30px,8.6vw,40px)}.phero2 + .statwrap{margin-top:-46px}}
+.flow{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin:-10px 0 28px;font:700 14px var(--font);color:var(--navy-2)}
+.flow span{background:var(--warm);border:1px solid var(--line);border-radius:999px;padding:8px 14px}.flow i{font-style:normal;color:#c2490c}
+.phases{display:grid;gap:14px;max-width:900px;margin:0 auto}
+.phase{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 14px 34px rgba(13,29,79,.07);overflow:hidden;transition:box-shadow .3s}
+.phase[open]{box-shadow:0 22px 50px rgba(13,29,79,.13)}
+.phase summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:18px 20px}
+.phase summary::-webkit-details-marker{display:none}
+.phase .pn{flex:none;background:var(--navy-2);color:var(--yellow);font:800 13px var(--font);letter-spacing:.06em;text-transform:uppercase;padding:8px 12px;border-radius:12px}
+.phase .pt{flex:1}.phase .pt b{display:block;font:800 20px/1.2 var(--head);color:var(--navy-2)}.phase .pt small{color:var(--muted);font-weight:600}
+.phase .pc .i3d{width:44px;height:44px}
+.phase .pb{padding:0 20px 20px;animation:up .45s ease}
+.phase .pb p{color:#3a4153;font-size:17px;line-height:1.65}
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+.chips li{background:var(--warm);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font:600 14px var(--font);color:var(--ink)}
+.goal{background:#fff8e1;border-left:4px solid var(--yellow);border-radius:10px;padding:10px 14px}
+.setup{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px 18px}.setup b{font-family:var(--head);color:var(--navy-2)}
+.areas{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:900px;margin:0 auto}
+.areas li{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px 8px 8px;font:700 15px var(--font);color:var(--navy-2);box-shadow:0 8px 20px rgba(13,29,79,.06)}
+.areas .i3d{width:28px;height:28px}
+.bpost{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start}.bpost img{border-radius:16px;aspect-ratio:4/3;object-fit:cover;width:100%}
+@media (max-width:640px){.bpost{grid-template-columns:1fr}}
+.article .phases{max-width:none}
+.social{display:flex;gap:10px;margin-top:16px}.social a{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.1);color:#fff}.social a:hover{background:var(--yellow);color:var(--navy-2)}.social svg{width:20px;height:20px}
+/* home hero: lighter overlay so the photo stays visible */
+.xhero::after{background:linear-gradient(180deg,rgba(13,29,79,0) 0%,rgba(13,29,79,.05) 45%,rgba(13,29,79,.72) 82%,rgba(13,29,79,.95) 100%)}
