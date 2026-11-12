@@ -735,3 +735,4 @@ footer{background:var(--navy-2)}
 .abadge span{display:flex;flex-direction:column}
 .endcta::before{background:linear-gradient(90deg,rgba(13,29,79,.96),rgba(13,29,79,.55))}
 .collage .abadge img{position:static;width:44px;height:44px;border-radius:0;box-shadow:none;border:0;object-fit:contain}
+footer .fh{color:#fff;font:600 15px var(--head);margin-bottom:14px;letter-spacing:0}
