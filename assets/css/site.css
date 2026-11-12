@@ -901,3 +901,28 @@ section:not(.phero2):not(.her2):not(.navy):not(.xhero) h2{background:linear-grad
 .ccard h3,.bcard h3,.phase .pt b{letter-spacing:-.02em}
 .btn{font-family:var(--font);font-weight:700;letter-spacing:-.005em}
 body{letter-spacing:0}p,li,small,.sub,.lead{letter-spacing:0}
+
+/* ===== v28: Seekho's own signature (from the logo + the road) ===== */
+/* 1. Headings: Saira, slanted like the SEEKHO2WHEELER wordmark */
+:root{--head:"Saira","Plus Jakarta Sans",system-ui,sans-serif}
+h1,h2{font-family:var(--head);font-style:italic;font-weight:900;letter-spacing:-.01em;line-height:1.02}
+h3,.phase .pt b,.ccard h3,.bcard h3{font-family:var(--head);font-style:normal;font-weight:800;letter-spacing:0}
+.scard b,.minis b,.dbody output,.st .n{font-family:var(--head);font-style:italic;font-weight:900}
+/* 2. Key words: a slanted yellow road-sign plate, not coloured text */
+.gold,.xhero h1 .gold .w>span{background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important;filter:none!important}
+.gold{display:inline-block;background:#ffc72c!important;color:#0d1d4f!important;padding:.02em .22em .04em;border-radius:.14em;transform:skewX(-8deg);box-shadow:0 .09em 0 #c78500,0 .3em .7em rgba(0,0,0,.18)}
+.gold .w>span{color:#0d1d4f!important}
+.gold::after{display:none}
+/* 3. Labels: Indian number-plate style */
+.eyebrow{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#0d1d4f;border:2px solid #0d1d4f;border-radius:8px;padding:5px 12px 5px 0;font:800 12px/1 var(--font);letter-spacing:.16em;overflow:hidden;box-shadow:0 3px 0 rgba(13,29,79,.15)}
+.eyebrow::before{content:"S2W";width:auto;height:auto;border-radius:0;margin:0;align-self:stretch;display:grid;place-items:center;background:#1f47c4;color:#fff;font:800 9px/1 var(--font);letter-spacing:.06em;padding:0 6px}
+.phero2 .eyebrow,.her2 .eyebrow,.navy .eyebrow,.endcta .eyebrow,.ph2t .eyebrow,.xhero .eyebrow{color:#0d1d4f!important;border-color:#fff}
+.sh.c .eyebrow{margin-inline:auto}
+/* 4. Underline under titles: a lane marking with moving dashes */
+.sh h2::after,.ph2t h1::after{width:96px;height:8px;border-radius:4px;box-shadow:none;background:repeating-linear-gradient(90deg,#ffc72c 0 14px,transparent 14px 26px) 0 50%/52px 3px repeat-x,#0d1d4f;animation:lane 1.4s linear infinite}
+.phero2 .ph2t h1::after,.navy .sh h2::after{background:repeating-linear-gradient(90deg,#ffc72c 0 14px,transparent 14px 26px) 0 50%/52px 3px repeat-x,rgba(255,255,255,.18)}
+@keyframes lane{to{background-position:52px 50%,0 0}}
+@media (prefers-reduced-motion:reduce){.sh h2::after,.ph2t h1::after{animation:none}}
+/* keep the light-section gradient on h2 but drop it on the plate inside */
+section:not(.phero2):not(.her2):not(.navy):not(.xhero) h2 .gold{-webkit-text-fill-color:#0d1d4f}
+.xhero h1 .gold .w>span,.xhero h1 .gold{color:#0d1d4f!important;-webkit-text-fill-color:#0d1d4f!important;text-shadow:none!important}.xhero h1 .gold .w{overflow:visible}
