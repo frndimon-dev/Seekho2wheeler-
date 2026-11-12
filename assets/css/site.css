@@ -743,3 +743,7 @@ footer .fh{color:#fff;font:600 15px var(--head);margin-bottom:14px;letter-spacin
 .eyebrow{color:#c2490c}.navy .eyebrow,.her .eyebrow{color:var(--yellow)}
 img.rv{opacity:1}
 .calc .ch{font-size:20px;margin:0}
+.tag{color:#b8430b;background:#fff1e8}.card .more,.br .acts a:last-child{color:#b8430b}
+.btn-primary{background:#c84a0c;box-shadow:0 8px 20px rgba(200,74,12,.3)}
+.pricebox b{color:#b8430b}
+.phead + section .rv{opacity:1;transform:none}
