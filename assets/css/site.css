@@ -838,3 +838,37 @@ img.rv{opacity:1}
 .social{display:flex;gap:10px;margin-top:16px}.social a{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.1);color:#fff}.social a:hover{background:var(--yellow);color:var(--navy-2)}.social svg{width:20px;height:20px}
 /* home hero: lighter overlay so the photo stays visible */
 .xhero::after{background:linear-gradient(180deg,rgba(13,29,79,0) 0%,rgba(13,29,79,.05) 45%,rgba(13,29,79,.72) 82%,rgba(13,29,79,.95) 100%)}
+
+/* ===== v22: never text over faces ===== */
+.her2{background:radial-gradient(circle at 10% 0%,rgba(255,199,44,.14),transparent 45%),var(--navy-2);color:#fff}
+.h2g{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.her2 h2{color:#fff;font-size:clamp(36px,5vw,64px)}.her2 p{color:#d4dcf0;font-size:18px;max-width:520px}
+.her2 .gfeats{margin:22px 0 26px}
+.h2pic{position:relative;padding-bottom:60px}
+.h2pic img{width:100%;aspect-ratio:4/3.4;object-fit:cover;object-position:center 25%;border-radius:28px;box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.h2pic .qcard{position:absolute;left:18px;right:18px;bottom:0;margin:0}
+@media (max-width:760px){.h2g{grid-template-columns:1fr;gap:28px}.h2pic{order:-1;padding-bottom:0}.h2pic .qcard{position:relative;left:auto;right:auto;margin:-40px 12px 0}}
+/* end call-to-action: photo only on the right half, text on solid navy */
+.endcta{background:var(--navy-2)}
+.endcta img{left:auto!important;width:46%!important;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40%);mask-image:linear-gradient(90deg,transparent,#000 40%)}
+.endcta::before{display:none}
+@media (max-width:760px){.endcta img{display:none}}
+/* home hero on tablets and phones: photo on top, text below on navy */
+@media (max-width:1024px){
+  .xhero{min-height:0;display:block}
+  .xhero .slides{position:relative;height:min(62vw,560px);min-height:300px}
+  .xhero::after{top:0;bottom:auto;height:min(62vw,560px);min-height:300px;background:linear-gradient(180deg,transparent 70%,var(--navy-2) 100%)}
+  .xhero .wrap{grid-template-columns:1fr;padding:18px 0 40px}
+  .floats{position:absolute;top:calc(-1 * min(62vw,560px) + 70px);right:0;height:auto}
+  .f2{display:none!important}
+}
+@media (max-width:1100px){.endcta img{display:none}}
+.endcta img{width:40%!important;object-position:78% center}
+@media (max-width:1024px){
+  .xhero .slides{overflow:hidden}
+  .xhero picture.sl{position:absolute!important;inset:0!important;height:100%!important;display:block}
+  .xhero picture.sl img{height:100%!important}
+  .floats{display:none!important}
+}
+.h2pic{padding-bottom:0}
+.h2pic .qcard{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:-28px 18px 0!important}
