@@ -878,3 +878,26 @@ img.rv{opacity:1}
 .aimg .abadge{position:relative!important;left:auto!important;right:auto!important;bottom:auto!important;margin:14px 0 0;animation:none}
 .phero2 + .statwrap + section{padding-top:56px}
 @media (max-width:900px){.aimg{position:static}}
+
+/* ===== v26: premium type — Plus Jakarta Sans, gradient + depth on headings ===== */
+:root{--font:"Plus Jakarta Sans",system-ui,sans-serif;--head:"Plus Jakarta Sans",system-ui,sans-serif}
+body{font-family:var(--font);letter-spacing:-.005em}
+h1,h2,h3{font-family:var(--head);font-weight:800;letter-spacing:-.03em}
+h3{letter-spacing:-.015em}
+/* light sections: deep navy-to-blue gradient letters with a soft lift */
+section:not(.phero2):not(.her2):not(.navy):not(.xhero) h2{background:linear-gradient(180deg,#1b3a94 0%,#0b1a47 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 6px 14px rgba(13,29,79,.16))}
+/* dark sections: white letters with depth and a warm glow */
+.phero2 h1,.her2 h2,.navy h2,.xhero h1,.endcta h2{color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.18),0 10px 30px rgba(0,0,0,.35)}
+/* highlighted words: yellow-to-orange gradient with glow and a brush underline */
+.gold,.xhero h1 .gold .w>span{background:linear-gradient(100deg,#ffe066 0%,#ffc72c 45%,#ff9f1c 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;filter:drop-shadow(0 4px 16px rgba(255,170,30,.35))}
+.gold{position:relative;display:inline-block}
+.gold::after{content:"";position:absolute;left:2%;right:2%;bottom:-.06em;height:.14em;border-radius:99px;background:linear-gradient(90deg,#ffc72c,#ff9f1c);opacity:.55;transform:skewX(-12deg)}
+/* section titles get a short gold underline */
+.sh h2::after{content:"";display:block;width:56px;height:5px;border-radius:9px;margin-top:14px;background:linear-gradient(90deg,#ffc72c,#ff8a1c);box-shadow:0 4px 12px rgba(255,160,30,.35)}
+.sh.c h2::after{margin-inline:auto}
+.ph2t h1::after{content:"";display:block;width:64px;height:5px;border-radius:9px;margin-top:16px;background:linear-gradient(90deg,#ffc72c,#ff8a1c)}
+.eyebrow{font-weight:800;letter-spacing:.18em}
+.scard b,.minis b,.dbody output{background:linear-gradient(180deg,#1b3a94,#0b1a47);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ccard h3,.bcard h3,.phase .pt b{letter-spacing:-.02em}
+.btn{font-family:var(--font);font-weight:700;letter-spacing:-.005em}
+body{letter-spacing:0}p,li,small,.sub,.lead{letter-spacing:0}
