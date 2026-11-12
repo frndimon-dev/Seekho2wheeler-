@@ -739,3 +739,7 @@ footer .fh{color:#fff;font:600 15px var(--head);margin-bottom:14px;letter-spacin
 .words .w>span{animation-delay:calc(.05s + var(--i)*.05s);animation-duration:.6s}
 .up{animation-duration:.6s}
 .f1{animation-delay:.6s,1.4s!important}.f2{animation-delay:.75s,1.9s!important}.f3{animation-delay:.9s,2.4s!important}
+.btn-wa{background:#128a4a}
+.eyebrow{color:#c2490c}.navy .eyebrow,.her .eyebrow{color:var(--yellow)}
+img.rv{opacity:1}
+.calc .ch{font-size:20px;margin:0}
