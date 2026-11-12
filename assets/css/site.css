@@ -339,3 +339,106 @@ footer{margin-top:0}
   .xhero h1{font-size:clamp(42px,12vw,60px)}
 }
 @media (min-width:761px){.xhero picture img{object-position:62% 12%}}
+
+/* ===== v5: floating cards + motion ===== */
+.clist button[aria-pressed=true]{background:var(--navy-2);border-color:var(--navy-2);transform:translateX(6px);box-shadow:0 14px 30px rgba(10,26,74,.25)}
+.clist button[aria-pressed=true] b{color:#fff}.clist button[aria-pressed=true] small{color:#b8c4e6}.clist button[aria-pressed=true] em{background:var(--yellow);color:var(--navy-2)}
+.clist button:hover{transform:translateX(6px);box-shadow:var(--shadow)}
+.clist button{transition:transform .25s,box-shadow .25s,background .25s}
+
+/* motion system */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.rv.rv-l{transform:translateX(-50px)}.rv.rv-r{transform:translateX(50px)}
+.rv.in{opacity:1;transform:none}
+.up{opacity:0;animation:up .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.words .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.06em}
+.words .w>span{display:inline-block;transform:translateY(105%);animation:wd .8s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:calc(.25s + var(--i)*.08s)}
+@keyframes wd{to{transform:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,168,85,.6)}70%{box-shadow:0 0 0 10px rgba(31,168,85,0)}100%{box-shadow:0 0 0 0 rgba(31,168,85,0)}}
+.shine{position:relative;overflow:hidden}
+.shine::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);animation:sh 3.2s ease-in-out infinite}
+@keyframes sh{0%,60%{left:-60%}100%{left:130%}}
+
+/* hero with floating cards */
+.xhero .wrap{display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:end}
+.floats{position:relative;height:360px}
+.fl{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.96);color:var(--navy-2);border-radius:20px;padding:14px 18px;box-shadow:0 22px 50px rgba(0,0,0,.28);font-size:14px;line-height:1.25;width:max-content;max-width:280px}
+.fl b{display:block;font:800 17px/1.2 var(--head)}
+.fl small{color:var(--muted);font-weight:500}
+.floats .fl{position:absolute;opacity:0;animation:up .8s cubic-bezier(.2,.7,.2,1) forwards,bob 5s ease-in-out infinite}
+.f1{top:0;right:0;animation-delay:1.3s,2.1s!important}
+.f2{top:120px;left:0;animation-delay:1.5s,2.6s!important}
+.f3{top:240px;right:10px;animation-delay:1.7s,3.1s!important}
+.gi{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:800 20px var(--head);color:#fff;background:conic-gradient(#ea4335 0 25%,#fbbc05 0 50%,#34a853 0 75%,#4285f4 0)}
+.faces{display:flex}.faces img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:3px solid #fff;margin-left:-12px}.faces img:first-child{margin-left:0}
+.dot{width:12px;height:12px;border-radius:50%;background:#1fa855;flex:none;animation:pulse 2s infinite}
+@media (max-width:900px){.xhero .wrap{grid-template-columns:1fr}.floats{height:auto;display:flex;gap:10px;flex-wrap:wrap;margin-top:-6px}.floats .fl{position:static;animation:up .8s forwards}.f2{display:none!important}}
+@media (max-width:760px){.floats{position:absolute;top:calc(-56svh + 70px);right:0;flex-direction:column;align-items:flex-end;margin:0}.floats .fl{padding:10px 14px;border-radius:16px}.f3{display:none!important}.fl b{font-size:15px}}
+
+/* floating stat cards overlapping the hero */
+.statwrap{padding:0;position:relative;z-index:5;margin-top:-56px;margin-bottom:46px}
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.scard{background:#fff;border-radius:24px;padding:24px 22px;box-shadow:0 24px 60px rgba(10,26,74,.16);border:1px solid var(--line);transition:transform .3s,box-shadow .3s}
+.scard:hover{transform:translateY(-8px);box-shadow:0 30px 70px rgba(10,26,74,.22)}
+.scard .ic,.st .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:#fff4d6;color:var(--orange);margin-bottom:14px}
+.scard .ic svg,.st .ic svg{width:24px;height:24px}
+.scard b{display:block;font:800 clamp(34px,4vw,50px)/1 var(--head);color:var(--navy-2);letter-spacing:-.03em}
+.scard>span:last-child{color:var(--muted);font-weight:600;font-size:15px}
+@media (max-width:760px){.statwrap{margin-top:0;padding-top:22px;background:var(--navy-2);padding-bottom:26px;margin-bottom:0}.stats4{grid-template-columns:repeat(2,1fr);gap:12px}.scard{padding:18px 16px;border-radius:20px}.scard .ic{width:38px;height:38px;margin-bottom:10px}}
+.ticker{margin-bottom:0}
+
+/* course cards lift */
+.ccard{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,opacity .8s;box-shadow:0 18px 40px rgba(10,26,74,.18)}
+.ccard:hover{transform:translateY(-10px) rotate(-.6deg);box-shadow:0 30px 60px rgba(10,26,74,.3)}
+.ccard .go{transition:transform .3s}.ccard:hover .go{transform:rotate(45deg);background:var(--yellow)}
+
+/* map floating card */
+.mapfl{position:absolute;top:16px;left:16px;z-index:2;animation:bob 6s ease-in-out infinite}
+
+/* ladies: floating quote card */
+.her .wrap{display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:end}
+.qcard{background:#fff;color:var(--navy-2);border-radius:24px;padding:22px 24px;box-shadow:0 30px 60px rgba(0,0,0,.35);margin:0}
+.qcard blockquote{font:600 16px/1.5 var(--font);margin:8px 0 14px}
+.qcard figcaption{display:flex;align-items:center;gap:10px;font:700 14px var(--font);color:var(--muted)}
+.av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font:800 16px var(--head);background:hsl(var(--h,220) 65% 45%);flex:none}
+@media (max-width:860px){.her .wrap{grid-template-columns:1fr}.qcard{margin-top:10px}}
+
+/* steps as floating cards */
+.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px;position:relative}
+.st{position:relative;background:#fff;border:1px solid var(--line);border-radius:24px;padding:26px 22px;box-shadow:0 18px 44px rgba(10,26,74,.10);transition:transform .3s,box-shadow .3s}
+.st:hover{transform:translateY(-8px);box-shadow:0 28px 60px rgba(10,26,74,.18)}
+.st .n{position:absolute;top:18px;right:20px;font:800 46px/1 var(--head);color:transparent;-webkit-text-stroke:1.6px #c9d3ee}
+.st h3{font-size:21px;margin-bottom:6px}.st p{color:var(--muted);font-size:15px}
+@media (max-width:900px){.steps4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.steps4{grid-template-columns:1fr}}
+
+/* doorstep: price card floats over the photo */
+.dvis{position:relative;padding-bottom:40px}
+.dvis img{border-radius:28px;aspect-ratio:4/3.3;object-fit:cover;width:82%;margin-left:auto;box-shadow:var(--shadow)}
+.dvis .card2{position:absolute;left:0;bottom:0;width:min(380px,78%)}
+@media (max-width:860px){.dvis img{width:100%}.dvis .card2{position:relative;width:auto;margin:-60px 14px 0}.dvis{padding-bottom:0}}
+
+/* review cards */
+.rev.fcard{background:#fff;border-radius:24px;border:0;box-shadow:0 20px 50px rgba(0,0,0,.25);transition:transform .3s}
+.rev.fcard:hover{transform:translateY(-8px)}
+.rev .who{display:flex;align-items:center;gap:12px}
+.rev .who b{font:800 16px var(--head);color:var(--navy-2);display:block}.rev .who small{color:var(--muted);font-size:13px}
+.rev .who .g{margin-left:auto;font:800 18px var(--head);color:#4285f4}
+
+/* gallery figures */
+.mgal figure{position:relative;margin:0;border-radius:18px;overflow:hidden}
+.mgal figure img{transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.mgal figure:hover img{transform:scale(1.08)}
+.mgal figcaption{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.95);color:var(--navy-2);font:700 13px var(--font);padding:7px 12px;border-radius:999px;transform:translateY(8px);opacity:.92;transition:.3s}
+.mgal figure:hover figcaption{transform:none;opacity:1;background:var(--yellow)}
+
+/* global card polish for inner pages */
+.card,.br,.step,.rev,.tl,.faq details,.contact-list a,.form,.calc{transition:transform .3s,box-shadow .3s}
+.card:hover,.br:hover,.step:hover,.tl:hover,.contact-list a:hover{transform:translateY(-8px);box-shadow:0 26px 56px rgba(10,26,74,.16)}
+.card,.br,.step{border-radius:24px;box-shadow:0 16px 40px rgba(10,26,74,.08)}
+.faq details[open]{box-shadow:0 16px 40px rgba(10,26,74,.10)}
+@media (prefers-reduced-motion:reduce){.up,.words .w>span,.floats .fl,.mapfl{animation:none!important;opacity:1;transform:none}.shine::after{display:none}}
+main{overflow-x:clip}
+@media (min-width:861px){.dvis{padding:0 0 60px 60px}.dvis img{width:100%;aspect-ratio:4/3.6}.dvis .card2{left:-10px;bottom:0;width:340px;padding:24px}.dvis .card2 .price-out output{font-size:44px}}
