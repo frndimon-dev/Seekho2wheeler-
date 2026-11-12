@@ -8,7 +8,7 @@ const HIDDEN = new Set(['server.js', 'package.json', 'README.md']);
 function send(res, file, code) {
   const ext = path.extname(file);
   res.writeHead(code, { 'Content-Type': TYPES[ext] || 'application/octet-stream',
-    'Cache-Control': ext === '.html' ? 'no-cache' : 'public, max-age=604800' });
+    'Cache-Control': ext === '.html' ? 'no-cache' : (ext === '.css' || ext === '.js') ? 'public, max-age=31536000, immutable' : 'public, max-age=2592000' });
   fs.createReadStream(file).pipe(res);
 }
 http.createServer((req, res) => {
