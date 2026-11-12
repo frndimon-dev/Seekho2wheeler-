@@ -736,3 +736,6 @@ footer{background:var(--navy-2)}
 .endcta::before{background:linear-gradient(90deg,rgba(13,29,79,.96),rgba(13,29,79,.55))}
 .collage .abadge img{position:static;width:44px;height:44px;border-radius:0;box-shadow:none;border:0;object-fit:contain}
 footer .fh{color:#fff;font:600 15px var(--head);margin-bottom:14px;letter-spacing:0}
+.words .w>span{animation-delay:calc(.05s + var(--i)*.05s);animation-duration:.6s}
+.up{animation-duration:.6s}
+.f1{animation-delay:.6s,1.4s!important}.f2{animation-delay:.75s,1.9s!important}.f3{animation-delay:.9s,2.4s!important}
