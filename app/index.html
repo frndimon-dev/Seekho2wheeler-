@@ -124,7 +124,7 @@ const app = $('#app');
 // =========================================================== STUDENT
 async function studentPage(token) {
   let me, date = istToday(1), sel = null;
-  async function load() { me = await api('me', { token }); render(); if (me.student.status === 'active') loadSlots(); }
+  async function load() { me = await api('me', { token }); render(); if (me.student.status === 'active' && !me.student.inactive) loadSlots(); }
   function render() {
     const s = me.student, pct = Math.round(100 * s.classes_done / s.package);
     const left = s.package - s.classes_done;
@@ -136,14 +136,16 @@ async function studentPage(token) {
       ${s.status === 'done' ? `<div class="card"><h2>অভিনন্দন! 🎉</h2><p>আপনার সব ক্লাস শেষ হয়েছে।</p></div>` : ''}
       ${me.upcoming.length ? `<div class="card"><h2>আপনার পরের ক্লাস</h2>${me.upcoming.map((u) => `<div class="flex between mt"><div><div class="big" style="font-size:20px">${tTime(u.slot)}</div><div class="mut">${tDay(u.slot)}</div></div>
           ${u.can_cancel ? `<button class="btn ghost sm" data-cancel="${u.id}">বাতিল</button>` : '<span class="mut" style="font-size:13px">বাতিলের সময় পেরিয়েছে</span>'}</div>`).join('')}</div>` : ''}
-      ${s.status === 'active' ? `<div class="card" id="bookcard"><h2>ক্লাস বুক করুন</h2><div class="mut">সপ্তাহে ২টো ক্লাস · আগের ক্লাসের ৪৮ ঘণ্টা পরে পরেরটা · ক্লাসের ৪ ঘণ্টা আগে পর্যন্ত বুক বা বাতিল করা যায়</div>
+      ${s.status === 'active' && s.inactive ? `<div class="card"><h2>অ্যাকাউন্ট বন্ধ আছে</h2><p>অনেকদিন ক্লাস হয়নি বলে বুকিং বন্ধ। আবার শুরু করতে অনুরোধ পাঠান, সেন্টার চালু করে দেবে।</p>${s.reactivation === 'requested' ? '<div class="okmsg">অনুরোধ পাঠানো হয়েছে। সেন্টার চালু করলেই বুক করতে পারবেন।</div>' : '<button class="btn block" id="react">আবার চালুর অনুরোধ পাঠান</button>'}</div>` : ''}
+      ${s.status === 'active' && !s.inactive ? `<div class="card" id="bookcard"><h2>ক্লাস বুক করুন</h2><div class="mut">সপ্তাহে ২টো ক্লাস · আগের ক্লাসের ৪৮ ঘণ্টা পরে পরেরটা · ক্লাসের ${bn(me.branch.window_hours)} ঘণ্টা আগে বুকিং খোলে, ${bn(me.branch.lead_hours)} ঘণ্টা আগে পর্যন্ত বুক করা যায় · ${bn(me.branch.cancel_hours)} ঘণ্টা আগে পর্যন্ত বাতিল</div>
         <div class="days mt" id="days"></div><div id="slots"><div class="mut mt">লোড হচ্ছে…</div></div><div id="bookbar"></div></div>` : ''}
       <div class="card center"><h2>ক্লাসে এসে এই QR দেখান</h2><div class="qr">${qrSvg(s.qr)}</div><div class="mut mt">${esc(s.qr)}</div></div>
       ${me.history.length ? `<div class="card"><h3>আগের ক্লাস</h3><div class="list">${me.history.map((h) => `<div class="it"><div style="flex:1">${tDay(h.slot)} · ${tTime(h.slot)}</div>${{ attended: '<span class="pill g">হয়েছে</span>', no_show: '<span class="pill y">আসেননি</span>', cancelled: '<span class="pill">বাতিল</span>', cancelled_centre: '<span class="pill r">সেন্টার বাতিল করেছে</span>' }[h.status] || ''}</div>`).join('')}</div></div>` : ''}
       <div class="card"><div class="mut">অনলাইনে বুক করতে অসুবিধা হলে ফোন করুন, আমরা বুক করে দেব।</div><a class="btn wa block mt" href="tel:${PHONE}">📞 ${PHONE_TXT}</a></div>
     </div>`;
     app.querySelectorAll('[data-cancel]').forEach((b) => b.onclick = async () => { if (!confirm('ক্লাসটা বাতিল করবেন?')) return; try { me = await api('cancel', { token, booking: b.dataset.cancel }); render(); loadSlots(); toast('বাতিল হয়েছে'); } catch (e) { toast(e.message); } });
-    const days = $('#days'); if (days) { days.innerHTML = Array.from({ length: me.branch.days_ahead + 1 }, (_, i) => istToday(i)).map((d) => { const l = dayLabel(d); return `<button data-d="${d}" class="${d === date ? 'on' : ''}">${l.wd}<small>${l.d}</small></button>`; }).join(''); days.querySelectorAll('button').forEach((b) => b.onclick = () => { date = b.dataset.d; sel = null; days.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b)); loadSlots(); }); }
+    if ($('#react')) $('#react').onclick = async () => { try { me = await api('reactivate_request', { token }); render(); } catch (e) { toast(e.message); } };
+    const days = $('#days'); if (days) { days.innerHTML = Array.from({ length: Math.ceil(me.branch.window_hours / 24) + 1 }, (_, i) => istToday(i)).map((d) => { const l = dayLabel(d); return `<button data-d="${d}" class="${d === date ? 'on' : ''}">${l.wd}<small>${l.d}</small></button>`; }).join(''); days.querySelectorAll('button').forEach((b) => b.onclick = () => { date = b.dataset.d; sel = null; days.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b)); loadSlots(); }); }
   }
   async function loadSlots() {
     const box = $('#slots'); if (!box) return; box.innerHTML = '<div class="mut mt">লোড হচ্ছে…</div>'; $('#bookbar').innerHTML = '';
@@ -324,9 +326,16 @@ async function dayTab(el) {
       if (!confirm('এই বুকিং সেন্টার থেকে বাতিল করবেন? শিক্ষার্থীর লিংকে "সেন্টার বাতিল করেছে" দেখাবে।')) return;
       try { await sapi('staff_cancel', { booking: c.dataset.bk, reason: prompt('কারণ') || '' }); toast('বাতিল হলো'); dayTab(el); } catch (e) { toast(e.message); }
     });
-    el.querySelectorAll('[data-free]').forEach((c) => c.onclick = () => pickStudent(async (s) => {
+    const bookCell = (c) => pickStudent(async (s) => {
       try { await sapi('staff_book', { id: s.id, slot: c.dataset.free, force: S.role === 'admin' && confirm('নিয়ম (৪৮ ঘণ্টা/সপ্তাহে ২টো) না মেনে বুক করবেন? "Cancel" দিলে নিয়ম মেনে বুক হবে।') }); toast('বুক হলো'); dayTab(el); } catch (e) { toast(e.message); }
-    }));
+    });
+    el.querySelectorAll('[data-free]').forEach((c) => c.onclick = () => {
+      if (S.role !== 'admin') return bookCell(c);
+      const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet"><h2>${tTime(c.dataset.free)}</h2><button class="btn block" id="mb">কারও জন্য বুক করুন</button><button class="btn ghost block mt" id="mk">এই স্লট বন্ধ করুন</button><button class="btn ghost block mt" id="mx">বন্ধ</button></div>`;
+      document.body.appendChild(m); $('#mx', m).onclick = () => m.remove();
+      $('#mb', m).onclick = () => { m.remove(); bookCell(c); };
+      $('#mk', m).onclick = async () => { m.remove(); const st = c.dataset.free, en = new Date(Date.parse(st) + 30 * 60000).toISOString(); try { const x = await sapi('block', { starts: st, ends: en, reason: prompt('কারণ') || '' }); if (x.ok === false) return alert('এই স্লটে বুকিং আছে, আগে বাতিল করুন।'); toast('স্লট বন্ধ হলো'); dayTab(el); } catch (e) { toast(e.message); } };
+    });
   } catch (e) { $('#grid').innerHTML = `<div class="err">${esc(e.message)}</div>`; }
 }
 function pickStudent(cb) {
@@ -338,9 +347,9 @@ function pickStudent(cb) {
 
 // ---------- students
 async function studentsTab(el) {
-  el.innerHTML = `<div class="card"><input id="q" placeholder="নাম, ফোন বা কোড দিয়ে খুঁজুন"><div class="seg mt" id="fl"><button data-v="" class="on">সবাই</button><button data-v="pending">অপেক্ষায়</button><button data-v="active">চলছে</button><button data-v="done">শেষ</button></div></div><div class="card"><div class="list" id="ls"></div></div>`;
+  el.innerHTML = `<div class="card"><input id="q" placeholder="নাম, ফোন বা কোড দিয়ে খুঁজুন"><div class="seg mt" id="fl"><button data-v="" class="on">সবাই</button><button data-v="pending">অপেক্ষায়</button><button data-v="active">চলছে</button><button data-v="reactivation">চালুর অনুরোধ</button><button data-v="done">শেষ</button></div></div><div class="card"><div class="list" id="ls"></div></div>`;
   let status = '';
-  const load = async () => { const r = await sapi('students', { q: $('#q').value, status }); $('#ls').innerHTML = r.students.map((s) => `<div class="it" data-id="${s.id}"><div class="av">${esc(s.name[0] || '?')}</div><div style="flex:1"><b>${esc(s.name)}</b><div class="mut">${esc(s.phone)} · ${s.kind === 'bike' ? 'বাইক' : 'স্কুটি'} · ${bn(s.classes_done)}/${bn(s.package)}</div></div>${s.status === 'pending' ? '<span class="pill y">অনুমোদন বাকি</span>' : s.status === 'done' ? '<span class="pill g">শেষ</span>' : s.due > 0 ? `<span class="pill o">${money(s.due)}</span>` : ''}</div>`).join('') || '<div class="mut">কেউ নেই</div>'; $('#ls').querySelectorAll('.it').forEach((it) => it.onclick = () => studentDetail(el, it.dataset.id)); };
+  const load = async () => { const r = await sapi('students', { q: $('#q').value, status }); $('#ls').innerHTML = r.students.map((s) => `<div class="it" data-id="${s.id}"><div class="av">${esc(s.name[0] || '?')}</div><div style="flex:1"><b>${esc(s.name)}</b><div class="mut">${esc(s.phone)} · ${s.kind === 'bike' ? 'বাইক' : 'স্কুটি'} · ${bn(s.classes_done)}/${bn(s.package)}</div></div>${s.status === 'pending' ? '<span class="pill y">অনুমোদন বাকি</span>' : s.reactivation === 'requested' ? '<span class="pill b">চালুর অনুরোধ</span>' : s.status === 'done' ? '<span class="pill g">শেষ</span>' : s.due > 0 ? `<span class="pill o">${money(s.due)}</span>` : ''}</div>`).join('') || '<div class="mut">কেউ নেই</div>'; $('#ls').querySelectorAll('.it').forEach((it) => it.onclick = () => studentDetail(el, it.dataset.id)); };
   el.querySelectorAll('#fl button').forEach((b) => b.onclick = () => { status = b.dataset.v; el.querySelectorAll('#fl button').forEach((x) => x.classList.toggle('on', x === b)); load(); });
   let t; $('#q').oninput = () => { clearTimeout(t); t = setTimeout(load, 250); }; load();
 }
@@ -354,9 +363,10 @@ async function studentDetail(el, id) {
     ${s.status === 'pending' ? `<div class="card"><h2>কার্ড মিলিয়ে অনুমোদন দিন</h2>${r.card_image ? `<img src="${r.card_image}" class="photo-prev" style="max-height:420px">` : '<div class="mut">কার্ডের ছবি নেই</div>'}
       ${s.card && s.card.confident === false ? '<div class="err">AI নিশ্চিত নয়, ভালো করে মিলিয়ে নিন।</div>' : ''}
       <label>নাম</label><input id="a_nm" value="${esc(s.name)}"><div class="grid2"><div><label>মোট ক্লাস</label><select id="a_pk"><option value="15" ${s.package === 15 ? 'selected' : ''}>১৫</option><option value="10" ${s.package === 10 ? 'selected' : ''}>১০</option></select></div><div><label>হয়ে গেছে</label><input id="a_cd" inputmode="numeric" value="${s.classes_done}"></div></div>
-      <div class="grid2"><div><label>মোট ফি</label><input id="a_fee" inputmode="numeric" value="${s.total_fee ?? 0}"></div><div><label>দিয়েছেন</label><input id="a_paid" inputmode="numeric" value="${s.paid ?? 0}"></div></div>
+      ${s.total_fee !== undefined ? `<div class="grid2"><div><label>মোট ফি</label><input id="a_fee" inputmode="numeric" value="${s.total_fee}"></div><div><label>দিয়েছেন</label><input id="a_paid" inputmode="numeric" value="${s.paid}"></div></div>` : '<div class="mut mt">ফি-র হিসাব কার্ড থেকে যেমন পড়া হয়েছে তেমনই থাকবে (অ্যাডমিন বদলাতে পারবেন)।</div>'}
       <label>কী শিখছেন</label><select id="a_k"><option value="scooty">স্কুটি</option><option value="bike" ${s.kind === 'bike' ? 'selected' : ''}>বাইক</option></select>
       <div class="grid2 mt2"><button class="btn green" id="appr">অনুমোদন</button><button class="btn red" id="rej">বাতিল</button></div></div>` : ''}
+    ${admin && s.reactivation === 'requested' ? '<div class="card"><h3>অ্যাকাউন্ট আবার চালুর অনুরোধ এসেছে</h3><button class="btn green block" id="reon">আবার চালু করুন</button></div>' : ''}
     <div class="card"><div class="grid2"><a class="btn wa" target="_blank" rel="noopener" href="${waLink(s.phone, `${s.name}, Seekho 2 Wheeler পাটুলি: আপনার ক্লাস বুকিংয়ের লিংক: ${link}`)}">লিংক পাঠান</a><button class="btn blue" id="qrb">QR দেখান</button></div>
       ${S.role === 'admin' || (S.perms || {}).bookings ? '<button class="btn ghost block mt" id="bookfor">এর হয়ে ক্লাস বুক করুন</button>' : ''}</div>
     ${s.total_fee !== undefined ? `<div class="card"><h3>ফি</h3><div class="grid2"><div class="kpi"><b>${money(s.total_fee)}</b><span>মোট</span></div><div class="kpi"><b style="color:${s.due > 0 ? 'var(--orange)' : 'var(--ok)'}">${money(s.due)}</b><span>বাকি</span></div></div>
@@ -373,7 +383,8 @@ async function studentDetail(el, id) {
   $('#qrb').onclick = () => { const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet center"><div class="qr">${qrSvg(s.qr, 260)}</div><div class="mut mt">${esc(s.qr)}</div><button class="btn ghost block mt">বন্ধ</button></div>`; document.body.appendChild(m); m.onclick = () => m.remove(); };
   if ($('#bookfor')) $('#bookfor').onclick = () => bookFor(s, () => studentDetail(el, id));
   if ($('#pay')) $('#pay').onclick = async () => { try { await sapi('payment', { id, amount: $('#amt').value }); toast('জমা হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
-  if ($('#appr')) $('#appr').onclick = async () => { try { await sapi('approve', { id, fields: { name: $('#a_nm').value, package: $('#a_pk').value, classes_done: $('#a_cd').value, total_fee: $('#a_fee').value, paid: $('#a_paid').value, kind: $('#a_k').value } }); toast('অনুমোদন হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
+  if ($('#appr')) $('#appr').onclick = async () => { try { await sapi('approve', { id, fields: { name: $('#a_nm').value, package: $('#a_pk').value, classes_done: $('#a_cd').value, total_fee: $('#a_fee')?.value, paid: $('#a_paid')?.value, kind: $('#a_k').value } }); toast('অনুমোদন হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
+  if ($('#reon')) $('#reon').onclick = async () => { await sapi('reactivate', { id }); toast('চালু হলো'); studentDetail(el, id); };
   if ($('#rej')) $('#rej').onclick = async () => { if (!confirm('বাতিল করবেন?')) return; await sapi('reject', { id }); studentsTab(el); };
   if ($('#save')) $('#save').onclick = async () => { try { await sapi('update_student', { id, fields: { name: $('#e_nm').value, phone: $('#e_ph').value, address: $('#e_ad').value, package: $('#e_pk').value, classes_done: $('#e_cd').value, total_fee: $('#e_fee').value, allow_consecutive: $('#e_cons').checked, status: $('#e_st').value, note: $('#e_nt').value } }); toast('সেভ হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
 }
@@ -403,14 +414,18 @@ async function dashTab(el) {
     const months = d.months.slice().reverse().map((m) => ({ l: MO[Number(m.m.slice(5)) - 1], v: m.total }));
     const thisM = d.months.find((m) => m.m === istToday().slice(0, 7));
     const sum = (f) => d.students.filter(f).reduce((t, x) => t + x.n, 0), due = d.students.reduce((t, x) => t + (x.due || 0), 0), paid = d.students.reduce((t, x) => t + (x.paid || 0), 0);
-    el.innerHTML = `<div class="kpis"><div class="kpi"><b>${money(thisM ? thisM.total : 0)}</b><span>এই মাসে উঠেছে</span></div><div class="kpi"><b style="color:var(--orange)">${money(due)}</b><span>মোট বাকি</span></div><div class="kpi"><b>${bn(d.admissions_this_month)}</b><span>এই মাসে ভর্তি</span></div><div class="kpi"><b>${bn(c.active_students)}</b><span>চলছে এমন শিক্ষার্থী</span></div></div>
+    const T = d.today;
+    el.innerHTML = `<div class="card"><h3>আজ</h3><div class="kpis"><div class="kpi"><b>${bn(T.total)}</b><span>বুকিং</span></div><div class="kpi"><b style="color:var(--ok)">${bn(T.attended)}</b><span>এসেছেন</span></div><div class="kpi"><b>${bn(T.waiting)}</b><span>আসা বাকি</span></div><div class="kpi"><b style="color:var(--orange)">${bn(T.no_show)}</b><span>আসেননি</span></div></div>
+      ${d.pending_approvals || d.reactivation_requests ? `<div class="okmsg mt">${d.pending_approvals ? `${bn(d.pending_approvals)} জনের কার্ড অনুমোদন বাকি। ` : ''}${d.reactivation_requests ? `${bn(d.reactivation_requests)} জন অ্যাকাউন্ট চালুর অনুরোধ করেছেন।` : ''} (শিক্ষার্থী ট্যাবে দেখুন)</div>` : ''}</div>
+      <div class="kpis"><div class="kpi"><b>${money(thisM ? thisM.total : 0)}</b><span>এই মাসে উঠেছে</span></div><div class="kpi"><b style="color:var(--orange)">${money(due)}</b><span>মোট বাকি</span></div><div class="kpi"><b>${bn(d.admissions_this_month)}</b><span>এই মাসে ভর্তি</span></div><div class="kpi"><b>${bn(c.active_students)}</b><span>চলছে এমন শিক্ষার্থী</span></div></div>
       <div class="card mt"><h3>প্রতি মাসের আয়</h3>${months.length ? bars(months) : '<div class="mut">এখনো কোনো জমা নেই</div>'}</div>
       <div class="card"><h3>স্লট বনাম চাহিদা (সপ্তাহে)</h3><div class="kpis" style="grid-template-columns:repeat(2,1fr)"><div class="kpi"><b>${bn(c.per_week)}</b><span>ক্লাসের জায়গা (${bn(c.vehicles)}টা স্কুটি)</span></div><div class="kpi"><b>${bn(c.weekly_demand)}</b><span>চাহিদা (সপ্তাহে ২টো করে)</span></div><div class="kpi"><b style="color:${c.deficit_per_week ? 'var(--bad)' : 'var(--ok)'}">${bn(c.deficit_per_week)}</b><span>ঘাটতি</span></div><div class="kpi"><b>${bn(c.next_week_booked)}</b><span>আগামী ৭ দিনে বুক</span></div></div>
         <div class="mut mt">গত ৭ দিনে ক্লাস হয়েছে ${bn(c.past_week_attended)}টা, আসেননি ${bn(c.past_week_no_show)} জন।${c.deficit_per_week ? ` প্রতি সপ্তাহে প্রায় ${bn(c.deficit_per_week)}টা ক্লাস কম পড়ছে: আরেকটা স্কুটি দিলে সপ্তাহে ${bn(c.per_day * 7 / Math.max(1, c.vehicles))}টা জায়গা বাড়বে।` : ''}</div></div>
       <div class="card"><h3>শিক্ষার্থী</h3>${pie([{ l: 'স্কুটি', v: sum((x) => x.kind === 'scooty'), c: '#0b3a8f' }, { l: 'বাইক', v: sum((x) => x.kind === 'bike'), c: '#ff5a0a' }])}</div>
       <div class="card"><h3>ফি</h3>${pie([{ l: 'জমা হয়েছে', v: paid, c: '#16a34a', fmt: money }, { l: 'বাকি', v: due, c: '#ff5a0a', fmt: money }])}</div>
-      <div class="card"><div class="flex between"><h3>কার কত বাকি</h3><button class="btn sm" id="csv">CSV</button></div><div class="list">${d.dues.map((x) => `<div class="it" data-id="${x.id}"><div style="flex:1"><b>${esc(x.name)}</b><div class="mut">${esc(x.phone)} · দিয়েছেন ${money(x.paid)} / ${money(x.total_fee)}</div></div><b style="color:var(--orange)">${money(x.due)}</b></div>`).join('') || '<div class="mut">কারও বাকি নেই</div>'}</div></div>`;
-    $('#csv').onclick = async () => { const month = prompt('কোন মাস? (YYYY-MM)', istToday().slice(0, 7)); if (!month) return; const r = await sapi('csv', { month }); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + r.csv], { type: 'text/csv' })); a.download = `patuli-${month}.csv`; a.click(); };
+      <div class="card"><div class="flex between"><h3>কার কত বাকি</h3><div class="flex"><button class="btn sm" id="csv">টাকার CSV</button><button class="btn sm blue" id="csvb">বুকিংয়ের CSV</button></div></div><div class="list">${d.dues.map((x) => `<div class="it" data-id="${x.id}"><div style="flex:1"><b>${esc(x.name)}</b><div class="mut">${esc(x.phone)} · দিয়েছেন ${money(x.paid)} / ${money(x.total_fee)}</div></div><b style="color:var(--orange)">${money(x.due)}</b></div>`).join('') || '<div class="mut">কারও বাকি নেই</div>'}</div></div>`;
+    const dl = async (type) => { const month = prompt('কোন মাস? (YYYY-MM)', istToday().slice(0, 7)); if (!month) return; const r = await sapi('csv', { month, type }); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + r.csv], { type: 'text/csv' })); a.download = `patuli-${type}-${month}.csv`; a.click(); };
+    $('#csv').onclick = () => dl('payments'); $('#csvb').onclick = () => dl('bookings');
   } catch (e) { el.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
 }
 
@@ -421,6 +436,7 @@ async function settingsTab(el) {
     ${[['bookings', 'বুকিং ক্যালেন্ডার'], ['students', 'শিক্ষার্থীর তালিকা'], ['dues', 'বাকি টাকা'], ['money', 'টাকা জমা নেওয়া'], ['dashboard', 'হিসাবের ড্যাশবোর্ড']].map(([k, l]) => `<div class="chk"><input type="checkbox" data-p="${k}" ${p[k] ? 'checked' : ''}><span>${l}</span></div>`).join('')}
     <button class="btn blue block" id="sp">সেভ</button></div>
     <div class="card"><h2>ক্লাসের সময়</h2><div class="mut">২৪ ঘণ্টার হিসাবে, যেমন 08:00 – 11:00</div><div id="hrs"></div><button class="btn ghost sm mt" id="addh">+ সময় যোগ</button><button class="btn blue block mt" id="sh">সেভ</button></div>
+    <div class="card"><h2>বুকিংয়ের নিয়ম</h2><div class="grid2"><div><label>কত ঘণ্টা আগে বুকিং খোলে</label><input id="r_win" inputmode="numeric" value="${b.window_hours}"></div><div><label>কত ঘণ্টা আগে পর্যন্ত বুক</label><input id="r_lead" inputmode="numeric" value="${b.lead_hours}"></div><div><label>কত ঘণ্টা আগে পর্যন্ত বাতিল</label><input id="r_can" inputmode="numeric" value="${b.cancel_hours}"></div><div><label>কত দিন না এলে অ্যাকাউন্ট বন্ধ (০ = কখনো না)</label><input id="r_ina" inputmode="numeric" value="${b.inactive_days}"></div></div><button class="btn blue block mt" id="sr">সেভ</button></div>
     <div class="card"><h2>গাড়ি</h2><div class="list">${r.vehicles.map((v) => `<div class="it"><div style="flex:1"><b>${esc(v.label)}</b> <span class="mut">${v.kind === 'bike' ? 'বাইক' : 'স্কুটি'}</span></div><button class="btn sm ${v.active ? 'ghost' : 'green'}" data-v="${v.id}" data-a="${v.active ? 0 : 1}">${v.active ? 'বন্ধ করুন' : 'চালু করুন'}</button></div>`).join('')}</div>
       <div class="flex mt"><input id="vl" placeholder="নাম, যেমন Scooty 3"><select id="vk" style="width:120px"><option value="scooty">স্কুটি</option><option value="bike">বাইক</option></select><button class="btn sm" id="addv">যোগ</button></div></div>
     <div class="card"><h2>PIN ও পাসওয়ার্ড</h2><label>ট্রেনারদের নতুন PIN (৪–৮ সংখ্যা)</label><input id="pin" inputmode="numeric"><label>অ্যাডমিনের নতুন পাসওয়ার্ড (অন্তত ৮ অক্ষর)</label><input id="pw" type="password"><button class="btn blue block mt" id="spin">বদলান</button></div>
@@ -432,10 +448,11 @@ async function settingsTab(el) {
   const save = async (fields, msg = 'সেভ হলো') => { try { await sapi('save_settings', { fields }); toast(msg); settingsTab(el); } catch (e) { toast(e.message); } };
   $('#sp').onclick = () => { const tp = {}; el.querySelectorAll('[data-p]').forEach((x) => tp[x.dataset.p] = x.checked); save({ trainer_perms: tp }); };
   $('#sh').onclick = () => save({ hours });
+  $('#sr').onclick = () => save({ window_hours: $('#r_win').value, lead_hours: $('#r_lead').value, cancel_hours: $('#r_can').value, inactive_days: $('#r_ina').value });
   el.querySelectorAll('[data-v]').forEach((x) => x.onclick = () => save({ toggle_vehicle: { id: x.dataset.v, active: x.dataset.a === '1' } }));
   $('#addv').onclick = () => save({ add_vehicle: { label: $('#vl').value || 'Scooty', kind: $('#vk').value } });
   $('#spin').onclick = () => { const f = {}; if ($('#pin').value) f.trainer_pin = $('#pin').value; if ($('#pw').value) f.admin_password = $('#pw').value; if (Object.keys(f).length) save(f, 'বদলানো হলো'); };
-  $('#aud').onclick = async () => { const a = await sapi('audit'); const L = { book: 'বুক', cancel: 'শিক্ষার্থী বাতিল', centre_cancel: 'সেন্টার বাতিল', attend: 'ক্লাস গোনা', admit: 'ভর্তি', approve: 'অনুমোদন', reject: 'বাতিল (কার্ড)', block: 'বন্ধ', unblock: 'খোলা', payment: 'টাকা জমা', update_student: 'সম্পাদনা', settings: 'সেটিংস', login_fail: 'ভুল লগইন', old_submit: 'কার্ড জমা' }; $('#audl').innerHTML = a.audit.map((x) => `<div class="it"><div style="flex:1"><b>${L[x.action] || x.action}</b> · ${esc(x.actor)}<div class="mut" style="font-size:12px">${tDay(x.at)} ${tTime(x.at)}</div></div></div>`).join(''); };
+  $('#aud').onclick = async () => { const a = await sapi('audit'); const L = { reactivate: 'আবার চালু', reactivate_request: 'চালুর অনুরোধ', book: 'বুক', cancel: 'শিক্ষার্থী বাতিল', centre_cancel: 'সেন্টার বাতিল', attend: 'ক্লাস গোনা', admit: 'ভর্তি', approve: 'অনুমোদন', reject: 'বাতিল (কার্ড)', block: 'বন্ধ', unblock: 'খোলা', payment: 'টাকা জমা', update_student: 'সম্পাদনা', settings: 'সেটিংস', login_fail: 'ভুল লগইন', old_submit: 'কার্ড জমা' }; $('#audl').innerHTML = a.audit.map((x) => `<div class="it"><div style="flex:1"><b>${L[x.action] || x.action}</b> · ${esc(x.actor)}${x.name ? ' · ' + esc(x.name) : ''}${x.detail && x.detail.slot ? ' · ' + tDay(x.detail.slot) + ' ' + tTime(x.detail.slot) : ''}<div class="mut" style="font-size:12px">${tDay(x.at)} ${tTime(x.at)}</div></div></div>`).join(''); };
   $('#out').onclick = () => { saveSession(null); S = null; loginPage(); };
 }
 
