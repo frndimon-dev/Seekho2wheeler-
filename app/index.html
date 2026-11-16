@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Seekho 2 Wheeler · ক্লাস বুকিং</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b3a8f">
+<link rel="manifest" href="/app/manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+:root{--blue:#0b3a8f;--blue2:#0e4bb5;--orange:#ff5a0a;--yellow:#ffc514;--cream:#fbf6e8;--ink:#14213d;--mut:#5b6478;--line:#e6e2d6;--ok:#16a34a;--bad:#dc2626;--bg:#f6f4ee;--card:#fff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:'Hind Siliguri',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.45}
+button,input,select,textarea{font:inherit}
+.top{background:var(--blue);color:#fff;padding:14px 16px calc(14px);position:sticky;top:0;z-index:5;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.top .row{display:flex;align-items:center;gap:10px;max-width:760px;margin:0 auto}
+.brand{font-family:Sora,sans-serif;font-weight:800;letter-spacing:.3px;font-size:17px}.brand b{color:var(--orange)}
+.top .sub{font-size:13px;opacity:.85}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 96px}
+.card{background:var(--card);border-radius:18px;padding:16px;margin:0 0 14px;box-shadow:0 1px 0 var(--line),0 6px 18px rgba(20,33,61,.05)}
+h1,h2,h3{margin:0 0 10px;line-height:1.25}h1{font-size:22px}h2{font-size:19px}h3{font-size:16px}
+.mut{color:var(--mut);font-size:14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer;background:var(--orange);color:#fff;min-height:48px;text-decoration:none}
+.btn.blue{background:var(--blue)}.btn.ghost{background:#fff;color:var(--blue);border:2px solid var(--blue)}.btn.green{background:var(--ok)}.btn.red{background:var(--bad)}.btn.wa{background:#1fa855}
+.btn.block{width:100%}.btn:disabled{opacity:.5}
+.btn.sm{min-height:36px;padding:6px 12px;border-radius:10px;font-size:14px}
+label{display:block;font-weight:600;margin:12px 0 6px;font-size:15px}
+input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);min-height:48px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue2);box-shadow:0 0 0 3px rgba(14,75,181,.15)}
+.seg{display:flex;gap:8px}.seg button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px;font-weight:700;color:var(--ink);min-height:48px}
+.seg button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chk{display:flex;align-items:center;gap:10px;margin:12px 0;font-weight:600}.chk input{width:24px;height:24px;min-height:0}
+.err{background:#fde8e8;color:#991b1b;border-radius:12px;padding:10px 12px;margin:10px 0;font-weight:600}
+.okmsg{background:#e7f6ec;color:#14532d;border-radius:12px;padding:10px 12px;margin:10px 0;font-weight:600}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;z-index:6;padding-bottom:env(safe-area-inset-bottom)}
+.tabs button{flex:1;border:0;background:none;padding:8px 2px 10px;font-size:12.5px;font-weight:600;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:2px}
+.tabs button.on{color:var(--blue)}.tabs svg{width:24px;height:24px}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.days button{flex:0 0 auto;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:8px 12px;min-width:68px;text-align:center;font-weight:700;color:var(--ink)}
+.days button small{display:block;font-weight:500;color:var(--mut);font-size:12px}
+.days button.on{background:var(--blue);border-color:var(--blue);color:#fff}.days button.on small{color:#dbe6ff}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:12px}
+.slot{border:1.5px solid #bfe3c9;background:#effaf2;border-radius:12px;padding:10px 6px;text-align:center;font-weight:700;color:#14532d;min-height:52px}
+.slot.no{background:#f3f3f3;border-color:#e3e3e3;color:#9aa0ab;font-weight:600}
+.slot.sel{background:var(--orange);border-color:var(--orange);color:#fff}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700}
+.pill.g{background:#e7f6ec;color:#166534}.pill.o{background:#fff1e6;color:#c2410c}.pill.b{background:#e6eeff;color:var(--blue)}.pill.r{background:#fde8e8;color:#991b1b}.pill.y{background:#fff7d6;color:#854d0e}
+.ring{--p:0;width:92px;height:92px;border-radius:50%;background:conic-gradient(var(--orange) calc(var(--p)*1%),#ece8dc 0);display:grid;place-items:center;flex:0 0 auto}
+.ring div{width:72px;height:72px;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:Sora;font-weight:800;font-size:18px}
+.flex{display:flex;align-items:center;gap:12px}.between{justify-content:space-between}.wrapf{flex-wrap:wrap}
+.qr{background:#fff;border-radius:14px;padding:10px;display:inline-block;border:3px solid var(--yellow)}
+.qr img,.qr svg{display:block;width:200px;height:200px;image-rendering:pixelated}
+.list .it{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.list .it:last-child{border:0}
+.av{width:44px;height:44px;border-radius:50%;background:#e6eeff;display:grid;place-items:center;font-weight:700;color:var(--blue);overflow:hidden;flex:0 0 auto}.av img{width:100%;height:100%;object-fit:cover}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.kpi{background:#fff;border-radius:16px;padding:14px;box-shadow:0 1px 0 var(--line)}
+.kpi b{display:block;font-family:Sora;font-size:22px}.kpi span{color:var(--mut);font-size:13px}
+.daygrid{width:100%;border-collapse:collapse;font-size:14px}.daygrid td,.daygrid th{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+.cell{border-radius:10px;padding:6px 8px;font-weight:600;min-height:38px;cursor:pointer}
+.cell.free{background:#effaf2;color:#166534;border:1px dashed #9fd8b0}.cell.bk{background:#e6eeff;color:var(--blue)}.cell.att{background:#e7f6ec;color:#14532d}.cell.blk{background:#f1f1f1;color:#888}
+.modal{position:fixed;inset:0;background:rgba(10,20,40,.5);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sheet{background:#fff;width:100%;max-width:640px;max-height:88vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+.photo-prev{width:100%;max-height:220px;object-fit:contain;border-radius:12px;background:#f3f3f3;margin-top:8px}
+video{width:100%;border-radius:16px;background:#000;max-height:60vh}
+.center{text-align:center}.mt{margin-top:12px}.mt2{margin-top:20px}.hide{display:none}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;background:var(--ink);color:#fff;padding:12px 16px;border-radius:12px;z-index:30;font-weight:600;max-width:90vw}
+.big{font-size:28px;font-family:Sora;font-weight:800}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:13px}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+@media (min-width:720px){.kpis{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+'use strict';
+const API = new URLSearchParams(location.search).get('api') || 'https://wzesyetbiyxdgjyuhqoz.supabase.co/functions/v1/book';
+const PHONE = '9748481630', PHONE_TXT = '97484 81630';
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const bn = (n) => String(n).replace(/\d/g, (d) => '০১২৩৪৫৬৭৮৯'[d]);
+const money = (n) => '₹' + Number(n || 0).toLocaleString('en-IN');
+const IST = 330 * 60000;
+const istParts = (iso) => { const d = new Date(Date.parse(iso) + IST); return { y: d.getUTCFullYear(), mo: d.getUTCMonth(), d: d.getUTCDate(), h: d.getUTCHours(), m: d.getUTCMinutes(), wd: d.getUTCDay() }; };
+const WD = ['রবি', 'সোম', 'মঙ্গল', 'বুধ', 'বৃহস্পতি', 'শুক্র', 'শনি'], MO = ['জানু', 'ফেব্রু', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টে', 'অক্টো', 'নভে', 'ডিসে'];
+function tTime(iso) { const p = istParts(iso); const h = p.h % 12 || 12; return `${bn(h)}:${bn(String(p.m).padStart(2, '0'))} ${p.h < 12 ? 'সকাল' : p.h < 16 ? 'দুপুর' : p.h < 18 ? 'বিকেল' : 'সন্ধ্যা'}`; }
+function tDay(iso) { const p = istParts(iso); return `${WD[p.wd]}, ${bn(p.d)} ${MO[p.mo]}`; }
+function istToday(off = 0) { return new Date(Date.now() + IST + off * 864e5).toISOString().slice(0, 10); }
+function dayLabel(ds) { const d = new Date(ds + 'T00:00:00Z'); return { wd: WD[d.getUTCDay()], d: bn(d.getUTCDate()) + ' ' + MO[d.getUTCMonth()] }; }
+function toast(msg) { document.querySelectorAll('.toast').forEach((x) => x.remove()); const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2600); }
+async function api(action, body = {}) {
+  const r = await fetch(API, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action, ...body }) });
+  const j = await r.json().catch(() => ({ error: 'নেটওয়ার্কে সমস্যা' }));
+  if (!r.ok) { const e = new Error(j.error || 'সমস্যা হয়েছে'); e.status = r.status; e.data = j; throw e; }
+  return j;
+}
+function qrSvg(text, size = 200) { const q = qrcode(0, 'M'); q.addData(text); q.make(); return q.createSvgTag({ cellSize: Math.max(2, Math.floor(size / (q.getModuleCount() + 8))), margin: 4, scalable: true }); }
+function compress(file, max = 1080, quality = 0.72) {
+  return new Promise((res, rej) => {
+    const img = new Image(); const url = URL.createObjectURL(file);
+    img.onload = () => { const k = Math.min(1, max / Math.max(img.width, img.height)); const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', quality)); };
+    img.onerror = () => rej(new Error('ছবিটা খোলা গেল না')); img.src = url;
+  });
+}
+function stack(a, b) { // front + back of a card in one picture
+  return new Promise((res) => { const i1 = new Image(), i2 = new Image(); let n = 0; const go = () => { if (++n < 2) return; const w = Math.min(1080, Math.max(i1.width, i2.width)); const h1 = i1.height * w / i1.width, h2 = i2.height * w / i2.width; const c = document.createElement('canvas'); c.width = w; c.height = h1 + h2 + 12; const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(i1, 0, 0, w, h1); x.drawImage(i2, 0, h1 + 12, w, h2); res(c.toDataURL('image/jpeg', 0.75)); }; i1.onload = go; i2.onload = go; i1.src = a; i2.src = b; });
+}
+const waLink = (phone, text) => `https://wa.me/91${String(phone).replace(/\D/g, '').slice(-10)}?text=${encodeURIComponent(text)}`;
+const studentUrl = (token) => `${location.origin}/app/?s=${token}`;
+function header(title, sub = '') { return `<div class="top"><div class="row"><div><div class="brand">SEEKHO <b>2</b> WHEELER</div><div class="sub">${esc(title)}${sub ? ' · ' + esc(sub) : ''}</div></div></div></div>`; }
+const ICON = {
+  scan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3M7 12h10"/></svg>',
+  add: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M19 8v6M16 11h6"/></svg>',
+  cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  ppl: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M17 4a4 4 0 010 8M22 21c0-3-2-5-4-5.6"/></svg>',
+  chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>',
+};
+const params = new URLSearchParams(location.search);
+const app = $('#app');
+
+// =========================================================== STUDENT
+async function studentPage(token) {
+  let me, date = istToday(1), sel = null;
+  async function load() { me = await api('me', { token }); render(); if (me.student.status === 'active') loadSlots(); }
+  function render() {
+    const s = me.student, pct = Math.round(100 * s.classes_done / s.package);
+    const left = s.package - s.classes_done;
+    app.innerHTML = header(me.branch.name, 'আমার ক্লাস') + `<div class="wrap">
+      <div class="card flex"><div class="ring" style="--p:${pct}"><div>${bn(s.classes_done)}/${bn(s.package)}</div></div>
+        <div><h1>${esc(s.name)}</h1><div class="mut">${s.kind === 'bike' ? 'বাইক' : 'স্কুটি'} · আর ${bn(left)}টা ক্লাস বাকি</div>
+        ${s.total_fee > s.paid ? `<div class="mt"><span class="pill o">বাকি ফি ${money(s.total_fee - s.paid)}</span></div>` : ''}</div></div>
+      ${s.status === 'pending' ? `<div class="card"><h2>অনুমোদনের অপেক্ষায়</h2><p>সেন্টার আপনার কার্ড মিলিয়ে দেখছে। অনুমোদন হলে এই লিংকেই বুকিং খুলে যাবে।</p><a class="btn blue" href="tel:${PHONE}">ফোন করুন ${PHONE_TXT}</a></div>` : ''}
+      ${s.status === 'done' ? `<div class="card"><h2>অভিনন্দন! 🎉</h2><p>আপনার সব ক্লাস শেষ হয়েছে।</p></div>` : ''}
+      ${me.upcoming.length ? `<div class="card"><h2>আপনার পরের ক্লাস</h2>${me.upcoming.map((u) => `<div class="flex between mt"><div><div class="big" style="font-size:20px">${tTime(u.slot)}</div><div class="mut">${tDay(u.slot)}</div></div>
+          ${u.can_cancel ? `<button class="btn ghost sm" data-cancel="${u.id}">বাতিল</button>` : '<span class="mut" style="font-size:13px">বাতিলের সময় পেরিয়েছে</span>'}</div>`).join('')}</div>` : ''}
+      ${s.status === 'active' ? `<div class="card" id="bookcard"><h2>ক্লাস বুক করুন</h2><div class="mut">সপ্তাহে ২টো ক্লাস · আগের ক্লাসের ৪৮ ঘণ্টা পরে পরেরটা · ক্লাসের ৪ ঘণ্টা আগে পর্যন্ত বুক বা বাতিল করা যায়</div>
+        <div class="days mt" id="days"></div><div id="slots"><div class="mut mt">লোড হচ্ছে…</div></div><div id="bookbar"></div></div>` : ''}
+      <div class="card center"><h2>ক্লাসে এসে এই QR দেখান</h2><div class="qr">${qrSvg(s.qr)}</div><div class="mut mt">${esc(s.qr)}</div></div>
+      ${me.history.length ? `<div class="card"><h3>আগের ক্লাস</h3><div class="list">${me.history.map((h) => `<div class="it"><div style="flex:1">${tDay(h.slot)} · ${tTime(h.slot)}</div>${{ attended: '<span class="pill g">হয়েছে</span>', no_show: '<span class="pill y">আসেননি</span>', cancelled: '<span class="pill">বাতিল</span>', cancelled_centre: '<span class="pill r">সেন্টার বাতিল করেছে</span>' }[h.status] || ''}</div>`).join('')}</div></div>` : ''}
+      <div class="card"><div class="mut">অনলাইনে বুক করতে অসুবিধা হলে ফোন করুন, আমরা বুক করে দেব।</div><a class="btn wa block mt" href="tel:${PHONE}">📞 ${PHONE_TXT}</a></div>
+    </div>`;
+    app.querySelectorAll('[data-cancel]').forEach((b) => b.onclick = async () => { if (!confirm('ক্লাসটা বাতিল করবেন?')) return; try { me = await api('cancel', { token, booking: b.dataset.cancel }); render(); loadSlots(); toast('বাতিল হয়েছে'); } catch (e) { toast(e.message); } });
+    const days = $('#days'); if (days) { days.innerHTML = Array.from({ length: me.branch.days_ahead + 1 }, (_, i) => istToday(i)).map((d) => { const l = dayLabel(d); return `<button data-d="${d}" class="${d === date ? 'on' : ''}">${l.wd}<small>${l.d}</small></button>`; }).join(''); days.querySelectorAll('button').forEach((b) => b.onclick = () => { date = b.dataset.d; sel = null; days.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b)); loadSlots(); }); }
+  }
+  async function loadSlots() {
+    const box = $('#slots'); if (!box) return; box.innerHTML = '<div class="mut mt">লোড হচ্ছে…</div>'; $('#bookbar').innerHTML = '';
+    try {
+      const r = await api('slots', { token, date });
+      const free = r.slots.filter((x) => x.ok);
+      box.innerHTML = `<div class="slots">${r.slots.map((x) => `<button class="slot ${x.ok ? '' : 'no'}" data-s="${x.slot}" data-why="${esc(x.text)}">${tTime(x.slot)}</button>`).join('')}</div>
+        ${free.length ? '' : `<div class="mut mt">${esc((r.slots.find((x) => !x.ok) || {}).text || 'এই দিনে ফাঁকা নেই')}</div>`}`;
+      box.querySelectorAll('.slot').forEach((b) => b.onclick = () => {
+        if (b.classList.contains('no')) { toast(b.dataset.why || 'এই সময় পাওয়া যাবে না'); return; }
+        sel = b.dataset.s; box.querySelectorAll('.slot').forEach((x) => x.classList.toggle('sel', x === b));
+        $('#bookbar').innerHTML = `<button class="btn block mt" id="go">${tDay(sel)} · ${tTime(sel)} বুক করুন</button>`;
+        $('#go').onclick = async () => { $('#go').disabled = true; try { me = await api('book', { token, slot: sel }); sel = null; render(); loadSlots(); toast('বুক হয়ে গেছে ✓'); window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { toast(e.message); loadSlots(); } };
+      });
+    } catch (e) { box.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+  }
+  try { await load(); } catch (e) { app.innerHTML = header('ক্লাস বুকিং') + `<div class="wrap"><div class="card"><div class="err">${esc(e.message)}</div><a class="btn blue" href="tel:${PHONE}">ফোন করুন ${PHONE_TXT}</a></div></div>`; }
+}
+
+// =========================================================== OLD STUDENT (card upload)
+function oldPage(branch) {
+  let front = '', back = '';
+  app.innerHTML = header('পুরোনো শিক্ষার্থী', 'কার্ড দিয়ে যুক্ত হোন') + `<div class="wrap"><div class="card">
+    <h1>আপনার ভর্তির কার্ডের ছবি দিন</h1><p class="mut">কার্ড থেকে আপনার ক্লাস আর ফি-র হিসাব নিজে থেকে উঠে যাবে। সেন্টার মিলিয়ে নেওয়ার পর বুকিং খুলবে।</p>
+    <label>আপনার নাম</label><input id="nm" autocomplete="name">
+    <label>ফোন নম্বর</label><input id="ph" inputmode="numeric" maxlength="10" placeholder="১০ সংখ্যার মোবাইল">
+    <label>কার্ডের সামনের দিক</label><input type="file" accept="image/*" capture="environment" id="f1"><img id="p1" class="photo-prev hide">
+    <label>কার্ডের পেছনের দিক</label><input type="file" accept="image/*" capture="environment" id="f2"><img id="p2" class="photo-prev hide">
+    <div id="msg"></div><button class="btn block mt2" id="go">জমা দিন</button></div></div>`;
+  const pick = (inp, img, set) => $(inp).onchange = async (e) => { const f = e.target.files[0]; if (!f) return; const d = await compress(f, 1400, 0.8); set(d); $(img).src = d; $(img).classList.remove('hide'); };
+  pick('#f1', '#p1', (d) => front = d); pick('#f2', '#p2', (d) => back = d);
+  $('#go').onclick = async () => {
+    const name = $('#nm').value.trim(), phone = $('#ph').value.replace(/\D/g, '');
+    if (!name || phone.length !== 10) return $('#msg').innerHTML = '<div class="err">নাম আর ১০ সংখ্যার ফোন নম্বর দিন।</div>';
+    if (!front || !back) return $('#msg').innerHTML = '<div class="err">কার্ডের দুই দিকের ছবি দিন।</div>';
+    $('#go').disabled = true; $('#go').textContent = 'কার্ড পড়া হচ্ছে…';
+    try { const card = await stack(front, back); const r = await api('old_submit', { branch, name, phone, card }); location.href = `/app/?s=${r.token}` + (params.get('api') ? `&api=${encodeURIComponent(params.get('api'))}` : ''); }
+    catch (e) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`; $('#go').disabled = false; $('#go').textContent = 'জমা দিন'; }
+  };
+}
+
+// =========================================================== STAFF
+let S = null; // {session, role, perms, branch}
+function saveSession(s) { try { localStorage.setItem('s2w_staff', JSON.stringify(s)); } catch (e) {} }
+function loadSession() { try { return JSON.parse(localStorage.getItem('s2w_staff') || 'null'); } catch (e) { return null; } }
+const sapi = (action, body = {}) => api(action, { session: S.session, ...body }).catch((e) => { if (e.status === 401) { saveSession(null); S = null; loginPage(); } throw e; });
+
+function loginPage() {
+  let role = 'trainer';
+  app.innerHTML = header('স্টাফ লগইন', 'পাটুলি') + `<div class="wrap"><div class="card"><h1>লগইন</h1>
+    <div class="seg mt"><button data-r="trainer" class="on">ট্রেনার</button><button data-r="admin">অ্যাডমিন</button></div>
+    <label id="lbl">PIN</label><input id="sec" type="password" inputmode="numeric" autocomplete="current-password">
+    <div id="msg"></div><button class="btn block mt2" id="go">ঢুকুন</button></div>
+    <div class="card"><h3>পুরোনো শিক্ষার্থীদের জন্য লিংক</h3><p class="mut">এই লিংক পাঠালে পুরোনো শিক্ষার্থীরা কার্ডের ছবি দিয়ে নিজেই যুক্ত হতে পারবেন।</p>
+    <button class="btn wa block" id="oldlink">WhatsApp-এ পাঠানোর জন্য কপি করুন</button></div></div>`;
+  app.querySelectorAll('.seg button').forEach((b) => b.onclick = () => { role = b.dataset.r; app.querySelectorAll('.seg button').forEach((x) => x.classList.toggle('on', x === b)); $('#lbl').textContent = role === 'admin' ? 'পাসওয়ার্ড' : 'PIN'; $('#sec').inputMode = role === 'admin' ? 'text' : 'numeric'; });
+  $('#oldlink').onclick = () => { const u = `${location.origin}/app/?old=patuli`; navigator.clipboard?.writeText(`Seekho 2 Wheeler পাটুলি: আপনার ভর্তির কার্ডের ছবি দিয়ে এই লিংকে যুক্ত হোন, তারপর অনলাইনে ক্লাস বুক করতে পারবেন: ${u}`); toast('লিংক কপি হয়েছে'); };
+  const go = async () => { try { const r = await api('login', { branch: 'patuli', role, secret: $('#sec').value }); S = r; saveSession(r); staffHome(); } catch (e) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`; } };
+  $('#go').onclick = go; $('#sec').onkeydown = (e) => { if (e.key === 'Enter') go(); };
+}
+
+let tab = 'scan';
+function staffHome() {
+  const P = S.role === 'admin' ? { dashboard: 1, students: 1, bookings: 1, money: 1 } : (S.perms || {});
+  const tabs = [['scan', 'স্ক্যান', ICON.scan], ['admit', 'ভর্তি', ICON.add]];
+  if (P.bookings) tabs.push(['day', 'বুকিং', ICON.cal]);
+  if (P.students) tabs.push(['students', 'শিক্ষার্থী', ICON.ppl]);
+  if (P.dashboard) tabs.push(['dash', 'হিসাব', ICON.chart]);
+  if (S.role === 'admin') tabs.push(['settings', 'সেটিংস', ICON.gear]);
+  if (!tabs.find((t) => t[0] === tab)) tab = 'scan';
+  app.innerHTML = header(S.branch.name, S.role === 'admin' ? 'অ্যাডমিন' : 'ট্রেনার') + `<div class="wrap" id="main"></div>
+    <nav class="tabs">${tabs.map((t) => `<button data-t="${t[0]}" class="${t[0] === tab ? 'on' : ''}">${t[2]}${t[1]}</button>`).join('')}</nav>`;
+  app.querySelectorAll('.tabs button').forEach((b) => b.onclick = () => { stopCam(); tab = b.dataset.t; staffHome(); });
+  ({ scan: scanTab, admit: admitTab, day: dayTab, students: studentsTab, dash: dashTab, settings: settingsTab })[tab]($('#main'));
+}
+
+// ---------- scan
+let camStream = null, camTimer = null;
+function stopCam() { if (camTimer) cancelAnimationFrame(camTimer); camTimer = null; if (camStream) camStream.getTracks().forEach((t) => t.stop()); camStream = null; }
+async function loadJsQR() { if (window.jsQR) return; await new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+function scanTab(el) {
+  el.innerHTML = `<div class="card"><h2>QR স্ক্যান করে ক্লাস গুনুন</h2><video id="v" playsinline muted class="hide"></video>
+    <button class="btn blue block mt" id="cam">📷 ক্যামেরা চালু করুন</button>
+    <label>অথবা কোড লিখুন</label><div class="flex"><input id="code" placeholder="S2W-XXXXXX" autocapitalize="characters"><button class="btn sm" id="sub">দেখুন</button></div>
+    <div id="res"></div></div>`;
+  const handle = async (code, force = false) => {
+    stopCam(); $('#v').classList.add('hide');
+    const box = $('#res'); box.innerHTML = '<div class="mut mt">মিলিয়ে দেখা হচ্ছে…</div>';
+    try {
+      const r = await sapi('scan', { qr: code, force });
+      if (r.ok) box.innerHTML = `<div class="okmsg">✓ ${esc(r.name)}: ক্লাস গোনা হলো (${bn(r.done)}/${bn(r.package)})${r.walk_in ? ' · বুকিং ছাড়া' : ''}</div>`;
+      else if (r.reason === 'no_booking') { box.innerHTML = `<div class="err">${esc(r.name)}-এর এখন কোনো বুকিং নেই (${bn(r.done)}/${bn(r.package)})।</div><button class="btn block" id="force">স্কুটি ফাঁকা থাকলে তবু ক্লাস দিন</button>`; $('#force').onclick = () => handle(code, true); }
+      else box.innerHTML = `<div class="err">${esc(r.name ? r.name + ': ' : '')}${{ unknown_qr: 'এই QR চেনা যাচ্ছে না', already_today: 'আজকের ক্লাস আগেই গোনা হয়েছে', package_used: 'সব ক্লাস শেষ', pending: 'এখনো অনুমোদন হয়নি (শিক্ষার্থী তালিকায় অনুমোদন দিন)' }[r.reason] || r.reason}</div>`;
+    } catch (e) { box.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+  };
+  $('#sub').onclick = () => handle($('#code').value.trim().toUpperCase());
+  $('#cam').onclick = async () => {
+    try {
+      await loadJsQR();
+      camStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+      const v = $('#v'); v.srcObject = camStream; v.classList.remove('hide'); await v.play();
+      const c = document.createElement('canvas'), x = c.getContext('2d', { willReadFrequently: true });
+      const tick = () => { if (!camStream) return; if (v.readyState === 4) { c.width = v.videoWidth; c.height = v.videoHeight; x.drawImage(v, 0, 0); const d = x.getImageData(0, 0, c.width, c.height); const q = window.jsQR(d.data, c.width, c.height); if (q && q.data) { navigator.vibrate?.(80); return handle(q.data.trim()); } } camTimer = requestAnimationFrame(tick); };
+      tick();
+    } catch (e) { toast('ক্যামেরা চালু হলো না। কোড লিখে দিন।'); }
+  };
+}
+
+// ---------- admission
+function admitTab(el) {
+  const st = { kind: 'scooty', package: 15, full: false, photo: '', id_photo: '' };
+  el.innerHTML = `<div class="card"><h2>নতুন ভর্তি</h2>
+    <label>নাম *</label><input id="nm" autocomplete="off">
+    <label>ফোন *</label><input id="ph" inputmode="numeric" maxlength="10">
+    <label>ঠিকানা</label><input id="ad">
+    <label>কী শিখবেন</label><div class="seg" id="kind"><button data-v="scooty" class="on">স্কুটি</button><button data-v="bike">বাইক</button></div>
+    <label>কটা ক্লাস</label><div class="seg" id="pkg"><button data-v="15" class="on">১৫টা</button><button data-v="10">১০টা</button></div>
+    <div class="grid2"><div><label>মোট ফি (₹)</label><input id="fee" inputmode="numeric"></div><div><label>এখন দিচ্ছেন (₹)</label><input id="paid" inputmode="numeric"></div></div>
+    <div class="chk"><input type="checkbox" id="full"><span>পুরো টাকা দিয়েছেন</span></div>
+    <div class="mut" id="due"></div>
+    <label>শিক্ষার্থীর ছবি</label><input type="file" accept="image/*" capture="user" id="ph1"><img id="pv1" class="photo-prev hide">
+    <label>পরিচয়পত্র (ঐচ্ছিক)</label><select id="idt"><option value="">দিচ্ছেন না</option><option value="aadhaar">আধার</option><option value="voter">ভোটার কার্ড</option><option value="pan">প্যান কার্ড</option><option value="driving">ড্রাইভিং লাইসেন্স</option></select>
+    <div id="idbox" class="hide"><input type="file" accept="image/*" capture="environment" id="ph2"><div class="mut">ছবি থেকে শুধু শেষ ৪টে সংখ্যা রাখা হবে, ছবিটা রাখা হবে না।</div></div>
+    <div id="msg"></div><button class="btn block mt2" id="go">ভর্তি করুন</button></div>`;
+  const seg = (id, key, num) => el.querySelectorAll(`#${id} button`).forEach((b) => b.onclick = () => { st[key] = num ? Number(b.dataset.v) : b.dataset.v; el.querySelectorAll(`#${id} button`).forEach((x) => x.classList.toggle('on', x === b)); });
+  seg('kind', 'kind'); seg('pkg', 'package', true);
+  const upd = () => { const f = Number($('#fee').value) || 0; const p = st.full ? f : Number($('#paid').value) || 0; if (st.full) $('#paid').value = f || ''; $('#due').innerHTML = f ? `বাকি থাকবে: <b>${money(Math.max(0, f - p))}</b>` : ''; };
+  $('#fee').oninput = upd; $('#paid').oninput = upd; $('#full').onchange = (e) => { st.full = e.target.checked; $('#paid').disabled = st.full; upd(); };
+  $('#ph1').onchange = async (e) => { const f = e.target.files[0]; if (!f) return; st.photo = await compress(f, 720, 0.7); $('#pv1').src = st.photo; $('#pv1').classList.remove('hide'); };
+  $('#idt').onchange = (e) => $('#idbox').classList.toggle('hide', !e.target.value);
+  $('#ph2').onchange = async (e) => { const f = e.target.files[0]; if (f) st.id_photo = await compress(f, 1400, 0.8); };
+  const submit = async (allow_duplicate = false) => {
+    $('#go').disabled = true;
+    try {
+      const r = await sapi('admit', { name: $('#nm').value, phone: $('#ph').value, address: $('#ad').value, kind: st.kind, package: st.package, total_fee: $('#fee').value, paid_now: $('#paid').value, full_paid: st.full, photo: st.photo, id_photo: st.id_photo, id_type: $('#idt').value, allow_duplicate });
+      admitted(el, r);
+    } catch (e) {
+      if (e.status === 409 && !allow_duplicate) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div><button class="btn ghost block" id="dup">তবু ভর্তি করুন</button>`; $('#dup').onclick = () => submit(true); }
+      else $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`;
+      $('#go').disabled = false;
+    }
+  };
+  $('#go').onclick = () => submit(false);
+}
+function admitted(el, r) {
+  const link = studentUrl(r.token);
+  const msg = `নমস্কার ${r.name}, Seekho 2 Wheeler পাটুলিতে আপনার ভর্তি হয়ে গেছে। এই লিংক থেকে ক্লাস বুক করবেন আর ক্লাসে এসে QR দেখাবেন: ${link}`;
+  el.innerHTML = `<div class="card center"><h2>ভর্তি হয়ে গেছে ✓</h2><div class="big">${esc(r.name)}</div>
+    <div class="qr mt">${qrSvg(r.qr)}</div><div class="mut mt">${esc(r.qr)}</div>
+    <a class="btn wa block mt2" href="${waLink(r.phone, msg)}" target="_blank" rel="noopener">WhatsApp-এ লিংক পাঠান</a>
+    <button class="btn ghost block mt" id="again">আরেকজন ভর্তি</button></div>`;
+  $('#again').onclick = () => admitTab(el);
+}
+
+// ---------- day view
+let dayDate = istToday();
+async function dayTab(el) {
+  el.innerHTML = `<div class="card"><div class="days" id="dd"></div></div><div id="grid"><div class="mut">লোড হচ্ছে…</div></div>`;
+  const dd = $('#dd'); dd.innerHTML = Array.from({ length: 10 }, (_, i) => istToday(i - 1)).map((d) => { const l = dayLabel(d); return `<button data-d="${d}" class="${d === dayDate ? 'on' : ''}">${l.wd}<small>${l.d}</small></button>`; }).join('');
+  dd.querySelectorAll('button').forEach((b) => b.onclick = () => { dayDate = b.dataset.d; dayTab(el); });
+  try {
+    const r = await sapi('today', { date: dayDate });
+    const veh = r.vehicles.filter((v) => v.active);
+    const isBlocked = (s) => r.blocks.some((b) => Date.parse(s) >= Date.parse(b.starts) && Date.parse(s) < Date.parse(b.ends));
+    const at = (s, vid) => r.bookings.find((b) => b.slot_start && Date.parse(b.slot_start) === Date.parse(s) && b.vehicle_id === vid && ['booked', 'attended'].includes(b.status));
+    const n = r.bookings.filter((b) => ['booked', 'attended'].includes(b.status)).length;
+    $('#grid').innerHTML = `<div class="card"><div class="flex between"><h2>${tDay(dayDate + 'T06:00:00Z')}</h2><span class="pill b">${bn(n)}/${bn(r.slots.length * veh.length)} বুক</span></div>
+      ${S.role === 'admin' ? `<div class="flex wrapf mt"><button class="btn ghost sm" id="blkday">পুরো দিন বন্ধ</button><button class="btn ghost sm" id="blkam">সকাল বন্ধ</button><button class="btn ghost sm" id="blkpm">বিকেল বন্ধ</button></div>` : ''}
+      ${r.blocks.map((b) => `<div class="err mt">বন্ধ: ${tTime(b.starts)} – ${tTime(b.ends)} ${esc(b.reason)} ${S.role === 'admin' ? `<button class="btn sm ghost" data-unblock="${b.id}">খুলুন</button>` : ''}</div>`).join('')}
+      <table class="daygrid mt"><tr><th>সময়</th>${veh.map((v) => `<th>${esc(v.label)}</th>`).join('')}</tr>
+      ${r.slots.map((s) => `<tr><td style="white-space:nowrap">${tTime(s)}</td>${veh.map((v) => { const b = at(s, v.id); if (isBlocked(s)) return '<td><div class="cell blk">বন্ধ</div></td>'; if (!b) return `<td><div class="cell free" data-free="${s}">ফাঁকা</div></td>`; return `<td><div class="cell ${b.status === 'attended' ? 'att' : 'bk'}" data-bk="${b.id}" data-st="${b.status}">${esc(b.name)}<div style="font-weight:500;font-size:12px">${b.status === 'attended' ? '✓ এসেছেন' : esc(b.phone)}</div></div></td>`; }).join('')}</tr>`).join('')}</table>
+      <div class="legend mt"><span><i style="background:#effaf2;border:1px dashed #9fd8b0"></i>ফাঁকা</span><span><i style="background:#e6eeff"></i>বুক</span><span><i style="background:#e7f6ec"></i>এসেছেন</span><span><i style="background:#f1f1f1"></i>বন্ধ</span></div></div>`;
+    const blk = async (a, b, why) => { const reason = prompt('কারণ (যেমন: পুজোর ছুটি)', why) ?? ''; const st = new Date(Date.parse(`${dayDate}T${a}:00Z`) - IST).toISOString(), en = new Date(Date.parse(`${dayDate}T${b}:00Z`) - IST).toISOString(); try { const x = await sapi('block', { starts: st, ends: en, reason }); if (x.ok === false) { alert('এই সময়ে বুকিং আছে। আগে এগুলো বাতিল করুন:\n' + x.clash.map((c) => `${tTime(c.slot_start)} ${c.name} (${c.phone})`).join('\n')); return; } toast('বন্ধ করা হলো'); dayTab(el); } catch (e) { toast(e.message); } };
+    if ($('#blkday')) { $('#blkday').onclick = () => blk('00:00', '23:59', 'ছুটি'); $('#blkam').onclick = () => blk('06:00', '13:00', ''); $('#blkpm').onclick = () => blk('13:00', '22:00', ''); }
+    el.querySelectorAll('[data-unblock]').forEach((b) => b.onclick = async () => { await sapi('unblock', { id: b.dataset.unblock }); dayTab(el); });
+    el.querySelectorAll('[data-bk]').forEach((c) => c.onclick = async () => {
+      if (S.role !== 'admin' || c.dataset.st !== 'booked') return toast(c.textContent.trim());
+      if (!confirm('এই বুকিং সেন্টার থেকে বাতিল করবেন? শিক্ষার্থীর লিংকে "সেন্টার বাতিল করেছে" দেখাবে।')) return;
+      try { await sapi('staff_cancel', { booking: c.dataset.bk, reason: prompt('কারণ') || '' }); toast('বাতিল হলো'); dayTab(el); } catch (e) { toast(e.message); }
+    });
+    el.querySelectorAll('[data-free]').forEach((c) => c.onclick = () => pickStudent(async (s) => {
+      try { await sapi('staff_book', { id: s.id, slot: c.dataset.free, force: S.role === 'admin' && confirm('নিয়ম (৪৮ ঘণ্টা/সপ্তাহে ২টো) না মেনে বুক করবেন? "Cancel" দিলে নিয়ম মেনে বুক হবে।') }); toast('বুক হলো'); dayTab(el); } catch (e) { toast(e.message); }
+    }));
+  } catch (e) { $('#grid').innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+}
+function pickStudent(cb) {
+  const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet"><h2>কার জন্য বুক করবেন?</h2><input id="q" placeholder="নাম বা ফোন"><div class="list mt" id="ls"></div><button class="btn ghost block mt" id="x">বন্ধ</button></div>`;
+  document.body.appendChild(m); m.onclick = (e) => { if (e.target === m) m.remove(); }; $('#x', m).onclick = () => m.remove();
+  const search = async () => { const r = await sapi('students', { q: $('#q', m).value, status: 'active' }); $('#ls', m).innerHTML = r.students.map((s) => `<div class="it" data-id="${s.id}"><div class="av">${esc(s.name[0] || '?')}</div><div style="flex:1"><b>${esc(s.name)}</b><div class="mut">${esc(s.phone)} · ${bn(s.classes_done)}/${bn(s.package)}</div></div></div>`).join('') || '<div class="mut">কেউ নেই</div>'; $('#ls', m).querySelectorAll('.it').forEach((it) => it.onclick = () => { m.remove(); cb(r.students.find((s) => s.id === it.dataset.id)); }); };
+  let t; $('#q', m).oninput = () => { clearTimeout(t); t = setTimeout(search, 250); }; search(); $('#q', m).focus();
+}
+
+// ---------- students
+async function studentsTab(el) {
+  el.innerHTML = `<div class="card"><input id="q" placeholder="নাম, ফোন বা কোড দিয়ে খুঁজুন"><div class="seg mt" id="fl"><button data-v="" class="on">সবাই</button><button data-v="pending">অপেক্ষায়</button><button data-v="active">চলছে</button><button data-v="done">শেষ</button></div></div><div class="card"><div class="list" id="ls"></div></div>`;
+  let status = '';
+  const load = async () => { const r = await sapi('students', { q: $('#q').value, status }); $('#ls').innerHTML = r.students.map((s) => `<div class="it" data-id="${s.id}"><div class="av">${esc(s.name[0] || '?')}</div><div style="flex:1"><b>${esc(s.name)}</b><div class="mut">${esc(s.phone)} · ${s.kind === 'bike' ? 'বাইক' : 'স্কুটি'} · ${bn(s.classes_done)}/${bn(s.package)}</div></div>${s.status === 'pending' ? '<span class="pill y">অনুমোদন বাকি</span>' : s.status === 'done' ? '<span class="pill g">শেষ</span>' : s.due > 0 ? `<span class="pill o">${money(s.due)}</span>` : ''}</div>`).join('') || '<div class="mut">কেউ নেই</div>'; $('#ls').querySelectorAll('.it').forEach((it) => it.onclick = () => studentDetail(el, it.dataset.id)); };
+  el.querySelectorAll('#fl button').forEach((b) => b.onclick = () => { status = b.dataset.v; el.querySelectorAll('#fl button').forEach((x) => x.classList.toggle('on', x === b)); load(); });
+  let t; $('#q').oninput = () => { clearTimeout(t); t = setTimeout(load, 250); }; load();
+}
+async function studentDetail(el, id) {
+  el.innerHTML = '<div class="mut">লোড হচ্ছে…</div>';
+  const r = await sapi('student', { id }); const s = r.student; const admin = S.role === 'admin';
+  const link = studentUrl(s.token);
+  el.innerHTML = `<button class="btn ghost sm" id="back">← তালিকা</button>
+    <div class="card mt flex"><div class="av" style="width:64px;height:64px">${r.photo ? `<img src="${r.photo}">` : esc(s.name[0])}</div><div style="flex:1"><h2 style="margin:0">${esc(s.name)}</h2><div class="mut">${esc(s.phone)} · ${s.kind === 'bike' ? 'বাইক' : 'স্কুটি'} · ${bn(s.classes_done)}/${bn(s.package)} ক্লাস</div>
+      <div class="mt">${s.status === 'pending' ? '<span class="pill y">অনুমোদন বাকি</span>' : ''}${s.allow_consecutive ? ' <span class="pill b">পরপর দুদিন চলবে</span>' : ''}${s.no_shows >= 3 ? ` <span class="pill r">${bn(s.no_shows)} বার আসেননি</span>` : ''}</div></div></div>
+    ${s.status === 'pending' ? `<div class="card"><h2>কার্ড মিলিয়ে অনুমোদন দিন</h2>${r.card_image ? `<img src="${r.card_image}" class="photo-prev" style="max-height:420px">` : '<div class="mut">কার্ডের ছবি নেই</div>'}
+      ${s.card && s.card.confident === false ? '<div class="err">AI নিশ্চিত নয়, ভালো করে মিলিয়ে নিন।</div>' : ''}
+      <label>নাম</label><input id="a_nm" value="${esc(s.name)}"><div class="grid2"><div><label>মোট ক্লাস</label><select id="a_pk"><option value="15" ${s.package === 15 ? 'selected' : ''}>১৫</option><option value="10" ${s.package === 10 ? 'selected' : ''}>১০</option></select></div><div><label>হয়ে গেছে</label><input id="a_cd" inputmode="numeric" value="${s.classes_done}"></div></div>
+      <div class="grid2"><div><label>মোট ফি</label><input id="a_fee" inputmode="numeric" value="${s.total_fee ?? 0}"></div><div><label>দিয়েছেন</label><input id="a_paid" inputmode="numeric" value="${s.paid ?? 0}"></div></div>
+      <label>কী শিখছেন</label><select id="a_k"><option value="scooty">স্কুটি</option><option value="bike" ${s.kind === 'bike' ? 'selected' : ''}>বাইক</option></select>
+      <div class="grid2 mt2"><button class="btn green" id="appr">অনুমোদন</button><button class="btn red" id="rej">বাতিল</button></div></div>` : ''}
+    <div class="card"><div class="grid2"><a class="btn wa" target="_blank" rel="noopener" href="${waLink(s.phone, `${s.name}, Seekho 2 Wheeler পাটুলি: আপনার ক্লাস বুকিংয়ের লিংক: ${link}`)}">লিংক পাঠান</a><button class="btn blue" id="qrb">QR দেখান</button></div>
+      ${S.role === 'admin' || (S.perms || {}).bookings ? '<button class="btn ghost block mt" id="bookfor">এর হয়ে ক্লাস বুক করুন</button>' : ''}</div>
+    ${s.total_fee !== undefined ? `<div class="card"><h3>ফি</h3><div class="grid2"><div class="kpi"><b>${money(s.total_fee)}</b><span>মোট</span></div><div class="kpi"><b style="color:${s.due > 0 ? 'var(--orange)' : 'var(--ok)'}">${money(s.due)}</b><span>বাকি</span></div></div>
+      ${(S.role === 'admin' || (S.perms || {}).money) ? `<div class="flex mt"><input id="amt" inputmode="numeric" placeholder="টাকা জমা (₹)"><button class="btn sm" id="pay">জমা</button></div>` : ''}
+      ${r.payments.length ? `<div class="list mt">${r.payments.map((p) => `<div class="it"><div style="flex:1">${tDay(p.at)}</div><b>${money(p.amount)}</b></div>`).join('')}</div>` : ''}</div>` : ''}
+    ${admin ? `<div class="card"><h3>সম্পাদনা</h3><label>নাম</label><input id="e_nm" value="${esc(s.name)}"><label>ফোন</label><input id="e_ph" value="${esc(s.phone)}"><label>ঠিকানা</label><input id="e_ad" value="${esc(s.address || '')}">
+      <div class="grid2"><div><label>মোট ক্লাস</label><select id="e_pk"><option value="15">১৫</option><option value="10" ${s.package === 10 ? 'selected' : ''}>১০</option></select></div><div><label>হয়ে গেছে</label><input id="e_cd" inputmode="numeric" value="${s.classes_done}"></div></div>
+      <label>মোট ফি</label><input id="e_fee" inputmode="numeric" value="${s.total_fee}">
+      <div class="chk"><input type="checkbox" id="e_cons" ${s.allow_consecutive ? 'checked' : ''}><span>পরপর দুদিন (যেমন শনি-রবি) ক্লাস নিতে পারবেন</span></div>
+      <label>অবস্থা</label><select id="e_st"><option value="active">চলছে</option><option value="done" ${s.status === 'done' ? 'selected' : ''}>শেষ</option><option value="archived">সরিয়ে দিন</option></select>
+      <label>নোট</label><textarea id="e_nt" rows="2">${esc(s.note || '')}</textarea><button class="btn blue block mt" id="save">সেভ</button></div>` : ''}
+    <div class="card"><h3>ক্লাসের ইতিহাস</h3><div class="list">${r.bookings.map((b) => `<div class="it"><div style="flex:1">${tDay(b.slot_start)} · ${tTime(b.slot_start)}<div class="mut" style="font-size:12px">${esc(b.created_by)}</div></div>${{ booked: '<span class="pill b">বুক</span>', attended: '<span class="pill g">এসেছেন</span>', no_show: '<span class="pill y">আসেননি</span>', cancelled: '<span class="pill">শিক্ষার্থী বাতিল</span>', cancelled_centre: '<span class="pill r">সেন্টার বাতিল</span>' }[b.status]}</div>`).join('') || '<div class="mut">এখনো নেই</div>'}</div></div>`;
+  $('#back').onclick = () => studentsTab(el);
+  $('#qrb').onclick = () => { const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet center"><div class="qr">${qrSvg(s.qr, 260)}</div><div class="mut mt">${esc(s.qr)}</div><button class="btn ghost block mt">বন্ধ</button></div>`; document.body.appendChild(m); m.onclick = () => m.remove(); };
+  if ($('#bookfor')) $('#bookfor').onclick = () => bookFor(s, () => studentDetail(el, id));
+  if ($('#pay')) $('#pay').onclick = async () => { try { await sapi('payment', { id, amount: $('#amt').value }); toast('জমা হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
+  if ($('#appr')) $('#appr').onclick = async () => { try { await sapi('approve', { id, fields: { name: $('#a_nm').value, package: $('#a_pk').value, classes_done: $('#a_cd').value, total_fee: $('#a_fee').value, paid: $('#a_paid').value, kind: $('#a_k').value } }); toast('অনুমোদন হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
+  if ($('#rej')) $('#rej').onclick = async () => { if (!confirm('বাতিল করবেন?')) return; await sapi('reject', { id }); studentsTab(el); };
+  if ($('#save')) $('#save').onclick = async () => { try { await sapi('update_student', { id, fields: { name: $('#e_nm').value, phone: $('#e_ph').value, address: $('#e_ad').value, package: $('#e_pk').value, classes_done: $('#e_cd').value, total_fee: $('#e_fee').value, allow_consecutive: $('#e_cons').checked, status: $('#e_st').value, note: $('#e_nt').value } }); toast('সেভ হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
+}
+function bookFor(s, done) {
+  let date = istToday(); const m = document.createElement('div'); m.className = 'modal';
+  m.innerHTML = `<div class="sheet"><h2>${esc(s.name)}-এর জন্য বুক</h2><div class="days" id="bd"></div>${S.role === 'admin' ? '<div class="chk"><input type="checkbox" id="frc"><span>নিয়ম ছাড়াই বুক (অ্যাডমিন)</span></div>' : ''}<div id="bs"></div><button class="btn ghost block mt" id="x">বন্ধ</button></div>`;
+  document.body.appendChild(m); $('#x', m).onclick = () => m.remove();
+  const days = () => { $('#bd', m).innerHTML = Array.from({ length: 8 }, (_, i) => istToday(i)).map((d) => { const l = dayLabel(d); return `<button data-d="${d}" class="${d === date ? 'on' : ''}">${l.wd}<small>${l.d}</small></button>`; }).join(''); $('#bd', m).querySelectorAll('button').forEach((b) => b.onclick = () => { date = b.dataset.d; days(); load(); }); };
+  const load = async () => { const force = $('#frc', m)?.checked; const r = await sapi('staff_slots', { id: s.id, date, force }); $('#bs', m).innerHTML = `<div class="slots">${r.slots.map((x) => `<button class="slot ${x.ok ? '' : 'no'}" data-s="${x.slot}" data-why="${esc(x.text)}">${tTime(x.slot)}</button>`).join('')}</div>`; $('#bs', m).querySelectorAll('.slot').forEach((b) => b.onclick = async () => { if (b.classList.contains('no')) return toast(b.dataset.why); try { await sapi('staff_book', { id: s.id, slot: b.dataset.s, force }); toast('বুক হলো'); m.remove(); done(); } catch (e) { toast(e.message); } }); };
+  if ($('#frc', m)) $('#frc', m).onchange = load; days(); load();
+}
+
+// ---------- dashboard
+function bars(data) {
+  const max = Math.max(1, ...data.map((d) => d.v)); const w = 320, h = 160, bw = w / Math.max(1, data.length);
+  return `<svg viewBox="0 0 ${w} ${h + 26}" width="100%" role="img">${data.map((d, i) => { const bh = Math.round((h - 18) * d.v / max); return `<rect x="${i * bw + 6}" y="${h - bh}" width="${bw - 12}" height="${bh}" rx="5" fill="${i === data.length - 1 ? '#ff5a0a' : '#0b3a8f'}"/><text x="${i * bw + bw / 2}" y="${h - bh - 4}" font-size="10" text-anchor="middle" fill="#14213d">${d.v >= 1000 ? Math.round(d.v / 1000) + 'k' : d.v}</text><text x="${i * bw + bw / 2}" y="${h + 16}" font-size="10" text-anchor="middle" fill="#5b6478">${esc(d.l)}</text>`; }).join('')}</svg>`;
+}
+function pie(parts) {
+  const tot = parts.reduce((t, p) => t + p.v, 0) || 1; let a = -Math.PI / 2; const R = 60, c = 70;
+  const segs = parts.filter((p) => p.v > 0).map((p) => { const a2 = a + 2 * Math.PI * p.v / tot; const large = a2 - a > Math.PI ? 1 : 0; const d = parts.filter((x) => x.v > 0).length === 1 ? `M${c} ${c - R}A${R} ${R} 0 1 1 ${c - 0.01} ${c - R}Z` : `M${c} ${c}L${c + R * Math.cos(a)} ${c + R * Math.sin(a)}A${R} ${R} 0 ${large} 1 ${c + R * Math.cos(a2)} ${c + R * Math.sin(a2)}Z`; a = a2; return `<path d="${d}" fill="${p.c}"/>`; }).join('');
+  return `<div class="flex"><svg viewBox="0 0 140 140" width="120">${segs}<circle cx="70" cy="70" r="30" fill="#fff"/></svg><div>${parts.map((p) => `<div><span class="legend"><span><i style="background:${p.c}"></i>${esc(p.l)}: <b>${p.fmt ? p.fmt(p.v) : bn(p.v)}</b></span></span></div>`).join('')}</div></div>`;
+}
+async function dashTab(el) {
+  el.innerHTML = '<div class="mut">লোড হচ্ছে…</div>';
+  try {
+    const d = await sapi('dashboard'); const c = d.capacity;
+    const months = d.months.slice().reverse().map((m) => ({ l: MO[Number(m.m.slice(5)) - 1], v: m.total }));
+    const thisM = d.months.find((m) => m.m === istToday().slice(0, 7));
+    const sum = (f) => d.students.filter(f).reduce((t, x) => t + x.n, 0), due = d.students.reduce((t, x) => t + (x.due || 0), 0), paid = d.students.reduce((t, x) => t + (x.paid || 0), 0);
+    el.innerHTML = `<div class="kpis"><div class="kpi"><b>${money(thisM ? thisM.total : 0)}</b><span>এই মাসে উঠেছে</span></div><div class="kpi"><b style="color:var(--orange)">${money(due)}</b><span>মোট বাকি</span></div><div class="kpi"><b>${bn(d.admissions_this_month)}</b><span>এই মাসে ভর্তি</span></div><div class="kpi"><b>${bn(c.active_students)}</b><span>চলছে এমন শিক্ষার্থী</span></div></div>
+      <div class="card mt"><h3>প্রতি মাসের আয়</h3>${months.length ? bars(months) : '<div class="mut">এখনো কোনো জমা নেই</div>'}</div>
+      <div class="card"><h3>স্লট বনাম চাহিদা (সপ্তাহে)</h3><div class="kpis" style="grid-template-columns:repeat(2,1fr)"><div class="kpi"><b>${bn(c.per_week)}</b><span>ক্লাসের জায়গা (${bn(c.vehicles)}টা স্কুটি)</span></div><div class="kpi"><b>${bn(c.weekly_demand)}</b><span>চাহিদা (সপ্তাহে ২টো করে)</span></div><div class="kpi"><b style="color:${c.deficit_per_week ? 'var(--bad)' : 'var(--ok)'}">${bn(c.deficit_per_week)}</b><span>ঘাটতি</span></div><div class="kpi"><b>${bn(c.next_week_booked)}</b><span>আগামী ৭ দিনে বুক</span></div></div>
+        <div class="mut mt">গত ৭ দিনে ক্লাস হয়েছে ${bn(c.past_week_attended)}টা, আসেননি ${bn(c.past_week_no_show)} জন।${c.deficit_per_week ? ` প্রতি সপ্তাহে প্রায় ${bn(c.deficit_per_week)}টা ক্লাস কম পড়ছে: আরেকটা স্কুটি দিলে সপ্তাহে ${bn(c.per_day * 7 / Math.max(1, c.vehicles))}টা জায়গা বাড়বে।` : ''}</div></div>
+      <div class="card"><h3>শিক্ষার্থী</h3>${pie([{ l: 'স্কুটি', v: sum((x) => x.kind === 'scooty'), c: '#0b3a8f' }, { l: 'বাইক', v: sum((x) => x.kind === 'bike'), c: '#ff5a0a' }])}</div>
+      <div class="card"><h3>ফি</h3>${pie([{ l: 'জমা হয়েছে', v: paid, c: '#16a34a', fmt: money }, { l: 'বাকি', v: due, c: '#ff5a0a', fmt: money }])}</div>
+      <div class="card"><div class="flex between"><h3>কার কত বাকি</h3><button class="btn sm" id="csv">CSV</button></div><div class="list">${d.dues.map((x) => `<div class="it" data-id="${x.id}"><div style="flex:1"><b>${esc(x.name)}</b><div class="mut">${esc(x.phone)} · দিয়েছেন ${money(x.paid)} / ${money(x.total_fee)}</div></div><b style="color:var(--orange)">${money(x.due)}</b></div>`).join('') || '<div class="mut">কারও বাকি নেই</div>'}</div></div>`;
+    $('#csv').onclick = async () => { const month = prompt('কোন মাস? (YYYY-MM)', istToday().slice(0, 7)); if (!month) return; const r = await sapi('csv', { month }); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + r.csv], { type: 'text/csv' })); a.download = `patuli-${month}.csv`; a.click(); };
+  } catch (e) { el.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+}
+
+// ---------- settings
+async function settingsTab(el) {
+  const r = await sapi('settings'); const b = r.branch; const p = b.trainer_perms;
+  el.innerHTML = `<div class="card"><h2>ট্রেনার কী দেখতে পাবেন</h2>
+    ${[['bookings', 'বুকিং ক্যালেন্ডার'], ['students', 'শিক্ষার্থীর তালিকা'], ['dues', 'বাকি টাকা'], ['money', 'টাকা জমা নেওয়া'], ['dashboard', 'হিসাবের ড্যাশবোর্ড']].map(([k, l]) => `<div class="chk"><input type="checkbox" data-p="${k}" ${p[k] ? 'checked' : ''}><span>${l}</span></div>`).join('')}
+    <button class="btn blue block" id="sp">সেভ</button></div>
+    <div class="card"><h2>ক্লাসের সময়</h2><div class="mut">২৪ ঘণ্টার হিসাবে, যেমন 08:00 – 11:00</div><div id="hrs"></div><button class="btn ghost sm mt" id="addh">+ সময় যোগ</button><button class="btn blue block mt" id="sh">সেভ</button></div>
+    <div class="card"><h2>গাড়ি</h2><div class="list">${r.vehicles.map((v) => `<div class="it"><div style="flex:1"><b>${esc(v.label)}</b> <span class="mut">${v.kind === 'bike' ? 'বাইক' : 'স্কুটি'}</span></div><button class="btn sm ${v.active ? 'ghost' : 'green'}" data-v="${v.id}" data-a="${v.active ? 0 : 1}">${v.active ? 'বন্ধ করুন' : 'চালু করুন'}</button></div>`).join('')}</div>
+      <div class="flex mt"><input id="vl" placeholder="নাম, যেমন Scooty 3"><select id="vk" style="width:120px"><option value="scooty">স্কুটি</option><option value="bike">বাইক</option></select><button class="btn sm" id="addv">যোগ</button></div></div>
+    <div class="card"><h2>PIN ও পাসওয়ার্ড</h2><label>ট্রেনারদের নতুন PIN (৪–৮ সংখ্যা)</label><input id="pin" inputmode="numeric"><label>অ্যাডমিনের নতুন পাসওয়ার্ড (অন্তত ৮ অক্ষর)</label><input id="pw" type="password"><button class="btn blue block mt" id="spin">বদলান</button></div>
+    <div class="card"><h2>কে কী করেছে</h2><button class="btn ghost sm" id="aud">দেখুন</button><div class="list" id="audl"></div></div>
+    <button class="btn ghost block" id="out">লগআউট</button>`;
+  let hours = b.hours.slice();
+  const drawH = () => { $('#hrs').innerHTML = hours.map((h, i) => `<div class="flex mt"><input value="${h[0]}" data-i="${i}" data-k="0" style="width:110px"> – <input value="${h[1]}" data-i="${i}" data-k="1" style="width:110px"><button class="btn sm ghost" data-del="${i}">✕</button></div>`).join(''); $('#hrs').querySelectorAll('input').forEach((x) => x.oninput = () => hours[x.dataset.i][x.dataset.k] = x.value.trim()); $('#hrs').querySelectorAll('[data-del]').forEach((x) => x.onclick = () => { hours.splice(Number(x.dataset.del), 1); drawH(); }); };
+  drawH(); $('#addh').onclick = () => { hours.push(['16:00', '18:00']); drawH(); };
+  const save = async (fields, msg = 'সেভ হলো') => { try { await sapi('save_settings', { fields }); toast(msg); settingsTab(el); } catch (e) { toast(e.message); } };
+  $('#sp').onclick = () => { const tp = {}; el.querySelectorAll('[data-p]').forEach((x) => tp[x.dataset.p] = x.checked); save({ trainer_perms: tp }); };
+  $('#sh').onclick = () => save({ hours });
+  el.querySelectorAll('[data-v]').forEach((x) => x.onclick = () => save({ toggle_vehicle: { id: x.dataset.v, active: x.dataset.a === '1' } }));
+  $('#addv').onclick = () => save({ add_vehicle: { label: $('#vl').value || 'Scooty', kind: $('#vk').value } });
+  $('#spin').onclick = () => { const f = {}; if ($('#pin').value) f.trainer_pin = $('#pin').value; if ($('#pw').value) f.admin_password = $('#pw').value; if (Object.keys(f).length) save(f, 'বদলানো হলো'); };
+  $('#aud').onclick = async () => { const a = await sapi('audit'); const L = { book: 'বুক', cancel: 'শিক্ষার্থী বাতিল', centre_cancel: 'সেন্টার বাতিল', attend: 'ক্লাস গোনা', admit: 'ভর্তি', approve: 'অনুমোদন', reject: 'বাতিল (কার্ড)', block: 'বন্ধ', unblock: 'খোলা', payment: 'টাকা জমা', update_student: 'সম্পাদনা', settings: 'সেটিংস', login_fail: 'ভুল লগইন', old_submit: 'কার্ড জমা' }; $('#audl').innerHTML = a.audit.map((x) => `<div class="it"><div style="flex:1"><b>${L[x.action] || x.action}</b> · ${esc(x.actor)}<div class="mut" style="font-size:12px">${tDay(x.at)} ${tTime(x.at)}</div></div></div>`).join(''); };
+  $('#out').onclick = () => { saveSession(null); S = null; loginPage(); };
+}
+
+// =========================================================== start
+(async () => {
+  if (params.get('s')) return studentPage(params.get('s'));
+  if (params.get('old')) return oldPage(params.get('old'));
+  S = loadSession();
+  if (!S) return loginPage();
+  try { const w = await api('whoami', { session: S.session }); S.perms = w.perms; S.role = w.role; S.branch = w.branch; saveSession(S); staffHome(); } catch (e) { saveSession(null); S = null; loginPage(); }
+})();
+</script>
+</body>
+</html>
