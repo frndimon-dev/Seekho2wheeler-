@@ -326,3 +326,36 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:30px;padding-t
   .lady .row2,.about .row2{flex-wrap:wrap}
 }
 @media (max-width:759px){.about-pic img{aspect-ratio:5/4;object-position:50% 20%}.about-pic::before{inset:10px -8px -8px 10px}}
+
+/* v3.1 — section order + clearer separation between sections */
+h2{font-size:clamp(26px,5.4vw,40px)}
+.centres{background:var(--cr)}
+.door{background:#fff}
+.door-panel{background:linear-gradient(160deg,#eef3ff,#e2ebff);border:1px solid #d9e4ff;border-radius:28px;padding:24px 18px}
+.how{background:var(--cr);border-top:1px solid #f0e6cf}
+.how .sh{margin-bottom:28px}
+.gal{background:#fff}
+.blog{background:var(--tint)}
+.faqs{background:#fff}
+.cta{background:#fff}
+/* Reviews: dark band with a score block */
+.revs{background:radial-gradient(60% 80% at 0 0,rgba(255,197,20,.14),transparent 60%),#071e4f;color:#c9d6f5}
+.revs-g{display:grid;gap:24px}
+.rsum h2{color:#fff}.rsum h2 .y{color:var(--ye)}
+.score{display:flex;align-items:center;gap:14px;margin:18px 0 20px}
+.score b{font:800 52px/1 var(--head);color:#fff}
+.score .st{display:block;color:var(--ye);font-size:20px;letter-spacing:2px}
+.score small{color:#a9b8de;font-size:13px}
+.rsum .b{flex:0 1 auto;display:inline-flex}
+.rsum .arrows{margin-top:18px}
+.revs .arrows button{border-color:rgba(255,255,255,.25);color:#fff}
+.revs .arrows button:hover{background:var(--ye);border-color:var(--ye);color:#1a1300}
+.revs .rev{background:#fff}
+.revs .rev blockquote{color:#2a3550}
+@media (min-width:700px){.door-panel{padding:36px}}
+@media (min-width:1000px){
+  .revs-g{grid-template-columns:320px minmax(0,1fr);gap:48px;align-items:center}
+  .revs .rail{grid-auto-columns:calc((100% - 14px)/2)}
+  .door-panel{padding:48px 52px}
+}
+.revs .rev{color:var(--ink)}.revs .rev .who small{color:var(--mut)}
