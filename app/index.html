@@ -3,42 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Seekho 2 Wheeler · ক্লাস বুকিং</title>
+<title>Seekho 2 Wheeler · Class Booking</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0b3a8f">
+<link rel="icon" href="/assets/img/logo-shield.png">
 <link rel="manifest" href="/app/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Hind:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
-:root{--blue:#0b3a8f;--blue2:#0e4bb5;--orange:#ff5a0a;--yellow:#ffc514;--cream:#fbf6e8;--ink:#14213d;--mut:#5b6478;--line:#e6e2d6;--ok:#16a34a;--bad:#dc2626;--bg:#f6f4ee;--card:#fff}
+:root{--blue:#0b3a8f;--blue2:#0e4bb5;--orange:#ff5a0a;--yellow:#ffc514;--cream:#fbf6e8;--ink:#14213d;--mut:#5b6478;--line:#ebe5d3;--ok:#16a34a;--bad:#dc2626;--bg:#f7f3e8;--card:#fff}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;font-family:'Hind Siliguri',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.45}
+body{margin:0;font-family:'Hind Siliguri','Hind',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.45}
+html[lang=hi] body{font-family:'Hind','Hind Siliguri',system-ui,sans-serif}
 button,input,select,textarea{font:inherit}
-.top{background:var(--blue);color:#fff;padding:14px 16px calc(14px);position:sticky;top:0;z-index:5;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.top{background:linear-gradient(135deg,#0a3480 0%,#0b3a8f 55%,#0e4bb5 100%);color:#fff;padding:10px 16px 12px;position:sticky;top:0;z-index:5;box-shadow:0 4px 18px rgba(11,58,143,.28);border-bottom:3px solid var(--yellow)}
 .top .row{display:flex;align-items:center;gap:10px;max-width:760px;margin:0 auto}
-.brand{font-family:Sora,sans-serif;font-weight:800;letter-spacing:.3px;font-size:17px}.brand b{color:var(--orange)}
-.top .sub{font-size:13px;opacity:.85}
-.wrap{max-width:760px;margin:0 auto;padding:16px 16px 96px}
-.card{background:var(--card);border-radius:18px;padding:16px;margin:0 0 14px;box-shadow:0 1px 0 var(--line),0 6px 18px rgba(20,33,61,.05)}
-h1,h2,h3{margin:0 0 10px;line-height:1.25}h1{font-size:22px}h2{font-size:19px}h3{font-size:16px}
+.brand{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
+.brand img.shield{height:40px;width:auto;flex:0 0 auto;filter:drop-shadow(0 2px 4px rgba(0,0,0,.25))}
+.brand img.word{height:22px;width:auto;display:block}
+.brand .sub{font-size:12.5px;color:#dbe6ff;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand .sub b{color:var(--yellow);font-weight:600}
+.lang{display:flex;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:2px;flex:0 0 auto}
+.lang button{border:0;background:none;color:#e6eeff;font-weight:700;font-size:12.5px;padding:5px 9px;border-radius:999px;min-width:34px;cursor:pointer;line-height:1.1}
+.lang button.on{background:#fff;color:var(--blue)}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 100px}
+.card{background:var(--card);border-radius:20px;padding:18px 16px;margin:0 0 14px;box-shadow:0 1px 0 var(--line),0 10px 28px rgba(20,33,61,.06)}
+h1,h2,h3{margin:0 0 10px;line-height:1.25;font-weight:700}h1{font-size:22px}h2{font-size:19px;color:var(--blue)}h3{font-size:16px;color:var(--blue)}
 .mut{color:var(--mut);font-size:14px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer;background:var(--orange);color:#fff;min-height:48px;text-decoration:none}
-.btn.blue{background:var(--blue)}.btn.ghost{background:#fff;color:var(--blue);border:2px solid var(--blue)}.btn.green{background:var(--ok)}.btn.red{background:var(--bad)}.btn.wa{background:#1fa855}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer;background:linear-gradient(180deg,#ff6a1f,#ff5a0a);color:#fff;min-height:48px;text-decoration:none;box-shadow:0 4px 12px rgba(255,90,10,.25)}
+.btn.blue{background:linear-gradient(180deg,#1047a8,#0b3a8f);box-shadow:0 4px 12px rgba(11,58,143,.22)}.btn.ghost{background:#fff;color:var(--blue);border:2px solid var(--blue);box-shadow:none}.btn.green{background:var(--ok);box-shadow:none}.btn.red{background:var(--bad);box-shadow:none}.btn.wa{background:#1fa855;box-shadow:0 4px 12px rgba(31,168,85,.22)}
 .btn.block{width:100%}.btn:disabled{opacity:.5}
-.btn.sm{min-height:36px;padding:6px 12px;border-radius:10px;font-size:14px}
+.btn.sm{min-height:36px;padding:6px 12px;border-radius:10px;font-size:14px;box-shadow:none}
 label{display:block;font-weight:600;margin:12px 0 6px;font-size:15px}
 input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);min-height:48px}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue2);box-shadow:0 0 0 3px rgba(14,75,181,.15)}
-.seg{display:flex;gap:8px}.seg button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px;font-weight:700;color:var(--ink);min-height:48px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}.seg button{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px;font-weight:700;color:var(--ink);min-height:48px}
 .seg button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:12px -16px 0;padding:0 16px}.chips button{flex:0 0 auto;min-height:40px;padding:6px 14px;border-radius:999px;white-space:nowrap;font-size:14px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.chk{display:flex;align-items:center;gap:10px;margin:12px 0;font-weight:600}.chk input{width:24px;height:24px;min-height:0}
+.chk{display:flex;align-items:center;gap:10px;margin:12px 0;font-weight:600}.chk input{width:24px;height:24px;min-height:0;flex:0 0 auto}
 .err{background:#fde8e8;color:#991b1b;border-radius:12px;padding:10px 12px;margin:10px 0;font-weight:600}
 .okmsg{background:#e7f6ec;color:#14532d;border-radius:12px;padding:10px 12px;margin:10px 0;font-weight:600}
-.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;z-index:6;padding-bottom:env(safe-area-inset-bottom)}
-.tabs button{flex:1;border:0;background:none;padding:8px 2px 10px;font-size:12.5px;font-weight:600;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:2px}
-.tabs button.on{color:var(--blue)}.tabs svg{width:24px;height:24px}
+.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;z-index:6;padding:4px 4px env(safe-area-inset-bottom);box-shadow:0 -6px 20px rgba(20,33,61,.06)}
+.tabs button{flex:1;border:0;background:none;padding:6px 2px 8px;font-size:12px;font-weight:600;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.tabs button span.ic{display:grid;place-items:center;width:46px;height:28px;border-radius:999px}
+.tabs button.on{color:var(--blue)}.tabs button.on span.ic{background:#e6eeff}.tabs svg{width:22px;height:22px}
 .days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
 .days button{flex:0 0 auto;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:8px 12px;min-width:68px;text-align:center;font-weight:700;color:var(--ink)}
 .days button small{display:block;font-weight:500;color:var(--mut);font-size:12px}
@@ -47,17 +57,17 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue2);b
 .slot{border:1.5px solid #bfe3c9;background:#effaf2;border-radius:12px;padding:10px 6px;text-align:center;font-weight:700;color:#14532d;min-height:52px}
 .slot.no{background:#f3f3f3;border-color:#e3e3e3;color:#9aa0ab;font-weight:600}
 .slot.sel{background:var(--orange);border-color:var(--orange);color:#fff}
-.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700;background:#f1efe8}
 .pill.g{background:#e7f6ec;color:#166534}.pill.o{background:#fff1e6;color:#c2410c}.pill.b{background:#e6eeff;color:var(--blue)}.pill.r{background:#fde8e8;color:#991b1b}.pill.y{background:#fff7d6;color:#854d0e}
 .ring{--p:0;width:92px;height:92px;border-radius:50%;background:conic-gradient(var(--orange) calc(var(--p)*1%),#ece8dc 0);display:grid;place-items:center;flex:0 0 auto}
-.ring div{width:72px;height:72px;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:Sora;font-weight:800;font-size:18px}
+.ring div{width:72px;height:72px;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:Sora,'Hind Siliguri',sans-serif;font-weight:800;font-size:18px;color:var(--blue)}
 .flex{display:flex;align-items:center;gap:12px}.between{justify-content:space-between}.wrapf{flex-wrap:wrap}
-.qr{background:#fff;border-radius:14px;padding:10px;display:inline-block;border:3px solid var(--yellow)}
+.qr{background:#fff;border-radius:16px;padding:10px;display:inline-block;border:3px solid var(--yellow);box-shadow:0 6px 18px rgba(255,197,20,.25)}
 .qr img,.qr svg{display:block;width:200px;height:200px;image-rendering:pixelated}
 .list .it{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.list .it:last-child{border:0}
 .av{width:44px;height:44px;border-radius:50%;background:#e6eeff;display:grid;place-items:center;font-weight:700;color:var(--blue);overflow:hidden;flex:0 0 auto}.av img{width:100%;height:100%;object-fit:cover}
-.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.kpi{background:#fff;border-radius:16px;padding:14px;box-shadow:0 1px 0 var(--line)}
-.kpi b{display:block;font-family:Sora;font-size:22px}.kpi span{color:var(--mut);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.kpi{background:#fff;border-radius:16px;padding:14px;box-shadow:0 1px 0 var(--line),0 6px 16px rgba(20,33,61,.04);border-top:3px solid var(--yellow)}
+.kpi b{display:block;font-family:Sora,'Hind Siliguri',sans-serif;font-size:22px}.kpi span{color:var(--mut);font-size:13px}
 .daygrid{width:100%;border-collapse:collapse;font-size:14px}.daygrid td,.daygrid th{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
 .cell{border-radius:10px;padding:6px 8px;font-weight:600;min-height:38px;cursor:pointer}
 .cell.free{background:#effaf2;color:#166534;border:1px dashed #9fd8b0}.cell.bk{background:#e6eeff;color:var(--blue)}.cell.att{background:#e7f6ec;color:#14532d}.cell.blk{background:#f1f1f1;color:#888}
@@ -66,10 +76,13 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue2);b
 .photo-prev{width:100%;max-height:220px;object-fit:contain;border-radius:12px;background:#f3f3f3;margin-top:8px}
 video{width:100%;border-radius:16px;background:#000;max-height:60vh}
 .center{text-align:center}.mt{margin-top:12px}.mt2{margin-top:20px}.hide{display:none}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;background:var(--ink);color:#fff;padding:12px 16px;border-radius:12px;z-index:30;font-weight:600;max-width:90vw}
-.big{font-size:28px;font-family:Sora;font-weight:800}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:88px;background:var(--ink);color:#fff;padding:12px 16px;border-radius:12px;z-index:30;font-weight:600;max-width:90vw;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.big{font-size:28px;font-family:Sora,'Hind Siliguri',sans-serif;font-weight:800}
 .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:13px}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.hero{text-align:center;padding:26px 16px 20px;background:linear-gradient(180deg,#fff 0%,#fffaf0 100%);border:1.5px solid #f6e3a6}
+.hero img{height:84px;width:auto}.hero h1{margin:10px 0 2px;color:var(--blue)}
 @media (min-width:720px){.kpis{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:360px){.brand img.word{height:17px}.brand img.shield{height:34px}.lang button{padding:5px 7px;min-width:30px}}
 </style>
 </head>
 <body>
@@ -80,20 +93,36 @@ const API = new URLSearchParams(location.search).get('api') || 'https://wzesyetb
 const PHONE = '9748481630', PHONE_TXT = '97484 81630';
 const $ = (s, el = document) => el.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const bn = (n) => String(n).replace(/\d/g, (d) => '০১২৩৪৫৬৭৮৯'[d]);
+
+// ---------- language (each person picks; terms like বুকিং / স্লট / QR / PIN / স্কুটি stay as people say them)
+let LANG = (() => { try { const v = localStorage.getItem('s2w_lang'); return ['bn', 'en', 'hi'].includes(v) ? v : 'bn'; } catch (e) { return 'bn'; } })();
+const L = (bn, en, hi) => (LANG === 'en' ? en : LANG === 'hi' ? hi : bn);
+const N = (n) => (LANG === 'bn' ? String(n).replace(/\d/g, (d) => '০১২৩৪৫৬৭৮৯'[d]) : String(n));
+let RERENDER = () => {};
+function setLang(l) { LANG = l; try { localStorage.setItem('s2w_lang', l); } catch (e) {} document.documentElement.lang = l; RERENDER(); }
+document.documentElement.lang = LANG;
+document.addEventListener('click', (e) => { const b = e.target.closest('[data-lang]'); if (b && b.dataset.lang !== LANG) setLang(b.dataset.lang); });
+
 const money = (n) => '₹' + Number(n || 0).toLocaleString('en-IN');
 const IST = 330 * 60000;
 const istParts = (iso) => { const d = new Date(Date.parse(iso) + IST); return { y: d.getUTCFullYear(), mo: d.getUTCMonth(), d: d.getUTCDate(), h: d.getUTCHours(), m: d.getUTCMinutes(), wd: d.getUTCDay() }; };
-const WD = ['রবি', 'সোম', 'মঙ্গল', 'বুধ', 'বৃহস্পতি', 'শুক্র', 'শনি'], MO = ['জানু', 'ফেব্রু', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টে', 'অক্টো', 'নভে', 'ডিসে'];
-function tTime(iso) { const p = istParts(iso); const h = p.h % 12 || 12; return `${bn(h)}:${bn(String(p.m).padStart(2, '0'))} ${p.h < 12 ? 'সকাল' : p.h < 16 ? 'দুপুর' : p.h < 18 ? 'বিকেল' : 'সন্ধ্যা'}`; }
-function tDay(iso) { const p = istParts(iso); return `${WD[p.wd]}, ${bn(p.d)} ${MO[p.mo]}`; }
+const WD = () => L(['রবি', 'সোম', 'মঙ্গল', 'বুধ', 'বৃহস্পতি', 'শুক্র', 'শনি'], ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], ['रवि', 'सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि']);
+const MO = () => L(['জানু', 'ফেব্রু', 'মার্চ', 'এপ্রিল', 'মে', 'জুন', 'জুলাই', 'আগস্ট', 'সেপ্টে', 'অক্টো', 'নভে', 'ডিসে'], ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], ['जन', 'फ़र', 'मार्च', 'अप्रै', 'मई', 'जून', 'जुला', 'अग', 'सित', 'अक्टू', 'नव', 'दिस']);
+function tTime(iso) {
+  const p = istParts(iso); const h = p.h % 12 || 12; const hm = `${N(h)}:${N(String(p.m).padStart(2, '0'))}`;
+  if (LANG === 'en') return `${hm} ${p.h < 12 ? 'am' : 'pm'}`;
+  if (LANG === 'hi') return `${p.h < 12 ? 'सुबह' : p.h < 16 ? 'दोपहर' : 'शाम'} ${hm}`;
+  return `${hm} ${p.h < 12 ? 'সকাল' : p.h < 16 ? 'দুপুর' : p.h < 18 ? 'বিকেল' : 'সন্ধ্যা'}`;
+}
+function tDay(iso) { const p = istParts(iso); return `${WD()[p.wd]}, ${N(p.d)} ${MO()[p.mo]}`; }
 function istToday(off = 0) { return new Date(Date.now() + IST + off * 864e5).toISOString().slice(0, 10); }
-function dayLabel(ds) { const d = new Date(ds + 'T00:00:00Z'); return { wd: WD[d.getUTCDay()], d: bn(d.getUTCDate()) + ' ' + MO[d.getUTCMonth()] }; }
+function dayLabel(ds) { const d = new Date(ds + 'T00:00:00Z'); return { wd: WD()[d.getUTCDay()], d: N(d.getUTCDate()) + ' ' + MO()[d.getUTCMonth()] }; }
+const kindName = (k) => (k === 'bike' ? L('বাইক', 'Bike', 'बाइक') : L('স্কুটি', 'Scooty', 'स्कूटी'));
 function toast(msg) { document.querySelectorAll('.toast').forEach((x) => x.remove()); const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2600); }
 async function api(action, body = {}) {
-  const r = await fetch(API, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action, ...body }) });
-  const j = await r.json().catch(() => ({ error: 'নেটওয়ার্কে সমস্যা' }));
-  if (!r.ok) { const e = new Error(j.error || 'সমস্যা হয়েছে'); e.status = r.status; e.data = j; throw e; }
+  const r = await fetch(API, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action, lang: LANG, ...body }) });
+  const j = await r.json().catch(() => ({ error: L('নেটওয়ার্কে সমস্যা', 'Network problem', 'नेटवर्क में दिक्कत') }));
+  if (!r.ok) { const e = new Error(j.error || L('সমস্যা হয়েছে', 'Something went wrong', 'कुछ गड़बड़ हुई')); e.status = r.status; e.data = j; throw e; }
   return j;
 }
 function qrSvg(text, size = 200) { const q = qrcode(0, 'M'); q.addData(text); q.make(); return q.createSvgTag({ cellSize: Math.max(2, Math.floor(size / (q.getModuleCount() + 8))), margin: 4, scalable: true }); }
@@ -101,7 +130,7 @@ function compress(file, max = 1080, quality = 0.72) {
   return new Promise((res, rej) => {
     const img = new Image(); const url = URL.createObjectURL(file);
     img.onload = () => { const k = Math.min(1, max / Math.max(img.width, img.height)); const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', quality)); };
-    img.onerror = () => rej(new Error('ছবিটা খোলা গেল না')); img.src = url;
+    img.onerror = () => rej(new Error(L('ছবিটা খোলা গেল না', 'Couldn’t open the photo', 'फ़ोटो खुल नहीं पाई'))); img.src = url;
   });
 }
 function stack(a, b) { // front + back of a card in one picture
@@ -109,7 +138,11 @@ function stack(a, b) { // front + back of a card in one picture
 }
 const waLink = (phone, text) => `https://wa.me/91${String(phone).replace(/\D/g, '').slice(-10)}?text=${encodeURIComponent(text)}`;
 const studentUrl = (token) => `${location.origin}/app/?s=${token}`;
-function header(title, sub = '') { return `<div class="top"><div class="row"><div><div class="brand">SEEKHO <b>2</b> WHEELER</div><div class="sub">${esc(title)}${sub ? ' · ' + esc(sub) : ''}</div></div></div></div>`; }
+const PATULI = () => L('পাটুলি', 'Patuli', 'पाटुली');
+function header(title, sub = '') {
+  return `<div class="top"><div class="row"><div class="brand"><img class="shield" src="/assets/img/logo-shield-s.webp" alt="" width="36" height="40"><div style="min-width:0"><img class="word" src="/assets/img/logo-wordmark-s.webp" alt="Seekho 2 Wheeler" width="80" height="20"><div class="sub"><b>${esc(title)}</b>${sub ? ' · ' + esc(sub) : ''}</div></div></div>
+    <div class="lang" role="group" aria-label="Language"><button data-lang="bn" class="${LANG === 'bn' ? 'on' : ''}">বাং</button><button data-lang="en" class="${LANG === 'en' ? 'on' : ''}">EN</button><button data-lang="hi" class="${LANG === 'hi' ? 'on' : ''}">हि</button></div></div></div>`;
+}
 const ICON = {
   scan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3M7 12h10"/></svg>',
   add: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6M19 8v6M16 11h6"/></svg>',
@@ -120,71 +153,80 @@ const ICON = {
 };
 const params = new URLSearchParams(location.search);
 const app = $('#app');
+const callBtn = (cls = 'btn blue') => `<a class="${cls}" href="tel:${PHONE}">${L('ফোন করুন', 'Call', 'फ़ोन करें')} ${PHONE_TXT}</a>`;
 
 // =========================================================== STUDENT
 async function studentPage(token) {
   let me, date = istToday(1), sel = null;
+  RERENDER = () => { if (me) { render(); if (me.student.status === 'active' && !me.student.inactive) loadSlots(); } else studentPage(token); };
   async function load() { me = await api('me', { token }); render(); if (me.student.status === 'active' && !me.student.inactive) loadSlots(); }
   function render() {
     const s = me.student, pct = Math.round(100 * s.classes_done / s.package);
-    const left = s.package - s.classes_done;
-    app.innerHTML = header(me.branch.name, 'আমার ক্লাস') + `<div class="wrap">
-      <div class="card flex"><div class="ring" style="--p:${pct}"><div>${bn(s.classes_done)}/${bn(s.package)}</div></div>
-        <div><h1>${esc(s.name)}</h1><div class="mut">${s.kind === 'bike' ? 'বাইক' : 'স্কুটি'} · আর ${bn(left)}টা ক্লাস বাকি</div>
-        ${s.total_fee > s.paid ? `<div class="mt"><span class="pill o">বাকি ফি ${money(s.total_fee - s.paid)}</span></div>` : ''}</div></div>
-      ${s.status === 'pending' ? `<div class="card"><h2>অনুমোদনের অপেক্ষায়</h2><p>সেন্টার আপনার কার্ড মিলিয়ে দেখছে। অনুমোদন হলে এই লিংকেই বুকিং খুলে যাবে।</p><a class="btn blue" href="tel:${PHONE}">ফোন করুন ${PHONE_TXT}</a></div>` : ''}
-      ${s.status === 'done' ? `<div class="card"><h2>অভিনন্দন! 🎉</h2><p>আপনার সব ক্লাস শেষ হয়েছে।</p></div>` : ''}
-      ${me.upcoming.length ? `<div class="card"><h2>আপনার পরের ক্লাস</h2>${me.upcoming.map((u) => `<div class="flex between mt"><div><div class="big" style="font-size:20px">${tTime(u.slot)}</div><div class="mut">${tDay(u.slot)}</div></div>
-          ${u.can_cancel ? `<button class="btn ghost sm" data-cancel="${u.id}">বাতিল</button>` : '<span class="mut" style="font-size:13px">বাতিলের সময় পেরিয়েছে</span>'}</div>`).join('')}</div>` : ''}
-      ${s.status === 'active' && s.inactive ? `<div class="card"><h2>অ্যাকাউন্ট বন্ধ আছে</h2><p>অনেকদিন ক্লাস হয়নি বলে বুকিং বন্ধ। আবার শুরু করতে অনুরোধ পাঠান, সেন্টার চালু করে দেবে।</p>${s.reactivation === 'requested' ? '<div class="okmsg">অনুরোধ পাঠানো হয়েছে। সেন্টার চালু করলেই বুক করতে পারবেন।</div>' : '<button class="btn block" id="react">আবার চালুর অনুরোধ পাঠান</button>'}</div>` : ''}
-      ${s.status === 'active' && !s.inactive ? `<div class="card" id="bookcard"><h2>ক্লাস বুক করুন</h2><div class="mut">সপ্তাহে ২টো ক্লাস · আগের ক্লাসের ৪৮ ঘণ্টা পরে পরেরটা · ক্লাসের ${bn(me.branch.window_hours)} ঘণ্টা আগে বুকিং খোলে, ${bn(me.branch.lead_hours)} ঘণ্টা আগে পর্যন্ত বুক করা যায় · ${bn(me.branch.cancel_hours)} ঘণ্টা আগে পর্যন্ত বাতিল</div>
-        <div class="days mt" id="days"></div><div id="slots"><div class="mut mt">লোড হচ্ছে…</div></div><div id="bookbar"></div></div>` : ''}
-      <div class="card center"><h2>ক্লাসে এসে এই QR দেখান</h2><div class="qr">${qrSvg(s.qr)}</div><div class="mut mt">${esc(s.qr)}</div></div>
-      ${me.history.length ? `<div class="card"><h3>আগের ক্লাস</h3><div class="list">${me.history.map((h) => `<div class="it"><div style="flex:1">${tDay(h.slot)} · ${tTime(h.slot)}</div>${{ attended: '<span class="pill g">হয়েছে</span>', no_show: '<span class="pill y">আসেননি</span>', cancelled: '<span class="pill">বাতিল</span>', cancelled_centre: '<span class="pill r">সেন্টার বাতিল করেছে</span>' }[h.status] || ''}</div>`).join('')}</div></div>` : ''}
-      <div class="card"><div class="mut">অনলাইনে বুক করতে অসুবিধা হলে ফোন করুন, আমরা বুক করে দেব।</div><a class="btn wa block mt" href="tel:${PHONE}">📞 ${PHONE_TXT}</a></div>
+    const left = s.package - s.classes_done, B = me.branch;
+    app.innerHTML = header(B.slug === 'patuli' ? PATULI() : B.name, L('আমার ক্লাস', 'My classes', 'मेरी क्लास')) + `<div class="wrap">
+      <div class="card flex"><div class="ring" style="--p:${pct}"><div>${N(s.classes_done)}/${N(s.package)}</div></div>
+        <div><h1>${esc(s.name)}</h1><div class="mut">${kindName(s.kind)} · ${L(`আর ${N(left)}টা ক্লাস বাকি`, `${left} classes left`, `${left} क्लास बाकी`)}</div>
+        ${s.total_fee > s.paid ? `<div class="mt"><span class="pill o">${L('বাকি ফি', 'Fee due', 'बाकी फीस')} ${money(s.total_fee - s.paid)}</span></div>` : ''}</div></div>
+      ${s.status === 'pending' ? `<div class="card"><h2>${L('অনুমোদনের অপেক্ষায়', 'Waiting for approval', 'अप्रूवल का इंतज़ार')}</h2><p>${L('সেন্টার আপনার কার্ড মিলিয়ে দেখছে। অনুমোদন হলে এই লিংকেই বুকিং খুলে যাবে।', 'The centre is checking your card. Once approved, booking opens on this same link.', 'सेंटर आपका कार्ड जाँच रहा है। अप्रूव होते ही इसी लिंक पर बुकिंग खुल जाएगी।')}</p>${callBtn()}</div>` : ''}
+      ${s.status === 'done' ? `<div class="card"><h2>${L('অভিনন্দন! 🎉', 'Congratulations! 🎉', 'बधाई हो! 🎉')}</h2><p>${L('আপনার সব ক্লাস শেষ হয়েছে।', 'All your classes are done.', 'आपकी सारी क्लास पूरी हो गई हैं।')}</p></div>` : ''}
+      ${me.upcoming.length ? `<div class="card"><h2>${L('আপনার পরের ক্লাস', 'Your next class', 'आपकी अगली क्लास')}</h2>${me.upcoming.map((u) => `<div class="flex between mt"><div><div class="big" style="font-size:20px">${tTime(u.slot)}</div><div class="mut">${tDay(u.slot)}</div></div>
+          ${u.can_cancel ? `<button class="btn ghost sm" data-cancel="${u.id}">${L('বাতিল', 'Cancel', 'कैंसल')}</button>` : `<span class="mut" style="font-size:13px">${L('বাতিলের সময় পেরিয়েছে', 'Too late to cancel', 'कैंसल का समय निकल गया')}</span>`}</div>`).join('')}</div>` : ''}
+      ${s.status === 'active' && s.inactive ? `<div class="card"><h2>${L('অ্যাকাউন্ট বন্ধ আছে', 'Account paused', 'अकाउंट बंद है')}</h2><p>${L('অনেকদিন ক্লাস হয়নি বলে বুকিং বন্ধ। আবার শুরু করতে অনুরোধ পাঠান, সেন্টার চালু করে দেবে।', 'Booking is paused because there was no class for a long time. Send a request and the centre will restart it.', 'काफ़ी दिनों से क्लास नहीं हुई, इसलिए बुकिंग बंद है। रिक्वेस्ट भेजें, सेंटर फिर से चालू कर देगा।')}</p>${s.reactivation === 'requested' ? `<div class="okmsg">${L('অনুরোধ পাঠানো হয়েছে। সেন্টার চালু করলেই বুক করতে পারবেন।', 'Request sent. You can book as soon as the centre restarts it.', 'रिक्वेस्ट भेज दी गई है। सेंटर चालू करते ही बुक कर सकेंगे।')}</div>` : `<button class="btn block" id="react">${L('আবার চালুর অনুরোধ পাঠান', 'Request restart', 'फिर से चालू करने की रिक्वेस्ट भेजें')}</button>`}</div>` : ''}
+      ${s.status === 'active' && !s.inactive ? `<div class="card" id="bookcard"><h2>${L('ক্লাস বুক করুন', 'Book a class', 'क्लास बुक करें')}</h2><div class="mut">${L(
+        `সপ্তাহে ২টো ক্লাস · আগের ক্লাসের ৪৮ ঘণ্টা পরে পরেরটা · ক্লাসের ${N(B.window_hours)} ঘণ্টা আগে বুকিং খোলে, ${N(B.lead_hours)} ঘণ্টা আগে পর্যন্ত বুক করা যায় · ${N(B.cancel_hours)} ঘণ্টা আগে পর্যন্ত বাতিল`,
+        `2 classes a week · next class 48 hours after the last · booking opens ${B.window_hours} hours before a class and closes ${B.lead_hours} hours before · cancel up to ${B.cancel_hours} hours before`,
+        `हफ़्ते में 2 क्लास · पिछली क्लास के 48 घंटे बाद अगली · बुकिंग क्लास से ${B.window_hours} घंटे पहले खुलती है, ${B.lead_hours} घंटे पहले तक बुक कर सकते हैं · ${B.cancel_hours} घंटे पहले तक कैंसल`)}</div>
+        <div class="days mt" id="days"></div><div id="slots"><div class="mut mt">${L('লোড হচ্ছে…', 'Loading…', 'लोड हो रहा है…')}</div></div><div id="bookbar"></div></div>` : ''}
+      <div class="card center"><h2>${L('ক্লাসে এসে এই QR দেখান', 'Show this QR at your class', 'क्लास में आकर यह QR दिखाएँ')}</h2><div class="qr">${qrSvg(s.qr)}</div><div class="mut mt">${esc(s.qr)}</div></div>
+      ${me.history.length ? `<div class="card"><h3>${L('আগের ক্লাস', 'Past classes', 'पिछली क्लास')}</h3><div class="list">${me.history.map((h) => `<div class="it"><div style="flex:1">${tDay(h.slot)} · ${tTime(h.slot)}</div>${{ attended: `<span class="pill g">${L('হয়েছে', 'Done', 'हो गई')}</span>`, no_show: `<span class="pill y">${L('আসেননি', 'Missed', 'नहीं आए')}</span>`, cancelled: `<span class="pill">${L('বাতিল', 'Cancelled', 'कैंसल')}</span>`, cancelled_centre: `<span class="pill r">${L('সেন্টার বাতিল করেছে', 'Cancelled by centre', 'सेंटर ने कैंसल किया')}</span>` }[h.status] || ''}</div>`).join('')}</div></div>` : ''}
+      <div class="card"><div class="mut">${L('অনলাইনে বুক করতে অসুবিধা হলে ফোন করুন, আমরা বুক করে দেব।', 'Trouble booking online? Call us and we’ll book it for you.', 'ऑनलाइन बुक करने में दिक्कत हो तो फ़ोन करें, हम बुक कर देंगे।')}</div><a class="btn wa block mt" href="tel:${PHONE}">📞 ${PHONE_TXT}</a></div>
     </div>`;
-    app.querySelectorAll('[data-cancel]').forEach((b) => b.onclick = async () => { if (!confirm('ক্লাসটা বাতিল করবেন?')) return; try { me = await api('cancel', { token, booking: b.dataset.cancel }); render(); loadSlots(); toast('বাতিল হয়েছে'); } catch (e) { toast(e.message); } });
+    app.querySelectorAll('[data-cancel]').forEach((b) => b.onclick = async () => { if (!confirm(L('ক্লাসটা বাতিল করবেন?', 'Cancel this class?', 'यह क्लास कैंसल करें?'))) return; try { me = await api('cancel', { token, booking: b.dataset.cancel }); render(); loadSlots(); toast(L('বাতিল হয়েছে', 'Cancelled', 'कैंसल हो गई')); } catch (e) { toast(e.message); } });
     if ($('#react')) $('#react').onclick = async () => { try { me = await api('reactivate_request', { token }); render(); } catch (e) { toast(e.message); } };
-    const days = $('#days'); if (days) { days.innerHTML = Array.from({ length: Math.ceil(me.branch.window_hours / 24) + 1 }, (_, i) => istToday(i)).map((d) => { const l = dayLabel(d); return `<button data-d="${d}" class="${d === date ? 'on' : ''}">${l.wd}<small>${l.d}</small></button>`; }).join(''); days.querySelectorAll('button').forEach((b) => b.onclick = () => { date = b.dataset.d; sel = null; days.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b)); loadSlots(); }); }
+    const days = $('#days'); if (days) { days.innerHTML = Array.from({ length: Math.ceil(B.window_hours / 24) + 1 }, (_, i) => istToday(i)).map((d) => { const l = dayLabel(d); return `<button data-d="${d}" class="${d === date ? 'on' : ''}">${l.wd}<small>${l.d}</small></button>`; }).join(''); days.querySelectorAll('button').forEach((b) => b.onclick = () => { date = b.dataset.d; sel = null; days.querySelectorAll('button').forEach((x) => x.classList.toggle('on', x === b)); loadSlots(); }); }
   }
   async function loadSlots() {
-    const box = $('#slots'); if (!box) return; box.innerHTML = '<div class="mut mt">লোড হচ্ছে…</div>'; $('#bookbar').innerHTML = '';
+    const box = $('#slots'); if (!box) return; box.innerHTML = `<div class="mut mt">${L('লোড হচ্ছে…', 'Loading…', 'लोड हो रहा है…')}</div>`; $('#bookbar').innerHTML = '';
     try {
       const r = await api('slots', { token, date });
       const free = r.slots.filter((x) => x.ok);
       box.innerHTML = `<div class="slots">${r.slots.map((x) => `<button class="slot ${x.ok ? '' : 'no'}" data-s="${x.slot}" data-why="${esc(x.text)}">${tTime(x.slot)}</button>`).join('')}</div>
-        ${free.length ? '' : `<div class="mut mt">${esc((r.slots.find((x) => !x.ok) || {}).text || 'এই দিনে ফাঁকা নেই')}</div>`}`;
+        ${free.length ? '' : `<div class="mut mt">${esc((r.slots.find((x) => !x.ok) || {}).text || L('এই দিনে ফাঁকা নেই', 'Nothing free on this day', 'इस दिन कुछ खाली नहीं'))}</div>`}`;
       box.querySelectorAll('.slot').forEach((b) => b.onclick = () => {
-        if (b.classList.contains('no')) { toast(b.dataset.why || 'এই সময় পাওয়া যাবে না'); return; }
+        if (b.classList.contains('no')) { toast(b.dataset.why || L('এই সময় পাওয়া যাবে না', 'This time isn’t available', 'यह समय नहीं मिलेगा')); return; }
         sel = b.dataset.s; box.querySelectorAll('.slot').forEach((x) => x.classList.toggle('sel', x === b));
-        $('#bookbar').innerHTML = `<button class="btn block mt" id="go">${tDay(sel)} · ${tTime(sel)} বুক করুন</button>`;
-        $('#go').onclick = async () => { $('#go').disabled = true; try { me = await api('book', { token, slot: sel }); sel = null; render(); loadSlots(); toast('বুক হয়ে গেছে ✓'); window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { toast(e.message); loadSlots(); } };
+        $('#bookbar').innerHTML = `<button class="btn block mt" id="go">${L(`${tDay(sel)} · ${tTime(sel)} বুক করুন`, `Book ${tDay(sel)} · ${tTime(sel)}`, `${tDay(sel)} · ${tTime(sel)} बुक करें`)}</button>`;
+        $('#go').onclick = async () => { $('#go').disabled = true; try { me = await api('book', { token, slot: sel }); sel = null; render(); loadSlots(); toast(L('বুক হয়ে গেছে ✓', 'Booked ✓', 'बुक हो गई ✓')); window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { toast(e.message); loadSlots(); } };
       });
     } catch (e) { box.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
   }
-  try { await load(); } catch (e) { app.innerHTML = header('ক্লাস বুকিং') + `<div class="wrap"><div class="card"><div class="err">${esc(e.message)}</div><a class="btn blue" href="tel:${PHONE}">ফোন করুন ${PHONE_TXT}</a></div></div>`; }
+  try { await load(); } catch (e) { app.innerHTML = header(L('ক্লাস বুকিং', 'Class booking', 'क्लास बुकिंग')) + `<div class="wrap"><div class="card"><div class="err">${esc(e.message)}</div>${callBtn()}</div></div>`; }
 }
 
 // =========================================================== OLD STUDENT (card upload)
 function oldPage(branch) {
   let front = '', back = '';
-  app.innerHTML = header('পুরোনো শিক্ষার্থী', 'কার্ড দিয়ে যুক্ত হোন') + `<div class="wrap"><div class="card">
-    <h1>আপনার ভর্তির কার্ডের ছবি দিন</h1><p class="mut">কার্ড থেকে আপনার ক্লাস আর ফি-র হিসাব নিজে থেকে উঠে যাবে। সেন্টার মিলিয়ে নেওয়ার পর বুকিং খুলবে।</p>
-    <label>আপনার নাম</label><input id="nm" autocomplete="name">
-    <label>ফোন নম্বর</label><input id="ph" inputmode="numeric" maxlength="10" placeholder="১০ সংখ্যার মোবাইল">
-    <label>কার্ডের সামনের দিক</label><input type="file" accept="image/*" capture="environment" id="f1"><img id="p1" class="photo-prev hide">
-    <label>কার্ডের পেছনের দিক</label><input type="file" accept="image/*" capture="environment" id="f2"><img id="p2" class="photo-prev hide">
-    <div id="msg"></div><button class="btn block mt2" id="go">জমা দিন</button></div></div>`;
-  const pick = (inp, img, set) => $(inp).onchange = async (e) => { const f = e.target.files[0]; if (!f) return; const d = await compress(f, 1400, 0.8); set(d); $(img).src = d; $(img).classList.remove('hide'); };
-  pick('#f1', '#p1', (d) => front = d); pick('#f2', '#p2', (d) => back = d);
-  $('#go').onclick = async () => {
-    const name = $('#nm').value.trim(), phone = $('#ph').value.replace(/\D/g, '');
-    if (!name || phone.length !== 10) return $('#msg').innerHTML = '<div class="err">নাম আর ১০ সংখ্যার ফোন নম্বর দিন।</div>';
-    if (!front || !back) return $('#msg').innerHTML = '<div class="err">কার্ডের দুই দিকের ছবি দিন।</div>';
-    $('#go').disabled = true; $('#go').textContent = 'কার্ড পড়া হচ্ছে…';
-    try { const card = await stack(front, back); const r = await api('old_submit', { branch, name, phone, card }); location.href = `/app/?s=${r.token}` + (params.get('api') ? `&api=${encodeURIComponent(params.get('api'))}` : ''); }
-    catch (e) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`; $('#go').disabled = false; $('#go').textContent = 'জমা দিন'; }
+  const draw = () => {
+    const keep = { nm: $('#nm')?.value || '', ph: $('#ph')?.value || '' };
+    app.innerHTML = header(L('পুরোনো শিক্ষার্থী', 'Existing student', 'पुराने स्टूडेंट'), L('কার্ড দিয়ে যুক্ত হোন', 'Join with your card', 'कार्ड से जुड़ें')) + `<div class="wrap"><div class="card">
+      <h1>${L('আপনার ভর্তির কার্ডের ছবি দিন', 'Add photos of your admission card', 'अपने एडमिशन कार्ड की फ़ोटो दें')}</h1><p class="mut">${L('কার্ড থেকে আপনার ক্লাস আর ফি-র হিসাব নিজে থেকে উঠে যাবে। সেন্টার মিলিয়ে নেওয়ার পর বুকিং খুলবে।', 'Your classes and fees are read from the card automatically. Booking opens after the centre checks it.', 'कार्ड से आपकी क्लास और फीस का हिसाब अपने आप आ जाएगा। सेंटर के जाँचने के बाद बुकिंग खुलेगी।')}</p>
+      <label>${L('আপনার নাম', 'Your name', 'आपका नाम')}</label><input id="nm" autocomplete="name" value="${esc(keep.nm)}">
+      <label>${L('ফোন নম্বর', 'Phone number', 'फ़ोन नंबर')}</label><input id="ph" inputmode="numeric" maxlength="10" placeholder="${L('১০ সংখ্যার মোবাইল', '10-digit mobile', '10 अंकों का मोबाइल')}" value="${esc(keep.ph)}">
+      <label>${L('কার্ডের সামনের দিক', 'Card front', 'कार्ड का आगे का हिस्सा')}</label><input type="file" accept="image/*" capture="environment" id="f1"><img id="p1" class="photo-prev ${front ? '' : 'hide'}" src="${front}">
+      <label>${L('কার্ডের পেছনের দিক', 'Card back', 'कार्ड का पीछे का हिस्सा')}</label><input type="file" accept="image/*" capture="environment" id="f2"><img id="p2" class="photo-prev ${back ? '' : 'hide'}" src="${back}">
+      <div id="msg"></div><button class="btn block mt2" id="go">${L('জমা দিন', 'Submit', 'जमा करें')}</button></div></div>`;
+    const pick = (inp, img, set) => $(inp).onchange = async (e) => { const f = e.target.files[0]; if (!f) return; const d = await compress(f, 1400, 0.8); set(d); $(img).src = d; $(img).classList.remove('hide'); };
+    pick('#f1', '#p1', (d) => front = d); pick('#f2', '#p2', (d) => back = d);
+    $('#go').onclick = async () => {
+      const name = $('#nm').value.trim(), phone = $('#ph').value.replace(/\D/g, '');
+      if (!name || phone.length !== 10) return $('#msg').innerHTML = `<div class="err">${L('নাম আর ১০ সংখ্যার ফোন নম্বর দিন।', 'Enter your name and a 10-digit phone number.', 'नाम और 10 अंकों का फ़ोन नंबर लिखें।')}</div>`;
+      if (!front || !back) return $('#msg').innerHTML = `<div class="err">${L('কার্ডের দুই দিকের ছবি দিন।', 'Add photos of both sides of the card.', 'कार्ड के दोनों तरफ़ की फ़ोटो दें।')}</div>`;
+      $('#go').disabled = true; $('#go').textContent = L('কার্ড পড়া হচ্ছে…', 'Reading the card…', 'कार्ड पढ़ा जा रहा है…');
+      try { const card = await stack(front, back); const r = await api('old_submit', { branch, name, phone, card }); location.href = `/app/?s=${r.token}` + (params.get('api') ? `&api=${encodeURIComponent(params.get('api'))}` : ''); }
+      catch (e) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`; $('#go').disabled = false; $('#go').textContent = L('জমা দিন', 'Submit', 'जमा करें'); }
+    };
   };
+  RERENDER = draw; draw();
 }
 
 // =========================================================== STAFF
@@ -195,29 +237,36 @@ const sapi = (action, body = {}) => api(action, { session: S.session, ...body })
 
 function loginPage() {
   let role = 'trainer';
-  app.innerHTML = header('স্টাফ লগইন', 'পাটুলি') + `<div class="wrap"><div class="card"><h1>লগইন</h1>
-    <div class="seg mt"><button data-r="trainer" class="on">ট্রেনার</button><button data-r="admin">অ্যাডমিন</button></div>
-    <label id="lbl">PIN</label><input id="sec" type="password" inputmode="numeric" autocomplete="current-password">
-    <div id="msg"></div><button class="btn block mt2" id="go">ঢুকুন</button></div>
-    <div class="card"><h3>পুরোনো শিক্ষার্থীদের জন্য লিংক</h3><p class="mut">এই লিংক পাঠালে পুরোনো শিক্ষার্থীরা কার্ডের ছবি দিয়ে নিজেই যুক্ত হতে পারবেন।</p>
-    <button class="btn wa block" id="oldlink">WhatsApp-এ পাঠানোর জন্য কপি করুন</button></div></div>`;
-  app.querySelectorAll('.seg button').forEach((b) => b.onclick = () => { role = b.dataset.r; app.querySelectorAll('.seg button').forEach((x) => x.classList.toggle('on', x === b)); $('#lbl').textContent = role === 'admin' ? 'পাসওয়ার্ড' : 'PIN'; $('#sec').inputMode = role === 'admin' ? 'text' : 'numeric'; });
-  $('#oldlink').onclick = () => { const u = `${location.origin}/app/?old=patuli`; navigator.clipboard?.writeText(`Seekho 2 Wheeler পাটুলি: আপনার ভর্তির কার্ডের ছবি দিয়ে এই লিংকে যুক্ত হোন, তারপর অনলাইনে ক্লাস বুক করতে পারবেন: ${u}`); toast('লিংক কপি হয়েছে'); };
-  const go = async () => { try { const r = await api('login', { branch: 'patuli', role, secret: $('#sec').value }); S = r; saveSession(r); staffHome(); } catch (e) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`; } };
-  $('#go').onclick = go; $('#sec').onkeydown = (e) => { if (e.key === 'Enter') go(); };
+  const draw = () => {
+    const sec = $('#sec')?.value || '';
+    app.innerHTML = header(L('স্টাফ লগইন', 'Staff login', 'स्टाफ़ लॉगिन'), PATULI()) + `<div class="wrap">
+      <div class="card hero"><img src="/assets/img/logo-shield.png" alt="Seekho 2 Wheeler"><h1>Seekho 2 Wheeler</h1><div class="mut">${PATULI()} · ${L('ক্লাস বুকিং', 'Class booking', 'क्लास बुकिंग')}</div></div>
+      <div class="card"><h2>${L('লগইন', 'Log in', 'लॉगिन')}</h2>
+      <div class="seg mt"><button data-r="trainer" class="${role === 'trainer' ? 'on' : ''}">${L('ট্রেনার', 'Trainer', 'ट्रेनर')}</button><button data-r="admin" class="${role === 'admin' ? 'on' : ''}">${L('অ্যাডমিন', 'Admin', 'एडमिन')}</button></div>
+      <label id="lbl">${role === 'admin' ? L('পাসওয়ার্ড', 'Password', 'पासवर्ड') : 'PIN'}</label><input id="sec" type="password" inputmode="${role === 'admin' ? 'text' : 'numeric'}" autocomplete="current-password" value="${esc(sec)}">
+      <div id="msg"></div><button class="btn block mt2" id="go">${L('ঢুকুন', 'Log in', 'अंदर जाएँ')}</button></div>
+      <div class="card"><h3>${L('পুরোনো শিক্ষার্থীদের জন্য লিংক', 'Link for existing students', 'पुराने स्टूडेंट के लिए लिंक')}</h3><p class="mut">${L('এই লিংক পাঠালে পুরোনো শিক্ষার্থীরা কার্ডের ছবি দিয়ে নিজেই যুক্ত হতে পারবেন।', 'Send this link and existing students can join by adding a photo of their card.', 'यह लिंक भेजने पर पुराने स्टूडेंट कार्ड की फ़ोटो देकर खुद जुड़ सकेंगे।')}</p>
+      <button class="btn wa block" id="oldlink">${L('WhatsApp-এ পাঠানোর জন্য কপি করুন', 'Copy to send on WhatsApp', 'WhatsApp पर भेजने के लिए कॉपी करें')}</button></div></div>`;
+    app.querySelectorAll('.seg button').forEach((b) => b.onclick = () => { role = b.dataset.r; app.querySelectorAll('.seg button').forEach((x) => x.classList.toggle('on', x === b)); $('#lbl').textContent = role === 'admin' ? L('পাসওয়ার্ড', 'Password', 'पासवर्ड') : 'PIN'; $('#sec').inputMode = role === 'admin' ? 'text' : 'numeric'; });
+    $('#oldlink').onclick = () => { const u = `${location.origin}/app/?old=patuli`; navigator.clipboard?.writeText(L(`Seekho 2 Wheeler পাটুলি: আপনার ভর্তির কার্ডের ছবি দিয়ে এই লিংকে যুক্ত হোন, তারপর অনলাইনে ক্লাস বুক করতে পারবেন: ${u}`, `Seekho 2 Wheeler Patuli: join with a photo of your admission card on this link, then book your classes online: ${u}`, `Seekho 2 Wheeler पाटुली: अपने एडमिशन कार्ड की फ़ोटो देकर इस लिंक पर जुड़ें, फिर ऑनलाइन क्लास बुक कर सकेंगे: ${u}`)); toast(L('লিংক কপি হয়েছে', 'Link copied', 'लिंक कॉपी हो गया')); };
+    const go = async () => { try { const r = await api('login', { branch: 'patuli', role, secret: $('#sec').value }); S = r; saveSession(r); staffHome(); } catch (e) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`; } };
+    $('#go').onclick = go; $('#sec').onkeydown = (e) => { if (e.key === 'Enter') go(); };
+  };
+  RERENDER = draw; draw();
 }
 
 let tab = 'scan';
 function staffHome() {
+  RERENDER = () => { stopCam(); document.querySelectorAll('.modal').forEach((m) => m.remove()); staffHome(); };
   const P = S.role === 'admin' ? { dashboard: 1, students: 1, bookings: 1, money: 1 } : (S.perms || {});
-  const tabs = [['scan', 'স্ক্যান', ICON.scan], ['admit', 'ভর্তি', ICON.add]];
-  if (P.bookings) tabs.push(['day', 'বুকিং', ICON.cal]);
-  if (P.students) tabs.push(['students', 'শিক্ষার্থী', ICON.ppl]);
-  if (P.dashboard) tabs.push(['dash', 'হিসাব', ICON.chart]);
-  if (S.role === 'admin') tabs.push(['settings', 'সেটিংস', ICON.gear]);
+  const tabs = [['scan', L('স্ক্যান', 'Scan', 'स्कैन'), ICON.scan], ['admit', L('ভর্তি', 'Admit', 'एडमिशन'), ICON.add]];
+  if (P.bookings) tabs.push(['day', L('বুকিং', 'Bookings', 'बुकिंग'), ICON.cal]);
+  if (P.students) tabs.push(['students', L('শিক্ষার্থী', 'Students', 'स्टूडेंट'), ICON.ppl]);
+  if (P.dashboard) tabs.push(['dash', L('হিসাব', 'Accounts', 'हिसाब'), ICON.chart]);
+  if (S.role === 'admin') tabs.push(['settings', L('সেটিংস', 'Settings', 'सेटिंग्स'), ICON.gear]);
   if (!tabs.find((t) => t[0] === tab)) tab = 'scan';
-  app.innerHTML = header(S.branch.name, S.role === 'admin' ? 'অ্যাডমিন' : 'ট্রেনার') + `<div class="wrap" id="main"></div>
-    <nav class="tabs">${tabs.map((t) => `<button data-t="${t[0]}" class="${t[0] === tab ? 'on' : ''}">${t[2]}${t[1]}</button>`).join('')}</nav>`;
+  app.innerHTML = header(S.branch.slug === 'patuli' ? PATULI() : S.branch.name, S.role === 'admin' ? L('অ্যাডমিন', 'Admin', 'एडमिन') : L('ট্রেনার', 'Trainer', 'ट्रेनर')) + `<div class="wrap" id="main"></div>
+    <nav class="tabs">${tabs.map((t) => `<button data-t="${t[0]}" class="${t[0] === tab ? 'on' : ''}"><span class="ic">${t[2]}</span>${t[1]}</button>`).join('')}</nav>`;
   app.querySelectorAll('.tabs button').forEach((b) => b.onclick = () => { stopCam(); tab = b.dataset.t; staffHome(); });
   ({ scan: scanTab, admit: admitTab, day: dayTab, students: studentsTab, dash: dashTab, settings: settingsTab })[tab]($('#main'));
 }
@@ -227,18 +276,19 @@ let camStream = null, camTimer = null;
 function stopCam() { if (camTimer) cancelAnimationFrame(camTimer); camTimer = null; if (camStream) camStream.getTracks().forEach((t) => t.stop()); camStream = null; }
 async function loadJsQR() { if (window.jsQR) return; await new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
 function scanTab(el) {
-  el.innerHTML = `<div class="card"><h2>QR স্ক্যান করে ক্লাস গুনুন</h2><video id="v" playsinline muted class="hide"></video>
-    <button class="btn blue block mt" id="cam">📷 ক্যামেরা চালু করুন</button>
-    <label>অথবা কোড লিখুন</label><div class="flex"><input id="code" placeholder="S2W-XXXXXX" autocapitalize="characters"><button class="btn sm" id="sub">দেখুন</button></div>
+  el.innerHTML = `<div class="card"><h2>${L('QR স্ক্যান করে ক্লাস গুনুন', 'Scan the QR to count the class', 'QR स्कैन करके क्लास गिनें')}</h2><video id="v" playsinline muted class="hide"></video>
+    <button class="btn blue block mt" id="cam">📷 ${L('ক্যামেরা চালু করুন', 'Turn on camera', 'कैमरा चालू करें')}</button>
+    <label>${L('অথবা কোড লিখুন', 'Or type the code', 'या कोड लिखें')}</label><div class="flex"><input id="code" placeholder="S2W-XXXXXX" autocapitalize="characters"><button class="btn sm" id="sub">${L('দেখুন', 'Check', 'देखें')}</button></div>
     <div id="res"></div></div>`;
   const handle = async (code, force = false) => {
     stopCam(); $('#v').classList.add('hide');
-    const box = $('#res'); box.innerHTML = '<div class="mut mt">মিলিয়ে দেখা হচ্ছে…</div>';
+    const box = $('#res'); box.innerHTML = `<div class="mut mt">${L('মিলিয়ে দেখা হচ্ছে…', 'Checking…', 'जाँच हो रही है…')}</div>`;
     try {
       const r = await sapi('scan', { qr: code, force });
-      if (r.ok) box.innerHTML = `<div class="okmsg">✓ ${esc(r.name)}: ক্লাস গোনা হলো (${bn(r.done)}/${bn(r.package)})${r.walk_in ? ' · বুকিং ছাড়া' : ''}</div>`;
-      else if (r.reason === 'no_booking') { box.innerHTML = `<div class="err">${esc(r.name)}-এর এখন কোনো বুকিং নেই (${bn(r.done)}/${bn(r.package)})।</div><button class="btn block" id="force">স্কুটি ফাঁকা থাকলে তবু ক্লাস দিন</button>`; $('#force').onclick = () => handle(code, true); }
-      else box.innerHTML = `<div class="err">${esc(r.name ? r.name + ': ' : '')}${{ unknown_qr: 'এই QR চেনা যাচ্ছে না', already_today: 'আজকের ক্লাস আগেই গোনা হয়েছে', package_used: 'সব ক্লাস শেষ', pending: 'এখনো অনুমোদন হয়নি (শিক্ষার্থী তালিকায় অনুমোদন দিন)' }[r.reason] || r.reason}</div>`;
+      const cnt = `${N(r.done)}/${N(r.package)}`;
+      if (r.ok) box.innerHTML = `<div class="okmsg">✓ ${esc(r.name)}: ${L('ক্লাস গোনা হলো', 'class counted', 'क्लास गिनी गई')} (${cnt})${r.walk_in ? ' · ' + L('বুকিং ছাড়া', 'without booking', 'बिना बुकिंग') : ''}</div>`;
+      else if (r.reason === 'no_booking') { box.innerHTML = `<div class="err">${L(`${esc(r.name)}-এর এখন কোনো বুকিং নেই (${cnt})।`, `${esc(r.name)} has no booking now (${cnt}).`, `${esc(r.name)} की अभी कोई बुकिंग नहीं है (${cnt})।`)}</div><button class="btn block" id="force">${L('স্কুটি ফাঁকা থাকলে তবু ক্লাস দিন', 'Give the class anyway if a scooty is free', 'स्कूटी खाली हो तो फिर भी क्लास दें')}</button>`; $('#force').onclick = () => handle(code, true); }
+      else box.innerHTML = `<div class="err">${esc(r.name ? r.name + ': ' : '')}${{ unknown_qr: L('এই QR চেনা যাচ্ছে না', 'This QR isn’t recognised', 'यह QR पहचाना नहीं गया'), already_today: L('আজকের ক্লাস আগেই গোনা হয়েছে', 'Today’s class is already counted', 'आज की क्लास पहले ही गिनी जा चुकी है'), package_used: L('সব ক্লাস শেষ', 'All classes used', 'सारी क्लास पूरी'), pending: L('এখনো অনুমোদন হয়নি (শিক্ষার্থী তালিকায় অনুমোদন দিন)', 'Not approved yet (approve in the students list)', 'अभी अप्रूव नहीं हुआ (स्टूडेंट लिस्ट में अप्रूव करें)'), not_active: L('এই শিক্ষার্থী এখন চালু নেই', 'This student is not active', 'यह स्टूडेंट अभी चालू नहीं है'), full: L('সব স্কুটি এখন বুক', 'All scooties are booked now', 'सारी स्कूटी अभी बुक हैं') }[r.reason] || r.reason}</div>`;
     } catch (e) { box.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
   };
   $('#sub').onclick = () => handle($('#code').value.trim().toUpperCase());
@@ -250,29 +300,29 @@ function scanTab(el) {
       const c = document.createElement('canvas'), x = c.getContext('2d', { willReadFrequently: true });
       const tick = () => { if (!camStream) return; if (v.readyState === 4) { c.width = v.videoWidth; c.height = v.videoHeight; x.drawImage(v, 0, 0); const d = x.getImageData(0, 0, c.width, c.height); const q = window.jsQR(d.data, c.width, c.height); if (q && q.data) { navigator.vibrate?.(80); return handle(q.data.trim()); } } camTimer = requestAnimationFrame(tick); };
       tick();
-    } catch (e) { toast('ক্যামেরা চালু হলো না। কোড লিখে দিন।'); }
+    } catch (e) { toast(L('ক্যামেরা চালু হলো না। কোড লিখে দিন।', 'Camera didn’t start. Type the code instead.', 'कैमरा चालू नहीं हुआ। कोड लिख दें।')); }
   };
 }
 
 // ---------- admission
 function admitTab(el) {
   const st = { kind: 'scooty', package: 15, full: false, photo: '', id_photo: '' };
-  el.innerHTML = `<div class="card"><h2>নতুন ভর্তি</h2>
-    <label>নাম *</label><input id="nm" autocomplete="off">
-    <label>ফোন *</label><input id="ph" inputmode="numeric" maxlength="10">
-    <label>ঠিকানা</label><input id="ad">
-    <label>কী শিখবেন</label><div class="seg" id="kind"><button data-v="scooty" class="on">স্কুটি</button><button data-v="bike">বাইক</button></div>
-    <label>কটা ক্লাস</label><div class="seg" id="pkg"><button data-v="15" class="on">১৫টা</button><button data-v="10">১০টা</button></div>
-    <div class="grid2"><div><label>মোট ফি (₹)</label><input id="fee" inputmode="numeric"></div><div><label>এখন দিচ্ছেন (₹)</label><input id="paid" inputmode="numeric"></div></div>
-    <div class="chk"><input type="checkbox" id="full"><span>পুরো টাকা দিয়েছেন</span></div>
+  el.innerHTML = `<div class="card"><h2>${L('নতুন ভর্তি', 'New admission', 'नया एडमिशन')}</h2>
+    <label>${L('নাম', 'Name', 'नाम')} *</label><input id="nm" autocomplete="off">
+    <label>${L('ফোন', 'Phone', 'फ़ोन')} *</label><input id="ph" inputmode="numeric" maxlength="10">
+    <label>${L('ঠিকানা', 'Address', 'पता')}</label><input id="ad">
+    <label>${L('কী শিখবেন', 'Learning', 'क्या सीखेंगे')}</label><div class="seg" id="kind"><button data-v="scooty" class="on">${kindName('scooty')}</button><button data-v="bike">${kindName('bike')}</button></div>
+    <label>${L('কটা ক্লাস', 'Number of classes', 'कितनी क्लास')}</label><div class="seg" id="pkg"><button data-v="15" class="on">${L('১৫টা', '15', '15')}</button><button data-v="10">${L('১০টা', '10', '10')}</button></div>
+    <div class="grid2"><div><label>${L('মোট ফি', 'Total fee', 'कुल फीस')} (₹)</label><input id="fee" inputmode="numeric"></div><div><label>${L('এখন দিচ্ছেন', 'Paying now', 'अभी दे रहे हैं')} (₹)</label><input id="paid" inputmode="numeric"></div></div>
+    <div class="chk"><input type="checkbox" id="full"><span>${L('পুরো টাকা দিয়েছেন', 'Paid in full', 'पूरी फीस दे दी')}</span></div>
     <div class="mut" id="due"></div>
-    <label>শিক্ষার্থীর ছবি</label><input type="file" accept="image/*" capture="user" id="ph1"><img id="pv1" class="photo-prev hide">
-    <label>পরিচয়পত্র (ঐচ্ছিক)</label><select id="idt"><option value="">দিচ্ছেন না</option><option value="aadhaar">আধার</option><option value="voter">ভোটার কার্ড</option><option value="pan">প্যান কার্ড</option><option value="driving">ড্রাইভিং লাইসেন্স</option></select>
-    <div id="idbox" class="hide"><input type="file" accept="image/*" capture="environment" id="ph2"><div class="mut">ছবি থেকে শুধু শেষ ৪টে সংখ্যা রাখা হবে, ছবিটা রাখা হবে না।</div></div>
-    <div id="msg"></div><button class="btn block mt2" id="go">ভর্তি করুন</button></div>`;
+    <label>${L('শিক্ষার্থীর ছবি', 'Student photo', 'स्टूडेंट की फ़ोटो')}</label><input type="file" accept="image/*" capture="user" id="ph1"><img id="pv1" class="photo-prev hide">
+    <label>${L('পরিচয়পত্র (ঐচ্ছিক)', 'ID proof (optional)', 'पहचान पत्र (ज़रूरी नहीं)')}</label><select id="idt"><option value="">${L('দিচ্ছেন না', 'Not given', 'नहीं दे रहे')}</option><option value="aadhaar">${L('আধার', 'Aadhaar', 'आधार')}</option><option value="voter">${L('ভোটার কার্ড', 'Voter card', 'वोटर कार्ड')}</option><option value="pan">${L('প্যান কার্ড', 'PAN card', 'पैन कार्ड')}</option><option value="driving">${L('ড্রাইভিং লাইসেন্স', 'Driving licence', 'ड्राइविंग लाइसेंस')}</option></select>
+    <div id="idbox" class="hide"><input type="file" accept="image/*" capture="environment" id="ph2"><div class="mut">${L('ছবি থেকে শুধু শেষ ৪টে সংখ্যা রাখা হবে, ছবিটা রাখা হবে না।', 'Only the last 4 digits are kept from the photo; the photo itself is not stored.', 'फ़ोटो से सिर्फ़ आख़िरी 4 अंक रखे जाएँगे, फ़ोटो नहीं रखी जाएगी।')}</div></div>
+    <div id="msg"></div><button class="btn block mt2" id="go">${L('ভর্তি করুন', 'Admit', 'एडमिशन करें')}</button></div>`;
   const seg = (id, key, num) => el.querySelectorAll(`#${id} button`).forEach((b) => b.onclick = () => { st[key] = num ? Number(b.dataset.v) : b.dataset.v; el.querySelectorAll(`#${id} button`).forEach((x) => x.classList.toggle('on', x === b)); });
   seg('kind', 'kind'); seg('pkg', 'package', true);
-  const upd = () => { const f = Number($('#fee').value) || 0; const p = st.full ? f : Number($('#paid').value) || 0; if (st.full) $('#paid').value = f || ''; $('#due').innerHTML = f ? `বাকি থাকবে: <b>${money(Math.max(0, f - p))}</b>` : ''; };
+  const upd = () => { const f = Number($('#fee').value) || 0; const p = st.full ? f : Number($('#paid').value) || 0; if (st.full) $('#paid').value = f || ''; $('#due').innerHTML = f ? `${L('বাকি থাকবে', 'Due', 'बाकी रहेगा')}: <b>${money(Math.max(0, f - p))}</b>` : ''; };
   $('#fee').oninput = upd; $('#paid').oninput = upd; $('#full').onchange = (e) => { st.full = e.target.checked; $('#paid').disabled = st.full; upd(); };
   $('#ph1').onchange = async (e) => { const f = e.target.files[0]; if (!f) return; st.photo = await compress(f, 720, 0.7); $('#pv1').src = st.photo; $('#pv1').classList.remove('hide'); };
   $('#idt').onchange = (e) => $('#idbox').classList.toggle('hide', !e.target.value);
@@ -283,7 +333,7 @@ function admitTab(el) {
       const r = await sapi('admit', { name: $('#nm').value, phone: $('#ph').value, address: $('#ad').value, kind: st.kind, package: st.package, total_fee: $('#fee').value, paid_now: $('#paid').value, full_paid: st.full, photo: st.photo, id_photo: st.id_photo, id_type: $('#idt').value, allow_duplicate });
       admitted(el, r);
     } catch (e) {
-      if (e.status === 409 && !allow_duplicate) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div><button class="btn ghost block" id="dup">তবু ভর্তি করুন</button>`; $('#dup').onclick = () => submit(true); }
+      if (e.status === 409 && !allow_duplicate) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div><button class="btn ghost block" id="dup">${L('তবু ভর্তি করুন', 'Admit anyway', 'फिर भी एडमिशन करें')}</button>`; $('#dup').onclick = () => submit(true); }
       else $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`;
       $('#go').disabled = false;
     }
@@ -292,18 +342,18 @@ function admitTab(el) {
 }
 function admitted(el, r) {
   const link = studentUrl(r.token);
-  const msg = `নমস্কার ${r.name}, Seekho 2 Wheeler পাটুলিতে আপনার ভর্তি হয়ে গেছে। এই লিংক থেকে ক্লাস বুক করবেন আর ক্লাসে এসে QR দেখাবেন: ${link}`;
-  el.innerHTML = `<div class="card center"><h2>ভর্তি হয়ে গেছে ✓</h2><div class="big">${esc(r.name)}</div>
+  const msg = L(`নমস্কার ${r.name}, Seekho 2 Wheeler পাটুলিতে আপনার ভর্তি হয়ে গেছে। এই লিংক থেকে ক্লাস বুক করবেন আর ক্লাসে এসে QR দেখাবেন: ${link}`, `Hello ${r.name}, your admission at Seekho 2 Wheeler Patuli is done. Book your classes from this link and show the QR when you come to class: ${link}`, `नमस्ते ${r.name}, Seekho 2 Wheeler पाटुली में आपका एडमिशन हो गया है। इस लिंक से क्लास बुक करें और क्लास में आकर QR दिखाएँ: ${link}`);
+  el.innerHTML = `<div class="card center"><h2>${L('ভর্তি হয়ে গেছে ✓', 'Admission done ✓', 'एडमिशन हो गया ✓')}</h2><div class="big">${esc(r.name)}</div>
     <div class="qr mt">${qrSvg(r.qr)}</div><div class="mut mt">${esc(r.qr)}</div>
-    <a class="btn wa block mt2" href="${waLink(r.phone, msg)}" target="_blank" rel="noopener">WhatsApp-এ লিংক পাঠান</a>
-    <button class="btn ghost block mt" id="again">আরেকজন ভর্তি</button></div>`;
+    <a class="btn wa block mt2" href="${waLink(r.phone, msg)}" target="_blank" rel="noopener">${L('WhatsApp-এ লিংক পাঠান', 'Send link on WhatsApp', 'WhatsApp पर लिंक भेजें')}</a>
+    <button class="btn ghost block mt" id="again">${L('আরেকজন ভর্তি', 'Admit another', 'एक और एडमिशन')}</button></div>`;
   $('#again').onclick = () => admitTab(el);
 }
 
 // ---------- day view
 let dayDate = istToday();
 async function dayTab(el) {
-  el.innerHTML = `<div class="card"><div class="days" id="dd"></div></div><div id="grid"><div class="mut">লোড হচ্ছে…</div></div>`;
+  el.innerHTML = `<div class="card"><div class="days" id="dd"></div></div><div id="grid"><div class="mut">${L('লোড হচ্ছে…', 'Loading…', 'लोड हो रहा है…')}</div></div>`;
   const dd = $('#dd'); dd.innerHTML = Array.from({ length: 10 }, (_, i) => istToday(i - 1)).map((d) => { const l = dayLabel(d); return `<button data-d="${d}" class="${d === dayDate ? 'on' : ''}">${l.wd}<small>${l.d}</small></button>`; }).join('');
   dd.querySelectorAll('button').forEach((b) => b.onclick = () => { dayDate = b.dataset.d; dayTab(el); });
   try {
@@ -312,119 +362,125 @@ async function dayTab(el) {
     const isBlocked = (s) => r.blocks.some((b) => Date.parse(s) >= Date.parse(b.starts) && Date.parse(s) < Date.parse(b.ends));
     const at = (s, vid) => r.bookings.find((b) => b.slot_start && Date.parse(b.slot_start) === Date.parse(s) && b.vehicle_id === vid && ['booked', 'attended'].includes(b.status));
     const n = r.bookings.filter((b) => ['booked', 'attended'].includes(b.status)).length;
-    $('#grid').innerHTML = `<div class="card"><div class="flex between"><h2>${tDay(dayDate + 'T06:00:00Z')}</h2><span class="pill b">${bn(n)}/${bn(r.slots.length * veh.length)} বুক</span></div>
-      ${S.role === 'admin' ? `<div class="flex wrapf mt"><button class="btn ghost sm" id="blkday">পুরো দিন বন্ধ</button><button class="btn ghost sm" id="blkam">সকাল বন্ধ</button><button class="btn ghost sm" id="blkpm">বিকেল বন্ধ</button></div>` : ''}
-      ${r.blocks.map((b) => `<div class="err mt">বন্ধ: ${tTime(b.starts)} – ${tTime(b.ends)} ${esc(b.reason)} ${S.role === 'admin' ? `<button class="btn sm ghost" data-unblock="${b.id}">খুলুন</button>` : ''}</div>`).join('')}
-      <table class="daygrid mt"><tr><th>সময়</th>${veh.map((v) => `<th>${esc(v.label)}</th>`).join('')}</tr>
-      ${r.slots.map((s) => `<tr><td style="white-space:nowrap">${tTime(s)}</td>${veh.map((v) => { const b = at(s, v.id); if (isBlocked(s)) return '<td><div class="cell blk">বন্ধ</div></td>'; if (!b) return `<td><div class="cell free" data-free="${s}">ফাঁকা</div></td>`; return `<td><div class="cell ${b.status === 'attended' ? 'att' : 'bk'}" data-bk="${b.id}" data-st="${b.status}">${esc(b.name)}<div style="font-weight:500;font-size:12px">${b.status === 'attended' ? '✓ এসেছেন' : esc(b.phone)}</div></div></td>`; }).join('')}</tr>`).join('')}</table>
-      <div class="legend mt"><span><i style="background:#effaf2;border:1px dashed #9fd8b0"></i>ফাঁকা</span><span><i style="background:#e6eeff"></i>বুক</span><span><i style="background:#e7f6ec"></i>এসেছেন</span><span><i style="background:#f1f1f1"></i>বন্ধ</span></div></div>`;
-    const blk = async (a, b, why) => { const reason = prompt('কারণ (যেমন: পুজোর ছুটি)', why) ?? ''; const st = new Date(Date.parse(`${dayDate}T${a}:00Z`) - IST).toISOString(), en = new Date(Date.parse(`${dayDate}T${b}:00Z`) - IST).toISOString(); try { const x = await sapi('block', { starts: st, ends: en, reason }); if (x.ok === false) { alert('এই সময়ে বুকিং আছে। আগে এগুলো বাতিল করুন:\n' + x.clash.map((c) => `${tTime(c.slot_start)} ${c.name} (${c.phone})`).join('\n')); return; } toast('বন্ধ করা হলো'); dayTab(el); } catch (e) { toast(e.message); } };
-    if ($('#blkday')) { $('#blkday').onclick = () => blk('00:00', '23:59', 'ছুটি'); $('#blkam').onclick = () => blk('06:00', '13:00', ''); $('#blkpm').onclick = () => blk('13:00', '22:00', ''); }
+    const W = { free: L('ফাঁকা', 'Free', 'खाली'), bk: L('বুক', 'Booked', 'बुक'), att: L('এসেছেন', 'Came', 'आए'), off: L('বন্ধ', 'Closed', 'बंद') };
+    $('#grid').innerHTML = `<div class="card"><div class="flex between"><h2>${tDay(dayDate + 'T06:00:00Z')}</h2><span class="pill b">${N(n)}/${N(r.slots.length * veh.length)} ${W.bk}</span></div>
+      ${S.role === 'admin' ? `<div class="flex wrapf mt"><button class="btn ghost sm" id="blkday">${L('পুরো দিন বন্ধ', 'Close whole day', 'पूरा दिन बंद')}</button><button class="btn ghost sm" id="blkam">${L('সকাল বন্ধ', 'Close morning', 'सुबह बंद')}</button><button class="btn ghost sm" id="blkpm">${L('বিকেল বন্ধ', 'Close afternoon', 'दोपहर बाद बंद')}</button></div>` : ''}
+      ${r.blocks.map((b) => `<div class="err mt">${W.off}: ${tTime(b.starts)} – ${tTime(b.ends)} ${esc(b.reason)} ${S.role === 'admin' ? `<button class="btn sm ghost" data-unblock="${b.id}">${L('খুলুন', 'Open', 'खोलें')}</button>` : ''}</div>`).join('')}
+      <table class="daygrid mt"><tr><th>${L('সময়', 'Time', 'समय')}</th>${veh.map((v) => `<th>${esc(v.label)}</th>`).join('')}</tr>
+      ${r.slots.map((s) => `<tr><td style="white-space:nowrap">${tTime(s)}</td>${veh.map((v) => { const b = at(s, v.id); if (isBlocked(s)) return `<td><div class="cell blk">${W.off}</div></td>`; if (!b) return `<td><div class="cell free" data-free="${s}">${W.free}</div></td>`; return `<td><div class="cell ${b.status === 'attended' ? 'att' : 'bk'}" data-bk="${b.id}" data-st="${b.status}">${esc(b.name)}<div style="font-weight:500;font-size:12px">${b.status === 'attended' ? '✓ ' + W.att : esc(b.phone)}</div></div></td>`; }).join('')}</tr>`).join('')}</table>
+      <div class="legend mt"><span><i style="background:#effaf2;border:1px dashed #9fd8b0"></i>${W.free}</span><span><i style="background:#e6eeff"></i>${W.bk}</span><span><i style="background:#e7f6ec"></i>${W.att}</span><span><i style="background:#f1f1f1"></i>${W.off}</span></div></div>`;
+    const askReason = (def = '') => prompt(L('কারণ (যেমন: পুজোর ছুটি)', 'Reason (e.g. Puja holiday)', 'कारण (जैसे: पूजा की छुट्टी)'), def) ?? '';
+    const blk = async (a, b, why) => { const reason = askReason(why); const st = new Date(Date.parse(`${dayDate}T${a}:00Z`) - IST).toISOString(), en = new Date(Date.parse(`${dayDate}T${b}:00Z`) - IST).toISOString(); try { const x = await sapi('block', { starts: st, ends: en, reason }); if (x.ok === false) { alert(L('এই সময়ে বুকিং আছে। আগে এগুলো বাতিল করুন:', 'There are bookings in this time. Cancel these first:', 'इस समय बुकिंग है। पहले इन्हें कैंसल करें:') + '\n' + x.clash.map((c) => `${tTime(c.slot_start)} ${c.name} (${c.phone})`).join('\n')); return; } toast(L('বন্ধ করা হলো', 'Closed', 'बंद कर दिया')); dayTab(el); } catch (e) { toast(e.message); } };
+    if ($('#blkday')) { $('#blkday').onclick = () => blk('00:00', '23:59', L('ছুটি', 'Holiday', 'छुट्टी')); $('#blkam').onclick = () => blk('06:00', '13:00', ''); $('#blkpm').onclick = () => blk('13:00', '22:00', ''); }
     el.querySelectorAll('[data-unblock]').forEach((b) => b.onclick = async () => { await sapi('unblock', { id: b.dataset.unblock }); dayTab(el); });
     el.querySelectorAll('[data-bk]').forEach((c) => c.onclick = async () => {
       if (S.role !== 'admin' || c.dataset.st !== 'booked') return toast(c.textContent.trim());
-      if (!confirm('এই বুকিং সেন্টার থেকে বাতিল করবেন? শিক্ষার্থীর লিংকে "সেন্টার বাতিল করেছে" দেখাবে।')) return;
-      try { await sapi('staff_cancel', { booking: c.dataset.bk, reason: prompt('কারণ') || '' }); toast('বাতিল হলো'); dayTab(el); } catch (e) { toast(e.message); }
+      if (!confirm(L('এই বুকিং সেন্টার থেকে বাতিল করবেন? শিক্ষার্থীর লিংকে "সেন্টার বাতিল করেছে" দেখাবে।', 'Cancel this booking from the centre? The student’s link will show “Cancelled by centre”.', 'यह बुकिंग सेंटर की तरफ़ से कैंसल करें? स्टूडेंट के लिंक पर "सेंटर ने कैंसल किया" दिखेगा।'))) return;
+      try { await sapi('staff_cancel', { booking: c.dataset.bk, reason: prompt(L('কারণ', 'Reason', 'कारण')) || '' }); toast(L('বাতিল হলো', 'Cancelled', 'कैंसल हो गई')); dayTab(el); } catch (e) { toast(e.message); }
     });
     const bookCell = (c) => pickStudent(async (s) => {
-      try { await sapi('staff_book', { id: s.id, slot: c.dataset.free, force: S.role === 'admin' && confirm('নিয়ম (৪৮ ঘণ্টা/সপ্তাহে ২টো) না মেনে বুক করবেন? "Cancel" দিলে নিয়ম মেনে বুক হবে।') }); toast('বুক হলো'); dayTab(el); } catch (e) { toast(e.message); }
+      try { await sapi('staff_book', { id: s.id, slot: c.dataset.free, force: S.role === 'admin' && confirm(L('নিয়ম (৪৮ ঘণ্টা/সপ্তাহে ২টো) না মেনে বুক করবেন? "Cancel" দিলে নিয়ম মেনে বুক হবে।', 'Book without the rules (48 hours / 2 a week)? Press "Cancel" to book with the rules.', 'नियम (48 घंटे / हफ़्ते में 2) के बिना बुक करें? "Cancel" दबाने पर नियम के साथ बुक होगी।')) }); toast(L('বুক হলো', 'Booked', 'बुक हो गई')); dayTab(el); } catch (e) { toast(e.message); }
     });
     el.querySelectorAll('[data-free]').forEach((c) => c.onclick = () => {
       if (S.role !== 'admin') return bookCell(c);
-      const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet"><h2>${tTime(c.dataset.free)}</h2><button class="btn block" id="mb">কারও জন্য বুক করুন</button><button class="btn ghost block mt" id="mk">এই স্লট বন্ধ করুন</button><button class="btn ghost block mt" id="mx">বন্ধ</button></div>`;
+      const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet"><h2>${tTime(c.dataset.free)}</h2><button class="btn block" id="mb">${L('কারও জন্য বুক করুন', 'Book for a student', 'किसी के लिए बुक करें')}</button><button class="btn ghost block mt" id="mk">${L('এই স্লট বন্ধ করুন', 'Close this slot', 'यह स्लॉट बंद करें')}</button><button class="btn ghost block mt" id="mx">${L('বন্ধ', 'Close', 'बंद')}</button></div>`;
       document.body.appendChild(m); $('#mx', m).onclick = () => m.remove();
       $('#mb', m).onclick = () => { m.remove(); bookCell(c); };
-      $('#mk', m).onclick = async () => { m.remove(); const st = c.dataset.free, en = new Date(Date.parse(st) + 30 * 60000).toISOString(); try { const x = await sapi('block', { starts: st, ends: en, reason: prompt('কারণ') || '' }); if (x.ok === false) return alert('এই স্লটে বুকিং আছে, আগে বাতিল করুন।'); toast('স্লট বন্ধ হলো'); dayTab(el); } catch (e) { toast(e.message); } };
+      $('#mk', m).onclick = async () => { m.remove(); const st = c.dataset.free, en = new Date(Date.parse(st) + 30 * 60000).toISOString(); try { const x = await sapi('block', { starts: st, ends: en, reason: prompt(L('কারণ', 'Reason', 'कारण')) || '' }); if (x.ok === false) return alert(L('এই স্লটে বুকিং আছে, আগে বাতিল করুন।', 'This slot has a booking; cancel it first.', 'इस स्लॉट में बुकिंग है, पहले कैंसल करें।')); toast(L('স্লট বন্ধ হলো', 'Slot closed', 'स्लॉट बंद हो गया')); dayTab(el); } catch (e) { toast(e.message); } };
     });
   } catch (e) { $('#grid').innerHTML = `<div class="err">${esc(e.message)}</div>`; }
 }
 function pickStudent(cb) {
-  const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet"><h2>কার জন্য বুক করবেন?</h2><input id="q" placeholder="নাম বা ফোন"><div class="list mt" id="ls"></div><button class="btn ghost block mt" id="x">বন্ধ</button></div>`;
+  const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet"><h2>${L('কার জন্য বুক করবেন?', 'Book for whom?', 'किसके लिए बुक करें?')}</h2><input id="q" placeholder="${L('নাম বা ফোন', 'Name or phone', 'नाम या फ़ोन')}"><div class="list mt" id="ls"></div><button class="btn ghost block mt" id="x">${L('বন্ধ', 'Close', 'बंद')}</button></div>`;
   document.body.appendChild(m); m.onclick = (e) => { if (e.target === m) m.remove(); }; $('#x', m).onclick = () => m.remove();
-  const search = async () => { const r = await sapi('students', { q: $('#q', m).value, status: 'active' }); $('#ls', m).innerHTML = r.students.map((s) => `<div class="it" data-id="${s.id}"><div class="av">${esc(s.name[0] || '?')}</div><div style="flex:1"><b>${esc(s.name)}</b><div class="mut">${esc(s.phone)} · ${bn(s.classes_done)}/${bn(s.package)}</div></div></div>`).join('') || '<div class="mut">কেউ নেই</div>'; $('#ls', m).querySelectorAll('.it').forEach((it) => it.onclick = () => { m.remove(); cb(r.students.find((s) => s.id === it.dataset.id)); }); };
+  const search = async () => { const r = await sapi('students', { q: $('#q', m).value, status: 'active' }); $('#ls', m).innerHTML = r.students.map((s) => `<div class="it" data-id="${s.id}"><div class="av">${esc(s.name[0] || '?')}</div><div style="flex:1"><b>${esc(s.name)}</b><div class="mut">${esc(s.phone)} · ${N(s.classes_done)}/${N(s.package)}</div></div></div>`).join('') || `<div class="mut">${L('কেউ নেই', 'No one', 'कोई नहीं')}</div>`; $('#ls', m).querySelectorAll('.it').forEach((it) => it.onclick = () => { m.remove(); cb(r.students.find((s) => s.id === it.dataset.id)); }); };
   let t; $('#q', m).oninput = () => { clearTimeout(t); t = setTimeout(search, 250); }; search(); $('#q', m).focus();
 }
 
 // ---------- students
+const ST = () => ({ pending: L('অনুমোদন বাকি', 'Needs approval', 'अप्रूवल बाकी'), react: L('চালুর অনুরোধ', 'Restart request', 'चालू करने की रिक्वेस्ट'), done: L('শেষ', 'Finished', 'पूरा'), active: L('চলছে', 'Active', 'चल रहा है') });
 async function studentsTab(el) {
-  el.innerHTML = `<div class="card"><input id="q" placeholder="নাম, ফোন বা কোড দিয়ে খুঁজুন"><div class="seg mt" id="fl"><button data-v="" class="on">সবাই</button><button data-v="pending">অপেক্ষায়</button><button data-v="active">চলছে</button><button data-v="reactivation">চালুর অনুরোধ</button><button data-v="done">শেষ</button></div></div><div class="card"><div class="list" id="ls"></div></div>`;
+  el.innerHTML = `<div class="card"><input id="q" placeholder="${L('নাম, ফোন বা কোড দিয়ে খুঁজুন', 'Search by name, phone or code', 'नाम, फ़ोन या कोड से खोजें')}"><div class="seg chips" id="fl"><button data-v="" class="on">${L('সবাই', 'All', 'सभी')}</button><button data-v="pending">${L('অপেক্ষায়', 'Waiting', 'इंतज़ार में')}</button><button data-v="active">${ST().active}</button><button data-v="reactivation">${ST().react}</button><button data-v="done">${ST().done}</button></div></div><div class="card"><div class="list" id="ls"></div></div>`;
   let status = '';
-  const load = async () => { const r = await sapi('students', { q: $('#q').value, status }); $('#ls').innerHTML = r.students.map((s) => `<div class="it" data-id="${s.id}"><div class="av">${esc(s.name[0] || '?')}</div><div style="flex:1"><b>${esc(s.name)}</b><div class="mut">${esc(s.phone)} · ${s.kind === 'bike' ? 'বাইক' : 'স্কুটি'} · ${bn(s.classes_done)}/${bn(s.package)}</div></div>${s.status === 'pending' ? '<span class="pill y">অনুমোদন বাকি</span>' : s.reactivation === 'requested' ? '<span class="pill b">চালুর অনুরোধ</span>' : s.status === 'done' ? '<span class="pill g">শেষ</span>' : s.due > 0 ? `<span class="pill o">${money(s.due)}</span>` : ''}</div>`).join('') || '<div class="mut">কেউ নেই</div>'; $('#ls').querySelectorAll('.it').forEach((it) => it.onclick = () => studentDetail(el, it.dataset.id)); };
+  const load = async () => { const r = await sapi('students', { q: $('#q').value, status }); $('#ls').innerHTML = r.students.map((s) => `<div class="it" data-id="${s.id}"><div class="av">${esc(s.name[0] || '?')}</div><div style="flex:1"><b>${esc(s.name)}</b><div class="mut">${esc(s.phone)} · ${kindName(s.kind)} · ${N(s.classes_done)}/${N(s.package)}</div></div>${s.status === 'pending' ? `<span class="pill y">${ST().pending}</span>` : s.reactivation === 'requested' ? `<span class="pill b">${ST().react}</span>` : s.status === 'done' ? `<span class="pill g">${ST().done}</span>` : s.due > 0 ? `<span class="pill o">${money(s.due)}</span>` : ''}</div>`).join('') || `<div class="mut">${L('কেউ নেই', 'No one', 'कोई नहीं')}</div>`; $('#ls').querySelectorAll('.it').forEach((it) => it.onclick = () => studentDetail(el, it.dataset.id)); };
   el.querySelectorAll('#fl button').forEach((b) => b.onclick = () => { status = b.dataset.v; el.querySelectorAll('#fl button').forEach((x) => x.classList.toggle('on', x === b)); load(); });
   let t; $('#q').oninput = () => { clearTimeout(t); t = setTimeout(load, 250); }; load();
 }
 async function studentDetail(el, id) {
-  el.innerHTML = '<div class="mut">লোড হচ্ছে…</div>';
+  el.innerHTML = `<div class="mut">${L('লোড হচ্ছে…', 'Loading…', 'लोड हो रहा है…')}</div>`;
   const r = await sapi('student', { id }); const s = r.student; const admin = S.role === 'admin';
   const link = studentUrl(s.token);
-  el.innerHTML = `<button class="btn ghost sm" id="back">← তালিকা</button>
-    <div class="card mt flex"><div class="av" style="width:64px;height:64px">${r.photo ? `<img src="${r.photo}">` : esc(s.name[0])}</div><div style="flex:1"><h2 style="margin:0">${esc(s.name)}</h2><div class="mut">${esc(s.phone)} · ${s.kind === 'bike' ? 'বাইক' : 'স্কুটি'} · ${bn(s.classes_done)}/${bn(s.package)} ক্লাস</div>
-      <div class="mt">${s.status === 'pending' ? '<span class="pill y">অনুমোদন বাকি</span>' : ''}${s.allow_consecutive ? ' <span class="pill b">পরপর দুদিন চলবে</span>' : ''}${s.no_shows >= 3 ? ` <span class="pill r">${bn(s.no_shows)} বার আসেননি</span>` : ''}</div></div></div>
-    ${s.status === 'pending' ? `<div class="card"><h2>কার্ড মিলিয়ে অনুমোদন দিন</h2>${r.card_image ? `<img src="${r.card_image}" class="photo-prev" style="max-height:420px">` : '<div class="mut">কার্ডের ছবি নেই</div>'}
-      ${s.card && s.card.confident === false ? '<div class="err">AI নিশ্চিত নয়, ভালো করে মিলিয়ে নিন।</div>' : ''}
-      <label>নাম</label><input id="a_nm" value="${esc(s.name)}"><div class="grid2"><div><label>মোট ক্লাস</label><select id="a_pk"><option value="15" ${s.package === 15 ? 'selected' : ''}>১৫</option><option value="10" ${s.package === 10 ? 'selected' : ''}>১০</option></select></div><div><label>হয়ে গেছে</label><input id="a_cd" inputmode="numeric" value="${s.classes_done}"></div></div>
-      ${s.total_fee !== undefined ? `<div class="grid2"><div><label>মোট ফি</label><input id="a_fee" inputmode="numeric" value="${s.total_fee}"></div><div><label>দিয়েছেন</label><input id="a_paid" inputmode="numeric" value="${s.paid}"></div></div>` : '<div class="mut mt">ফি-র হিসাব কার্ড থেকে যেমন পড়া হয়েছে তেমনই থাকবে (অ্যাডমিন বদলাতে পারবেন)।</div>'}
-      <label>কী শিখছেন</label><select id="a_k"><option value="scooty">স্কুটি</option><option value="bike" ${s.kind === 'bike' ? 'selected' : ''}>বাইক</option></select>
-      <div class="grid2 mt2"><button class="btn green" id="appr">অনুমোদন</button><button class="btn red" id="rej">বাতিল</button></div></div>` : ''}
-    ${admin && s.reactivation === 'requested' ? '<div class="card"><h3>অ্যাকাউন্ট আবার চালুর অনুরোধ এসেছে</h3><button class="btn green block" id="reon">আবার চালু করুন</button></div>' : ''}
-    <div class="card"><div class="grid2"><a class="btn wa" target="_blank" rel="noopener" href="${waLink(s.phone, `${s.name}, Seekho 2 Wheeler পাটুলি: আপনার ক্লাস বুকিংয়ের লিংক: ${link}`)}">লিংক পাঠান</a><button class="btn blue" id="qrb">QR দেখান</button></div>
-      ${S.role === 'admin' || (S.perms || {}).bookings ? '<button class="btn ghost block mt" id="bookfor">এর হয়ে ক্লাস বুক করুন</button>' : ''}</div>
-    ${s.total_fee !== undefined ? `<div class="card"><h3>ফি</h3><div class="grid2"><div class="kpi"><b>${money(s.total_fee)}</b><span>মোট</span></div><div class="kpi"><b style="color:${s.due > 0 ? 'var(--orange)' : 'var(--ok)'}">${money(s.due)}</b><span>বাকি</span></div></div>
-      ${(S.role === 'admin' || (S.perms || {}).money) ? `<div class="flex mt"><input id="amt" inputmode="numeric" placeholder="টাকা জমা (₹)"><button class="btn sm" id="pay">জমা</button></div>` : ''}
+  const T = { name: L('নাম', 'Name', 'नाम'), tot: L('মোট ক্লাস', 'Total classes', 'कुल क्लास'), done: L('হয়ে গেছে', 'Done', 'हो गईं'), fee: L('মোট ফি', 'Total fee', 'कुल फीस'), paid: L('দিয়েছেন', 'Paid', 'दिए'), learn: L('কী শিখছেন', 'Learning', 'क्या सीख रहे हैं'), cls: L('ক্লাস', 'classes', 'क्लास') };
+  el.innerHTML = `<button class="btn ghost sm" id="back">← ${L('তালিকা', 'List', 'लिस्ट')}</button>
+    <div class="card mt flex"><div class="av" style="width:64px;height:64px">${r.photo ? `<img src="${r.photo}">` : esc(s.name[0])}</div><div style="flex:1"><h2 style="margin:0">${esc(s.name)}</h2><div class="mut">${esc(s.phone)} · ${kindName(s.kind)} · ${N(s.classes_done)}/${N(s.package)} ${T.cls}</div>
+      <div class="mt">${s.status === 'pending' ? `<span class="pill y">${ST().pending}</span>` : ''}${s.allow_consecutive ? ` <span class="pill b">${L('পরপর দুদিন চলবে', 'Back-to-back days allowed', 'लगातार दो दिन चलेगा')}</span>` : ''}${s.no_shows >= 3 ? ` <span class="pill r">${L(`${N(s.no_shows)} বার আসেননি`, `Missed ${s.no_shows} times`, `${s.no_shows} बार नहीं आए`)}</span>` : ''}</div></div></div>
+    ${s.status === 'pending' ? `<div class="card"><h2>${L('কার্ড মিলিয়ে অনুমোদন দিন', 'Check the card and approve', 'कार्ड मिलाकर अप्रूव करें')}</h2>${r.card_image ? `<img src="${r.card_image}" class="photo-prev" style="max-height:420px">` : `<div class="mut">${L('কার্ডের ছবি নেই', 'No card photo', 'कार्ड की फ़ोटो नहीं है')}</div>`}
+      ${s.card && s.card.confident === false ? `<div class="err">${L('AI নিশ্চিত নয়, ভালো করে মিলিয়ে নিন।', 'AI isn’t sure; check carefully.', 'AI पक्का नहीं है, ध्यान से मिलाएँ।')}</div>` : ''}
+      <label>${T.name}</label><input id="a_nm" value="${esc(s.name)}"><div class="grid2"><div><label>${T.tot}</label><select id="a_pk"><option value="15" ${s.package === 15 ? 'selected' : ''}>${N(15)}</option><option value="10" ${s.package === 10 ? 'selected' : ''}>${N(10)}</option></select></div><div><label>${T.done}</label><input id="a_cd" inputmode="numeric" value="${s.classes_done}"></div></div>
+      ${s.total_fee !== undefined ? `<div class="grid2"><div><label>${T.fee}</label><input id="a_fee" inputmode="numeric" value="${s.total_fee}"></div><div><label>${T.paid}</label><input id="a_paid" inputmode="numeric" value="${s.paid}"></div></div>` : `<div class="mut mt">${L('ফি-র হিসাব কার্ড থেকে যেমন পড়া হয়েছে তেমনই থাকবে (অ্যাডমিন বদলাতে পারবেন)।', 'Fees stay as read from the card (the admin can change them).', 'फीस का हिसाब कार्ड से जैसा पढ़ा गया वैसा ही रहेगा (एडमिन बदल सकते हैं)।')}</div>`}
+      <label>${T.learn}</label><select id="a_k"><option value="scooty">${kindName('scooty')}</option><option value="bike" ${s.kind === 'bike' ? 'selected' : ''}>${kindName('bike')}</option></select>
+      <div class="grid2 mt2"><button class="btn green" id="appr">${L('অনুমোদন', 'Approve', 'अप्रूव')}</button><button class="btn red" id="rej">${L('বাতিল', 'Reject', 'रिजेक्ट')}</button></div></div>` : ''}
+    ${admin && s.reactivation === 'requested' ? `<div class="card"><h3>${L('অ্যাকাউন্ট আবার চালুর অনুরোধ এসেছে', 'Request to restart the account', 'अकाउंट फिर से चालू करने की रिक्वेस्ट आई है')}</h3><button class="btn green block" id="reon">${L('আবার চালু করুন', 'Restart', 'फिर से चालू करें')}</button></div>` : ''}
+    <div class="card"><div class="grid2"><a class="btn wa" target="_blank" rel="noopener" href="${waLink(s.phone, L(`${s.name}, Seekho 2 Wheeler পাটুলি: আপনার ক্লাস বুকিংয়ের লিংক: ${link}`, `${s.name}, Seekho 2 Wheeler Patuli: your class booking link: ${link}`, `${s.name}, Seekho 2 Wheeler पाटुली: आपकी क्लास बुकिंग का लिंक: ${link}`))}">${L('লিংক পাঠান', 'Send link', 'लिंक भेजें')}</a><button class="btn blue" id="qrb">${L('QR দেখান', 'Show QR', 'QR दिखाएँ')}</button></div>
+      ${S.role === 'admin' || (S.perms || {}).bookings ? `<button class="btn ghost block mt" id="bookfor">${L('এর হয়ে ক্লাস বুক করুন', 'Book a class for this student', 'इनके लिए क्लास बुक करें')}</button>` : ''}</div>
+    ${s.total_fee !== undefined ? `<div class="card"><h3>${L('ফি', 'Fees', 'फीस')}</h3><div class="grid2"><div class="kpi"><b>${money(s.total_fee)}</b><span>${L('মোট', 'Total', 'कुल')}</span></div><div class="kpi"><b style="color:${s.due > 0 ? 'var(--orange)' : 'var(--ok)'}">${money(s.due)}</b><span>${L('বাকি', 'Due', 'बाकी')}</span></div></div>
+      ${(S.role === 'admin' || (S.perms || {}).money) ? `<div class="flex mt"><input id="amt" inputmode="numeric" placeholder="${L('টাকা জমা', 'Payment', 'पैसे जमा')} (₹)"><button class="btn sm" id="pay">${L('জমা', 'Add', 'जमा')}</button></div>` : ''}
       ${r.payments.length ? `<div class="list mt">${r.payments.map((p) => `<div class="it"><div style="flex:1">${tDay(p.at)}</div><b>${money(p.amount)}</b></div>`).join('')}</div>` : ''}</div>` : ''}
-    ${admin ? `<div class="card"><h3>সম্পাদনা</h3><label>নাম</label><input id="e_nm" value="${esc(s.name)}"><label>ফোন</label><input id="e_ph" value="${esc(s.phone)}"><label>ঠিকানা</label><input id="e_ad" value="${esc(s.address || '')}">
-      <div class="grid2"><div><label>মোট ক্লাস</label><select id="e_pk"><option value="15">১৫</option><option value="10" ${s.package === 10 ? 'selected' : ''}>১০</option></select></div><div><label>হয়ে গেছে</label><input id="e_cd" inputmode="numeric" value="${s.classes_done}"></div></div>
-      <label>মোট ফি</label><input id="e_fee" inputmode="numeric" value="${s.total_fee}">
-      <div class="chk"><input type="checkbox" id="e_cons" ${s.allow_consecutive ? 'checked' : ''}><span>পরপর দুদিন (যেমন শনি-রবি) ক্লাস নিতে পারবেন</span></div>
-      <label>অবস্থা</label><select id="e_st"><option value="active">চলছে</option><option value="done" ${s.status === 'done' ? 'selected' : ''}>শেষ</option><option value="archived">সরিয়ে দিন</option></select>
-      <label>নোট</label><textarea id="e_nt" rows="2">${esc(s.note || '')}</textarea><button class="btn blue block mt" id="save">সেভ</button></div>` : ''}
-    <div class="card"><h3>ক্লাসের ইতিহাস</h3><div class="list">${r.bookings.map((b) => `<div class="it"><div style="flex:1">${tDay(b.slot_start)} · ${tTime(b.slot_start)}<div class="mut" style="font-size:12px">${esc(b.created_by)}</div></div>${{ booked: '<span class="pill b">বুক</span>', attended: '<span class="pill g">এসেছেন</span>', no_show: '<span class="pill y">আসেননি</span>', cancelled: '<span class="pill">শিক্ষার্থী বাতিল</span>', cancelled_centre: '<span class="pill r">সেন্টার বাতিল</span>' }[b.status]}</div>`).join('') || '<div class="mut">এখনো নেই</div>'}</div></div>`;
+    ${admin ? `<div class="card"><h3>${L('সম্পাদনা', 'Edit', 'बदलाव')}</h3><label>${T.name}</label><input id="e_nm" value="${esc(s.name)}"><label>${L('ফোন', 'Phone', 'फ़ोन')}</label><input id="e_ph" value="${esc(s.phone)}"><label>${L('ঠিকানা', 'Address', 'पता')}</label><input id="e_ad" value="${esc(s.address || '')}">
+      <div class="grid2"><div><label>${T.tot}</label><select id="e_pk"><option value="15">${N(15)}</option><option value="10" ${s.package === 10 ? 'selected' : ''}>${N(10)}</option></select></div><div><label>${T.done}</label><input id="e_cd" inputmode="numeric" value="${s.classes_done}"></div></div>
+      <label>${T.fee}</label><input id="e_fee" inputmode="numeric" value="${s.total_fee}">
+      <div class="chk"><input type="checkbox" id="e_cons" ${s.allow_consecutive ? 'checked' : ''}><span>${L('পরপর দুদিন (যেমন শনি-রবি) ক্লাস নিতে পারবেন', 'Can take classes on back-to-back days (e.g. Sat–Sun)', 'लगातार दो दिन (जैसे शनि-रवि) क्लास ले सकते हैं')}</span></div>
+      <label>${L('অবস্থা', 'Status', 'स्थिति')}</label><select id="e_st"><option value="active">${ST().active}</option><option value="done" ${s.status === 'done' ? 'selected' : ''}>${ST().done}</option><option value="archived">${L('সরিয়ে দিন', 'Remove', 'हटा दें')}</option></select>
+      <label>${L('নোট', 'Note', 'नोट')}</label><textarea id="e_nt" rows="2">${esc(s.note || '')}</textarea><button class="btn blue block mt" id="save">${L('সেভ', 'Save', 'सेव')}</button></div>` : ''}
+    <div class="card"><h3>${L('ক্লাসের ইতিহাস', 'Class history', 'क्लास का इतिहास')}</h3><div class="list">${r.bookings.map((b) => `<div class="it"><div style="flex:1">${tDay(b.slot_start)} · ${tTime(b.slot_start)}<div class="mut" style="font-size:12px">${esc(b.created_by)}</div></div>${{ booked: `<span class="pill b">${L('বুক', 'Booked', 'बुक')}</span>`, attended: `<span class="pill g">${L('এসেছেন', 'Came', 'आए')}</span>`, no_show: `<span class="pill y">${L('আসেননি', 'Missed', 'नहीं आए')}</span>`, cancelled: `<span class="pill">${L('শিক্ষার্থী বাতিল', 'Cancelled by student', 'स्टूडेंट ने कैंसल किया')}</span>`, cancelled_centre: `<span class="pill r">${L('সেন্টার বাতিল', 'Cancelled by centre', 'सेंटर ने कैंसल किया')}</span>` }[b.status]}</div>`).join('') || `<div class="mut">${L('এখনো নেই', 'None yet', 'अभी कुछ नहीं')}</div>`}</div></div>`;
   $('#back').onclick = () => studentsTab(el);
-  $('#qrb').onclick = () => { const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet center"><div class="qr">${qrSvg(s.qr, 260)}</div><div class="mut mt">${esc(s.qr)}</div><button class="btn ghost block mt">বন্ধ</button></div>`; document.body.appendChild(m); m.onclick = () => m.remove(); };
+  $('#qrb').onclick = () => { const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet center"><div class="qr">${qrSvg(s.qr, 260)}</div><div class="mut mt">${esc(s.qr)}</div><button class="btn ghost block mt">${L('বন্ধ', 'Close', 'बंद')}</button></div>`; document.body.appendChild(m); m.onclick = () => m.remove(); };
   if ($('#bookfor')) $('#bookfor').onclick = () => bookFor(s, () => studentDetail(el, id));
-  if ($('#pay')) $('#pay').onclick = async () => { try { await sapi('payment', { id, amount: $('#amt').value }); toast('জমা হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
-  if ($('#appr')) $('#appr').onclick = async () => { try { await sapi('approve', { id, fields: { name: $('#a_nm').value, package: $('#a_pk').value, classes_done: $('#a_cd').value, total_fee: $('#a_fee')?.value, paid: $('#a_paid')?.value, kind: $('#a_k').value } }); toast('অনুমোদন হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
-  if ($('#reon')) $('#reon').onclick = async () => { await sapi('reactivate', { id }); toast('চালু হলো'); studentDetail(el, id); };
-  if ($('#rej')) $('#rej').onclick = async () => { if (!confirm('বাতিল করবেন?')) return; await sapi('reject', { id }); studentsTab(el); };
-  if ($('#save')) $('#save').onclick = async () => { try { await sapi('update_student', { id, fields: { name: $('#e_nm').value, phone: $('#e_ph').value, address: $('#e_ad').value, package: $('#e_pk').value, classes_done: $('#e_cd').value, total_fee: $('#e_fee').value, allow_consecutive: $('#e_cons').checked, status: $('#e_st').value, note: $('#e_nt').value } }); toast('সেভ হলো'); studentDetail(el, id); } catch (e) { toast(e.message); } };
+  if ($('#pay')) $('#pay').onclick = async () => { try { await sapi('payment', { id, amount: $('#amt').value }); toast(L('জমা হলো', 'Payment added', 'जमा हो गया')); studentDetail(el, id); } catch (e) { toast(e.message); } };
+  if ($('#appr')) $('#appr').onclick = async () => { try { await sapi('approve', { id, fields: { name: $('#a_nm').value, package: $('#a_pk').value, classes_done: $('#a_cd').value, total_fee: $('#a_fee')?.value, paid: $('#a_paid')?.value, kind: $('#a_k').value } }); toast(L('অনুমোদন হলো', 'Approved', 'अप्रूव हो गया')); studentDetail(el, id); } catch (e) { toast(e.message); } };
+  if ($('#reon')) $('#reon').onclick = async () => { await sapi('reactivate', { id }); toast(L('চালু হলো', 'Restarted', 'चालू हो गया')); studentDetail(el, id); };
+  if ($('#rej')) $('#rej').onclick = async () => { if (!confirm(L('বাতিল করবেন?', 'Reject this card?', 'रिजेक्ट करें?'))) return; await sapi('reject', { id }); studentsTab(el); };
+  if ($('#save')) $('#save').onclick = async () => { try { await sapi('update_student', { id, fields: { name: $('#e_nm').value, phone: $('#e_ph').value, address: $('#e_ad').value, package: $('#e_pk').value, classes_done: $('#e_cd').value, total_fee: $('#e_fee').value, allow_consecutive: $('#e_cons').checked, status: $('#e_st').value, note: $('#e_nt').value } }); toast(L('সেভ হলো', 'Saved', 'सेव हो गया')); studentDetail(el, id); } catch (e) { toast(e.message); } };
 }
 function bookFor(s, done) {
   let date = istToday(); const m = document.createElement('div'); m.className = 'modal';
-  m.innerHTML = `<div class="sheet"><h2>${esc(s.name)}-এর জন্য বুক</h2><div class="days" id="bd"></div>${S.role === 'admin' ? '<div class="chk"><input type="checkbox" id="frc"><span>নিয়ম ছাড়াই বুক (অ্যাডমিন)</span></div>' : ''}<div id="bs"></div><button class="btn ghost block mt" id="x">বন্ধ</button></div>`;
+  m.innerHTML = `<div class="sheet"><h2>${L(`${esc(s.name)}-এর জন্য বুক`, `Book for ${esc(s.name)}`, `${esc(s.name)} के लिए बुक`)}</h2><div class="days" id="bd"></div>${S.role === 'admin' ? `<div class="chk"><input type="checkbox" id="frc"><span>${L('নিয়ম ছাড়াই বুক (অ্যাডমিন)', 'Book without the rules (admin)', 'नियम के बिना बुक (एडमिन)')}</span></div>` : ''}<div id="bs"></div><button class="btn ghost block mt" id="x">${L('বন্ধ', 'Close', 'बंद')}</button></div>`;
   document.body.appendChild(m); $('#x', m).onclick = () => m.remove();
   const days = () => { $('#bd', m).innerHTML = Array.from({ length: 8 }, (_, i) => istToday(i)).map((d) => { const l = dayLabel(d); return `<button data-d="${d}" class="${d === date ? 'on' : ''}">${l.wd}<small>${l.d}</small></button>`; }).join(''); $('#bd', m).querySelectorAll('button').forEach((b) => b.onclick = () => { date = b.dataset.d; days(); load(); }); };
-  const load = async () => { const force = $('#frc', m)?.checked; const r = await sapi('staff_slots', { id: s.id, date, force }); $('#bs', m).innerHTML = `<div class="slots">${r.slots.map((x) => `<button class="slot ${x.ok ? '' : 'no'}" data-s="${x.slot}" data-why="${esc(x.text)}">${tTime(x.slot)}</button>`).join('')}</div>`; $('#bs', m).querySelectorAll('.slot').forEach((b) => b.onclick = async () => { if (b.classList.contains('no')) return toast(b.dataset.why); try { await sapi('staff_book', { id: s.id, slot: b.dataset.s, force }); toast('বুক হলো'); m.remove(); done(); } catch (e) { toast(e.message); } }); };
+  const load = async () => { const force = $('#frc', m)?.checked; const r = await sapi('staff_slots', { id: s.id, date, force }); $('#bs', m).innerHTML = `<div class="slots">${r.slots.map((x) => `<button class="slot ${x.ok ? '' : 'no'}" data-s="${x.slot}" data-why="${esc(x.text)}">${tTime(x.slot)}</button>`).join('')}</div>`; $('#bs', m).querySelectorAll('.slot').forEach((b) => b.onclick = async () => { if (b.classList.contains('no')) return toast(b.dataset.why); try { await sapi('staff_book', { id: s.id, slot: b.dataset.s, force }); toast(L('বুক হলো', 'Booked', 'बुक हो गई')); m.remove(); done(); } catch (e) { toast(e.message); } }); };
   if ($('#frc', m)) $('#frc', m).onchange = load; days(); load();
 }
 
 // ---------- dashboard
 function bars(data) {
-  const max = Math.max(1, ...data.map((d) => d.v)); const w = 320, h = 160, bw = w / Math.max(1, data.length);
-  return `<svg viewBox="0 0 ${w} ${h + 26}" width="100%" role="img">${data.map((d, i) => { const bh = Math.round((h - 18) * d.v / max); return `<rect x="${i * bw + 6}" y="${h - bh}" width="${bw - 12}" height="${bh}" rx="5" fill="${i === data.length - 1 ? '#ff5a0a' : '#0b3a8f'}"/><text x="${i * bw + bw / 2}" y="${h - bh - 4}" font-size="10" text-anchor="middle" fill="#14213d">${d.v >= 1000 ? Math.round(d.v / 1000) + 'k' : d.v}</text><text x="${i * bw + bw / 2}" y="${h + 16}" font-size="10" text-anchor="middle" fill="#5b6478">${esc(d.l)}</text>`; }).join('')}</svg>`;
+  const max = Math.max(1, ...data.map((d) => d.v)); const w = 320, h = 160, bw = w / Math.max(1, data.length), rw = Math.min(46, bw - 12);
+  return `<svg viewBox="0 0 ${w} ${h + 26}" width="100%" role="img">${data.map((d, i) => { const bh = Math.round((h - 18) * d.v / max); return `<rect x="${i * bw + (bw - rw) / 2}" y="${h - bh}" width="${rw}" height="${bh}" rx="5" fill="${i === data.length - 1 ? '#ff5a0a' : '#0b3a8f'}"/><text x="${i * bw + bw / 2}" y="${h - bh - 4}" font-size="10" text-anchor="middle" fill="#14213d">${d.v >= 1000 ? Math.round(d.v / 1000) + 'k' : d.v}</text><text x="${i * bw + bw / 2}" y="${h + 16}" font-size="10" text-anchor="middle" fill="#5b6478">${esc(d.l)}</text>`; }).join('')}</svg>`;
 }
 function pie(parts) {
   const tot = parts.reduce((t, p) => t + p.v, 0) || 1; let a = -Math.PI / 2; const R = 60, c = 70;
   const segs = parts.filter((p) => p.v > 0).map((p) => { const a2 = a + 2 * Math.PI * p.v / tot; const large = a2 - a > Math.PI ? 1 : 0; const d = parts.filter((x) => x.v > 0).length === 1 ? `M${c} ${c - R}A${R} ${R} 0 1 1 ${c - 0.01} ${c - R}Z` : `M${c} ${c}L${c + R * Math.cos(a)} ${c + R * Math.sin(a)}A${R} ${R} 0 ${large} 1 ${c + R * Math.cos(a2)} ${c + R * Math.sin(a2)}Z`; a = a2; return `<path d="${d}" fill="${p.c}"/>`; }).join('');
-  return `<div class="flex"><svg viewBox="0 0 140 140" width="120">${segs}<circle cx="70" cy="70" r="30" fill="#fff"/></svg><div>${parts.map((p) => `<div><span class="legend"><span><i style="background:${p.c}"></i>${esc(p.l)}: <b>${p.fmt ? p.fmt(p.v) : bn(p.v)}</b></span></span></div>`).join('')}</div></div>`;
+  return `<div class="flex"><svg viewBox="0 0 140 140" width="120">${segs}<circle cx="70" cy="70" r="30" fill="#fff"/></svg><div>${parts.map((p) => `<div><span class="legend"><span><i style="background:${p.c}"></i>${esc(p.l)}: <b>${p.fmt ? p.fmt(p.v) : N(p.v)}</b></span></span></div>`).join('')}</div></div>`;
 }
 async function dashTab(el) {
-  el.innerHTML = '<div class="mut">লোড হচ্ছে…</div>';
+  el.innerHTML = `<div class="mut">${L('লোড হচ্ছে…', 'Loading…', 'लोड हो रहा है…')}</div>`;
   try {
     const d = await sapi('dashboard'); const c = d.capacity;
-    const months = d.months.slice().reverse().map((m) => ({ l: MO[Number(m.m.slice(5)) - 1], v: m.total }));
+    const months = d.months.slice().reverse().map((m) => ({ l: MO()[Number(m.m.slice(5)) - 1], v: m.total }));
     const thisM = d.months.find((m) => m.m === istToday().slice(0, 7));
     const sum = (f) => d.students.filter(f).reduce((t, x) => t + x.n, 0), due = d.students.reduce((t, x) => t + (x.due || 0), 0), paid = d.students.reduce((t, x) => t + (x.paid || 0), 0);
     const T = d.today;
-    el.innerHTML = `<div class="card"><h3>আজ</h3><div class="kpis"><div class="kpi"><b>${bn(T.total)}</b><span>বুকিং</span></div><div class="kpi"><b style="color:var(--ok)">${bn(T.attended)}</b><span>এসেছেন</span></div><div class="kpi"><b>${bn(T.waiting)}</b><span>আসা বাকি</span></div><div class="kpi"><b style="color:var(--orange)">${bn(T.no_show)}</b><span>আসেননি</span></div></div>
-      ${d.pending_approvals || d.reactivation_requests ? `<div class="okmsg mt">${d.pending_approvals ? `${bn(d.pending_approvals)} জনের কার্ড অনুমোদন বাকি। ` : ''}${d.reactivation_requests ? `${bn(d.reactivation_requests)} জন অ্যাকাউন্ট চালুর অনুরোধ করেছেন।` : ''} (শিক্ষার্থী ট্যাবে দেখুন)</div>` : ''}</div>
-      <div class="kpis"><div class="kpi"><b>${money(thisM ? thisM.total : 0)}</b><span>এই মাসে উঠেছে</span></div><div class="kpi"><b style="color:var(--orange)">${money(due)}</b><span>মোট বাকি</span></div><div class="kpi"><b>${bn(d.admissions_this_month)}</b><span>এই মাসে ভর্তি</span></div><div class="kpi"><b>${bn(c.active_students)}</b><span>চলছে এমন শিক্ষার্থী</span></div></div>
-      <div class="card mt"><h3>প্রতি মাসের আয়</h3>${months.length ? bars(months) : '<div class="mut">এখনো কোনো জমা নেই</div>'}</div>
-      <div class="card"><h3>স্লট বনাম চাহিদা (সপ্তাহে)</h3><div class="kpis" style="grid-template-columns:repeat(2,1fr)"><div class="kpi"><b>${bn(c.per_week)}</b><span>ক্লাসের জায়গা (${bn(c.vehicles)}টা স্কুটি)</span></div><div class="kpi"><b>${bn(c.weekly_demand)}</b><span>চাহিদা (সপ্তাহে ২টো করে)</span></div><div class="kpi"><b style="color:${c.deficit_per_week ? 'var(--bad)' : 'var(--ok)'}">${bn(c.deficit_per_week)}</b><span>ঘাটতি</span></div><div class="kpi"><b>${bn(c.next_week_booked)}</b><span>আগামী ৭ দিনে বুক</span></div></div>
-        <div class="mut mt">গত ৭ দিনে ক্লাস হয়েছে ${bn(c.past_week_attended)}টা, আসেননি ${bn(c.past_week_no_show)} জন।${c.deficit_per_week ? ` প্রতি সপ্তাহে প্রায় ${bn(c.deficit_per_week)}টা ক্লাস কম পড়ছে: আরেকটা স্কুটি দিলে সপ্তাহে ${bn(c.per_day * 7 / Math.max(1, c.vehicles))}টা জায়গা বাড়বে।` : ''}</div></div>
-      <div class="card"><h3>শিক্ষার্থী</h3>${pie([{ l: 'স্কুটি', v: sum((x) => x.kind === 'scooty'), c: '#0b3a8f' }, { l: 'বাইক', v: sum((x) => x.kind === 'bike'), c: '#ff5a0a' }])}</div>
-      <div class="card"><h3>ফি</h3>${pie([{ l: 'জমা হয়েছে', v: paid, c: '#16a34a', fmt: money }, { l: 'বাকি', v: due, c: '#ff5a0a', fmt: money }])}</div>
-      <div class="card"><div class="flex between"><h3>কার কত বাকি</h3><div class="flex"><button class="btn sm" id="csv">টাকার CSV</button><button class="btn sm blue" id="csvb">বুকিংয়ের CSV</button></div></div><div class="list">${d.dues.map((x) => `<div class="it" data-id="${x.id}"><div style="flex:1"><b>${esc(x.name)}</b><div class="mut">${esc(x.phone)} · দিয়েছেন ${money(x.paid)} / ${money(x.total_fee)}</div></div><b style="color:var(--orange)">${money(x.due)}</b></div>`).join('') || '<div class="mut">কারও বাকি নেই</div>'}</div></div>`;
-    const dl = async (type) => { const month = prompt('কোন মাস? (YYYY-MM)', istToday().slice(0, 7)); if (!month) return; const r = await sapi('csv', { month, type }); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + r.csv], { type: 'text/csv' })); a.download = `patuli-${type}-${month}.csv`; a.click(); };
+    const pend = d.pending_approvals ? L(`${N(d.pending_approvals)} জনের কার্ড অনুমোদন বাকি। `, `${d.pending_approvals} card(s) waiting for approval. `, `${d.pending_approvals} लोगों के कार्ड का अप्रूवल बाकी। `) : '';
+    const reqs = d.reactivation_requests ? L(`${N(d.reactivation_requests)} জন অ্যাকাউন্ট চালুর অনুরোধ করেছেন।`, `${d.reactivation_requests} restart request(s).`, `${d.reactivation_requests} लोगों ने अकाउंट चालू करने की रिक्वेस्ट की है।`) : '';
+    el.innerHTML = `<div class="card"><h3>${L('আজ', 'Today', 'आज')}</h3><div class="kpis"><div class="kpi"><b>${N(T.total)}</b><span>${L('বুকিং', 'Bookings', 'बुकिंग')}</span></div><div class="kpi"><b style="color:var(--ok)">${N(T.attended)}</b><span>${L('এসেছেন', 'Came', 'आए')}</span></div><div class="kpi"><b>${N(T.waiting)}</b><span>${L('আসা বাকি', 'Still to come', 'आना बाकी')}</span></div><div class="kpi"><b style="color:var(--orange)">${N(T.no_show)}</b><span>${L('আসেননি', 'Missed', 'नहीं आए')}</span></div></div>
+      ${pend || reqs ? `<div class="okmsg mt">${pend}${reqs} ${L('(শিক্ষার্থী ট্যাবে দেখুন)', '(see the Students tab)', '(स्टूडेंट टैब में देखें)')}</div>` : ''}</div>
+      <div class="kpis"><div class="kpi"><b>${money(thisM ? thisM.total : 0)}</b><span>${L('এই মাসে উঠেছে', 'Collected this month', 'इस महीने आया')}</span></div><div class="kpi"><b style="color:var(--orange)">${money(due)}</b><span>${L('মোট বাকি', 'Total due', 'कुल बाकी')}</span></div><div class="kpi"><b>${N(d.admissions_this_month)}</b><span>${L('এই মাসে ভর্তি', 'Admissions this month', 'इस महीने एडमिशन')}</span></div><div class="kpi"><b>${N(c.active_students)}</b><span>${L('চলছে এমন শিক্ষার্থী', 'Active students', 'चालू स्टूडेंट')}</span></div></div>
+      <div class="card mt"><h3>${L('প্রতি মাসের আয়', 'Monthly income', 'हर महीने की कमाई')}</h3>${months.length ? bars(months) : `<div class="mut">${L('এখনো কোনো জমা নেই', 'No payments yet', 'अभी कोई जमा नहीं')}</div>`}</div>
+      <div class="card"><h3>${L('স্লট বনাম চাহিদা (সপ্তাহে)', 'Slots vs demand (per week)', 'स्लॉट बनाम माँग (हफ़्ते में)')}</h3><div class="kpis" style="grid-template-columns:repeat(2,1fr)"><div class="kpi"><b>${N(c.per_week)}</b><span>${L(`ক্লাসের জায়গা (${N(c.vehicles)}টা স্কুটি)`, `Class places (${c.vehicles} scooties)`, `क्लास की जगह (${c.vehicles} स्कूटी)`)}</span></div><div class="kpi"><b>${N(c.weekly_demand)}</b><span>${L('চাহিদা (সপ্তাহে ২টো করে)', 'Demand (2 a week each)', 'माँग (हर किसी की हफ़्ते में 2)')}</span></div><div class="kpi"><b style="color:${c.deficit_per_week ? 'var(--bad)' : 'var(--ok)'}">${N(c.deficit_per_week)}</b><span>${L('ঘাটতি', 'Shortfall', 'कमी')}</span></div><div class="kpi"><b>${N(c.next_week_booked)}</b><span>${L('আগামী ৭ দিনে বুক', 'Booked in next 7 days', 'अगले 7 दिन में बुक')}</span></div></div>
+        <div class="mut mt">${L(`গত ৭ দিনে ক্লাস হয়েছে ${N(c.past_week_attended)}টা, আসেননি ${N(c.past_week_no_show)} জন।`, `Last 7 days: ${c.past_week_attended} classes held, ${c.past_week_no_show} missed.`, `पिछले 7 दिन में ${c.past_week_attended} क्लास हुईं, ${c.past_week_no_show} लोग नहीं आए।`)}${c.deficit_per_week ? ' ' + L(`প্রতি সপ্তাহে প্রায় ${N(c.deficit_per_week)}টা ক্লাস কম পড়ছে: আরেকটা স্কুটি দিলে সপ্তাহে ${N(c.per_day * 7 / Math.max(1, c.vehicles))}টা জায়গা বাড়বে।`, `About ${c.deficit_per_week} classes short every week: one more scooty adds ${c.per_day * 7 / Math.max(1, c.vehicles)} places a week.`, `हर हफ़्ते लगभग ${c.deficit_per_week} क्लास कम पड़ रही हैं: एक और स्कूटी से हफ़्ते में ${c.per_day * 7 / Math.max(1, c.vehicles)} जगह बढ़ेंगी।`) : ''}</div></div>
+      <div class="card"><h3>${L('শিক্ষার্থী', 'Students', 'स्टूडेंट')}</h3>${pie([{ l: kindName('scooty'), v: sum((x) => x.kind === 'scooty'), c: '#0b3a8f' }, { l: kindName('bike'), v: sum((x) => x.kind === 'bike'), c: '#ff5a0a' }])}</div>
+      <div class="card"><h3>${L('ফি', 'Fees', 'फीस')}</h3>${pie([{ l: L('জমা হয়েছে', 'Paid', 'जमा हुआ'), v: paid, c: '#16a34a', fmt: money }, { l: L('বাকি', 'Due', 'बाकी'), v: due, c: '#ff5a0a', fmt: money }])}</div>
+      <div class="card"><div class="flex between wrapf"><h3>${L('কার কত বাকি', 'Who owes what', 'किसका कितना बाकी')}</h3><div class="flex"><button class="btn sm" id="csv">${L('টাকার CSV', 'Payments CSV', 'पैसों की CSV')}</button><button class="btn sm blue" id="csvb">${L('বুকিংয়ের CSV', 'Bookings CSV', 'बुकिंग की CSV')}</button></div></div><div class="list">${d.dues.map((x) => `<div class="it" data-id="${x.id}"><div style="flex:1"><b>${esc(x.name)}</b><div class="mut">${esc(x.phone)} · ${L('দিয়েছেন', 'paid', 'दिए')} ${money(x.paid)} / ${money(x.total_fee)}</div></div><b style="color:var(--orange)">${money(x.due)}</b></div>`).join('') || `<div class="mut">${L('কারও বাকি নেই', 'Nobody owes anything', 'किसी का कुछ बाकी नहीं')}</div>`}</div></div>`;
+    const dl = async (type) => { const month = prompt(L('কোন মাস? (YYYY-MM)', 'Which month? (YYYY-MM)', 'कौन सा महीना? (YYYY-MM)'), istToday().slice(0, 7)); if (!month) return; const r = await sapi('csv', { month, type }); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + r.csv], { type: 'text/csv' })); a.download = `patuli-${type}-${month}.csv`; a.click(); };
     $('#csv').onclick = () => dl('payments'); $('#csvb').onclick = () => dl('bookings');
   } catch (e) { el.innerHTML = `<div class="err">${esc(e.message)}</div>`; }
 }
@@ -432,27 +488,32 @@ async function dashTab(el) {
 // ---------- settings
 async function settingsTab(el) {
   const r = await sapi('settings'); const b = r.branch; const p = b.trainer_perms;
-  el.innerHTML = `<div class="card"><h2>ট্রেনার কী দেখতে পাবেন</h2>
-    ${[['bookings', 'বুকিং ক্যালেন্ডার'], ['students', 'শিক্ষার্থীর তালিকা'], ['dues', 'বাকি টাকা'], ['money', 'টাকা জমা নেওয়া'], ['dashboard', 'হিসাবের ড্যাশবোর্ড']].map(([k, l]) => `<div class="chk"><input type="checkbox" data-p="${k}" ${p[k] ? 'checked' : ''}><span>${l}</span></div>`).join('')}
-    <button class="btn blue block" id="sp">সেভ</button></div>
-    <div class="card"><h2>ক্লাসের সময়</h2><div class="mut">২৪ ঘণ্টার হিসাবে, যেমন 08:00 – 11:00</div><div id="hrs"></div><button class="btn ghost sm mt" id="addh">+ সময় যোগ</button><button class="btn blue block mt" id="sh">সেভ</button></div>
-    <div class="card"><h2>বুকিংয়ের নিয়ম</h2><div class="grid2"><div><label>কত ঘণ্টা আগে বুকিং খোলে</label><input id="r_win" inputmode="numeric" value="${b.window_hours}"></div><div><label>কত ঘণ্টা আগে পর্যন্ত বুক</label><input id="r_lead" inputmode="numeric" value="${b.lead_hours}"></div><div><label>কত ঘণ্টা আগে পর্যন্ত বাতিল</label><input id="r_can" inputmode="numeric" value="${b.cancel_hours}"></div><div><label>কত দিন না এলে অ্যাকাউন্ট বন্ধ (০ = কখনো না)</label><input id="r_ina" inputmode="numeric" value="${b.inactive_days}"></div></div><button class="btn blue block mt" id="sr">সেভ</button></div>
-    <div class="card"><h2>গাড়ি</h2><div class="list">${r.vehicles.map((v) => `<div class="it"><div style="flex:1"><b>${esc(v.label)}</b> <span class="mut">${v.kind === 'bike' ? 'বাইক' : 'স্কুটি'}</span></div><button class="btn sm ${v.active ? 'ghost' : 'green'}" data-v="${v.id}" data-a="${v.active ? 0 : 1}">${v.active ? 'বন্ধ করুন' : 'চালু করুন'}</button></div>`).join('')}</div>
-      <div class="flex mt"><input id="vl" placeholder="নাম, যেমন Scooty 3"><select id="vk" style="width:120px"><option value="scooty">স্কুটি</option><option value="bike">বাইক</option></select><button class="btn sm" id="addv">যোগ</button></div></div>
-    <div class="card"><h2>PIN ও পাসওয়ার্ড</h2><label>ট্রেনারদের নতুন PIN (৪–৮ সংখ্যা)</label><input id="pin" inputmode="numeric"><label>অ্যাডমিনের নতুন পাসওয়ার্ড (অন্তত ৮ অক্ষর)</label><input id="pw" type="password"><button class="btn blue block mt" id="spin">বদলান</button></div>
-    <div class="card"><h2>কে কী করেছে</h2><button class="btn ghost sm" id="aud">দেখুন</button><div class="list" id="audl"></div></div>
-    <button class="btn ghost block" id="out">লগআউট</button>`;
+  const SAVE = L('সেভ', 'Save', 'सेव');
+  el.innerHTML = `<div class="card"><h2>${L('ট্রেনার কী দেখতে পাবেন', 'What trainers can see', 'ट्रेनर क्या देख सकेंगे')}</h2>
+    ${[['bookings', L('বুকিং ক্যালেন্ডার', 'Booking calendar', 'बुकिंग कैलेंडर')], ['students', L('শিক্ষার্থীর তালিকা', 'Student list', 'स्टूडेंट लिस्ट')], ['dues', L('বাকি টাকা', 'Dues', 'बाकी पैसे')], ['money', L('টাকা জমা নেওয়া', 'Taking payments', 'पैसे जमा लेना')], ['dashboard', L('হিসাবের ড্যাশবোর্ড', 'Accounts dashboard', 'हिसाब का डैशबोर्ड')]].map(([k, l]) => `<div class="chk"><input type="checkbox" data-p="${k}" ${p[k] ? 'checked' : ''}><span>${l}</span></div>`).join('')}
+    <button class="btn blue block" id="sp">${SAVE}</button></div>
+    <div class="card"><h2>${L('ক্লাসের সময়', 'Class hours', 'क्लास का समय')}</h2><div class="mut">${L('২৪ ঘণ্টার হিসাবে, যেমন 08:00 – 11:00', '24-hour format, e.g. 08:00 – 11:00', '24 घंटे के हिसाब से, जैसे 08:00 – 11:00')}</div><div id="hrs"></div><button class="btn ghost sm mt" id="addh">+ ${L('সময় যোগ', 'Add hours', 'समय जोड़ें')}</button><button class="btn blue block mt" id="sh">${SAVE}</button></div>
+    <div class="card"><h2>${L('বুকিংয়ের নিয়ম', 'Booking rules', 'बुकिंग के नियम')}</h2><div class="grid2"><div><label>${L('কত ঘণ্টা আগে বুকিং খোলে', 'Booking opens (hours before)', 'कितने घंटे पहले बुकिंग खुले')}</label><input id="r_win" inputmode="numeric" value="${b.window_hours}"></div><div><label>${L('কত ঘণ্টা আগে পর্যন্ত বুক', 'Book until (hours before)', 'कितने घंटे पहले तक बुक')}</label><input id="r_lead" inputmode="numeric" value="${b.lead_hours}"></div><div><label>${L('কত ঘণ্টা আগে পর্যন্ত বাতিল', 'Cancel until (hours before)', 'कितने घंटे पहले तक कैंसल')}</label><input id="r_can" inputmode="numeric" value="${b.cancel_hours}"></div><div><label>${L('কত দিন না এলে অ্যাকাউন্ট বন্ধ (০ = কখনো না)', 'Pause account after days away (0 = never)', 'कितने दिन न आने पर अकाउंट बंद (0 = कभी नहीं)')}</label><input id="r_ina" inputmode="numeric" value="${b.inactive_days}"></div></div><button class="btn blue block mt" id="sr">${SAVE}</button></div>
+    <div class="card"><h2>${L('গাড়ি', 'Vehicles', 'गाड़ियाँ')}</h2><div class="list">${r.vehicles.map((v) => `<div class="it"><div style="flex:1"><b>${esc(v.label)}</b> <span class="mut">${kindName(v.kind)}</span></div><button class="btn sm ${v.active ? 'ghost' : 'green'}" data-v="${v.id}" data-a="${v.active ? 0 : 1}">${v.active ? L('বন্ধ করুন', 'Turn off', 'बंद करें') : L('চালু করুন', 'Turn on', 'चालू करें')}</button></div>`).join('')}</div>
+      <div class="flex mt"><input id="vl" placeholder="${L('নাম, যেমন Scooty 3', 'Name, e.g. Scooty 3', 'नाम, जैसे Scooty 3')}"><select id="vk" style="width:120px"><option value="scooty">${kindName('scooty')}</option><option value="bike">${kindName('bike')}</option></select><button class="btn sm" id="addv">${L('যোগ', 'Add', 'जोड़ें')}</button></div></div>
+    <div class="card"><h2>${L('PIN ও পাসওয়ার্ড', 'PIN and password', 'PIN और पासवर्ड')}</h2><label>${L('ট্রেনারদের নতুন PIN (৪–৮ সংখ্যা)', 'New trainer PIN (4–8 digits)', 'ट्रेनरों का नया PIN (4–8 अंक)')}</label><input id="pin" inputmode="numeric"><label>${L('অ্যাডমিনের নতুন পাসওয়ার্ড (অন্তত ৮ অক্ষর)', 'New admin password (at least 8 characters)', 'एडमिन का नया पासवर्ड (कम से कम 8 अक्षर)')}</label><input id="pw" type="password"><button class="btn blue block mt" id="spin">${L('বদলান', 'Change', 'बदलें')}</button></div>
+    <div class="card"><h2>${L('কে কী করেছে', 'Activity log', 'किसने क्या किया')}</h2><button class="btn ghost sm" id="aud">${L('দেখুন', 'Show', 'देखें')}</button><div class="list" id="audl"></div></div>
+    <button class="btn ghost block" id="out">${L('লগআউট', 'Log out', 'लॉगआउट')}</button>`;
   let hours = b.hours.slice();
   const drawH = () => { $('#hrs').innerHTML = hours.map((h, i) => `<div class="flex mt"><input value="${h[0]}" data-i="${i}" data-k="0" style="width:110px"> – <input value="${h[1]}" data-i="${i}" data-k="1" style="width:110px"><button class="btn sm ghost" data-del="${i}">✕</button></div>`).join(''); $('#hrs').querySelectorAll('input').forEach((x) => x.oninput = () => hours[x.dataset.i][x.dataset.k] = x.value.trim()); $('#hrs').querySelectorAll('[data-del]').forEach((x) => x.onclick = () => { hours.splice(Number(x.dataset.del), 1); drawH(); }); };
   drawH(); $('#addh').onclick = () => { hours.push(['16:00', '18:00']); drawH(); };
-  const save = async (fields, msg = 'সেভ হলো') => { try { await sapi('save_settings', { fields }); toast(msg); settingsTab(el); } catch (e) { toast(e.message); } };
+  const save = async (fields, msg = L('সেভ হলো', 'Saved', 'सेव हो गया')) => { try { await sapi('save_settings', { fields }); toast(msg); settingsTab(el); } catch (e) { toast(e.message); } };
   $('#sp').onclick = () => { const tp = {}; el.querySelectorAll('[data-p]').forEach((x) => tp[x.dataset.p] = x.checked); save({ trainer_perms: tp }); };
   $('#sh').onclick = () => save({ hours });
   $('#sr').onclick = () => save({ window_hours: $('#r_win').value, lead_hours: $('#r_lead').value, cancel_hours: $('#r_can').value, inactive_days: $('#r_ina').value });
   el.querySelectorAll('[data-v]').forEach((x) => x.onclick = () => save({ toggle_vehicle: { id: x.dataset.v, active: x.dataset.a === '1' } }));
   $('#addv').onclick = () => save({ add_vehicle: { label: $('#vl').value || 'Scooty', kind: $('#vk').value } });
-  $('#spin').onclick = () => { const f = {}; if ($('#pin').value) f.trainer_pin = $('#pin').value; if ($('#pw').value) f.admin_password = $('#pw').value; if (Object.keys(f).length) save(f, 'বদলানো হলো'); };
-  $('#aud').onclick = async () => { const a = await sapi('audit'); const L = { reactivate: 'আবার চালু', reactivate_request: 'চালুর অনুরোধ', book: 'বুক', cancel: 'শিক্ষার্থী বাতিল', centre_cancel: 'সেন্টার বাতিল', attend: 'ক্লাস গোনা', admit: 'ভর্তি', approve: 'অনুমোদন', reject: 'বাতিল (কার্ড)', block: 'বন্ধ', unblock: 'খোলা', payment: 'টাকা জমা', update_student: 'সম্পাদনা', settings: 'সেটিংস', login_fail: 'ভুল লগইন', old_submit: 'কার্ড জমা' }; $('#audl').innerHTML = a.audit.map((x) => `<div class="it"><div style="flex:1"><b>${L[x.action] || x.action}</b> · ${esc(x.actor)}${x.name ? ' · ' + esc(x.name) : ''}${x.detail && x.detail.slot ? ' · ' + tDay(x.detail.slot) + ' ' + tTime(x.detail.slot) : ''}<div class="mut" style="font-size:12px">${tDay(x.at)} ${tTime(x.at)}</div></div></div>`).join(''); };
+  $('#spin').onclick = () => { const f = {}; if ($('#pin').value) f.trainer_pin = $('#pin').value; if ($('#pw').value) f.admin_password = $('#pw').value; if (Object.keys(f).length) save(f, L('বদলানো হলো', 'Changed', 'बदल दिया')); };
+  $('#aud').onclick = async () => {
+    const a = await sapi('audit');
+    const AL = { reactivate: L('আবার চালু', 'Restarted', 'फिर से चालू'), reactivate_request: L('চালুর অনুরোধ', 'Restart request', 'चालू करने की रिक्वेस्ट'), book: L('বুক', 'Booked', 'बुक'), cancel: L('শিক্ষার্থী বাতিল', 'Student cancelled', 'स्टूडेंट ने कैंसल किया'), centre_cancel: L('সেন্টার বাতিল', 'Centre cancelled', 'सेंटर ने कैंसल किया'), attend: L('ক্লাস গোনা', 'Class counted', 'क्लास गिनी'), admit: L('ভর্তি', 'Admission', 'एडमिशन'), approve: L('অনুমোদন', 'Approved', 'अप्रूव'), reject: L('বাতিল (কার্ড)', 'Rejected (card)', 'रिजेक्ट (कार्ड)'), block: L('বন্ধ', 'Closed', 'बंद'), unblock: L('খোলা', 'Opened', 'खोला'), payment: L('টাকা জমা', 'Payment', 'पैसे जमा'), update_student: L('সম্পাদনা', 'Edited', 'बदलाव'), settings: L('সেটিংস', 'Settings', 'सेटिंग्स'), login_fail: L('ভুল লগইন', 'Failed login', 'गलत लॉगिन'), old_submit: L('কার্ড জমা', 'Card submitted', 'कार्ड जमा') };
+    $('#audl').innerHTML = a.audit.map((x) => `<div class="it"><div style="flex:1"><b>${AL[x.action] || x.action}</b> · ${esc(x.actor)}${x.name ? ' · ' + esc(x.name) : ''}${x.detail && x.detail.slot ? ' · ' + tDay(x.detail.slot) + ' ' + tTime(x.detail.slot) : ''}<div class="mut" style="font-size:12px">${tDay(x.at)} ${tTime(x.at)}</div></div></div>`).join('');
+  };
   $('#out').onclick = () => { saveSession(null); S = null; loginPage(); };
 }
 
