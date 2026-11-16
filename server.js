@@ -11,6 +11,20 @@ try { fs.readFileSync(path.join(ROOT, 'redirects.txt'), 'utf8').split('\n').forE
 const TEXT = new Set(['.html', '.css', '.js', '.svg', '.xml', '.txt', '.json']);
 function send(res, file, code, req) {
   const ext = path.extname(file);
+  // Videos: answer byte-range requests (iPhone/iPad Safari will not play a video without them).
+  if (code === 200 && ext === '.mp4') {
+    const size = fs.statSync(file).size, base = { 'Content-Type': 'video/mp4', 'Accept-Ranges': 'bytes', 'Cache-Control': 'public, max-age=2592000' };
+    const m = /^bytes=(\d*)-(\d*)$/.exec((req && req.headers.range) || '');
+    if (m) {
+      let a = m[1] === '' ? size - +m[2] : +m[1], b = m[1] !== '' && m[2] !== '' ? +m[2] : size - 1;
+      if (isNaN(a) || a < 0 || a >= size || b < a) { res.writeHead(416, { 'Content-Range': 'bytes */' + size }); return res.end(); }
+      b = Math.min(b, size - 1);
+      res.writeHead(206, { ...base, 'Content-Range': `bytes ${a}-${b}/${size}`, 'Content-Length': b - a + 1 });
+      return fs.createReadStream(file, { start: a, end: b }).pipe(res);
+    }
+    res.writeHead(200, { ...base, 'Content-Length': size });
+    return fs.createReadStream(file).pipe(res);
+  }
   const ae = (req && req.headers['accept-encoding']) || '';
   const enc = TEXT.has(ext) ? (/\bbr\b/.test(ae) ? 'br' : /\bgzip\b/.test(ae) ? 'gzip' : '') : '';
   const h = {};
