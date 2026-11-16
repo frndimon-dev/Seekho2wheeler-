@@ -522,3 +522,45 @@ section{overflow:hidden}
   .stats{margin-top:-24px}
 }
 @media (max-width:760px){.hero-media .hs video{object-position:50% 7%}}
+
+/* Centres: animated network band (pins drop in the order the centres opened) */
+.centres .wm{display:none}
+.cband{display:grid;gap:18px;align-items:center;background:radial-gradient(70% 70% at 90% 10%,rgba(255,197,20,.18),transparent 60%),linear-gradient(150deg,var(--rb),#061a45);border-radius:28px;padding:26px 20px 18px;color:#c9d6f5;margin-bottom:34px;overflow:hidden;box-shadow:0 40px 70px -40px rgba(11,58,143,.7)}
+.cband .eb{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);box-shadow:none}
+.cb-num{display:flex;align-items:center;gap:14px;margin:4px 0 6px}
+.cb-num b{font:700 clamp(120px,30vw,220px)/.8 var(--head);font-stretch:75%;color:var(--ye);letter-spacing:-.04em;text-shadow:0 10px 40px rgba(255,197,20,.35)}
+.cb-num span{font:600 clamp(18px,4vw,26px)/1.1 var(--head);color:#fff;text-transform:uppercase;letter-spacing:.04em}
+.cband h2{color:#fff;font-size:clamp(28px,6vw,44px)}
+.cband .sub{color:#b9c7ec}
+.cb-tick{margin-top:18px;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.cb-tick>div{display:flex;gap:10px;width:max-content;animation:cbt 22s linear infinite}
+.cb-tick span{white-space:nowrap;font:600 13px var(--font);color:#fff;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);padding:7px 12px;border-radius:999px}
+.cb-tick span::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ye);margin-right:7px;vertical-align:middle}
+@keyframes cbt{to{transform:translateX(-50%)}}
+.cb-map{position:relative}
+.cmap{width:100%;height:auto;display:block;overflow:visible}
+.cmap .river{fill:none;stroke:rgba(120,170,255,.35);stroke-width:14;stroke-linecap:round}
+.cmap .rv-lbl{fill:rgba(160,195,255,.55);font:italic 600 11px var(--font);letter-spacing:.1em}
+.cmap .ln{fill:none;stroke:var(--ye);stroke-width:1.6;stroke-dasharray:4 5;opacity:0;transition:opacity .6s var(--d)}
+.cmap .pin{opacity:0;transform-box:fill-box}
+.cmap .pin .dotc{fill:#fff;stroke:var(--or);stroke-width:3}
+.cmap .pin.main .dotc{fill:var(--ye);stroke:#fff}
+.cmap .pin .pulse{fill:var(--ye);opacity:0}
+.cmap text{fill:#fff;font:600 12.5px var(--font)}
+.cmap .yr{fill:var(--ye);font-weight:700;font-size:11px}
+.cband.go .ln{opacity:.8;animation:dash 2.4s linear infinite}
+.cband.go .pin{animation:drop .6s cubic-bezier(.2,1.4,.4,1) var(--d) forwards}
+.cband.go .pin .pulse{animation:pulse 2.4s ease-out calc(var(--d) + .6s) infinite}
+@keyframes drop{from{opacity:0;translate:0 -26px}to{opacity:1;translate:0 0}}
+@keyframes pulse{0%{opacity:.55;r:6}100%{opacity:0;r:22}}
+@keyframes dash{to{stroke-dashoffset:-36}}
+.cb-h3{font-size:22px}
+.sh-r{margin-bottom:14px}
+@media (min-width:900px){.cband{grid-template-columns:1.05fr .95fr;gap:36px;padding:44px 48px}.cb-map{max-width:440px;justify-self:center}}
+@media (max-width:899px){.cb-map{max-width:380px;margin:0 auto}}
+@media (prefers-reduced-motion:reduce){.cmap .pin,.cmap .ln{opacity:1;animation:none}.cb-tick>div{animation:none}}
+.cband>*{min-width:0}
+.cband{grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){.cband{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}}
+.cmap .river{stroke-linejoin:round}
+@media (min-width:900px){.cb-map{max-width:none;width:100%;justify-self:stretch}}
