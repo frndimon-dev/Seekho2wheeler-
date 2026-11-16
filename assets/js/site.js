@@ -23,13 +23,14 @@
     els.forEach(function (e) { io.observe(e); });
   } else els.forEach(function (e) { e.classList.add('in'); });
 
-  // Doorstep price: up to 3 km 4500, +500 per extra km (rounded up), max 8000, none above 10 km.
+  // Doorstep price (same rule as Business Desk): up to 2 km 4500, up to 3 km 5000, then a straight line to 8000 at 10 km (rounded to 100); none above 10 km.
+  function doorFee(v) { return v <= 2 ? 4500 : v <= 3 ? 5000 : Math.round((5000 + (v - 3) / 7 * 3000) / 100) * 100; }
   var km = document.getElementById('km'), out = document.getElementById('kmout');
   if (km && out) km.addEventListener('input', function () {
     var v = parseFloat(km.value);
     if (isNaN(v) || v < 0) { out.textContent = '—'; return; }
     if (v > 10) { out.textContent = 'Not available'; return; }
-    var p = v <= 3 ? 4500 : Math.min(8000, 4500 + Math.ceil(v - 3) * 500);
+    var p = doorFee(v);
     out.textContent = '₹' + p.toLocaleString('en-IN');
   });
 
@@ -73,7 +74,7 @@
 
   // Doorstep slider.
   var kr = document.getElementById('kmr'), kp = document.getElementById('kmp'), kv = document.getElementById('kmv');
-  if (kr) { var upd = function () { var v = +kr.value; kv.textContent = v + ' km'; kp.textContent = '₹' + (v <= 3 ? 4500 : Math.min(8000, 4500 + (v - 3) * 500)).toLocaleString('en-IN'); }; kr.addEventListener('input', upd); upd(); }
+  if (kr) { var upd = function () { var v = +kr.value; kv.textContent = v + ' km'; kp.textContent = '₹' + doorFee(v).toLocaleString('en-IN'); }; kr.addEventListener('input', upd); upd(); }
 
   // Count-up numbers.
   var cs = document.querySelectorAll('[data-count]');
