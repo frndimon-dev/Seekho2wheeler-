@@ -74,7 +74,7 @@
 
   // Doorstep slider.
   var kr = document.getElementById('kmr'), kp = document.getElementById('kmp'), kv = document.getElementById('kmv');
-  if (kr) { var upd = function () { var v = +kr.value; kv.textContent = v + ' km'; kp.textContent = '₹' + doorFee(v).toLocaleString('en-IN'); }; kr.addEventListener('input', upd); upd(); }
+  if (kr) { var upd = function () { var v = +kr.value; kv.textContent = v + ' km'; kr.style.setProperty('--p', (v * 10) + '%'); kp.textContent = '₹' + doorFee(v).toLocaleString('en-IN'); }; kr.addEventListener('input', upd); upd(); }
 
   // Count-up numbers.
   var cs = document.querySelectorAll('[data-count]');
