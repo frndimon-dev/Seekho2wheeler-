@@ -92,3 +92,8 @@ h2{font-size:clamp(32px,7.4vw,56px)!important;line-height:1.04!important}
 .brand .tagl{align-self:start;font:600 10.5px/1.1 "Instrument Sans",system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#5c667a;white-space:nowrap;margin-top:2px}
 @media (min-width:1000px){.brand .tagl{font-size:11px}}
 
+/* small touch-ups (17 Nov): bigger page titles, phase details easier to read */
+.ph2t h1,.phero2 h1{font-size:clamp(34px,6.4vw,60px)!important;line-height:1.02!important}
+.phase[open]{border-color:#ffd76a!important;box-shadow:0 18px 36px -26px rgba(11,58,143,.55)!important}
+.phase .chips li{font-size:13.5px}
+.aimg img,.lpic img{aspect-ratio:4/5;object-fit:cover}
