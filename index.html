@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="/assets/img/logo-shield.png">
 <link rel="preload" href="/assets/fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" as="image" href="/assets/img/tall-3-m.webp" media="(max-width:760px)" fetchpriority="high"><link rel="preload" as="image" href="/assets/img/group-ride.webp" media="(min-width:761px)" fetchpriority="high">
-<link rel="stylesheet" href="/assets/css/home.css?v=15">
+<link rel="stylesheet" href="/assets/css/home.css?v=17">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"DrivingSchool","name":"Kolkata Scooty Bike Training Centre","alternateName":"Seekho 2 Wheeler","url":"https://seekho2wheeler.com/","telephone":"+919748481630","address":{"@type":"PostalAddress","streetAddress":"1, 78, Banerjee Para Rd, Haridevpur, Paschim Putiary","addressLocality":"Kolkata","addressRegion":"West Bengal","postalCode":"700041","addressCountry":"IN"},"hasMap":"https://www.google.com/maps/place/?q=place_id:ChIJTW1jJIZxAjoR5lZey5JaXcY","sameAs":["https://www.instagram.com/scooty_bike_training_centre","https://www.facebook.com/kolkatascootybiketraining","https://youtube.com/@kolkatascootybiketrainingcentr"],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"644"}}</script>
 </head>
 <body class="v3">
@@ -204,6 +204,12 @@ pick();ready=true;window.addEventListener('resize',function(){go(cur)});})();</s
 </div></section>
 
 <section class="revs"><span class="wm" aria-hidden="true">REVIEWS</span><div class="wrap revs-g">
+  <div class="vrev">
+    <div class="vr-head"><h3>Hear it from our learners</h3><button type="button" class="b b-y vr-full">▶ Watch the full video</button></div>
+    <div class="vr-row"><button type="button" class="vr" data-v="rv1" aria-label="Play video review: Balance in 7–8 classes"><video muted loop playsinline preload="none" poster="/assets/video/rv1.webp"></video><span class="snd" aria-hidden="true"></span><span class="vr-cap">Balance in 7–8 classes</span></button><button type="button" class="vr" data-v="rv2" aria-label="Play video review: No match for the trainer"><video muted loop playsinline preload="none" poster="/assets/video/rv2.webp"></video><span class="snd" aria-hidden="true"></span><span class="vr-cap">“No match for the trainer”</span></button><button type="button" class="vr" data-v="rv3" aria-label="Play video review: Now I bring my daughter home from school"><video muted loop playsinline preload="none" poster="/assets/video/rv3.webp"></video><span class="snd" aria-hidden="true"></span><span class="vr-cap">Now I bring my daughter home from school</span></button><button type="button" class="vr" data-v="rv4" aria-label="Play video review: Feet up from the 3rd day"><video muted loop playsinline preload="none" poster="/assets/video/rv4.webp"></video><span class="snd" aria-hidden="true"></span><span class="vr-cap">Feet up from the 3rd day</span></button><button type="button" class="vr" data-v="rv5" aria-label="Play video review: I am grateful to him"><video muted loop playsinline preload="none" poster="/assets/video/rv5.webp"></video><span class="snd" aria-hidden="true"></span><span class="vr-cap">“I am grateful to him”</span></button><button type="button" class="vr" data-v="rv6" aria-label="Play video review: A learner shares his experience"><video muted loop playsinline preload="none" poster="/assets/video/rv6.webp"></video><span class="snd" aria-hidden="true"></span><span class="vr-cap">A learner shares his experience</span></button></div>
+    <p class="vr-note">Tap a video for sound. From our Instagram reel with 7 lakh views.</p>
+  </div>
+  <dialog class="vr-dlg"><button type="button" class="vr-x" aria-label="Close">✕</button><video controls playsinline preload="none" poster="/assets/video/rv-full.webp"></video></dialog>
   <div class="rsum">
     <span class="eb eb-y"><i>06</i>Reviews</span>
     <h2>Loved by <span class="y">5,000+</span> riders</h2>
@@ -291,6 +297,15 @@ pick();ready=true;
 var band=document.querySelector('.cband');if('IntersectionObserver' in window&&band){new IntersectionObserver(function(e){if(e[0].isIntersecting&&!user&&!auto){auto=setInterval(function(){if(user){clearInterval(auto);return}go(cur+1)},3200)}else if(!e[0].isIntersecting&&auto){clearInterval(auto);auto=null}},{threshold:.4}).observe(band)}
 })();</script>
 
+<script>(function(){var cs=[].slice.call(document.querySelectorAll('.vr'));if(!cs.length)return;var V='?v=1';
+function load(c){var v=c.querySelector('video');if(!v.getAttribute('src')){v.setAttribute('src','/assets/video/'+c.dataset.v+'.mp4'+V)}return v}
+function quiet(){cs.forEach(function(c){var v=c.querySelector('video');v.muted=true;c.classList.remove('on')})}
+var io='IntersectionObserver' in window?new IntersectionObserver(function(es){es.forEach(function(e){var v=load(e.target);if(e.isIntersecting){var p=v.play();p&&p.catch&&p.catch(function(){})}else v.pause()})},{threshold:.5}):null;
+cs.forEach(function(c){io?io.observe(c):load(c);c.addEventListener('click',function(){var v=load(c),was=c.classList.contains('on');quiet();if(!was){c.classList.add('on');v.muted=false;try{v.currentTime=0}catch(e){}v.play()}})});
+var d=document.querySelector('.vr-dlg'),b=document.querySelector('.vr-full');if(d&&b){var fv=d.querySelector('video');
+b.addEventListener('click',function(){quiet();if(!fv.getAttribute('src'))fv.setAttribute('src','/assets/video/rv-full.mp4'+V);if(d.showModal)d.showModal();else d.setAttribute('open','');fv.play()});
+function close(){fv.pause();d.close?d.close():d.removeAttribute('open')}
+d.querySelector('.vr-x').addEventListener('click',close);d.addEventListener('click',function(e){if(e.target===d)close()});d.addEventListener('close',function(){fv.pause()});}})();</script>
 </main>
 <footer><div class="wrap">
   <div class="cols">
