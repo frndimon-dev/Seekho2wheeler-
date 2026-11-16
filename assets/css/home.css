@@ -1,6 +1,13 @@
+@font-face{font-family:"Clash Display";src:url(/assets/fonts/clash-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Clash Display";src:url(/assets/fonts/clash-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Clash Display";src:url(/assets/fonts/clash-700.woff2) format("woff2");font-weight:700 900;font-display:swap}
+@font-face{font-family:"Switzer";src:url(/assets/fonts/switzer-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Switzer";src:url(/assets/fonts/switzer-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Switzer";src:url(/assets/fonts/switzer-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Switzer";src:url(/assets/fonts/switzer-700.woff2) format("woff2");font-weight:700 900;font-display:swap}
 /* Seekho 2 Wheeler — homepage v3 (16 Nov 2026). One clean stylesheet, mobile first. */
 :root{--rb:#0b3a8f;--rb2:#082a6b;--ink:#0f1b33;--mut:#5c667a;--or:#ff5a0a;--ye:#ffc514;--cr:#fbf6e8;--tint:#eef3ff;--line:#e6e9f2;
---head:"Sora","Plus Jakarta Sans",system-ui,sans-serif;--font:"Plus Jakarta Sans",system-ui,sans-serif;--r:20px}
+--head:"Clash Display","Switzer",system-ui,sans-serif;--font:"Switzer",system-ui,sans-serif;--r:20px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{font:400 16px/1.6 var(--font);color:var(--ink);background:#fff;overflow-x:hidden}
@@ -409,3 +416,39 @@ h2{font-size:clamp(26px,5.4vw,40px)}
   .cxp.on::after{background:linear-gradient(90deg,#071e4f 0,#071e4f 44%,rgba(7,30,79,.6) 52%,rgba(7,30,79,0) 64%)}
   .cx-body{top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;max-width:52%;padding:32px}
 }
+
+/* Premium type: Clash Display headings, Switzer text */
+h1,h2,h3{font-weight:600;letter-spacing:-.01em}
+h1{letter-spacing:-.02em}
+.hero h1{font-weight:600}
+h2 mark{background:linear-gradient(transparent 66%,var(--ye) 66%,var(--ye) 92%,transparent 92%)}
+
+/* Courses: centre-mode carousel. The card in the middle grows, neighbours step back. */
+.courses{padding-bottom:40px}
+.courses .wrap .sh{margin-bottom:6px}
+.cc{--cw:min(82vw,360px);position:relative;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:26px calc(50% - var(--cw)/2) 34px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.cc::-webkit-scrollbar{display:none}
+.ccd{flex:0 0 var(--cw);scroll-snap-align:center;scroll-snap-stop:always;border-radius:26px;overflow:hidden;background:linear-gradient(170deg,var(--rb),#061a45);color:#fff;transform:scale(.86);opacity:.5;filter:saturate(.7);transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .45s,filter .45s,box-shadow .45s;cursor:pointer}
+.ccd.on{transform:scale(1);opacity:1;filter:none;cursor:default;box-shadow:0 40px 70px -34px rgba(11,58,143,.75)}
+.ccd-ph{position:relative;height:210px;overflow:hidden}
+.ccd-ph img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;transition:transform 1.2s}
+.ccd.on .ccd-ph img{transform:scale(1.06)}
+.ccd-ph::after{content:"";position:absolute;inset:auto 0 0;height:50%;background:linear-gradient(transparent,#0b3a8f)}
+.ccd-bd{padding:4px 20px 22px;position:relative}
+.ccd .cx-tag{display:inline-block;background:var(--ye);color:#1a1300;font:600 11.5px var(--font);padding:5px 11px;border-radius:999px;margin-top:-26px;position:relative}
+.ccd h3{color:#fff;font-size:28px;margin-top:10px}
+.ccd p{color:#cbd7f6;font-size:14.5px;margin-top:4px}
+.ccd .cx-meta{display:flex;gap:8px;margin-top:12px}
+.ccd .cx-meta span{font:600 12px var(--font);color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);padding:5px 10px;border-radius:999px}
+.ccd ul{margin-top:14px;display:grid;gap:7px}
+.ccd li{display:flex;align-items:center;gap:8px;font-size:14px;color:#eef3ff}
+.ccd li svg{width:18px;height:18px;flex:none;fill:none;stroke:var(--ye);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.ccd .cx-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
+.ccd .cx-price small{display:block;font-size:11.5px;color:#a9b8de}
+.ccd .cx-price b{font:600 26px var(--head);color:var(--ye)}
+.ccd .cx-foot .b{flex:0 1 auto;height:44px;padding:0 18px}
+.cc-dots{display:flex;justify-content:center;gap:7px}
+.cc-dots button{width:8px;height:8px;border-radius:9px;background:#cfd7ea;transition:width .3s,background .3s}
+.cc-dots button.on{width:28px;background:var(--rb)}
+@media (min-width:700px){.cc{--cw:400px}.ccd-ph{height:240px}}
+@media (min-width:1000px){.cc{--cw:440px;gap:22px}.ccd{transform:scale(.88)}.ccd.on{transform:scale(1)}}

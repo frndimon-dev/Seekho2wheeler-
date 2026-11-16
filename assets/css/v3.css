@@ -1,20 +1,27 @@
+@font-face{font-family:"Clash Display";src:url(/assets/fonts/clash-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Clash Display";src:url(/assets/fonts/clash-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Clash Display";src:url(/assets/fonts/clash-700.woff2) format("woff2");font-weight:700 900;font-display:swap}
+@font-face{font-family:"Switzer";src:url(/assets/fonts/switzer-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Switzer";src:url(/assets/fonts/switzer-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Switzer";src:url(/assets/fonts/switzer-600.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Switzer";src:url(/assets/fonts/switzer-700.woff2) format("woff2");font-weight:700 900;font-display:swap}
 /* v3 overlay for inner pages (16 Nov 2026): matches the new homepage. Loaded after site.css. */
 :root{--rb:#0b3a8f;--rb2:#082a6b;--ink3:#0f1b33;--mut3:#5c667a;--or3:#ff5a0a;--ye3:#ffc514;--line3:#e6e9f2;--tint3:#eef3ff}
-body{font-family:"Plus Jakarta Sans",system-ui,sans-serif!important;color:var(--ink3)}
-h1,h2,h3,.ph2t h1,section h2{font-family:"Sora","Plus Jakarta Sans",sans-serif!important;text-transform:none!important;letter-spacing:-.025em!important;font-weight:800!important;font-style:normal!important;color:var(--ink3)}
+body{font-family:"Switzer",system-ui,sans-serif!important;color:var(--ink3)}
+h1,h2,h3,.ph2t h1,section h2{font-family:"Clash Display","Switzer",sans-serif!important;text-transform:none!important;letter-spacing:-.025em!important;font-weight:800!important;font-style:normal!important;color:var(--ink3)}
 h1{font-size:clamp(30px,7vw,52px)!important;line-height:1.1!important}
 h2{font-size:clamp(25px,5.4vw,38px)!important;line-height:1.14!important}
 h3{letter-spacing:-.015em!important}
 .navy h2,.navy h3,.her2 h2,.endcta h2,.phero2.dark h1{color:#fff!important}
 .sh h2::after,.ph2t h1::after{display:none!important}
 .bar{display:none!important}
-.eyebrow{background:none!important;border:0!important;padding:0!important;font:700 11.5px/1 "Plus Jakarta Sans",sans-serif!important;letter-spacing:.16em!important;color:var(--or3)!important;gap:7px!important}
+.eyebrow{background:none!important;border:0!important;padding:0!important;font:700 11.5px/1 "Switzer",sans-serif!important;letter-spacing:.16em!important;color:var(--or3)!important;gap:7px!important}
 .eyebrow::before{content:""!important;width:18px!important;height:2px!important;border-radius:2px!important;background:currentColor!important;display:inline-block!important}
 .eyebrow .dot,.eyebrow>span:first-child:empty{display:none!important}
 section{padding-top:clamp(48px,7vw,88px)!important;padding-bottom:clamp(48px,7vw,88px)!important}
 /* Buttons: one line, calmer */
 .ctas{display:flex!important;flex-wrap:wrap;gap:10px!important}
-.btn{height:48px!important;padding:0 20px!important;border-radius:999px!important;font:700 15px "Plus Jakarta Sans",sans-serif!important;box-shadow:none!important}
+.btn{height:48px!important;padding:0 20px!important;border-radius:999px!important;font:700 15px "Switzer",sans-serif!important;box-shadow:none!important}
 .ctas .btn{flex:1 1 0;min-width:140px;max-width:260px}
 .btn.sm{height:36px!important;padding:0 14px!important;font-size:13px!important}
 .btn-yellow{background:var(--ye3)!important;color:#1a1300!important;border:0!important;box-shadow:0 10px 24px -12px rgba(255,197,20,.9)!important}
@@ -26,7 +33,7 @@ section{padding-top:clamp(48px,7vw,88px)!important;padding-bottom:clamp(48px,7vw
 .scard{display:flex!important;flex-direction:row!important;align-items:center!important;gap:10px!important;padding:14px!important;border:1px solid var(--line3)!important;border-radius:16px!important;box-shadow:0 14px 30px -24px rgba(11,58,143,.5)!important;min-height:0!important}
 .scard::before,.scard::after{display:none!important}
 .scard .i3d{width:34px!important;height:34px!important;margin:0!important;filter:none!important}
-.scard b{font:800 19px/1.1 "Sora",sans-serif!important;color:var(--rb)!important}
+.scard b{font:800 19px/1.1 "Clash Display",sans-serif!important;color:var(--rb)!important}
 .scard b.sm{font-size:17px!important}
 .scard>span:last-child,.scard small{font-size:11.5px!important;letter-spacing:.02em!important;text-transform:none!important;color:var(--mut3)!important;font-weight:600!important}
 .scard>div{display:flex;flex-direction:column}
@@ -46,7 +53,7 @@ section{padding-top:clamp(48px,7vw,88px)!important;padding-bottom:clamp(48px,7vw
 /* Header + footer to match homepage */
 .top{border-bottom:1px solid var(--line3)!important;background:rgba(255,255,255,.94)!important;backdrop-filter:blur(12px)}
 footer{background:#071e4f!important;border-top:0!important}
-footer .fh{color:#fff!important;letter-spacing:.04em!important;font:700 14px "Plus Jakarta Sans",sans-serif!important;text-transform:none!important}
+footer .fh{color:#fff!important;letter-spacing:.04em!important;font:700 14px "Switzer",sans-serif!important;text-transform:none!important}
 .fab .c{background:var(--or3)!important}
 @media (max-width:700px){.ctas .btn{max-width:none}}
 /* fixes after first check */
@@ -65,3 +72,6 @@ footer .fh{color:#fff!important;letter-spacing:.04em!important;font:700 14px "Pl
 .scard .i3d{box-sizing:border-box!important;width:34px!important;height:34px!important;padding:6px!important;margin:0!important;border:0!important;background:var(--tint3)!important;border-radius:10px!important}
 .i3d{border:0!important;background:var(--tint3)!important}
 .ctas .btn{flex:1 1 auto!important;min-width:0!important;max-width:none!important;white-space:nowrap}
+
+h1,h2,h3,.ph2t h1,section h2{font-weight:600!important;letter-spacing:-.01em!important}
+.scard b{font-weight:600!important}
