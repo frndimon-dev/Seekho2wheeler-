@@ -452,3 +452,42 @@ h2 mark{background:linear-gradient(transparent 66%,var(--ye) 66%,var(--ye) 92%,t
 .cc-dots button.on{width:28px;background:var(--rb)}
 @media (min-width:700px){.cc{--cw:400px}.ccd-ph{height:240px}}
 @media (min-width:1000px){.cc{--cw:440px;gap:22px}.ccd{transform:scale(.88)}.ccd.on{transform:scale(1)}}
+
+/* ===== v3.2 (16 Nov night): taller premium type + sections that read as distinct ===== */
+@font-face{font-family:"Instrument Sans";src:url(/assets/fonts/instrument-sans-var.woff2) format("woff2");font-weight:400 700;font-stretch:75% 100%;font-display:swap}
+:root{--head:"Instrument Sans",system-ui,sans-serif;--font:"Instrument Sans",system-ui,sans-serif}
+body{font-family:var(--font);font-stretch:100%}
+h1,h2,h3{font-family:var(--head);font-weight:700;font-stretch:84%;letter-spacing:-.018em;line-height:1.02}
+h1{font-stretch:80%}
+.hero h1{font-size:clamp(44px,11vw,88px);font-weight:700}
+h2{font-size:clamp(36px,8.4vw,64px)}
+h3{font-stretch:88%}
+.b,.x-btn,.eb,.cx-tag,.rating,.f4 b,.steps b,.stat b,.x-dsteps b{font-family:var(--font)}
+.stat b,.score b,.ccd .cx-price b,.x-price output,.lady-pic .pct b{font-family:var(--head);font-stretch:84%;font-weight:700}
+.stat b{font-size:24px}
+.x-price output{font-size:44px}
+/* Section chip: number + label, clearly visible */
+.eb{display:inline-flex;align-items:center;gap:10px;font:600 13px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--rb);background:#fff;border:1px solid #dbe3f5;padding:7px 14px 7px 7px;border-radius:999px;margin-bottom:16px;box-shadow:0 6px 16px -10px rgba(11,58,143,.35)}
+.eb::before{display:none}
+.eb i{font-style:normal;display:grid;place-items:center;min-width:26px;height:26px;padding:0 6px;border-radius:999px;background:var(--or);color:#fff;font:700 12px/1 var(--font);letter-spacing:0}
+.eb-y{color:#fff;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);box-shadow:none}
+.eb-y i{background:var(--ye);color:#1a1300}
+/* Big outlined watermark word behind each section */
+section{position:relative}
+.wm{position:absolute;top:14px;left:50%;translate:-50% 0;font:700 clamp(84px,24vw,240px)/.8 var(--head);font-stretch:75%;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1.5px rgba(11,58,143,.09);white-space:nowrap;pointer-events:none;user-select:none;z-index:0}
+.lady .wm,.revs .wm{-webkit-text-stroke-color:rgba(255,255,255,.08)}
+.door .wm{top:30px}
+section>.wrap,section>.cc,section>.cc-dots{position:relative;z-index:1}
+section{overflow:hidden}
+/* each section's own accent so they read apart */
+.courses{background:#fff}
+.centres{background:var(--cr)}
+.centres .sh h2 mark,.how h2 mark{background:linear-gradient(transparent 66%,#ffd76a 66%,#ffd76a 92%,transparent 92%)}
+.door-panel{border:0;background:linear-gradient(150deg,#e9f0ff,#dbe6ff 60%,#cfdcff);box-shadow:inset 0 0 0 1px #d2ddf7}
+.door .x-door-tx h2{font-size:clamp(36px,8vw,60px)}
+.lady h2{font-size:clamp(40px,9vw,68px)}
+.how{background:linear-gradient(180deg,var(--cr),#fff3d6)}
+.gal{background:#fff}
+.blog{background:var(--tint)}
+.hero{touch-action:pan-y}
+.hero img{-webkit-user-drag:none;user-select:none;pointer-events:none}
