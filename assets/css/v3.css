@@ -1,0 +1,67 @@
+/* v3 overlay for inner pages (16 Nov 2026): matches the new homepage. Loaded after site.css. */
+:root{--rb:#0b3a8f;--rb2:#082a6b;--ink3:#0f1b33;--mut3:#5c667a;--or3:#ff5a0a;--ye3:#ffc514;--line3:#e6e9f2;--tint3:#eef3ff}
+body{font-family:"Plus Jakarta Sans",system-ui,sans-serif!important;color:var(--ink3)}
+h1,h2,h3,.ph2t h1,section h2{font-family:"Sora","Plus Jakarta Sans",sans-serif!important;text-transform:none!important;letter-spacing:-.025em!important;font-weight:800!important;font-style:normal!important;color:var(--ink3)}
+h1{font-size:clamp(30px,7vw,52px)!important;line-height:1.1!important}
+h2{font-size:clamp(25px,5.4vw,38px)!important;line-height:1.14!important}
+h3{letter-spacing:-.015em!important}
+.navy h2,.navy h3,.her2 h2,.endcta h2,.phero2.dark h1{color:#fff!important}
+.sh h2::after,.ph2t h1::after{display:none!important}
+.bar{display:none!important}
+.eyebrow{background:none!important;border:0!important;padding:0!important;font:700 11.5px/1 "Plus Jakarta Sans",sans-serif!important;letter-spacing:.16em!important;color:var(--or3)!important;gap:7px!important}
+.eyebrow::before{content:""!important;width:18px!important;height:2px!important;border-radius:2px!important;background:currentColor!important;display:inline-block!important}
+.eyebrow .dot,.eyebrow>span:first-child:empty{display:none!important}
+section{padding-top:clamp(48px,7vw,88px)!important;padding-bottom:clamp(48px,7vw,88px)!important}
+/* Buttons: one line, calmer */
+.ctas{display:flex!important;flex-wrap:wrap;gap:10px!important}
+.btn{height:48px!important;padding:0 20px!important;border-radius:999px!important;font:700 15px "Plus Jakarta Sans",sans-serif!important;box-shadow:none!important}
+.ctas .btn{flex:1 1 0;min-width:140px;max-width:260px}
+.btn.sm{height:36px!important;padding:0 14px!important;font-size:13px!important}
+.btn-yellow{background:var(--ye3)!important;color:#1a1300!important;border:0!important;box-shadow:0 10px 24px -12px rgba(255,197,20,.9)!important}
+.btn-line,.btn-ghost{border:1.5px solid var(--line3)!important;color:var(--rb)!important;background:#fff!important}
+.btn-navy{background:var(--rb)!important;color:#fff!important;border:0!important}
+.shine::after{display:none!important}
+/* Stats: compact, like the homepage strip */
+.stats4{gap:10px!important}
+.scard{display:flex!important;flex-direction:row!important;align-items:center!important;gap:10px!important;padding:14px!important;border:1px solid var(--line3)!important;border-radius:16px!important;box-shadow:0 14px 30px -24px rgba(11,58,143,.5)!important;min-height:0!important}
+.scard::before,.scard::after{display:none!important}
+.scard .i3d{width:34px!important;height:34px!important;margin:0!important;filter:none!important}
+.scard b{font:800 19px/1.1 "Sora",sans-serif!important;color:var(--rb)!important}
+.scard b.sm{font-size:17px!important}
+.scard>span:last-child,.scard small{font-size:11.5px!important;letter-spacing:.02em!important;text-transform:none!important;color:var(--mut3)!important;font-weight:600!important}
+.scard>div{display:flex;flex-direction:column}
+/* Cards: no yellow borders, one soft style */
+.feat,.phase,.ds,.st,.bcard,.rev,.pcard,.gf,.faq details,.fcard,.goal,.flow{border-color:var(--line3)!important}
+.feat,.phase,.bcard,.rev,.pcard,.faq details{border-width:1px!important;box-shadow:0 14px 30px -26px rgba(11,58,143,.5)!important}
+.feat .i3d,.fi .i3d,.ds .i3d,.phase .i3d,.gf .i3d{width:30px!important;height:30px!important;filter:none!important}
+.fi{width:44px!important;height:44px!important;border-radius:14px!important;background:var(--tint3)!important;border:0!important;display:grid!important;place-items:center!important}
+.phase .pn{background:var(--tint3)!important;color:var(--rb)!important;border:0!important}
+/* Page hero */
+.phero2{background:linear-gradient(180deg,#fff,var(--tint3))!important}
+.crumbs{font-size:12.5px!important;color:var(--mut3)!important}
+/* End CTA: navy like the homepage */
+.endcta{background:linear-gradient(135deg,var(--rb2),var(--rb))!important;border:0!important;border-radius:24px!important}
+.endcta .eyebrow{color:var(--ye3)!important}
+.endcta .btn-yellow{background:var(--ye3)!important;color:#1a1300!important}
+/* Header + footer to match homepage */
+.top{border-bottom:1px solid var(--line3)!important;background:rgba(255,255,255,.94)!important;backdrop-filter:blur(12px)}
+footer{background:#071e4f!important;border-top:0!important}
+footer .fh{color:#fff!important;letter-spacing:.04em!important;font:700 14px "Plus Jakarta Sans",sans-serif!important;text-transform:none!important}
+.fab .c{background:var(--or3)!important}
+@media (max-width:700px){.ctas .btn{max-width:none}}
+/* fixes after first check */
+.eyebrow,.phero2 .eyebrow,.her2 .eyebrow,.navy .eyebrow,.ph2t .eyebrow,.xhero .eyebrow,.endcta .eyebrow,section .eyebrow{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important}
+.navy .eyebrow,.her2 .eyebrow,.endcta .eyebrow{color:var(--ye3)!important}
+.eyebrow::before,.phero2 .eyebrow::before,section .eyebrow::before{width:18px!important;height:2px!important;border-radius:2px!important;background:currentColor!important;content:""!important}
+.scard,.feat,.st,.ds,.bcard,.pcard,.rev.fcard,.phase,.dcard,.qcard,.faq details{border:1px solid var(--line3)!important;box-shadow:0 14px 30px -26px rgba(11,58,143,.5)!important}
+.scard{display:grid!important;grid-template-columns:34px minmax(0,1fr)!important;column-gap:10px!important;row-gap:2px!important;align-items:center!important}
+.scard .i3d{grid-row:span 2}
+.scard b{align-self:end!important;margin:0!important}
+.scard>span:last-child{align-self:start!important;margin:0!important;line-height:1.3!important}
+/* the old hero badge rule (.f3{display:none} on phones) also hid the ladies "six things" cards */
+.feats.f3{display:grid!important;animation:none!important;position:static!important}
+@media (max-width:640px){.feats.f3{grid-template-columns:1fr!important}}
+/* stat icon tile: keep inside its column */
+.scard .i3d{box-sizing:border-box!important;width:34px!important;height:34px!important;padding:6px!important;margin:0!important;border:0!important;background:var(--tint3)!important;border-radius:10px!important}
+.i3d{border:0!important;background:var(--tint3)!important}
+.ctas .btn{flex:1 1 auto!important;min-width:0!important;max-width:none!important;white-space:nowrap}
