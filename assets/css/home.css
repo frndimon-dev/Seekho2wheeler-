@@ -598,3 +598,32 @@ section{overflow:hidden}
 .cmap .pin .pulse{fill:none;stroke:var(--ye);stroke-width:1.5}
 @keyframes pulse{0%{opacity:.7;r:3}100%{opacity:0;r:16}}
 @media (max-width:699px){.cb-map{max-width:300px}}
+
+/* Centres v3: band shorter, branch cards in a centre-mode carousel synced with the map */
+.cband{padding:18px 18px 12px;margin-bottom:10px}
+.cb-num b{font-size:clamp(72px,12vw,120px)}
+.cband h2{font-size:clamp(22px,3vw,32px)}
+.cband .sub{font-size:14px;margin-top:6px}
+.cb-map{max-width:300px}
+@media (min-width:700px){.cband{padding:22px 28px 14px}.cb-map{max-height:330px;width:auto;justify-self:center}.cmap{max-height:330px;width:auto;margin:0 auto}}
+@media (min-width:1000px){.cband{padding:26px 40px 16px}.cb-map{max-height:340px}}
+.cmap .bub{opacity:0;transform:scale(.4);transform-origin:0 -10px;transition:opacity .35s,transform .45s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.cmap .bring{fill:#fff}
+.cmap .pin.act .bub{opacity:1;transform:scale(1)}
+.cmap .pin.act .pp{fill:var(--ye)}
+.cmap .pin.act text .nm{fill:var(--ye)}
+.cmap .pin.act text{font-size:13px}
+/* branch carousel */
+.bc{--bw:min(68vw,270px);display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:14px calc(50% - var(--bw)/2) 18px;scrollbar-width:none;position:relative}
+.bc::-webkit-scrollbar{display:none}
+.bc .bcard{flex:0 0 var(--bw);scroll-snap-align:center;transform:scale(.88);opacity:.55;transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .4s,box-shadow .4s;cursor:pointer;background:#fff}
+.bc .bcard.on{transform:scale(1);opacity:1;cursor:default;box-shadow:0 26px 50px -28px rgba(11,58,143,.6)}
+.bc .bcard .ph img{aspect-ratio:16/10}
+.bc .bcard h3{font-size:22px;color:var(--rb2)}
+.bc .bcard.on h3{color:var(--rb)}
+.bc .bcard p{min-height:0;font-size:13.5px}
+.bc-dots{margin-top:0}
+@media (min-width:700px){.bc{--bw:300px;gap:16px}}
+@media (min-width:1000px){.bc{--bw:320px}}
+@media (min-width:700px){.cb-map{width:100%;max-height:none;justify-self:stretch}.cmap{width:100%;height:330px;max-height:none}}
+@media (min-width:1000px){.cmap{height:340px}}
