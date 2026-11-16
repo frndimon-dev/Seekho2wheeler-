@@ -496,3 +496,29 @@ section{overflow:hidden}
 .hero::after{background:linear-gradient(180deg,rgba(8,42,107,0) 38%,rgba(8,42,107,.6) 64%,rgba(8,42,107,.95) 100%)}
 @media (min-width:1000px){.hero{min-height:0;aspect-ratio:16/9;max-height:88vh;align-items:flex-end}.hero::after{background:linear-gradient(180deg,rgba(8,42,107,0) 45%,rgba(8,42,107,.55) 70%,rgba(8,42,107,.92) 100%)}.hero-in{padding:0 0 56px}.hero h1{font-size:clamp(44px,5.4vw,80px)}}
 @media (max-width:999px){.hero-media video{object-position:50% 0}}
+/* Hero slideshow: photo first (instant), then video slides */
+.hero-media .hs{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+.hero-media .hs.on{opacity:1}
+.hero-media .hs img,.hero-media .hs video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.hero-media .hs.kb img{transform:scale(1.02);transition:transform 6s ease-out}
+.hero-media .hs.kb.on img{transform:scale(1.14)}
+@media (max-width:999px){.hero-media .hs video{object-position:50% 0}}
+.hs-ui{display:flex;flex-direction:column;gap:10px;margin-top:22px;max-width:520px}
+.hs-cap{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font:600 13px var(--font);padding:7px 12px;border-radius:999px}
+.hs-cap .dot{width:7px;height:7px;border-radius:50%;background:var(--ye)}
+.hs-cap .yt{display:none;color:var(--ye);font-weight:700}
+.hs-cap.lnk{cursor:pointer}.hs-cap.lnk .yt{display:inline}
+.hs-bars{display:flex;gap:6px}
+.hs-bars button{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.3);overflow:hidden;padding:0}
+.hs-bars i{display:block;height:100%;width:0;background:var(--ye)}
+.hero{user-select:none;-webkit-user-select:none}
+/* Phone: media on top, text below it, so no words sit on anyone's face */
+@media (max-width:760px){
+  .hero{display:block;min-height:0;background:var(--rb2)}
+  .hero-media{position:relative!important;inset:auto;height:calc(100vw * 1.12);overflow:hidden}
+  .hero::after{top:auto;bottom:auto;height:calc(100vw * 1.12);background:linear-gradient(180deg,rgba(8,42,107,0) 70%,var(--rb2) 100%)}
+  .hero-in{padding:6px 0 60px}
+  .hero .rating{margin-top:-30px;position:relative}
+  .stats{margin-top:-24px}
+}
+@media (max-width:760px){.hero-media .hs video{object-position:50% 7%}}
