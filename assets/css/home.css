@@ -564,3 +564,37 @@ section{overflow:hidden}
 @media (min-width:900px){.cband{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}}
 .cmap .river{stroke-linejoin:round}
 @media (min-width:900px){.cb-map{max-width:none;width:100%;justify-self:stretch}}
+/* Centres band v2: compact, two columns from 700px, dot map, ticker along the bottom */
+.cband{padding:22px 18px 16px;gap:12px 24px;margin-bottom:28px}
+.cb-num{margin:2px 0 2px}
+.cb-num b{font-size:clamp(84px,16vw,150px)}
+.cb-num span{font-size:clamp(15px,2.6vw,22px)}
+.cband h2{font-size:clamp(24px,3.6vw,38px)}
+.cband .sub{margin-top:8px;font-size:15px}
+.cb-tick{grid-column:1/-1;margin-top:4px}
+.cb-tick span{font-size:12.5px;padding:6px 11px}
+.cb-tick em{font-style:normal;color:var(--ye);font-weight:700;margin-left:3px}
+.cb-map{max-width:360px;margin:0 auto}
+.cmap .dt{fill:none;stroke-linecap:round;stroke-width:3.2}
+.cmap .dt.kol{stroke:rgba(255,255,255,.55)}
+.cmap .dt.how{stroke:rgba(140,180,255,.45)}
+.cmap .dt.n24{stroke:rgba(140,180,255,.28)}
+.cmap .dt.s24{stroke:rgba(140,180,255,.14)}
+.cmap .dl{font:700 9px var(--font);letter-spacing:.18em;fill:rgba(255,255,255,.38)}
+.cmap .dl.kol{fill:rgba(255,255,255,.6)}
+.cmap .pp{fill:var(--or);stroke:#fff;stroke-width:1.4}
+.cmap .pin.main .pp{fill:var(--ye)}
+.cmap .pc{fill:#fff}
+.cmap .pin.main .pc{fill:var(--rb2)}
+.cmap text{font:700 11px var(--font);paint-order:stroke;stroke:#082a6b;stroke-width:3px;stroke-linejoin:round}
+.cmap .yr{font-size:10px}
+.cmap .ln{stroke-width:1.3}
+.cmap .river,.cmap .rv-lbl{display:none}
+@media (min-width:700px){
+  .cband{grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:28px 32px 18px;align-items:center}
+  .cb-map{max-width:none;width:100%}
+}
+@media (min-width:1000px){.cband{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);padding:34px 44px 20px}.cb-map{max-width:420px;justify-self:end}}
+.cmap .pin .pulse{fill:none;stroke:var(--ye);stroke-width:1.5}
+@keyframes pulse{0%{opacity:.7;r:3}100%{opacity:0;r:16}}
+@media (max-width:699px){.cb-map{max-width:300px}}
