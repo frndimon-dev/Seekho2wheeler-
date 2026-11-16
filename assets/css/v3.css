@@ -75,3 +75,12 @@ footer .fh{color:#fff!important;letter-spacing:.04em!important;font:700 14px "Sw
 
 h1,h2,h3,.ph2t h1,section h2{font-weight:600!important;letter-spacing:-.01em!important}
 .scard b{font-weight:600!important}
+
+/* v3.2: Instrument Sans everywhere (taller, premium) */
+@font-face{font-family:"Instrument Sans";src:url(/assets/fonts/instrument-sans-var.woff2) format("woff2");font-weight:400 700;font-stretch:75% 100%;font-display:swap}
+body,p,li,a,button,input,select,textarea,.btn,.eyebrow,.scard>span:last-child,footer .fh{font-family:"Instrument Sans",system-ui,sans-serif!important}
+h1,h2,h3,.ph2t h1,section h2,.scard b{font-family:"Instrument Sans",system-ui,sans-serif!important;font-weight:700!important;font-stretch:84%!important;letter-spacing:-.018em!important}
+h1{font-size:clamp(38px,9vw,72px)!important;line-height:1.02!important}
+h2{font-size:clamp(32px,7.4vw,56px)!important;line-height:1.04!important}
+.scard b{font-size:22px!important}
+.eyebrow{font-size:13px!important}
