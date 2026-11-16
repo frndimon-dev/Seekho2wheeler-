@@ -491,3 +491,8 @@ section{overflow:hidden}
 .blog{background:var(--tint)}
 .hero{touch-action:pan-y}
 .hero img{-webkit-user-drag:none;user-select:none;pointer-events:none}
+/* Hero video (owner's transformation clip, 16 Nov) */
+.hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.hero::after{background:linear-gradient(180deg,rgba(8,42,107,0) 38%,rgba(8,42,107,.6) 64%,rgba(8,42,107,.95) 100%)}
+@media (min-width:1000px){.hero{min-height:0;aspect-ratio:16/9;max-height:88vh;align-items:flex-end}.hero::after{background:linear-gradient(180deg,rgba(8,42,107,0) 45%,rgba(8,42,107,.55) 70%,rgba(8,42,107,.92) 100%)}.hero-in{padding:0 0 56px}.hero h1{font-size:clamp(44px,5.4vw,80px)}}
+@media (max-width:999px){.hero-media video{object-position:50% 0}}
