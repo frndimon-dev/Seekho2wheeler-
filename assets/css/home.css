@@ -1020,3 +1020,22 @@ section{overflow:hidden}
 .courses .wm{top:auto!important;bottom:150px!important;font-size:clamp(110px,26vw,260px)!important}
 @media (min-width:1000px){.courses{padding-top:64px!important}.courses .wm{bottom:170px!important}}
 .courses .wm{-webkit-text-stroke:2px rgba(11,58,143,.16)!important;bottom:170px!important}@media (max-width:699px){.courses .wm{bottom:230px!important}}
+/* Stats: real visuals instead of generic icons (17 Nov 2026) */
+.stat{gap:12px!important}
+.stat .sv{flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#fffaf0,#ffe8a6);box-shadow:inset 0 0 0 1px rgba(255,194,26,.5),0 10px 20px -12px rgba(11,42,111,.55)}
+.stat .sv img.i3{width:40px;height:40px;object-fit:contain}
+.stat .sv.g{background:#fff;box-shadow:inset 0 0 0 1px #e6e9f2,0 10px 20px -12px rgba(11,42,111,.55)}
+.stat .sv.g svg{width:28px;height:28px}
+.stat .sv.lg{background:#fff;box-shadow:inset 0 0 0 1px #e6e9f2,0 10px 20px -12px rgba(11,42,111,.55)}
+.stat .sv.lg img{width:32px;height:auto}
+.stat .sv.map{background:#0b2a6f;position:relative}
+.stat .sv.map img{width:100%;height:100%;object-fit:cover;display:block}
+.stat .sv.map::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.avs{display:flex;flex:none;align-items:center}
+.avs img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2.5px solid #fff;box-shadow:0 6px 14px -6px rgba(11,42,111,.55);background:#e9edf6}
+.avs img+img{margin-left:-15px}
+.st5{display:block;font:400 11px/1 var(--font);letter-spacing:1.5px;color:#f5b400;margin:3px 0 2px}
+@media (max-width:1000px){.avs img{width:34px;height:34px;border-width:2px}.avs img+img{margin-left:-13px}}
+@media (max-width:760px){.stat .sv{width:44px;height:44px;border-radius:13px}.stat .sv img.i3{width:34px;height:34px}.stat .sv.g svg{width:24px;height:24px}.stat .sv.lg img{width:27px}
+.avs img{width:34px;height:34px;border-width:2px}.avs img+img{margin-left:-13px}}
+@media (max-width:420px){.avs img:nth-child(3){display:none}.stat{gap:9px!important}}
