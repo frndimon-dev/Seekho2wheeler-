@@ -176,6 +176,8 @@ const remindBtn = (s, due, cls = 'btn wa sm') => `<a class="${cls}" data-remind=
 document.addEventListener('click', (e) => { const a = e.target.closest('[data-remind]'); if (a && S) sapi('fee_reminded', { id: a.dataset.remind }).catch(() => {}); });
 const params = new URLSearchParams(location.search);
 const app = $('#app');
+const saveMe = (t) => { try { if (t) localStorage.setItem('s2w_me', t); else localStorage.removeItem('s2w_me'); } catch (e) {} };
+const loadMe = () => { try { return localStorage.getItem('s2w_me') || ''; } catch (e) { return ''; } };
 const callBtn = (cls = 'btn blue') => `<a class="${cls}" href="tel:${PHONE}">${L('ফোন করুন', 'Call', 'फ़ोन करें')} ${PHONE_TXT}</a>`;
 function sheet(html) { const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet">${html}</div>`; document.body.appendChild(m); m.onclick = (e) => { if (e.target === m) m.remove(); }; return m; }
 const oldLinkText = () => { const u = `${location.origin}/app/?old=patuli`; return L(`Seekho 2 Wheeler পাটুলি: আপনার ভর্তির কার্ডের ছবি দিয়ে এই লিংকে যুক্ত হোন, তারপর অনলাইনে ক্লাস বুক করতে পারবেন: ${u}`, `Seekho 2 Wheeler Patuli: join with a photo of your admission card on this link, then book your classes online: ${u}`, `Seekho 2 Wheeler पाटुली: अपने एडमिशन कार्ड की फ़ोटो देकर इस लिंक पर जुड़ें, फिर ऑनलाइन क्लास बुक कर सकेंगे: ${u}`); };
@@ -191,7 +193,14 @@ const methodTxt = (m) => (m === 'upi' ? 'UPI' : L('ক্যাশ', 'Cash', '�
 async function studentPage(token) {
   let me, date = istToday(1), sel = null;
   RERENDER = () => { if (me) { render(); if (me.student.status === 'active' && !me.student.inactive && !me.student.expired) loadSlots(); } else studentPage(token); };
-  async function load() { me = await api('me', { token }); render(); if (me.student.status === 'active' && !me.student.inactive && !me.student.expired) loadSlots(); }
+  let poll = null;
+  async function load() {
+    me = await api('me', { token });
+    if (me.student.status === 'deleted') { if (loadMe() === token) saveMe(''); } else saveMe(token);
+    render(); if (me.student.status === 'active' && !me.student.inactive && !me.student.expired) loadSlots();
+    clearInterval(poll);
+    if (me.student.status === 'pending') poll = setInterval(async () => { try { const n = await api('me', { token }); if (n.student.status !== 'pending') { clearInterval(poll); me = n; render(); if (me.student.status === 'active' && !me.student.inactive && !me.student.expired) loadSlots(); toast(L('অনুমোদন হয়ে গেছে ✓ এখন ক্লাস বুক করুন', 'Approved ✓ You can book now', 'अप्रूव हो गया ✓ अब क्लास बुक करें')); } } catch (e) {} }, 20000);
+  }
   function render() {
     const s = me.student, pct = Math.round(100 * s.classes_done / s.package);
     const left = s.package - s.classes_done, B = me.branch;
@@ -210,7 +219,7 @@ async function studentPage(token) {
         <button class="btn block mt2" id="cl_go">${L('আমি টাকা দিয়ে দিয়েছি', 'I have paid', 'मैंने पैसे दे दिए')}</button>`}${callBtn('btn ghost block mt')}</div>` : ''}
       ${s.status === 'active' && s.fee_due && !s.fee_locked ? `<div class="warn">💰 ${L(`আপনার ${N(s.classes_done)}টা ক্লাস হয়ে গেছে। বাকি ফি ${money(s.total_fee - s.paid)} ${byTxt(s.due_by_class || 5)} দিতে হবে, পরের ক্লাসে নিয়ে আসবেন।`, `${s.classes_done} classes done. The remaining fee of ${money(s.total_fee - s.paid)} is due ${byTxt(s.due_by_class || 5)}; please bring it to your next class.`, `${s.classes_done} क्लास हो चुकी हैं। बाकी फीस ${money(s.total_fee - s.paid)} ${byTxt(s.due_by_class || 5)} देनी है, अगली क्लास में ले आइए।`)}</div>` : ''}
       ${s.status === 'active' && s.expired ? `<div class="card"><h2>${L('মেয়াদ শেষ হয়ে গেছে', 'Validity is over', 'वैधता ख़त्म हो गई')}</h2><p>${L(`ভর্তির ${N(B.valid_days || 90)} দিন পেরিয়ে গেছে, তাই আর ক্লাস বুক করা যাবে না। বাকি ক্লাসের জন্য সেন্টারে কথা বলুন।`, `It has been more than ${B.valid_days || 90} days since admission, so no more classes can be booked. Please talk to the centre about the remaining classes.`, `एडमिशन को ${B.valid_days || 90} दिन से ज़्यादा हो गए, इसलिए अब क्लास बुक नहीं हो सकती। बाकी क्लास के लिए सेंटर से बात करें।`)}</p>${callBtn()}</div>` : ''}
-      ${s.status === 'pending' ? `<div class="card"><h2>${L('অনুমোদনের অপেক্ষায়', 'Waiting for approval', 'अप्रूवल का इंतज़ार')}</h2><p>${L('সেন্টার আপনার কার্ড মিলিয়ে দেখছে। অনুমোদন হলে এই লিংকেই বুকিং খুলে যাবে।', 'The centre is checking your card. Once approved, booking opens on this same link.', 'सेंटर आपका कार्ड जाँच रहा है। अप्रूव होते ही इसी लिंक पर बुकिंग खुल जाएगी।')}</p>${callBtn()}</div>` : ''}
+      ${s.status === 'pending' ? `<div class="card"><h2>${L('অনুমোদনের অপেক্ষায়', 'Waiting for approval', 'अप्रूवल का इंतज़ार')}</h2><p>${L('সেন্টার আপনার কার্ড মিলিয়ে দেখছে। অনুমোদন হলে এই লিংকেই বুকিং খুলে যাবে।', 'The centre is checking your card. Once approved, booking opens on this same link.', 'सेंटर आपका कार्ड जाँच रहा है। अप्रूव होते ही इसी लिंक पर बुकिंग खुल जाएगी।')}</p><p class="mut">${L('এই পাতা খোলা রাখলে অনুমোদন হওয়া মাত্র নিজে থেকেই বুকিং দেখাবে। পরে খোলার জন্য লিংকটা নিজের WhatsApp-এ রেখে দিন:', 'Keep this page open and booking appears as soon as you are approved. To open it later, save the link in your WhatsApp:', 'यह पेज खुला रखें, अप्रूव होते ही बुकिंग दिखेगी। बाद में खोलने के लिए लिंक अपने WhatsApp में रख लें:')}</p><a class="btn wa block mt" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(L('আমার Seekho 2 Wheeler ক্লাস বুকিংয়ের লিংক: ', 'My Seekho 2 Wheeler class booking link: ', 'मेरा Seekho 2 Wheeler क्लास बुकिंग लिंक: ') + studentUrl(token))}">${L('লিংকটা নিজের WhatsApp-এ রাখুন', 'Save the link in my WhatsApp', 'लिंक अपने WhatsApp में रखें')}</a>${callBtn()}</div>` : ''}
       ${s.status === 'done' ? `<div class="card"><h2>${L('অভিনন্দন! 🎉', 'Congratulations! 🎉', 'बधाई हो! 🎉')}</h2><p>${L('আপনার সব ক্লাস শেষ হয়েছে।', 'All your classes are done.', 'आपकी सारी क्लास पूरी हो गई हैं।')}</p></div>` : ''}
       ${me.upcoming.length ? `<div class="card"><h2>${L('আপনার পরের ক্লাস', 'Your next class', 'आपकी अगली क्लास')}</h2>${me.upcoming.map((u) => `<div class="flex between mt"><div><div class="big" style="font-size:20px">${tTime(u.slot)}</div><div class="mut">${tDay(u.slot)}</div></div>
           ${u.can_cancel ? `<button class="btn ghost sm" data-cancel="${u.id}">${L('বাতিল', 'Cancel', 'कैंसल')}</button>` : `<span class="mut" style="font-size:13px">${L('বাতিলের সময় পেরিয়েছে', 'Too late to cancel', 'कैंसल का समय निकल गया')}</span>`}</div>`).join('')}</div>` : ''}
@@ -222,9 +231,11 @@ async function studentPage(token) {
         <div class="days mt" id="days"></div><div id="slots"><div class="mut mt">${L('লোড হচ্ছে…', 'Loading…', 'लोड हो रहा है…')}</div></div><div id="bookbar"></div></div>` : ''}
       ${s.status === 'deleted' ? '' : `<div class="card center"><h2>${L('ক্লাসে এসে এই QR দেখান', 'Show this QR at your class', 'क्लास में आकर यह QR दिखाएँ')}</h2><div class="qr">${qrSvg(s.qr)}</div><div class="mut mt">${esc(s.qr)}</div></div>`}
       ${me.history.length ? `<div class="card"><h3>${L('আগের ক্লাস', 'Past classes', 'पिछली क्लास')}</h3><div class="list">${me.history.map((h) => `<div class="it"><div style="flex:1">${tDay(h.slot)} · ${tTime(h.slot)}</div>${{ attended: `<span class="pill g">${L('হয়েছে', 'Done', 'हो गई')}</span>`, no_show: `<span class="pill y">${L('আসেননি', 'Missed', 'नहीं आए')}</span>`, cancelled: `<span class="pill">${L('বাতিল', 'Cancelled', 'कैंसल')}</span>`, cancelled_centre: `<span class="pill r">${L('সেন্টার বাতিল করেছে', 'Cancelled by centre', 'सेंटर ने कैंसल किया')}${h.note && h.note !== 'deleted' ? ' · ' + esc(h.note) : ''}</span>` }[h.status] || ''}</div>`).join('')}</div></div>` : ''}
+      <div class="center mt"><a class="mut" href="/app/?old=${encodeURIComponent(B.slug)}&new=1" id="notme">${L('অন্য কেউ এই ফোন থেকে যুক্ত হবেন? এখানে চাপুন', 'Someone else joining from this phone? Tap here', 'कोई और इस फ़ोन से जुड़ेगा? यहाँ दबाएँ')}</a></div>
       <div class="card"><div class="mut">${L('অনলাইনে বুক করতে অসুবিধা হলে ফোন করুন, আমরা বুক করে দেব।', 'Trouble booking online? Call us and we’ll book it for you.', 'ऑनलाइन बुक करने में दिक्कत हो तो फ़ोन करें, हम बुक कर देंगे।')}</div><a class="btn wa block mt" href="tel:${PHONE}">📞 ${PHONE_TXT}</a></div>
     </div>`;
     app.querySelectorAll('[data-cancel]').forEach((b) => b.onclick = async () => { if (!confirm(L('ক্লাসটা বাতিল করবেন?', 'Cancel this class?', 'यह क्लास कैंसल करें?'))) return; try { me = await api('cancel', { token, booking: b.dataset.cancel }); render(); loadSlots(); toast(L('বাতিল হয়েছে', 'Cancelled', 'कैंसल हो गई')); } catch (e) { toast(e.message); } });
+    if ($('#notme')) $('#notme').onclick = () => saveMe('');
     if ($('#react')) $('#react').onclick = async () => { try { me = await api('reactivate_request', { token }); render(); } catch (e) { toast(e.message); } };
     if ($('#cl_go')) {
       let method = 'cash'; app.querySelectorAll('#cl_m button').forEach((b) => b.onclick = () => { method = b.dataset.v; app.querySelectorAll('#cl_m button').forEach((x) => x.classList.toggle('on', x === b)); });
@@ -269,7 +280,7 @@ function oldPage(branch) {
       if (!name || phone.length !== 10) return $('#msg').innerHTML = `<div class="err">${L('নাম আর ১০ সংখ্যার ফোন নম্বর দিন।', 'Enter your name and a 10-digit phone number.', 'नाम और 10 अंकों का फ़ोन नंबर लिखें।')}</div>`;
       if (!front || !back) return $('#msg').innerHTML = `<div class="err">${L('কার্ডের দুই দিকের ছবি দিন।', 'Add photos of both sides of the card.', 'कार्ड के दोनों तरफ़ की फ़ोटो दें।')}</div>`;
       $('#go').disabled = true; $('#go').textContent = L('কার্ড পড়া হচ্ছে…', 'Reading the card…', 'कार्ड पढ़ा जा रहा है…');
-      try { const card = await stack(front, back); const r = await api('old_submit', { branch, name, phone, card }); location.href = `/app/?s=${r.token}` + (params.get('api') ? `&api=${encodeURIComponent(params.get('api'))}` : ''); }
+      try { const card = await stack(front, back); const r = await api('old_submit', { branch, name, phone, card }); saveMe(r.token); location.href = `/app/?s=${r.token}` + (params.get('api') ? `&api=${encodeURIComponent(params.get('api'))}` : ''); }
       catch (e) { $('#msg').innerHTML = `<div class="err">${esc(e.message)}</div>`; $('#go').disabled = false; $('#go').textContent = L('জমা দিন', 'Submit', 'जमा करें'); }
     };
   };
@@ -605,7 +616,7 @@ async function studentDetail(el, id) {
   $('#qrb').onclick = () => { const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="sheet center"><div class="qr">${qrSvg(s.qr, 260)}</div><div class="mut mt">${esc(s.qr)}</div><button class="btn ghost block mt">${L('বন্ধ', 'Close', 'बंद')}</button></div>`; document.body.appendChild(m); m.onclick = () => m.remove(); };
   if ($('#bookfor')) $('#bookfor').onclick = () => bookFor(s, () => studentDetail(el, id));
   if ($('#pay')) $('#pay').onclick = async () => { try { await sapi('payment', { id, amount: $('#amt').value, due_by_class: $('#dby2')?.value ?? '' }); toast(L('জমা হলো', 'Payment added', 'जमा हो गया')); studentDetail(el, id); } catch (e) { toast(e.message); } };
-  if ($('#appr')) $('#appr').onclick = async () => { try { await sapi('approve', { id, fields: { name: $('#a_nm').value, package: $('#a_pk').value, classes_done: $('#a_cd').value, total_fee: $('#a_fee')?.value, paid: $('#a_paid')?.value, kind: $('#a_k').value, admitted_on: $('#a_ad').value } }); toast(L('অনুমোদন হলো', 'Approved', 'अप्रूव हो गया')); studentDetail(el, id); } catch (e) { toast(e.message); } };
+  if ($('#appr')) $('#appr').onclick = async () => { try { await sapi('approve', { id, fields: { name: $('#a_nm').value, package: $('#a_pk').value, classes_done: $('#a_cd').value, total_fee: $('#a_fee')?.value, paid: $('#a_paid')?.value, kind: $('#a_k').value, admitted_on: $('#a_ad').value } }); toast(L('অনুমোদন হলো', 'Approved', 'अप्रूव हो गया')); const nm = $('#a_nm').value || s.name; if (confirm(L(`${nm}-কে এখনই WhatsApp-এ ক্লাস বুকিংয়ের লিংক পাঠাবেন?`, `Send ${nm} the class booking link on WhatsApp now?`, `${nm} को अभी WhatsApp पर क्लास बुकिंग लिंक भेजें?`))) window.open(waLink(s.phone, L(`নমস্কার ${nm}, Seekho 2 Wheeler পাটুলি থেকে বলছি। আপনার কার্ড অনুমোদন হয়ে গেছে। এই লিংক থেকে ক্লাস বুক করবেন আর ক্লাসে এসে QR দেখাবেন: ${link}`, `Hello ${nm}, this is Seekho 2 Wheeler Patuli. Your card is approved. Book your classes from this link and show the QR at class: ${link}`, `नमस्ते ${nm}, Seekho 2 Wheeler पाटुली से। आपका कार्ड अप्रूव हो गया। इस लिंक से क्लास बुक करें और क्लास में QR दिखाएँ: ${link}`)), '_blank'); studentDetail(el, id); } catch (e) { toast(e.message); } };
   if ($('#reon')) $('#reon').onclick = async () => { await sapi('reactivate', { id }); toast(L('চালু হলো', 'Restarted', 'चालू हो गया')); studentDetail(el, id); };
   if ($('#rej')) $('#rej').onclick = async () => { if (!confirm(L('বাতিল করবেন?', 'Reject this card?', 'रिजेक्ट करें?'))) return; await sapi('reject', { id }); studentsTab(el); };
   if ($('#cly')) $('#cly').onclick = async () => { try { await sapi('payment', { id, amount: s.pay_claim.amount }); toast(L('জমা হলো', 'Recorded', 'जमा हो गया')); studentDetail(el, id); } catch (e) { toast(e.message); } };
@@ -709,7 +720,7 @@ async function settingsTab(el) {
 // =========================================================== start
 (async () => {
   if (params.get('s')) return studentPage(params.get('s'));
-  if (params.get('old')) return oldPage(params.get('old'));
+  if (params.get('old')) { const mine = params.get('new') ? '' : loadMe(); if (mine) { history.replaceState(null, '', `/app/?s=${mine}` + (params.get('api') ? `&api=${encodeURIComponent(params.get('api'))}` : '')); return studentPage(mine); } return oldPage(params.get('old')); }
   S = loadSession();
   if (!S) return loginPage();
   try { const w = await api('whoami', { session: S.session }); S.perms = w.perms; S.role = w.role; S.branch = w.branch; saveSession(S); staffHome(); } catch (e) { saveSession(null); S = null; loginPage(); }
