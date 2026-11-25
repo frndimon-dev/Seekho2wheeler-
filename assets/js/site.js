@@ -106,3 +106,49 @@
     r.addEventListener('click', function (e) { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
   });
 })();
+
+/* Month-end offer (owner, 25 Nov 2026): floating "Offer" pill bottom-left; tap opens the poster.
+   Shows only from FROM to TO (India date), never on /book/ or /app/. To end early, set TO to an earlier date. */
+(function () {
+  var O = { id: 'monthend-2026-11', from: '2026-11-25', to: '2026-11-30', poster: '/assets/img/offers/s2w-monthend-nov2026.jpg?v=1' };
+  var p = location.pathname;
+  if (p.indexOf('/book') === 0 || p.indexOf('/app') === 0) return;
+  var today = new Date(Date.now() + 330 * 60000).toISOString().slice(0, 10);
+  if (today < O.from || today > O.to) return;
+  function st(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) {} return null; }
+  var css = '.ofr{position:fixed;left:14px;bottom:14px;z-index:65;font-family:inherit}' +
+    '.ofr-pill{display:flex;align-items:center;gap:10px;border:0;cursor:pointer;background:#e5254d;color:#fff;border-radius:999px;padding:11px 16px 11px 13px;font:800 15px/1.15 inherit;text-align:left;box-shadow:0 10px 28px rgba(229,37,77,.45),0 0 0 3px #fff;animation:ofr-in .5s cubic-bezier(.2,.8,.2,1) both}' +
+    '.ofr-pill b{display:block;font-size:15px;letter-spacing:.02em}.ofr-pill small{display:block;font-weight:700;font-size:12.5px;opacity:.92}' +
+    '.ofr-dot{position:relative;width:11px;height:11px;border-radius:50%;background:#ffc514;flex:none}.ofr-dot:after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid #ffc514;animation:ofr-ping 1.6s ease-out infinite}' +
+    '.ofr-x{position:absolute;top:-9px;right:-9px;width:24px;height:24px;border-radius:50%;border:0;background:#fff;color:#082a6b;font-size:16px;line-height:1;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25)}' +
+    '.ofr-bg{position:fixed;inset:0;z-index:90;background:rgba(8,20,45,.72);display:flex;align-items:center;justify-content:center;padding:16px;animation:ofr-fade .25s both}' +
+    '.ofr-card{position:relative;width:min(440px,100%);max-height:calc(100vh - 32px);overflow:auto;background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.4);animation:ofr-pop .3s cubic-bezier(.2,.8,.2,1) both}' +
+    '.ofr-card img{display:block;width:100%;height:auto}.ofr-acts{display:grid;gap:8px;padding:12px}' +
+    '.ofr-acts a{display:flex;justify-content:center;align-items:center;gap:8px;padding:13px;border-radius:12px;font-weight:800;text-decoration:none;font-size:16px}' +
+    '.ofr-wa{background:#19b45a;color:#fff}.ofr-call{background:#082a6b;color:#fff}' +
+    '.ofr-close{position:sticky;top:10px;float:right;margin:10px 10px -44px 0;width:34px;height:34px;border-radius:50%;border:0;background:rgba(8,20,45,.75);color:#fff;font-size:22px;line-height:1;cursor:pointer;z-index:2}' +
+    '@keyframes ofr-in{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}@keyframes ofr-ping{from{transform:scale(.5);opacity:.8}to{transform:scale(1.7);opacity:0}}' +
+    '@keyframes ofr-fade{from{opacity:0}}@keyframes ofr-pop{from{transform:translateY(12px) scale(.96);opacity:0}}' +
+    '@media (prefers-reduced-motion:reduce){.ofr-pill,.ofr-bg,.ofr-card,.ofr-dot:after{animation:none}}';
+  var s = document.createElement('style'); s.textContent = css; document.head.appendChild(s);
+  var wa = 'https://wa.me/919748481630?text=' + encodeURIComponent('Hi Seekho 2 Wheeler, I want the Month End Offer (₹3000 instead of ₹4000). Please share the details.');
+  var root = document.createElement('div'); root.className = 'ofr';
+  root.innerHTML = '<button class="ofr-pill" type="button" aria-haspopup="dialog"><span class="ofr-dot" aria-hidden="true"></span><span><b>OFFER · Flat ₹1000 off</b><small>Month end · till 30 Nov</small></span></button>' +
+    '<button class="ofr-x" type="button" aria-label="Hide offer">×</button>';
+  document.body.appendChild(root);
+  var bg = null;
+  function close() { if (bg) { bg.remove(); bg = null; } }
+  function open() {
+    st('ofr-seen:' + O.id, '1');
+    bg = document.createElement('div'); bg.className = 'ofr-bg';
+    bg.innerHTML = '<div class="ofr-card" role="dialog" aria-modal="true" aria-label="Month End Offer: flat ₹1000 off, ₹4000 now ₹3000, till 30 November">' +
+      '<button class="ofr-close" type="button" aria-label="Close">×</button><img src="' + O.poster + '" alt="Seekho 2 Wheeler Month End Offer: flat ₹1000 off on scooty and bike training, ₹4000 now ₹3000, valid till 30th November" width="1080" height="1350">' +
+      '<div class="ofr-acts"><a class="ofr-wa" href="' + wa + '" target="_blank" rel="noopener">Claim on WhatsApp</a><a class="ofr-call" href="tel:+919748481630">Call 97484 81630</a></div></div>';
+    bg.addEventListener('click', function (e) { if (e.target === bg || e.target.className === 'ofr-close') close(); });
+    document.body.appendChild(bg);
+  }
+  root.querySelector('.ofr-pill').addEventListener('click', open);
+  root.querySelector('.ofr-x').addEventListener('click', function () { root.remove(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  if (!st('ofr-seen:' + O.id)) setTimeout(function () { if (!bg && document.visibilityState === 'visible') open(); }, 6000);
+})();
