@@ -152,3 +152,36 @@
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   if (!st('ofr-seen:' + O.id)) setTimeout(function () { if (!bg && document.visibilityState === 'visible') open(); }, 6000);
 })();
+
+// Ad tracking (added 28 Nov 2026): remembers a Google Ads click id for 30 days and,
+// when a visitor taps Call or WhatsApp, records it in Business Desk (no cookies, no
+// personal data). WhatsApp messages from ad visitors get a short "(G)" tag so Desk
+// can tell which chats came from ads.
+(function () {
+  var KEY = 's2w-ad', DAY = 864e5, EP = 'https://wzesyetbiyxdgjyuhqoz.supabase.co/functions/v1/gads';
+  function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  var q = new URLSearchParams(location.search), id = q.get('gclid') || q.get('gbraid') || q.get('wbraid');
+  if (id) ls(KEY, JSON.stringify({ id: id.slice(0, 200), at: Date.now() }));
+  var ad = null;
+  try { ad = JSON.parse(ls(KEY) || 'null'); if (ad && Date.now() - ad.at > 30 * DAY) ad = null; } catch (e) { ad = null; }
+  function send(kind) {
+    var body = JSON.stringify({ action: 'lead', kind: kind, page: location.pathname.slice(0, 200), ad: !!ad, click_id: ad ? ad.id : null });
+    try { if (!(navigator.sendBeacon && navigator.sendBeacon(EP, new Blob([body], { type: 'text/plain' })))) fetch(EP, { method: 'POST', body: body, keepalive: true, mode: 'no-cors' }); } catch (e) {}
+  }
+  function tag(href) {
+    if (!ad || href.indexOf('wa.me/') < 0 || /%28G%29|\(G\)/.test(href)) return href;
+    try { var u = new URL(href); u.searchParams.set('text', (u.searchParams.get('text') || 'Hi') + ' (G)'); return u.toString(); } catch (e) { return href; }
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    var h = a.getAttribute('href') || '';
+    if (h.indexOf('tel:') === 0) send('call');
+    else if (h.indexOf('wa.me/') >= 0 || h.indexOf('/wa/') === 0) { send('wa'); a.setAttribute('href', tag(a.href)); }
+  }, true);
+  var open = window.open;
+  window.open = function (u) {
+    if (typeof u === 'string' && u.indexOf('wa.me/') >= 0) { send('wa'); arguments[0] = tag(u); }
+    return open.apply(window, arguments);
+  };
+})();
